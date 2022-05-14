@@ -1,6 +1,7 @@
 package extractor
 
 import (
+	"fmt"
 	"regexp"
 	"strings"
 )
@@ -11,6 +12,29 @@ type GoFunctionDeclaration struct {
 	ParamsList        []*GoVariableDefinition
 	ReturnList        []*GoTypeDeclaration // not support named return
 	BodyContent       []byte
+}
+
+func (d *GoFunctionDeclaration) Traversal(deep int) {
+	fmt.Printf("%v- Function Signature: %v\n", strings.Repeat("\t", deep), d.FunctionSignature)
+	fmt.Printf("%v- Function Params List: ", strings.Repeat("\t", deep))
+	if len(d.ParamsList) > 0 {
+		fmt.Println()
+		for index, paramDeclaration := range d.ParamsList {
+			fmt.Printf("%v- Param.%v: %v %v\n", strings.Repeat("\t", deep+1), index, paramDeclaration.VariableSignature, paramDeclaration.TypeDeclaration.MakeUp())
+		}
+	} else {
+		fmt.Printf("None\n")
+	}
+	fmt.Printf("%v- Function Return List: ", strings.Repeat("\t", deep))
+	if len(d.ReturnList) > 0 {
+		fmt.Println()
+		for index, returnDeclaration := range d.ReturnList {
+			fmt.Printf("%v- Return.%v: %v\n", strings.Repeat("\t", deep+1), index, returnDeclaration.MakeUp())
+		}
+	} else {
+		fmt.Printf("None\n")
+	}
+	fmt.Printf("%v- MakeUp: |%v|\n", strings.Repeat("\t", deep), d.MakeUp())
 }
 
 func (d *GoFunctionDeclaration) MakeUp() string {
