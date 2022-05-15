@@ -1,7 +1,6 @@
 package extractor
 
 import (
-	"runtime"
 	"testing"
 )
 
@@ -16,7 +15,7 @@ func TestGoFunctionDeclaration_Traversal(t *testing.T) {
 	}{
 		// TODO: Add test cases.
 		{
-			name: "UnitTestBundle.go ReadUnitTestFile Declaration test",
+			name: "UnitTestBundle.go GoFunctionDeclaration.Traversal test",
 			d: func() *GoFunctionDeclaration {
 				fdMap := ExtractGoFileFunctionDeclaration(ReadUnitTestFile("UnitTestBundle.go"))
 				return fdMap["ReadUnitTestFile"]
@@ -41,29 +40,20 @@ func TestGoFunctionDeclaration_MakeUp(t *testing.T) {
 	}{
 		// TODO: Add test cases.
 		{
-			name: "UnitTestBundle.go ReadUnitTestFile Declaration test",
+			name: "UnitTestBundle.go GoFunctionDeclaration.MakeUp test",
 			d: func() *GoFunctionDeclaration {
 				fdMap := ExtractGoFileFunctionDeclaration(ReadUnitTestFile("UnitTestBundle.go"))
 				return fdMap["ReadUnitTestFile"]
 			}(),
-			want: func() string {
-				if runtime.GOOS == "windows" {
-					return `func ReadUnitTestFile(p string) []byte {` + "\r" + `
-	c, err := os.ReadFile(p)` + "\r" + `
-	if err != nil {` + "\r" + `
-		panic(err)` + "\r" + `
-	}` + "\r" + `
-	return c` + "\r" + `
-}`
-				}
-				return `func ReadUnitTestFile(p string) []byte {
+			want: `
+func ReadUnitTestFile(p string) []byte {
 	c, err := os.ReadFile(p)
 	if err != nil {
 		panic(err)
 	}
 	return c
-}`
-			}(),
+}
+`,
 		},
 		{
 			name: "file.go GoFmtFile Declaration test",
@@ -71,22 +61,8 @@ func TestGoFunctionDeclaration_MakeUp(t *testing.T) {
 				fdMap := ExtractGoFileFunctionDeclaration(ReadUnitTestFile("file.go"))
 				return fdMap["GoFmtFile"]
 			}(),
-			want: func() string {
-				if runtime.GOOS == "windows" {
-					return `func GoFmtFile(p string) {` + "\r" + `
-	if _, err := os.Stat(p); !(err == nil || os.IsExist(err)) {` + "\r" + `
-		panic(fmt.Sprintf("%v not exist", p))` + "\r" + `
-	}` + "\r" + `
-	cmd := exec.Command("go", "fmt", p)` + "\r" + `
-	cmd.Stdout = &bytes.Buffer{}` + "\r" + `
-	cmd.Stderr = &bytes.Buffer{}` + "\r" + `
-	err := cmd.Run()` + "\r" + `
-	if err != nil {` + "\r" + `
-		panic(cmd.Stderr.(*bytes.Buffer).String())` + "\r" + `
-	}` + "\r" + `
-}`
-				}
-				return `func GoFmtFile(p string) {
+			want: `
+func GoFmtFile(p string) {
 	if _, err := os.Stat(p); !(err == nil || os.IsExist(err)) {
 		panic(fmt.Sprintf("%v not exist", p))
 	}
@@ -97,14 +73,16 @@ func TestGoFunctionDeclaration_MakeUp(t *testing.T) {
 	if err != nil {
 		panic(cmd.Stderr.(*bytes.Buffer).String())
 	}
-}`
-			}(),
+}
+`,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := tt.d.MakeUp(); got != tt.want {
 				t.Errorf("GoFunctionDeclaration.MakeUp() = %v, want %v", got, tt.want)
+				t.Logf("got: %v", []byte(got))
+				t.Logf("tt.want: %v", []byte(tt.want))
 			}
 		})
 	}

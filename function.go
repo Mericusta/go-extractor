@@ -16,7 +16,7 @@ type GoFunctionDeclaration struct {
 
 func (d *GoFunctionDeclaration) Traversal(deep int) {
 	fmt.Printf("%v- Function Signature: %v\n", strings.Repeat("\t", deep), d.FunctionSignature)
-	fmt.Printf("%v- Function Params List: ", strings.Repeat("\t", deep))
+	fmt.Printf("%v- Function Param List: ", strings.Repeat("\t", deep))
 	if len(d.ParamsList) > 0 {
 		fmt.Println()
 		for index, paramDeclaration := range d.ParamsList {
@@ -102,6 +102,12 @@ func (d *GoFunctionDeclaration) MakeUp() string {
 	// body scope
 	bodyContent := strings.Replace(bodyScopeTemplate, makeUpReplaceKeywordBodyContent, string(d.BodyContent), -1)
 	makeUpContent = strings.Replace(makeUpContent, makeUpReplaceKeywordBodyScope, bodyContent, -1)
+
+	// add new line
+	makeUpContent = "\n" + makeUpContent + "\n"
+
+	// remove all CR
+	makeUpContent = strings.ReplaceAll(makeUpContent, "\r", "")
 
 	return makeUpContent
 }
