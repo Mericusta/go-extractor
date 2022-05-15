@@ -65,6 +65,41 @@ func TestGoFunctionDeclaration_MakeUp(t *testing.T) {
 }`
 			}(),
 		},
+		{
+			name: "file.go GoFmtFile Declaration test",
+			d: func() *GoFunctionDeclaration {
+				fdMap := ExtractGoFileFunctionDeclaration(ReadUnitTestFile("file.go"))
+				return fdMap["GoFmtFile"]
+			}(),
+			want: func() string {
+				if runtime.GOOS == "windows" {
+					return `func GoFmtFile(p string) {` + "\r" + `
+	if _, err := os.Stat(p); !(err == nil || os.IsExist(err)) {` + "\r" + `
+		panic(fmt.Sprintf("%v not exist", p))` + "\r" + `
+	}` + "\r" + `
+	cmd := exec.Command("go", "fmt", p)` + "\r" + `
+	cmd.Stdout = &bytes.Buffer{}` + "\r" + `
+	cmd.Stderr = &bytes.Buffer{}` + "\r" + `
+	err := cmd.Run()` + "\r" + `
+	if err != nil {` + "\r" + `
+		panic(cmd.Stderr.(*bytes.Buffer).String())` + "\r" + `
+	}` + "\r" + `
+}`
+				}
+				return `func GoFmtFile(p string) {
+	if _, err := os.Stat(p); !(err == nil || os.IsExist(err)) {
+		panic(fmt.Sprintf("%v not exist", p))
+	}
+	cmd := exec.Command("go", "fmt", p)
+	cmd.Stdout = &bytes.Buffer{}
+	cmd.Stderr = &bytes.Buffer{}
+	err := cmd.Run()
+	if err != nil {
+		panic(cmd.Stderr.(*bytes.Buffer).String())
+	}
+}`
+			}(),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

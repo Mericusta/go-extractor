@@ -38,18 +38,18 @@ func (d *GoFunctionDeclaration) Traversal(deep int) {
 }
 
 func (d *GoFunctionDeclaration) MakeUp() string {
-	makeUpTemplate := `funcTHIS_SCOPE SIGNATUREPARAM_SCOPE RETURN_SCOPE BODY_SCOPE`
+	makeUpTemplate := `func[THIS_SCOPE] [SIGNATURE][PARAM_SCOPE][RETURN_SCOPE] [BODY_SCOPE]`
 	thisScopeTemplate := `(THIS_VARIABLE)`
 	paramScopeTemplate := `(EACH_PARAM)`
 	singleReturnScopeTemplate := `EACH_RETURN`
 	multiReturnScopeTemplate := `(EACH_RETURN)`
 	bodyScopeTemplate := `{BODY_CONTENT}`
 
-	makeUpReplaceKeywordThisScope := `THIS_SCOPE`
-	makeUpReplaceKeywordSignature := `SIGNATURE`
-	makeUpReplaceKeywordParamScope := `PARAM_SCOPE`
-	makeUpReplaceKeywordReturnScope := `RETURN_SCOPE`
-	makeUpReplaceKeywordBodyScope := `BODY_SCOPE`
+	makeUpReplaceKeywordThisScope := `[THIS_SCOPE]`
+	makeUpReplaceKeywordSignature := `[SIGNATURE]`
+	makeUpReplaceKeywordParamScope := `[PARAM_SCOPE]`
+	makeUpReplaceKeywordReturnScope := `[RETURN_SCOPE]`
+	makeUpReplaceKeywordBodyScope := `[BODY_SCOPE]`
 	makeUpReplaceKeywordThisVariable := `THIS_VARIABLE`
 	makeUpReplaceKeywordEachParam := `EACH_PARAM`
 	makeUpReplaceKeywordEachReturn := `EACH_RETURN`
@@ -93,6 +93,9 @@ func (d *GoFunctionDeclaration) MakeUp() string {
 		returnScopeContent = strings.Replace(multiReturnScopeTemplate, makeUpReplaceKeywordEachReturn, builder.String(), -1)
 	} else {
 		returnScopeContent = strings.Replace(singleReturnScopeTemplate, makeUpReplaceKeywordEachReturn, builder.String(), -1)
+	}
+	if len(returnScopeContent) > 0 {
+		returnScopeContent = fmt.Sprintf(" %v", returnScopeContent)
 	}
 	makeUpContent = strings.Replace(makeUpContent, makeUpReplaceKeywordReturnScope, returnScopeContent, -1)
 
