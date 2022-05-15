@@ -38,7 +38,69 @@ func (d *GoFunctionDeclaration) Traversal(deep int) {
 }
 
 func (d *GoFunctionDeclaration) MakeUp() string {
-	return ""
+	makeUpTemplate := `funcTHIS_SCOPE SIGNATUREPARAM_SCOPE RETURN_SCOPE BODY_SCOPE`
+	thisScopeTemplate := `(THIS_VARIABLE)`
+	paramScopeTemplate := `(EACH_PARAM)`
+	singleReturnScopeTemplate := `EACH_RETURN`
+	multiReturnScopeTemplate := `(EACH_RETURN)`
+	bodyScopeTemplate := `{BODY_CONTENT}`
+
+	makeUpReplaceKeywordThisScope := `THIS_SCOPE`
+	makeUpReplaceKeywordSignature := `SIGNATURE`
+	makeUpReplaceKeywordParamScope := `PARAM_SCOPE`
+	makeUpReplaceKeywordReturnScope := `RETURN_SCOPE`
+	makeUpReplaceKeywordBodyScope := `BODY_SCOPE`
+	makeUpReplaceKeywordThisVariable := `THIS_VARIABLE`
+	makeUpReplaceKeywordEachParam := `EACH_PARAM`
+	makeUpReplaceKeywordEachReturn := `EACH_RETURN`
+	makeUpReplaceKeywordBodyContent := `BODY_CONTENT`
+
+	// signature
+	makeUpContent := strings.Replace(makeUpTemplate, makeUpReplaceKeywordSignature, d.FunctionSignature, -1)
+
+	// this scope
+	var thisScopeContent string
+	if d.This != nil {
+		thisScopeContent = strings.Replace(thisScopeTemplate, makeUpReplaceKeywordThisVariable, d.This.MakeUp(), -1)
+	}
+	makeUpContent = strings.Replace(makeUpContent, makeUpReplaceKeywordThisScope, thisScopeContent, -1)
+
+	// param scope
+	builder := strings.Builder{}
+	for index, eachParam := range d.ParamsList {
+		builder.WriteString(eachParam.MakeUp())
+		if index > 0 {
+			builder.WriteRune(',')
+			builder.WriteRune(' ')
+		}
+	}
+	paramScopeContent := strings.Replace(paramScopeTemplate, makeUpReplaceKeywordEachParam, builder.String(), -1)
+	makeUpContent = strings.Replace(makeUpContent, makeUpReplaceKeywordParamScope, paramScopeContent, -1)
+
+	// return scope
+	builder.Reset()
+	multiReturn := false
+	for index, eachReturn := range d.ReturnList {
+		builder.WriteString(eachReturn.MakeUp())
+		if index > 0 {
+			builder.WriteRune(',')
+			builder.WriteRune(' ')
+			multiReturn = true
+		}
+	}
+	var returnScopeContent string
+	if multiReturn {
+		returnScopeContent = strings.Replace(multiReturnScopeTemplate, makeUpReplaceKeywordEachReturn, builder.String(), -1)
+	} else {
+		returnScopeContent = strings.Replace(singleReturnScopeTemplate, makeUpReplaceKeywordEachReturn, builder.String(), -1)
+	}
+	makeUpContent = strings.Replace(makeUpContent, makeUpReplaceKeywordReturnScope, returnScopeContent, -1)
+
+	// body scope
+	bodyContent := strings.Replace(bodyScopeTemplate, makeUpReplaceKeywordBodyContent, string(d.BodyContent), -1)
+	makeUpContent = strings.Replace(makeUpContent, makeUpReplaceKeywordBodyScope, bodyContent, -1)
+
+	return makeUpContent
 }
 
 var (

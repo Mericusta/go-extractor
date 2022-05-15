@@ -1,10 +1,21 @@
 package extractor
 
-import "regexp"
+import (
+	"fmt"
+	"regexp"
+)
 
 type GoVariableDefinition struct {
 	VariableSignature string
 	TypeDeclaration   *GoTypeDeclaration
+}
+
+func (d *GoVariableDefinition) MakeUp() string {
+	if len(d.VariableSignature) > 0 {
+		return fmt.Sprintf("%v %v", d.VariableSignature, d.TypeDeclaration.MakeUp())
+	} else {
+		return d.TypeDeclaration.MakeUp()
+	}
 }
 
 var (
