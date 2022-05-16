@@ -48,7 +48,7 @@ func TestGoImportDeclaration_MakeUp(t *testing.T) {
 			},
 			want: `
 import (
-	windowsOS "os"
+	"os"
 )
 `,
 		},
@@ -59,7 +59,7 @@ import (
 				withBracket: false,
 			},
 			want: `
-import windowsOS "os"
+import "os"
 `,
 		},
 	}

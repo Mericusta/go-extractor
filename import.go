@@ -55,10 +55,8 @@ func (d *GoImportDeclaration) MakeUp(withBracket bool) string {
 	case l == 1 && !withBracket:
 		importScopeContent := strings.Replace(singleImportTemplate, makeUpReplaceKeywordEachImport, strings.TrimSpace(builder.String()), -1)
 		makeUpContent = strings.Replace(makeUpTemplate, makeUpReplaceKeywordImportScope, importScopeContent, -1)
-	case l == 1 && withBracket:
+	case (l == 1 && withBracket) || l > 1:
 		builder.WriteString("\n")
-		fallthrough
-	case l > 1:
 		importScopeContent := strings.Replace(multiImportTemplate, makeUpReplaceKeywordEachImport, builder.String(), -1)
 		makeUpContent = strings.Replace(makeUpTemplate, makeUpReplaceKeywordImportScope, importScopeContent, -1)
 	}
