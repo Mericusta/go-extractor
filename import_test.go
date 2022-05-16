@@ -67,8 +67,6 @@ import "os"
 		t.Run(tt.name, func(t *testing.T) {
 			if got := tt.d.MakeUp(tt.args.withBracket); got != tt.want {
 				t.Errorf("GoImportDeclaration.MakeUp() = %v, want %v", got, tt.want)
-				t.Logf("got %v\n", []byte(got))
-				t.Logf("want %v\n", []byte(tt.want))
 			}
 		})
 	}

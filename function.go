@@ -330,14 +330,11 @@ func ExtractorFunctionReturnList(content []byte) []*GoTypeDeclaration {
 	splitContent := RecursiveSplitUnderSameDeepPunctuationMarksContent(string(content), GetLeftPunctuationMarkList(), ",")
 	returnTypeDeclarationSlice := make([]*GoTypeDeclaration, 0)
 	for _, content := range splitContent.ContentList {
-		// fmt.Printf("return content = |%v|\n", strings.TrimSpace(content))
 		if len(content) == 0 {
 			panic("return content is empty")
 		}
 		typeDeclaration := ExtractGoVariableTypeDeclaration(strings.TrimSpace(content))
 		returnTypeDeclarationSlice = append(returnTypeDeclarationSlice, typeDeclaration)
-		// fmt.Printf("typeDeclaration = %v\n", typeDeclaration.MakeUp())
-		typeDeclaration.Traversal(0)
 	}
 	return returnTypeDeclarationSlice
 }

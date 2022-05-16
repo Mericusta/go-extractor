@@ -81,8 +81,6 @@ func GoFmtFile(p string) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := tt.d.MakeUp(); got != tt.want {
 				t.Errorf("GoFunctionDeclaration.MakeUp() = %v, want %v", got, tt.want)
-				t.Logf("got: %v", []byte(got))
-				t.Logf("tt.want: %v", []byte(tt.want))
 			}
 		})
 	}
