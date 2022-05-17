@@ -7,7 +7,7 @@ import (
 )
 
 type GoFunctionDeclaration struct {
-	Content           string
+	Content           []byte
 	FunctionSignature string
 	This              *GoVariableDefinition
 	ParamsList        []*GoVariableDefinition
@@ -133,15 +133,10 @@ func ExtractGoFileFunctionDeclaration(content []byte) map[string]*GoFunctionDecl
 
 	functionDeclarationMap := make(map[string]*GoFunctionDeclaration)
 	for _, functionDeclarationScopeBeginSubmatchIndexSlice := range GoFunctionDeclarationScopeBeginRegexp.FindAllSubmatchIndex(content, -1) {
-		// fmt.Printf("function declaration scope begin = |%v|\n", strings.TrimSpace(string(content[functionDeclarationScopeBeginSubmatchIndexSlice[0]:functionDeclarationScopeBeginSubmatchIndexSlice[1]])))
+		contentAfterBeginScopeLength := 0
 
 		// signature
 		functionName := strings.TrimSpace(string(content[functionDeclarationScopeBeginSubmatchIndexSlice[GoFunctionDeclarationScopeBeginRegexpSubmatchNameIndex*2]:functionDeclarationScopeBeginSubmatchIndexSlice[GoFunctionDeclarationScopeBeginRegexpSubmatchNameIndex*2+1]]))
-		// fmt.Printf("function name = |%v|\n", functionName)
-
-		// if functionName != "ExtractMemberFunction" {
-		// 	continue
-		// }
 
 		// this scope
 		var thisDeclaration *GoVariableDefinition
@@ -155,8 +150,6 @@ func ExtractGoFileFunctionDeclaration(content []byte) map[string]*GoFunctionDecl
 				VariableSignature: thisSignature,
 				TypeDeclaration:   ExtractGoVariableTypeDeclaration(thisTypeContent),
 			}
-			// fmt.Printf("function this = |%v|\n", thisDeclaration.VariableSignature)
-			// fmt.Printf("function this type = |%v|\n", thisDeclaration.TypeDeclaration.MakeUp())
 		}
 
 		// params scope
@@ -169,8 +162,8 @@ func ExtractGoFileFunctionDeclaration(content []byte) map[string]*GoFunctionDecl
 		)
 		paramsScopeEndRuneIndex := paramsScopeBeginRuneIndex + 1 + paramsScopeLength        // ')' index
 		paramsListContent := content[paramsScopeBeginRuneIndex+1 : paramsScopeEndRuneIndex] // between '(' and ')'
-		// fmt.Printf("paramsListContent = |%v|\n", string(paramsListContent))
 		paramsList := ExtractorFunctionParamsList(paramsListContent)
+		contentAfterBeginScopeLength += paramsScopeLength + 1
 
 		// returns scope
 		returnsScopeBeginRuneIndex := paramsScopeEndRuneIndex + 1 // after params scope end rune index
@@ -256,8 +249,8 @@ func ExtractGoFileFunctionDeclaration(content []byte) map[string]*GoFunctionDecl
 			}
 		}
 	SEARCH_END:
-		// fmt.Printf("function returns scope = |%v|\n", string(content[returnsScopeBeginRuneIndex+1:returnsScopeEndRuneIndex]))
 		returnList := ExtractorFunctionReturnList(content[returnsScopeBeginRuneIndex+1 : returnsScopeEndRuneIndex])
+		contentAfterBeginScopeLength += returnsScopeEndRuneIndex - returnsScopeBeginRuneIndex + 1
 
 		// body scope
 		if bodyScopeBeginRuneIndex < 0 {
@@ -271,14 +264,10 @@ func ExtractGoFileFunctionDeclaration(content []byte) map[string]*GoFunctionDecl
 			panic("function body length is -1")
 		}
 		bodyScopeEndRuneIndex := bodyScopeBeginRuneIndex + 1 + bodyLength
-		// {
-		// 	fmt.Printf("function body scope = |%v|\n", string(content[bodyScopeBeginRuneIndex+1:bodyScopeEndRuneIndex]))
-		// 	fmt.Printf("body begin rune %v\n", string(content[bodyScopeBeginRuneIndex]))
-		// 	fmt.Printf("body end rune %v\n", string(content[bodyScopeEndRuneIndex]))
-		// 	fmt.Println()
-		// }
+		contentAfterBeginScopeLength += bodyLength + 1
 
 		functionDeclarationMap[functionName] = &GoFunctionDeclaration{
+			Content:           content[functionDeclarationScopeBeginSubmatchIndexSlice[0] : functionDeclarationScopeBeginSubmatchIndexSlice[1]+contentAfterBeginScopeLength],
 			FunctionSignature: functionName,
 			This:              thisDeclaration,
 			ParamsList:        paramsList,
