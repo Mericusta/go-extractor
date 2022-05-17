@@ -7,6 +7,7 @@ import (
 )
 
 type GoFunctionDeclaration struct {
+	Content           string
 	FunctionSignature string
 	This              *GoVariableDefinition
 	ParamsList        []*GoVariableDefinition

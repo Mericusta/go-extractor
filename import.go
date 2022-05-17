@@ -8,6 +8,7 @@ import (
 )
 
 type GoImportDeclaration struct {
+	Content            []byte
 	ImportAliasPathMap map[string]string
 }
 
@@ -80,20 +81,26 @@ var (
 
 func ExtractGoFileImportDeclaration(fileContent []byte) *GoImportDeclaration {
 	var importScopeContent []byte
+	var content []byte
 	importScopeBeginIndexSlice := GoImportScopeBeginRegexp.FindIndex(fileContent)
 	if len(importScopeBeginIndexSlice) == 0 {
 		subMatchSlice := GoSingleImportScopeRegexp.FindSubmatch(fileContent)
 		if len(subMatchSlice) > 0 {
 			importScopeContent = subMatchSlice[GoSingleImportScopeRegexpSubmatchContentIndex]
+			singleImportScopeIndexSlice := GoSingleImportScopeRegexp.FindIndex(fileContent)
+			if len(singleImportScopeIndexSlice) > 0 {
+				content = fileContent[singleImportScopeIndexSlice[0]:singleImportScopeIndexSlice[1]]
+			}
 		} else {
 			return nil
 		}
 	} else {
 		importScopeContent = GetScopeContentBetweenPunctuationMarks(fileContent, importScopeBeginIndexSlice[1]-1)
+		content = fileContent[importScopeBeginIndexSlice[0] : importScopeBeginIndexSlice[1]+len(importScopeContent)+1]
 	}
 
-	// fmt.Printf("import scope content: |%v|\n", string(fileContent[importScopeBeginIndexSlice[1]+1:importScopeBeginIndexSlice[1]+1+importScopeLength]))
 	goImportDeclaration := &GoImportDeclaration{
+		Content:            content,
 		ImportAliasPathMap: make(map[string]string),
 	}
 	for _, eachImportString := range strings.Split(string(importScopeContent), "\n") {
