@@ -3,6 +3,7 @@ package extractor
 import (
 	"fmt"
 	"strings"
+	"unicode/utf8"
 )
 
 var (
@@ -61,7 +62,7 @@ func CalculatePunctuationMarksContentLength(contentAfterLeftPunctuationMark stri
 	isValid := true
 	var invalidScopePunctuationMark rune = -1
 	strings.IndexFunc(contentAfterLeftPunctuationMark, func(r rune) bool {
-		length++
+		length += utf8.RuneLen(r)
 
 		// end invalid scope
 		if !isValid && r == invalidScopePunctuationMark {
@@ -91,7 +92,7 @@ func CalculatePunctuationMarksContentLength(contentAfterLeftPunctuationMark stri
 
 		return leftCount == rightCount
 	})
-	return length - 1 // // cut right punctuation mark len
+	return length - 1
 }
 
 // GetScopeContentBetweenPunctuationMarks 获取成对标点符号的内容

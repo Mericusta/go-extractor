@@ -160,7 +160,7 @@ func ExtractGoFileFunctionDeclaration(content []byte) map[string]*GoFunctionDecl
 			string(content[paramsScopeBeginRuneIndex+1:]),
 			paramsScopeBeginRune, paramsScopeEndRune, InvalidScopePunctuationMarkMap,
 		)
-		paramsScopeEndRuneIndex := paramsScopeBeginRuneIndex + 1 + paramsScopeLength        // ')' index
+		paramsScopeEndRuneIndex := paramsScopeBeginRuneIndex + paramsScopeLength + 1        // ')' index
 		paramsListContent := content[paramsScopeBeginRuneIndex+1 : paramsScopeEndRuneIndex] // between '(' and ')'
 		paramsList := ExtractorFunctionParamsList(paramsListContent)
 		contentAfterBeginScopeLength += paramsScopeLength + 1
@@ -267,7 +267,7 @@ func ExtractGoFileFunctionDeclaration(content []byte) map[string]*GoFunctionDecl
 		contentAfterBeginScopeLength += bodyLength + 1
 
 		functionDeclarationMap[functionName] = &GoFunctionDeclaration{
-			Content:           content[functionDeclarationScopeBeginSubmatchIndexSlice[0] : functionDeclarationScopeBeginSubmatchIndexSlice[1]+contentAfterBeginScopeLength],
+			Content:           content[functionDeclarationScopeBeginSubmatchIndexSlice[0] : functionDeclarationScopeBeginSubmatchIndexSlice[1]+1+contentAfterBeginScopeLength],
 			FunctionSignature: functionName,
 			This:              thisDeclaration,
 			ParamsList:        paramsList,

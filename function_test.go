@@ -1,6 +1,7 @@
 package extractor
 
 import (
+	"reflect"
 	"testing"
 )
 
@@ -81,6 +82,138 @@ func GoFmtFile(p string) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := tt.d.MakeUp(); got != tt.want {
 				t.Errorf("GoFunctionDeclaration.MakeUp() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestExtractGoFileFunctionDeclaration(t *testing.T) {
+	type args struct {
+		content []byte
+	}
+	tests := []struct {
+		name string
+		args args
+		want map[string]*GoFunctionDeclaration
+	}{
+		// TODO: Add test cases.
+		{
+			"example test",
+			args{
+				content: []byte(`
+func TestNewPoint(t *testing.T) {
+	type args struct {
+		r rune
+	}
+	tests := []struct {
+		name string
+		args args
+		want Point
+	}{
+		// TODO: Add test cases.
+		{
+			"Point ❤",
+			args{r: '❤'},
+			Point{
+				ShapeContext: ShapeContext{
+					BasicContext: core.NewBasicContext(core.Size{
+						Width: 2, Height: 1,
+					}),
+				},
+				r: '❤',
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := NewPoint(tt.args.r); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("NewPoint() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+`),
+			},
+			map[string]*GoFunctionDeclaration{
+				"TestNewPoint": {
+					FunctionSignature: "TestNewPoint",
+					This:              nil,
+					ParamsList:        ExtractorFunctionParamsList([]byte("t *testing.T")),
+					ReturnList:        nil,
+					BodyContent: []byte(`
+	type args struct {
+		r rune
+	}
+	tests := []struct {
+		name string
+		args args
+		want Point
+	}{
+		// TODO: Add test cases.
+		{
+			"Point ❤",
+			args{r: '❤'},
+			Point{
+				ShapeContext: ShapeContext{
+					BasicContext: core.NewBasicContext(core.Size{
+						Width: 2, Height: 1,
+					}),
+				},
+				r: '❤',
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := NewPoint(tt.args.r); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("NewPoint() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+`),
+					Content: []byte(`
+func TestNewPoint(t *testing.T) {
+	type args struct {
+		r rune
+	}
+	tests := []struct {
+		name string
+		args args
+		want Point
+	}{
+		// TODO: Add test cases.
+		{
+			"Point ❤",
+			args{r: '❤'},
+			Point{
+				ShapeContext: ShapeContext{
+					BasicContext: core.NewBasicContext(core.Size{
+						Width: 2, Height: 1,
+					}),
+				},
+				r: '❤',
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := NewPoint(tt.args.r); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("NewPoint() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+`),
+				},
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := ExtractGoFileFunctionDeclaration(tt.args.content); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("ExtractGoFileFunctionDeclaration() = %v, want %v", got, tt.want)
+				t.Logf("got |%+v|", string(got["TestNewPoint"].Content))
+				t.Logf("want |%+v|", string(tt.want["TestNewPoint"].Content))
 			}
 		})
 	}
