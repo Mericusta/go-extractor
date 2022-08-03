@@ -40,3 +40,14 @@ func ExtractGoFilePackage(fileContent []byte) string {
 	}
 	return string(submatch[GoPackageRegexpSubmatchNameIndex])
 }
+
+type goPackageMeta struct {
+	Name       string                 // pkg name
+	PkgPath    string                 // pkg path
+	ImportPath string                 // import path
+	pkgFileMap map[string]*goFileMeta // each file meta
+}
+
+func extractGoPackageMeta(pkgPath string) (*goPackageMeta, error) {
+	return &goPackageMeta{}, nil
+}

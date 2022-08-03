@@ -3,19 +3,49 @@ package extractor
 import (
 	"bytes"
 	"fmt"
+	"go/ast"
+	"go/parser"
+	"go/token"
 	"io"
 	"io/ioutil"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 )
 
 type GoFileInfo struct {
+	fileSet                 *token.FileSet
+	fileAST                 *ast.File
 	Name                    string                                      // 文件名
 	Path                    string                                      // 相对项目根目录的路径
 	ImportStruct            map[string]map[string]struct{}              // 该文件引入的外部包
 	StructDefinitionMap     map[string]map[string]*GoVariableDefinition // 该文件定义的结构体
 	InterfaceDeclarationMap map[string]*GoInterfaceInfo                 // 该文件定义的接口
+}
+
+type goFileMeta struct {
+	fileSet *token.FileSet
+	fileAST *ast.File
+	Name    string // filename
+	Path    string
+}
+
+func extractGoFileMeta(extractFilePath string) (*goFileMeta, error) {
+	fileSet := token.NewFileSet()
+	fileAST, err := parser.ParseFile(fileSet, extractFilePath, nil, parser.ParseComments)
+	if err != nil {
+		return nil, err
+	}
+
+	fileMeta := &goFileMeta{
+		fileSet: fileSet,
+		fileAST: fileAST,
+		Name:    filepath.Base(extractFilePath),
+		Path:    extractFilePath,
+	}
+
+	return fileMeta, nil
 }
 
 // CleanFileComment 置空文件中所有注释
