@@ -28,7 +28,7 @@ type goFileMeta struct {
 	fileSet *token.FileSet
 	fileAST *ast.File
 	Name    string // filename
-	Path    string
+	Path    string // file path
 }
 
 func extractGoFileMeta(extractFilePath string) (*goFileMeta, error) {
@@ -36,6 +36,11 @@ func extractGoFileMeta(extractFilePath string) (*goFileMeta, error) {
 	fileAST, err := parser.ParseFile(fileSet, extractFilePath, nil, parser.ParseComments)
 	if err != nil {
 		return nil, err
+	}
+
+	for _, obj := range fileAST.Scope.Objects {
+		switch obj.Kind {
+		}
 	}
 
 	fileMeta := &goFileMeta{
@@ -46,6 +51,10 @@ func extractGoFileMeta(extractFilePath string) (*goFileMeta, error) {
 	}
 
 	return fileMeta, nil
+}
+
+func (gfm *goFileMeta) PkgName() string {
+	return gfm.fileAST.Name.Name
 }
 
 // CleanFileComment 置空文件中所有注释

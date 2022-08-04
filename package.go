@@ -49,5 +49,7 @@ type goPackageMeta struct {
 }
 
 func extractGoPackageMeta(pkgPath string) (*goPackageMeta, error) {
-	return &goPackageMeta{}, nil
+	pkgMeta := &goPackageMeta{}
+
+	return pkgMeta, nil
 }

@@ -9,16 +9,15 @@ import (
 
 // GoProjectMeta
 // go project which uses go module
+// go.mod must exists project root path
 type GoProjectMeta struct {
 	ProjectPath string // projects absolute path
 	ModuleName  string // projects module name
-	pkgPath     string // go.mod relative path to ProjectPath
-	cmdPath     string // main.go relative path to ProjectPath if exists
 	PackageMap  map[string]*goPackageMeta
-	ignorePaths map[string]interface{}
+	ignorePaths map[string]struct{}
 }
 
-func ExtractGoProjectMeta(projectPath string, ignorePaths map[string]interface{}) (*GoProjectMeta, error) {
+func ExtractGoProjectMeta(projectPath string, ignorePaths map[string]struct{}) (*GoProjectMeta, error) {
 	// get project abs path
 	projectPathAbs, err := filepath.Abs(projectPath)
 	if err != nil {
@@ -35,65 +34,81 @@ func ExtractGoProjectMeta(projectPath string, ignorePaths map[string]interface{}
 	projectMeta := &GoProjectMeta{
 		ProjectPath: projectPathAbs,
 		PackageMap:  make(map[string]*goPackageMeta),
-		ignorePaths: ignorePaths,
+		ignorePaths: make(map[string]struct{}),
+	}
+	// get ignore abs path
+	for ignorePath := range ignorePaths {
+		ignorePathAbs, err := filepath.Abs(ignorePath)
+		if err != nil {
+			return nil, err
+		}
+		projectMeta.ignorePaths[ignorePathAbs] = struct{}{}
 	}
 
-	// TODO:
-	// search main.go and go.mod
+	hasGoMod := false
 	err = filepath.Walk(projectPathAbs, func(path string, info fs.FileInfo, err error) error {
-		if !info.IsDir() {
-			switch info.Name() {
-			case "go.mod":
+		if path == projectPathAbs {
+			return nil
+		}
+		if _, isIgnore := ignorePaths[filepath.Dir(path)]; isIgnore {
+			return nil
+		}
+		if info.IsDir() {
+			fmt.Printf("dir = %v\n", path)
+		} else {
+			if info.Name() == "go.mod" {
+				if projectPathAbs != filepath.Dir(path) {
+					return fmt.Errorf("go.mod not exists project root path")
+				}
+				hasGoMod = true
 				moduleName, err := extractGoModuleName(path)
 				if err != nil {
 					return err
 				}
 				projectMeta.ModuleName = moduleName
-
-				if len(projectMeta.pkgPath) > 0 {
-					return fmt.Errorf("there are more than one go.mod in go projects")
-				}
-
-				dirPath := filepath.Dir(path)
-				relPath, err := filepath.Rel(projectPathAbs, dirPath)
+			} else if filepath.Ext(path) == ".go" {
+				fmt.Printf("path = %v\n", path)
+				fileMeta, err := extractGoFileMeta(path)
 				if err != nil {
 					return err
 				}
-				projectMeta.pkgPath = relPath
-			case "main.go":
-				dirPath := filepath.Dir(path)
-
-				relPath, err := filepath.Rel(projectPathAbs, dirPath)
-				if err != nil {
-					return err
-				}
-				projectMeta.cmdPath = relPath
-
-				mainPkgFileMetaMap := make(map[string]*goFileMeta)
-				cmdDirEntrySlice, err := os.ReadDir(dirPath)
-				if err != nil {
-					return err
-				}
-				for _, cmdDirEntry := range cmdDirEntrySlice {
-					if cmdDirEntry.IsDir() {
-						continue
+				filePkg := fileMeta.PkgName()
+				if filePkg == "main" {
+					if _, has := projectMeta.PackageMap[filePkg]; !has {
+						projectMeta.PackageMap[filePkg] = &goPackageMeta{
+							Name:    filePkg,
+							PkgPath: filepath.Dir(path),
+							pkgFileMap: map[string]*goFileMeta{
+								fileMeta.Name: fileMeta,
+							},
+						}
+					} else {
+						projectMeta.PackageMap[filePkg].pkgFileMap[fileMeta.Name] = fileMeta
 					}
-					if filepath.Ext(cmdDirEntry.Name()) == ".go" {
-						mainPkgFileMetaMap[cmdDirEntry.Name()] = nil
+				} else {
+					pkgImportPath := fmt.Sprintf("%v/%v", projectMeta.ModuleName, filePkg)
+					if _, has := projectMeta.PackageMap[pkgImportPath]; !has {
+						projectMeta.PackageMap[pkgImportPath] = &goPackageMeta{
+							Name:       filePkg,
+							ImportPath: pkgImportPath,
+							PkgPath:    filepath.Dir(path),
+							pkgFileMap: map[string]*goFileMeta{
+								fileMeta.Name: fileMeta,
+							},
+						}
 					}
-				}
-
-				projectMeta.PackageMap["main"] = &goPackageMeta{
-					Name:       "main",
-					PkgPath:    dirPath,
-					pkgFileMap: mainPkgFileMetaMap,
 				}
 			}
 		}
 		return nil
 	})
+
 	if err != nil {
 		return nil, err
+	}
+
+	if !hasGoMod {
+		return nil, fmt.Errorf("go.mod not exists in project path")
 	}
 
 	return projectMeta, nil
