@@ -1,7 +1,10 @@
 package pkg
 
-import "fmt"
+import (
+	"fmt"
+	"standardProject/pkg/module"
+)
 
-func ExampleFunc() {
-	fmt.Println("Hello go-extractor")
+func ExampleFunc(s *module.ExampleStruct) {
+	fmt.Println("Hello go-extractor,", s.V)
 }

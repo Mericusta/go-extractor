@@ -2,6 +2,7 @@ package extractor
 
 import (
 	"fmt"
+	"go/ast"
 	"path/filepath"
 	"regexp"
 )
@@ -48,8 +49,31 @@ type goPackageMeta struct {
 	pkgFileMap map[string]*goFileMeta // each file meta
 }
 
-func extractGoPackageMeta(pkgPath string) (*goPackageMeta, error) {
-	pkgMeta := &goPackageMeta{}
+func (gpm *goPackageMeta) searchDeclaration(objectKind ast.ObjKind) ast.Spec {
 
-	return pkgMeta, nil
+	return nil
+}
+
+func (gpm *goPackageMeta) SearchStructDeclaration() *ast.TypeSpec {
+	for _, gfm := range gpm.pkgFileMap {
+		if gfm.fileAST != nil && gfm.fileAST.Scope != nil {
+			ast.Inspect(gfm.fileAST, func(n ast.Node) bool {
+				if n != nil {
+					typeSpec, ok := n.(*ast.TypeSpec)
+					if !ok {
+						return true
+					}
+					if typeSpec.Name.Name == "ExampleStruct" {
+						return false
+					}
+				}
+				return n != nil
+			})
+		}
+	}
+	return nil
+}
+
+func SearchFunctionDeclaration() {
+
 }

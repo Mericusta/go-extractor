@@ -6,6 +6,5 @@ import (
 )
 
 func main() {
-	pkg.ExampleFunc()
-	module.ExampleFunc()
+	pkg.ExampleFunc(module.NewExampleStruct(10))
 }

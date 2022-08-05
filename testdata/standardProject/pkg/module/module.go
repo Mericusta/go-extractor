@@ -1,7 +1,9 @@
 package module
 
-import "fmt"
+type ExampleStruct struct {
+	V int
+}
 
-func ExampleFunc() {
-	fmt.Println("This is an example func")
+func NewExampleStruct(v int) *ExampleStruct {
+	return &ExampleStruct{V: v}
 }
