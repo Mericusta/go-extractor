@@ -5,7 +5,6 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
-	"strings"
 )
 
 // GoProjectMeta
@@ -22,12 +21,17 @@ type GoProjectMeta struct {
 	// projects all package meta
 	// package import path as key
 	PackageMap map[string]*goPackageMeta
-
-	// ignore file or folder
-	ignorePaths map[string]struct{}
 }
 
 func ExtractGoProjectMeta(projectPath string, ignorePaths map[string]struct{}) (*GoProjectMeta, error) {
+	return extractGoProjectMeta(projectPath, ignorePaths, false)
+}
+
+func ExtractGoProjectMetaWithSpecPaths(projectPath string, specPaths map[string]struct{}) (*GoProjectMeta, error) {
+	return extractGoProjectMeta(projectPath, specPaths, true)
+}
+
+func extractGoProjectMeta(projectPath string, paths map[string]struct{}, spec bool) (*GoProjectMeta, error) {
 	// get project abs path
 	projectPathAbs, err := filepath.Abs(projectPath)
 	if err != nil {
@@ -41,35 +45,32 @@ func ExtractGoProjectMeta(projectPath string, ignorePaths map[string]struct{}) (
 	projectMeta := &GoProjectMeta{
 		ProjectPath: projectPathAbs,
 		PackageMap:  make(map[string]*goPackageMeta),
-		ignorePaths: make(map[string]struct{}),
+	}
+
+	// get ignore abs path
+	pathsAbs := make(map[string]struct{})
+	for path := range paths {
+		pathAbs, err := filepath.Abs(path)
+		if err != nil {
+			return nil, err
+		}
+		pathsAbs[pathAbs] = struct{}{}
+	}
+	if spec {
+		pathsAbs[filepath.Join(projectPathAbs, "go.mod")] = struct{}{}
 	}
 
 	if projectDirInfo.IsDir() {
-		// get ignore abs path
-		for ignorePath := range ignorePaths {
-			ignorePathAbs, err := filepath.Abs(ignorePath)
-			if err != nil {
-				return nil, err
-			}
-			projectMeta.ignorePaths[ignorePathAbs] = struct{}{}
-		}
-
 		hasGoMod := false
-		err = filepath.Walk(projectPathAbs, func(path string, info fs.FileInfo, err error) error {
-			fmt.Printf("path = %v\n", path)
+		err = filepath.WalkDir(projectPathAbs, func(path string, d fs.DirEntry, err error) error {
 			if path == projectPathAbs {
-				fmt.Printf("path is project path\n")
 				return nil
 			}
-			if projectMeta.isSubpath(path) {
-				fmt.Printf("path is ignore path\n")
-				return nil
-			}
-			if info.IsDir() {
-				fmt.Printf("path is dir\n")
-			} else {
-				if info.Name() == "go.mod" {
-					fmt.Printf("path is go.mod\n")
+			if !d.IsDir() {
+				if (!spec && isInPaths(pathsAbs, path)) || (spec && !isInPaths(pathsAbs, path)) {
+					return nil
+				}
+				if d.Name() == "go.mod" {
 					if projectPathAbs != filepath.Dir(path) {
 						return fmt.Errorf("go.mod not exists project root path")
 					}
@@ -80,7 +81,6 @@ func ExtractGoProjectMeta(projectPath string, ignorePaths map[string]struct{}) (
 					}
 					projectMeta.ModuleName = moduleName
 				} else if filepath.Ext(path) == ".go" {
-					fmt.Printf("path is .go file\n")
 					fileMeta, err := extractGoFileMeta(path)
 					if err != nil {
 						return err
@@ -134,6 +134,10 @@ func ExtractGoProjectMeta(projectPath string, ignorePaths map[string]struct{}) (
 			return nil, fmt.Errorf("go.mod not exists in project path")
 		}
 	} else {
+		if (!spec && isInPaths(pathsAbs, projectPathAbs)) || (spec && !isInPaths(pathsAbs, projectPathAbs)) {
+			return nil, fmt.Errorf("project path not in handle list")
+		}
+
 		gfm, err := extractGoFileMeta(projectPathAbs)
 		if err != nil {
 			return nil, err
@@ -146,14 +150,6 @@ func ExtractGoProjectMeta(projectPath string, ignorePaths map[string]struct{}) (
 			},
 		}
 	}
-	return projectMeta, nil
-}
 
-func (gpm *GoProjectMeta) isSubpath(path string) bool {
-	for ignorePath := range gpm.ignorePaths {
-		if strings.Contains(path, ignorePath) {
-			return true
-		}
-	}
-	return false
+	return projectMeta, nil
 }

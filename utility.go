@@ -438,3 +438,12 @@ func FormatFilePathWithOS(filePath, spec string) string {
 	}
 	return strings.ReplaceAll(filePath, beReplaced, toReplace)
 }
+
+func isInPaths(paths map[string]struct{}, checkPath string) bool {
+	for path := range paths {
+		if strings.Contains(checkPath, path) {
+			return true
+		}
+	}
+	return false
+}
