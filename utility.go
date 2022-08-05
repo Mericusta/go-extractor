@@ -2,6 +2,7 @@ package extractor
 
 import (
 	"fmt"
+	"runtime"
 	"strings"
 	"unicode/utf8"
 )
@@ -421,4 +422,19 @@ func SplitAny(groupSplitter, itemSplitter byte, content string) [][]string {
 	}
 
 	return groupSlice
+}
+
+// FormatFilePathWithOS 根据操作系统格式化路径
+func FormatFilePathWithOS(filePath, spec string) string {
+	osLinux := "linux"
+	operationSystem := runtime.GOOS
+	if len(spec) != 0 {
+		operationSystem = spec
+	}
+	beReplaced := "/"
+	toReplace := "\\"
+	if operationSystem == osLinux {
+		beReplaced, toReplace = toReplace, beReplaced
+	}
+	return strings.ReplaceAll(filePath, beReplaced, toReplace)
 }
