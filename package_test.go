@@ -1,7 +1,6 @@
 package extractor
 
 import (
-	"go/ast"
 	"reflect"
 	"testing"
 )
@@ -30,11 +29,15 @@ func TestGoPackageInfo_MakeUp(t *testing.T) {
 	}
 }
 
-func Test_goPackageMeta_SearchStructDeclaration(t *testing.T) {
+func Test_goPackageMeta_SearchStructMeta(t *testing.T) {
+	type args struct {
+		structName string
+	}
 	tests := []struct {
 		name string
 		gpm  *goPackageMeta
-		want *ast.StructType
+		args args
+		want *goStructMeta
 	}{
 		// TODO: Add test cases.
 		{
@@ -43,15 +46,22 @@ func Test_goPackageMeta_SearchStructDeclaration(t *testing.T) {
 				gpm, _ := ExtractGoProjectMeta("./testdata/standardProject", map[string]struct{}{
 					"./testdata/standardProject/vendor": {},
 				})
-				return gpm.PackageMap["standardProject/pkg"]
+				return gpm.PackageMap["standardProject/pkg/module"]
 			}(),
-			nil,
+			args{structName: "ExampleStruct"},
+			func() *goStructMeta {
+				gsm, err := extractGoStructMeta("./testdata/standardProject/pkg/module/module.go", "ExampleStruct")
+				if err != nil {
+					panic(err)
+				}
+				return gsm
+			}(),
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.gpm.SearchStructDeclaration(); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("goPackageMeta.SearchStructDeclaration() = %v, want %v", got, tt.want)
+			if got := tt.gpm.SearchStructMeta(tt.args.structName); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("goPackageMeta.SearchStructMeta() = %v, want %v", got, tt.want)
 			}
 		})
 	}

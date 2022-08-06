@@ -2,6 +2,9 @@ package extractor
 
 import (
 	"fmt"
+	"go/ast"
+	"go/parser"
+	"go/token"
 	"io"
 	"regexp"
 	"strings"
@@ -98,4 +101,47 @@ func ExtractGoFileStructDeclaration(r io.Reader) map[string]*GoStructInfo {
 		}
 	}
 	return fileStructDeclarationMap
+}
+
+type goStructMeta struct {
+	typeSpec *ast.TypeSpec
+}
+
+func extractGoStructMeta(extractFilepath string, structName string) (*goStructMeta, error) {
+	astFile, err := parser.ParseFile(token.NewFileSet(), extractFilepath, nil, parser.ParseComments)
+	if err != nil {
+		return nil, err
+	}
+
+	gsm := searchGoStructMeta(astFile, structName)
+	if gsm.typeSpec == nil {
+		return nil, fmt.Errorf("can not find struct decl")
+	}
+
+	return gsm, nil
+}
+
+func searchGoStructMeta(fileAST *ast.File, structName string) *goStructMeta {
+	var structDecl *ast.TypeSpec
+	ast.Inspect(fileAST, func(n ast.Node) bool {
+		if n == nil || structDecl != nil {
+			return false
+		}
+		typeSpec, ok := n.(*ast.TypeSpec)
+		if !ok {
+			return true
+		}
+		if typeSpec.Name.Name == structName {
+			structDecl = typeSpec
+			return false
+		}
+		return true
+	})
+	return &goStructMeta{
+		typeSpec: structDecl,
+	}
+}
+
+func (gsm *goStructMeta) StructName() string {
+	return gsm.typeSpec.Name.String()
 }

@@ -43,10 +43,11 @@ func ExtractGoFilePackage(fileContent []byte) string {
 }
 
 type goPackageMeta struct {
-	Name       string                 // pkg name
-	PkgPath    string                 // pkg path
-	ImportPath string                 // import path
-	pkgFileMap map[string]*goFileMeta // each file meta
+	Name          string                   // pkg name
+	PkgPath       string                   // pkg path
+	ImportPath    string                   // import path
+	pkgFileMap    map[string]*goFileMeta   // each file meta
+	pkgStructDecl map[string]*goStructMeta // each struct meta
 }
 
 func (gpm *goPackageMeta) searchDeclaration(objectKind ast.ObjKind) ast.Spec {
@@ -54,24 +55,26 @@ func (gpm *goPackageMeta) searchDeclaration(objectKind ast.ObjKind) ast.Spec {
 	return nil
 }
 
-func (gpm *goPackageMeta) SearchStructDeclaration() *ast.TypeSpec {
-	for _, gfm := range gpm.pkgFileMap {
-		if gfm.fileAST != nil && gfm.fileAST.Scope != nil {
-			ast.Inspect(gfm.fileAST, func(n ast.Node) bool {
-				if n != nil {
-					typeSpec, ok := n.(*ast.TypeSpec)
-					if !ok {
-						return true
-					}
-					if typeSpec.Name.Name == "ExampleStruct" {
-						return false
-					}
-				}
-				return n != nil
-			})
+func (gpm *goPackageMeta) SearchStructMeta(structName string) *goStructMeta {
+	if len(gpm.pkgStructDecl) > 0 {
+		if _, has := gpm.pkgStructDecl[structName]; has {
+			return gpm.pkgStructDecl[structName]
 		}
 	}
-	return nil
+
+	var gsm *goStructMeta
+	for _, gfm := range gpm.pkgFileMap {
+		if gfm.fileAST != nil && gfm.fileAST.Scope != nil && gsm == nil {
+			gsm = searchGoStructMeta(gfm.fileAST, structName)
+		}
+	}
+
+	if gpm.pkgStructDecl == nil {
+		gpm.pkgStructDecl = make(map[string]*goStructMeta)
+	}
+	gpm.pkgStructDecl[gsm.StructName()] = gsm
+
+	return gpm.pkgStructDecl[gsm.StructName()]
 }
 
 func SearchFunctionDeclaration() {
