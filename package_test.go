@@ -95,6 +95,23 @@ func Test_goPackageMeta_SearchFunctionMeta(t *testing.T) {
 				return gsm
 			}(),
 		},
+		{
+			"test case 2",
+			func() *goPackageMeta {
+				gpm, _ := ExtractGoProjectMeta("./testdata/standardProject", map[string]struct{}{
+					"./testdata/standardProject/vendor": {},
+				})
+				return gpm.PackageMap["standardProject/pkg/module"]
+			}(),
+			args{functionName: "ExampleFunc"},
+			func() *goFunctionMeta {
+				gsm, err := extractGoFunctionMeta("./testdata/standardProject/pkg/module/module.go", "ExampleFunc")
+				if err != nil {
+					panic(err)
+				}
+				return gsm
+			}(),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

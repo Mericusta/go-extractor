@@ -362,7 +362,7 @@ func searchGoFunctionMeta(fileAST *ast.File, functionName string) *goFunctionMet
 		if !ok {
 			return true
 		}
-		if decl.Name.String() == functionName {
+		if decl.Recv == nil && decl.Name.String() == functionName {
 			funcDecl = decl
 			return false
 		}

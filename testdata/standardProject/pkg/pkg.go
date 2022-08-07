@@ -6,5 +6,5 @@ import (
 )
 
 func ExampleFunc(s *module.ExampleStruct) {
-	fmt.Println("Hello go-extractor,", s.V)
+	fmt.Println("pkg.ExampleFunc, Hello go-extractor,", s.V())
 }
