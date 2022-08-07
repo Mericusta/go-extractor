@@ -2,6 +2,9 @@ package extractor
 
 import (
 	"fmt"
+	"go/ast"
+	"go/parser"
+	"go/token"
 	"regexp"
 	"strings"
 )
@@ -327,4 +330,49 @@ func ExtractorFunctionReturnList(content []byte) []*GoTypeDeclaration {
 		returnTypeDeclarationSlice = append(returnTypeDeclarationSlice, typeDeclaration)
 	}
 	return returnTypeDeclarationSlice
+}
+
+// ----------------------------------------------------------------
+
+type goFunctionMeta struct {
+	funcDecl *ast.FuncDecl
+}
+
+func extractGoFunctionMeta(extractFilepath string, functionName string) (*goFunctionMeta, error) {
+	astFile, err := parser.ParseFile(token.NewFileSet(), extractFilepath, nil, parser.ParseComments)
+	if err != nil {
+		return nil, err
+	}
+
+	gfm := searchGoFunctionMeta(astFile, functionName)
+	if gfm.funcDecl == nil {
+		return nil, fmt.Errorf("can not find struct decl")
+	}
+
+	return gfm, nil
+}
+
+func searchGoFunctionMeta(fileAST *ast.File, functionName string) *goFunctionMeta {
+	var funcDecl *ast.FuncDecl
+	ast.Inspect(fileAST, func(n ast.Node) bool {
+		if n == nil || funcDecl != nil {
+			return false
+		}
+		decl, ok := n.(*ast.FuncDecl)
+		if !ok {
+			return true
+		}
+		if decl.Name.String() == functionName {
+			funcDecl = decl
+			return false
+		}
+		return true
+	})
+	return &goFunctionMeta{
+		funcDecl: funcDecl,
+	}
+}
+
+func (gfm *goFunctionMeta) FunctionName() string {
+	return gfm.funcDecl.Name.String()
 }

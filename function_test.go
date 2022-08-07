@@ -1,6 +1,9 @@
 package extractor
 
 import (
+	"go/ast"
+	"go/parser"
+	"go/token"
 	"reflect"
 	"testing"
 )
@@ -214,6 +217,90 @@ func TestNewPoint(t *testing.T) {
 				t.Errorf("ExtractGoFileFunctionDeclaration() = %v, want %v", got, tt.want)
 				t.Logf("got |%+v|", string(got["TestNewPoint"].Content))
 				t.Logf("want |%+v|", string(tt.want["TestNewPoint"].Content))
+			}
+		})
+	}
+}
+
+func Test_extractGoFunctionMeta(t *testing.T) {
+	type args struct {
+		extractFilepath string
+		functionName    string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    *goFunctionMeta
+		wantErr bool
+	}{
+		// TODO: Add test cases.
+		{
+			"test case 1",
+			args{
+				extractFilepath: "./testdata/standardProject/pkg/pkg.go",
+				functionName:    "ExampleFunc",
+			},
+			searchGoFunctionMeta(func() *ast.File {
+				fileAST, err := parser.ParseFile(token.NewFileSet(), "./testdata/standardProject/pkg/pkg.go", nil, parser.ParseComments)
+				if err != nil {
+					panic(err)
+				}
+				return fileAST
+			}(), "ExampleFunc"),
+			false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := extractGoFunctionMeta(tt.args.extractFilepath, tt.args.functionName)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("extractGoFunctionMeta() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("extractGoFunctionMeta() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_searchGoFunctionMeta(t *testing.T) {
+	type args struct {
+		fileAST      *ast.File
+		functionName string
+	}
+	tests := []struct {
+		name string
+		args args
+		want *goFunctionMeta
+	}{
+		// TODO: Add test cases.
+		{
+			"test case 1",
+			args{
+				fileAST: func() *ast.File {
+					fileAST, err := parser.ParseFile(token.NewFileSet(), "./testdata/standardProject/pkg/pkg.go", nil, parser.ParseComments)
+					if err != nil {
+						panic(err)
+					}
+					return fileAST
+				}(),
+				functionName: "ExampleFunc",
+			},
+			func() *goFunctionMeta {
+				fileAST, err := parser.ParseFile(token.NewFileSet(), "./testdata/standardProject/pkg/pkg.go", nil, parser.ParseComments)
+				if err != nil {
+					panic(err)
+				}
+				funcDecl := searchGoFunctionMeta(fileAST, "ExampleFunc")
+				return funcDecl
+			}(),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := searchGoFunctionMeta(tt.args.fileAST, tt.args.functionName); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("searchGoFunctionMeta() = %v, want %v", got, tt.want)
 			}
 		})
 	}

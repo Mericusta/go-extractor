@@ -66,3 +66,41 @@ func Test_goPackageMeta_SearchStructMeta(t *testing.T) {
 		})
 	}
 }
+
+func Test_goPackageMeta_SearchFunctionMeta(t *testing.T) {
+	type args struct {
+		functionName string
+	}
+	tests := []struct {
+		name string
+		gpm  *goPackageMeta
+		args args
+		want *goFunctionMeta
+	}{
+		// TODO: Add test cases.
+		{
+			"test case 1",
+			func() *goPackageMeta {
+				gpm, _ := ExtractGoProjectMeta("./testdata/standardProject", map[string]struct{}{
+					"./testdata/standardProject/vendor": {},
+				})
+				return gpm.PackageMap["standardProject/pkg"]
+			}(),
+			args{functionName: "ExampleFunc"},
+			func() *goFunctionMeta {
+				gsm, err := extractGoFunctionMeta("./testdata/standardProject/pkg/pkg.go", "ExampleFunc")
+				if err != nil {
+					panic(err)
+				}
+				return gsm
+			}(),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.gpm.SearchFunctionMeta(tt.args.functionName); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("goPackageMeta.SearchFunctionMeta() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

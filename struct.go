@@ -131,7 +131,7 @@ func searchGoStructMeta(fileAST *ast.File, structName string) *goStructMeta {
 		if !ok {
 			return true
 		}
-		if typeSpec.Name.Name == structName {
+		if typeSpec.Name.String() == structName {
 			structDecl = typeSpec
 			return false
 		}

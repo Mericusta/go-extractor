@@ -43,11 +43,12 @@ func ExtractGoFilePackage(fileContent []byte) string {
 }
 
 type goPackageMeta struct {
-	Name          string                   // pkg name
-	PkgPath       string                   // pkg path
-	ImportPath    string                   // import path
-	pkgFileMap    map[string]*goFileMeta   // each file meta
-	pkgStructDecl map[string]*goStructMeta // each struct meta
+	Name            string                     // pkg name
+	PkgPath         string                     // pkg path
+	ImportPath      string                     // import path
+	pkgFileMap      map[string]*goFileMeta     // each file meta
+	pkgStructDecl   map[string]*goStructMeta   // each struct meta
+	pkgFunctionDecl map[string]*goFunctionMeta // each function meta
 }
 
 func (gpm *goPackageMeta) searchDeclaration(objectKind ast.ObjKind) ast.Spec {
@@ -77,6 +78,24 @@ func (gpm *goPackageMeta) SearchStructMeta(structName string) *goStructMeta {
 	return gpm.pkgStructDecl[gsm.StructName()]
 }
 
-func SearchFunctionDeclaration() {
+func (gpm *goPackageMeta) SearchFunctionMeta(functionName string) *goFunctionMeta {
+	if len(gpm.pkgFunctionDecl) > 0 {
+		if _, has := gpm.pkgFunctionDecl[functionName]; has {
+			return gpm.pkgFunctionDecl[functionName]
+		}
+	}
 
+	var gsm *goFunctionMeta
+	for _, gfm := range gpm.pkgFileMap {
+		if gfm.fileAST != nil && gfm.fileAST.Scope != nil && gsm == nil {
+			gsm = searchGoFunctionMeta(gfm.fileAST, functionName)
+		}
+	}
+
+	if gpm.pkgFunctionDecl == nil {
+		gpm.pkgFunctionDecl = make(map[string]*goFunctionMeta)
+	}
+	gpm.pkgFunctionDecl[gsm.FunctionName()] = gsm
+
+	return gpm.pkgFunctionDecl[gsm.FunctionName()]
 }
