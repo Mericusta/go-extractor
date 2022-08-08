@@ -42,12 +42,13 @@ func ExtractGoFilePackage(fileContent []byte) string {
 }
 
 type goPackageMeta struct {
-	Name            string                     // pkg name
-	PkgPath         string                     // pkg path
-	ImportPath      string                     // import path
-	pkgFileMap      map[string]*goFileMeta     // each file meta
-	pkgStructDecl   map[string]*goStructMeta   // each struct meta
-	pkgFunctionDecl map[string]*goFunctionMeta // each function meta
+	Name             string                      // pkg name
+	PkgPath          string                      // pkg path
+	ImportPath       string                      // import path
+	pkgFileMap       map[string]*goFileMeta      // all file meta
+	pkgStructDecl    map[string]*goStructMeta    // all struct meta
+	pkgInterfaceDecl map[string]*goInterfaceMeta // all interface meta
+	pkgFunctionDecl  map[string]*goFunctionMeta  // all function meta
 }
 
 func (gpm *goPackageMeta) SearchStructMeta(structName string) *goStructMeta {
@@ -72,6 +73,28 @@ func (gpm *goPackageMeta) SearchStructMeta(structName string) *goStructMeta {
 	return gpm.pkgStructDecl[gsm.StructName()]
 }
 
+func (gpm *goPackageMeta) SearchInterfaceMeta(interfaceName string) *goInterfaceMeta {
+	if len(gpm.pkgInterfaceDecl) > 0 {
+		if _, has := gpm.pkgInterfaceDecl[interfaceName]; has {
+			return gpm.pkgInterfaceDecl[interfaceName]
+		}
+	}
+
+	var gim *goInterfaceMeta
+	for _, gfm := range gpm.pkgFileMap {
+		if gfm.fileAST != nil && gfm.fileAST.Scope != nil && gim == nil {
+			gim = searchGoInterfaceMeta(gfm.fileAST, interfaceName)
+		}
+	}
+
+	if gpm.pkgInterfaceDecl == nil {
+		gpm.pkgInterfaceDecl = make(map[string]*goInterfaceMeta)
+	}
+	gpm.pkgInterfaceDecl[gim.InterfaceName()] = gim
+
+	return gpm.pkgInterfaceDecl[gim.InterfaceName()]
+}
+
 func (gpm *goPackageMeta) SearchFunctionMeta(functionName string) *goFunctionMeta {
 	if len(gpm.pkgFunctionDecl) > 0 {
 		if _, has := gpm.pkgFunctionDecl[functionName]; has {
@@ -92,4 +115,15 @@ func (gpm *goPackageMeta) SearchFunctionMeta(functionName string) *goFunctionMet
 	gpm.pkgFunctionDecl[gsm.FunctionName()] = gsm
 
 	return gpm.pkgFunctionDecl[gsm.FunctionName()]
+}
+
+// SearchMethodMeta search method implement from node.(*ast.File)
+func (gpm *goPackageMeta) SearchMethodMeta(structName, methodName string) *goMethodMeta {
+	for _, gfm := range gpm.pkgFileMap {
+		gmm := searchGoMethodMeta(gfm.fileAST, structName, methodName)
+		if gmm != nil && gmm.structMethodDecl != nil {
+			return gmm
+		}
+	}
+	return nil
 }

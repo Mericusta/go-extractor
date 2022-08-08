@@ -108,12 +108,12 @@ type goStructMeta struct {
 }
 
 func extractGoStructMeta(extractFilepath string, structName string) (*goStructMeta, error) {
-	astFile, err := parser.ParseFile(token.NewFileSet(), extractFilepath, nil, parser.ParseComments)
+	fileAST, err := parser.ParseFile(token.NewFileSet(), extractFilepath, nil, parser.ParseComments)
 	if err != nil {
 		return nil, err
 	}
 
-	gsm := searchGoStructMeta(astFile, structName)
+	gsm := searchGoStructMeta(fileAST, structName)
 	if gsm.typeSpec == nil {
 		return nil, fmt.Errorf("can not find struct decl")
 	}
@@ -124,10 +124,20 @@ func extractGoStructMeta(extractFilepath string, structName string) (*goStructMe
 func searchGoStructMeta(fileAST *ast.File, structName string) *goStructMeta {
 	var structDecl *ast.TypeSpec
 	ast.Inspect(fileAST, func(n ast.Node) bool {
+		if n == fileAST {
+			return true
+		}
 		if n == nil || structDecl != nil {
 			return false
 		}
 		typeSpec, ok := n.(*ast.TypeSpec)
+		if !ok {
+			return true
+		}
+		if typeSpec.Type == nil {
+			return false
+		}
+		_, ok = typeSpec.Type.(*ast.StructType)
 		if !ok {
 			return true
 		}

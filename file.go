@@ -31,9 +31,9 @@ type goFileMeta struct {
 	Path    string // file path
 }
 
-func extractGoFileMeta(extractFilePath string) (*goFileMeta, error) {
+func extractGoFileMeta(extractFilepath string) (*goFileMeta, error) {
 	fileSet := token.NewFileSet()
-	fileAST, err := parser.ParseFile(fileSet, extractFilePath, nil, parser.ParseComments)
+	fileAST, err := parser.ParseFile(fileSet, extractFilepath, nil, parser.ParseComments)
 	if err != nil {
 		return nil, err
 	}
@@ -46,8 +46,8 @@ func extractGoFileMeta(extractFilePath string) (*goFileMeta, error) {
 	fileMeta := &goFileMeta{
 		fileSet: fileSet,
 		fileAST: fileAST,
-		Name:    filepath.Base(extractFilePath),
-		Path:    extractFilePath,
+		Name:    filepath.Base(extractFilepath),
+		Path:    extractFilepath,
 	}
 
 	return fileMeta, nil

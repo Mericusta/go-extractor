@@ -43,9 +43,12 @@ func Test_goPackageMeta_SearchStructMeta(t *testing.T) {
 		{
 			"test case 1",
 			func() *goPackageMeta {
-				gpm, _ := ExtractGoProjectMeta("./testdata/standardProject", map[string]struct{}{
+				gpm, err := ExtractGoProjectMeta("./testdata/standardProject", map[string]struct{}{
 					"./testdata/standardProject/vendor": {},
 				})
+				if err != nil {
+					panic(err)
+				}
 				return gpm.PackageMap["standardProject/pkg/module"]
 			}(),
 			args{structName: "ExampleStruct"},
@@ -67,6 +70,47 @@ func Test_goPackageMeta_SearchStructMeta(t *testing.T) {
 	}
 }
 
+func Test_goPackageMeta_SearchInterfaceMeta(t *testing.T) {
+	type args struct {
+		interfaceName string
+	}
+	tests := []struct {
+		name string
+		gpm  *goPackageMeta
+		args args
+		want *goInterfaceMeta
+	}{
+		// TODO: Add test cases.
+		{
+			"test case 1",
+			func() *goPackageMeta {
+				gpm, err := ExtractGoProjectMeta("./testdata/standardProject", map[string]struct{}{
+					"./testdata/standardProject/vendor": {},
+				})
+				if err != nil {
+					panic(err)
+				}
+				return gpm.PackageMap["standardProject/pkg/pkgInterface"]
+			}(),
+			args{interfaceName: "ExampleInterface"},
+			func() *goInterfaceMeta {
+				gim, err := extractGoInterfaceMeta("./testdata/standardProject/pkg/interface/interface.go", "ExampleInterface")
+				if err != nil {
+					panic(err)
+				}
+				return gim
+			}(),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.gpm.SearchInterfaceMeta(tt.args.interfaceName); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("goPackageMeta.SearchInterfaceMeta() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
 func Test_goPackageMeta_SearchFunctionMeta(t *testing.T) {
 	type args struct {
 		functionName string
@@ -81,9 +125,12 @@ func Test_goPackageMeta_SearchFunctionMeta(t *testing.T) {
 		{
 			"test case 1",
 			func() *goPackageMeta {
-				gpm, _ := ExtractGoProjectMeta("./testdata/standardProject", map[string]struct{}{
+				gpm, err := ExtractGoProjectMeta("./testdata/standardProject", map[string]struct{}{
 					"./testdata/standardProject/vendor": {},
 				})
+				if err != nil {
+					panic(err)
+				}
 				return gpm.PackageMap["standardProject/pkg"]
 			}(),
 			args{functionName: "ExampleFunc"},
@@ -98,9 +145,12 @@ func Test_goPackageMeta_SearchFunctionMeta(t *testing.T) {
 		{
 			"test case 2",
 			func() *goPackageMeta {
-				gpm, _ := ExtractGoProjectMeta("./testdata/standardProject", map[string]struct{}{
+				gpm, err := ExtractGoProjectMeta("./testdata/standardProject", map[string]struct{}{
 					"./testdata/standardProject/vendor": {},
 				})
+				if err != nil {
+					panic(err)
+				}
 				return gpm.PackageMap["standardProject/pkg/module"]
 			}(),
 			args{functionName: "ExampleFunc"},
@@ -117,6 +167,51 @@ func Test_goPackageMeta_SearchFunctionMeta(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := tt.gpm.SearchFunctionMeta(tt.args.functionName); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("goPackageMeta.SearchFunctionMeta() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_goPackageMeta_SearchMethodMeta(t *testing.T) {
+	type args struct {
+		structName string
+		methodName string
+	}
+	tests := []struct {
+		name string
+		gpm  *goPackageMeta
+		args args
+		want *goMethodMeta
+	}{
+		// TODO: Add test cases.
+		{
+			"test case 1",
+			func() *goPackageMeta {
+				gpm, err := ExtractGoProjectMeta("./testdata/standardProject", map[string]struct{}{
+					"./testdata/standardProject/vendor": {},
+				})
+				if err != nil {
+					panic(err)
+				}
+				return gpm.PackageMap["standardProject/pkg/module"]
+			}(),
+			args{
+				structName: "ExampleStruct",
+				methodName: "ExampleFunc",
+			},
+			func() *goMethodMeta {
+				gsm, err := extractGoMethodMeta("./testdata/standardProject/pkg/module/module.go", "ExampleStruct", "ExampleFunc")
+				if err != nil {
+					panic(err)
+				}
+				return gsm
+			}(),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.gpm.SearchMethodMeta(tt.args.structName, tt.args.methodName); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("goPackageMeta.SearchMethodMeta() = %v, want %v", got, tt.want)
 			}
 		})
 	}

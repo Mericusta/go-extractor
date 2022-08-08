@@ -74,12 +74,11 @@ func Test_searchGoStructMeta(t *testing.T) {
 				structName: "ExampleStruct",
 			},
 			func() *goStructMeta {
-				fileAST, err := parser.ParseFile(token.NewFileSet(), "./testdata/standardProject/pkg/module/module.go", nil, parser.ParseComments)
+				gsm, err := extractGoStructMeta("./testdata/standardProject/pkg/module/module.go", "ExampleStruct")
 				if err != nil {
 					panic(err)
 				}
-				typeSpec := searchGoStructMeta(fileAST, "ExampleStruct")
-				return typeSpec
+				return gsm
 			}(),
 		},
 	}

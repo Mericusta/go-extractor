@@ -339,12 +339,12 @@ type goFunctionMeta struct {
 }
 
 func extractGoFunctionMeta(extractFilepath string, functionName string) (*goFunctionMeta, error) {
-	astFile, err := parser.ParseFile(token.NewFileSet(), extractFilepath, nil, parser.ParseComments)
+	fileAST, err := parser.ParseFile(token.NewFileSet(), extractFilepath, nil, parser.ParseComments)
 	if err != nil {
 		return nil, err
 	}
 
-	gfm := searchGoFunctionMeta(astFile, functionName)
+	gfm := searchGoFunctionMeta(fileAST, functionName)
 	if gfm.funcDecl == nil {
 		return nil, fmt.Errorf("can not find struct decl")
 	}
@@ -355,6 +355,9 @@ func extractGoFunctionMeta(extractFilepath string, functionName string) (*goFunc
 func searchGoFunctionMeta(fileAST *ast.File, functionName string) *goFunctionMeta {
 	var funcDecl *ast.FuncDecl
 	ast.Inspect(fileAST, func(n ast.Node) bool {
+		if n == fileAST {
+			return true
+		}
 		if n == nil || funcDecl != nil {
 			return false
 		}

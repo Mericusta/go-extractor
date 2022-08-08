@@ -288,12 +288,11 @@ func Test_searchGoFunctionMeta(t *testing.T) {
 				functionName: "ExampleFunc",
 			},
 			func() *goFunctionMeta {
-				fileAST, err := parser.ParseFile(token.NewFileSet(), "./testdata/standardProject/pkg/pkg.go", nil, parser.ParseComments)
+				gfm, err := extractGoFunctionMeta("./testdata/standardProject/pkg/pkg.go", "ExampleFunc")
 				if err != nil {
 					panic(err)
 				}
-				funcDecl := searchGoFunctionMeta(fileAST, "ExampleFunc")
-				return funcDecl
+				return gfm
 			}(),
 		},
 	}
