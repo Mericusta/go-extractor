@@ -1,6 +1,7 @@
 package extractor
 
 import (
+	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/token"
@@ -126,6 +127,40 @@ func Test_goInterfaceMeta_SearchMethodDecl(t *testing.T) {
 			if got := tt.gim.SearchMethodDecl(tt.args.methodName); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("goInterfaceMeta.SearchMethodDecl() = %v, want %v", got, tt.want)
 			}
+		})
+	}
+}
+
+func Test_goInterfaceMeta_ForeachMethodDecl(t *testing.T) {
+	type args struct {
+		f func(*ast.Field) bool
+	}
+	tests := []struct {
+		name string
+		gim  *goInterfaceMeta
+		args args
+	}{
+		// TODO: Add test cases.
+		{
+			"test case 1",
+			func() *goInterfaceMeta {
+				gim, err := extractGoInterfaceMeta("./testdata/standardProject/pkg/interface/interface.go", "ExampleInterface")
+				if err != nil {
+					panic(err)
+				}
+				return gim
+			}(),
+			args{func(f *ast.Field) bool {
+				if f.Doc != nil {
+					fmt.Printf("%v\n", f.Doc.Text())
+				}
+				return true
+			}},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			tt.gim.ForeachMethodDecl(tt.args.f)
 		})
 	}
 }
