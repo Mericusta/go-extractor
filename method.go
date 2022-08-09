@@ -27,6 +27,7 @@ func extractGoMethodMeta(extractFilepath, structInterfaceName, methodName string
 }
 
 // searchGoMethodMeta search method from node.(*ast.File)
+// TODO: split search interface and method impl
 func searchGoMethodMeta(fileAST *ast.File, structInterfaceName, methodName string) *goMethodMeta {
 	var interfaceMethodDecl *ast.Field
 	var structMethodDecl *ast.FuncDecl
@@ -39,14 +40,19 @@ func searchGoMethodMeta(fileAST *ast.File, structInterfaceName, methodName strin
 		}
 
 		switch n.(type) {
-		case *ast.GenDecl:
-			return true
 		case *ast.FuncDecl:
 			// struct method
 			funcDecl := n.(*ast.FuncDecl)
 			if funcDecl.Name.String() == methodName {
 				if funcDecl.Recv != nil && len(funcDecl.Recv.List) > 0 {
-					recvTypeIdent, ok := funcDecl.Recv.List[0].Type.(*ast.Ident)
+					var recvTypeIdentNode ast.Node
+					switch funcDecl.Recv.List[0].Type.(type) {
+					case *ast.Ident:
+						recvTypeIdentNode = funcDecl.Recv.List[0].Type
+					case *ast.StarExpr:
+						recvTypeIdentNode = funcDecl.Recv.List[0].Type.(*ast.StarExpr).X
+					}
+					recvTypeIdent, ok := recvTypeIdentNode.(*ast.Ident)
 					if ok && recvTypeIdent.Name == structInterfaceName {
 						structMethodDecl = funcDecl
 						return false
@@ -54,6 +60,8 @@ func searchGoMethodMeta(fileAST *ast.File, structInterfaceName, methodName strin
 				}
 				return false
 			}
+		case *ast.GenDecl: // interface top decl
+			return true
 		case *ast.TypeSpec:
 			// interface method
 			typeSpec := n.(*ast.TypeSpec)
@@ -75,7 +83,7 @@ func searchGoMethodMeta(fileAST *ast.File, structInterfaceName, methodName strin
 			}
 		}
 
-		return true
+		return false
 	})
 
 	if interfaceMethodDecl == nil && structMethodDecl == nil {
