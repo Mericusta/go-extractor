@@ -83,6 +83,10 @@ func searchGoInterfaceMeta(fileAST *ast.File, interfaceName string) *goInterface
 	}
 }
 
+func (gim *goInterfaceMeta) PrintAST() {
+	ast.Print(token.NewFileSet(), gim.typeSpec)
+}
+
 func (gim *goInterfaceMeta) InterfaceName() string {
 	return gim.typeSpec.Name.String()
 }

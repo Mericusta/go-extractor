@@ -53,6 +53,10 @@ func extractGoFileMeta(extractFilepath string) (*goFileMeta, error) {
 	return fileMeta, nil
 }
 
+func (gfm *goFileMeta) PrintAST() {
+	ast.Print(gfm.fileSet, gfm.fileAST)
+}
+
 func (gfm *goFileMeta) PkgName() string {
 	return gfm.fileAST.Name.Name
 }

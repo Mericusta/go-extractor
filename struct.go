@@ -152,6 +152,10 @@ func searchGoStructMeta(fileAST *ast.File, structName string) *goStructMeta {
 	}
 }
 
+func (gsm *goStructMeta) PrintAST() {
+	ast.Print(token.NewFileSet(), gsm.typeSpec)
+}
+
 func (gsm *goStructMeta) StructName() string {
 	return gsm.typeSpec.Name.String()
 }

@@ -376,6 +376,10 @@ func searchGoFunctionMeta(fileAST *ast.File, functionName string) *goFunctionMet
 	}
 }
 
+func (gfm *goFunctionMeta) PrintAST() {
+	ast.Print(token.NewFileSet(), gfm.funcDecl)
+}
+
 func (gfm *goFunctionMeta) FunctionName() string {
 	return gfm.funcDecl.Name.String()
 }

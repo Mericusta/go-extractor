@@ -96,6 +96,14 @@ func searchGoMethodMeta(fileAST *ast.File, structInterfaceName, methodName strin
 	}
 }
 
+func (gmm *goMethodMeta) PrintAST() {
+	if gmm.interfaceMethodDecl != nil {
+		ast.Print(token.NewFileSet(), gmm.interfaceMethodDecl)
+	} else if gmm.structMethodDecl != nil {
+		ast.Print(token.NewFileSet(), gmm.structMethodDecl)
+	}
+}
+
 func (gmm *goMethodMeta) MethodName() string {
 	if gmm.interfaceMethodDecl != nil {
 		return gmm.structMethodDecl.Name.String()
