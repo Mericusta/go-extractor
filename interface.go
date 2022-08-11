@@ -25,17 +25,16 @@ var (
 )
 
 func ExtractGoFileInterfaceDeclaration(extractFilepath string, parseComments bool) (map[string]*GoInterfaceInfo, error) {
-
-	// for objectName, object := range fileAST.Scope.Objects {
-
-	// }
-
-	// return fileInterfaceDeclarationMap
 	return nil, nil
 }
 
 type goInterfaceMeta struct {
-	typeSpec *ast.TypeSpec
+	typeSpec   *ast.TypeSpec
+	methodMeta map[string]*goInterfaceMethodMeta
+}
+
+type goInterfaceMethodMeta struct {
+	methodField *ast.Field
 }
 
 func extractGoInterfaceMeta(extractFilepath string, interfaceName string) (*goInterfaceMeta, error) {
@@ -92,16 +91,15 @@ func (gim *goInterfaceMeta) InterfaceName() string {
 }
 
 // SearchMethodDecl search method decl from node.(*ast.InterfaceType)
-func (gim *goInterfaceMeta) SearchMethodDecl(methodName string) *goMethodMeta {
-	var gmm *goMethodMeta
+func (gim *goInterfaceMeta) SearchMethodDecl(methodName string) *goInterfaceMethodMeta {
 	gim.ForeachMethodDecl(func(f *ast.Field) bool {
 		if f.Names[0].Name == methodName {
-			gmm = &goMethodMeta{interfaceMethodDecl: f}
+			gim.methodMeta[methodName] = &goInterfaceMethodMeta{methodField: f}
 			return false
 		}
 		return true
 	})
-	return gmm
+	return gim.methodMeta[methodName]
 }
 
 func (gim *goInterfaceMeta) ForeachMethodDecl(f func(*ast.Field) bool) {

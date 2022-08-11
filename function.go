@@ -346,7 +346,7 @@ func extractGoFunctionMeta(extractFilepath string, functionName string) (*goFunc
 
 	gfm := searchGoFunctionMeta(fileAST, functionName)
 	if gfm.funcDecl == nil {
-		return nil, fmt.Errorf("can not find struct decl")
+		return nil, fmt.Errorf("can not find function decl")
 	}
 
 	return gfm, nil
@@ -382,4 +382,28 @@ func (gfm *goFunctionMeta) PrintAST() {
 
 func (gfm *goFunctionMeta) FunctionName() string {
 	return gfm.funcDecl.Name.String()
+}
+
+func (gfm *goFunctionMeta) IsMethod() bool {
+	return gfm.funcDecl.Recv != nil
+}
+
+func (gfm *goFunctionMeta) RecvStruct() string {
+	if !gfm.IsMethod() || len(gfm.funcDecl.Recv.List) < 1 {
+		return ""
+	}
+
+	var recvTypeIdentNode ast.Node
+	switch gfm.funcDecl.Recv.List[0].Type.(type) {
+	case *ast.Ident:
+		recvTypeIdentNode = gfm.funcDecl.Recv.List[0].Type
+	case *ast.StarExpr:
+		recvTypeIdentNode = gfm.funcDecl.Recv.List[0].Type.(*ast.StarExpr).X
+	}
+
+	recvTypeIdent, ok := recvTypeIdentNode.(*ast.Ident)
+	if !ok {
+		return ""
+	}
+	return recvTypeIdent.Name
 }

@@ -8,6 +8,7 @@ import (
 
 // 以文件为单位提取
 // 以包为单位整合
+// 以包为单位查找
 
 var (
 	GO_PACKAGE_EXPRESSION            string = `package\s+(?P<NAME>[[:alpha:]][_\w]+)`
@@ -58,19 +59,21 @@ func (gpm *goPackageMeta) SearchStructMeta(structName string) *goStructMeta {
 		}
 	}
 
-	var gsm *goStructMeta
-	for _, gfm := range gpm.pkgFileMap {
-		if gfm.fileAST != nil && gfm.fileAST.Scope != nil && gsm == nil {
-			gsm = searchGoStructMeta(gfm.fileAST, structName)
-		}
-	}
-
 	if gpm.pkgStructDecl == nil {
 		gpm.pkgStructDecl = make(map[string]*goStructMeta)
 	}
-	gpm.pkgStructDecl[gsm.StructName()] = gsm
 
-	return gpm.pkgStructDecl[gsm.StructName()]
+	for _, gfm := range gpm.pkgFileMap {
+		if gfm.fileAST != nil && gfm.fileAST.Scope != nil {
+			gsm := searchGoStructMeta(gfm.fileAST, structName)
+			if gsm != nil {
+				gpm.pkgStructDecl[gsm.StructName()] = gsm
+				break
+			}
+		}
+	}
+
+	return gpm.pkgStructDecl[structName]
 }
 
 func (gpm *goPackageMeta) SearchInterfaceMeta(interfaceName string) *goInterfaceMeta {
@@ -80,19 +83,21 @@ func (gpm *goPackageMeta) SearchInterfaceMeta(interfaceName string) *goInterface
 		}
 	}
 
-	var gim *goInterfaceMeta
-	for _, gfm := range gpm.pkgFileMap {
-		if gfm.fileAST != nil && gfm.fileAST.Scope != nil && gim == nil {
-			gim = searchGoInterfaceMeta(gfm.fileAST, interfaceName)
-		}
-	}
-
 	if gpm.pkgInterfaceDecl == nil {
 		gpm.pkgInterfaceDecl = make(map[string]*goInterfaceMeta)
 	}
-	gpm.pkgInterfaceDecl[gim.InterfaceName()] = gim
 
-	return gpm.pkgInterfaceDecl[gim.InterfaceName()]
+	for _, gfm := range gpm.pkgFileMap {
+		if gfm.fileAST != nil && gfm.fileAST.Scope != nil {
+			gim := searchGoInterfaceMeta(gfm.fileAST, interfaceName)
+			if gim != nil {
+				gpm.pkgInterfaceDecl[gim.InterfaceName()] = gim
+				break
+			}
+		}
+	}
+
+	return gpm.pkgInterfaceDecl[interfaceName]
 }
 
 func (gpm *goPackageMeta) SearchFunctionMeta(functionName string) *goFunctionMeta {
@@ -102,28 +107,45 @@ func (gpm *goPackageMeta) SearchFunctionMeta(functionName string) *goFunctionMet
 		}
 	}
 
-	var gsm *goFunctionMeta
-	for _, gfm := range gpm.pkgFileMap {
-		if gfm.fileAST != nil && gfm.fileAST.Scope != nil && gsm == nil {
-			gsm = searchGoFunctionMeta(gfm.fileAST, functionName)
-		}
-	}
-
 	if gpm.pkgFunctionDecl == nil {
 		gpm.pkgFunctionDecl = make(map[string]*goFunctionMeta)
 	}
-	gpm.pkgFunctionDecl[gsm.FunctionName()] = gsm
 
-	return gpm.pkgFunctionDecl[gsm.FunctionName()]
-}
-
-// SearchMethodMeta search method implement from node.(*ast.File)
-func (gpm *goPackageMeta) SearchMethodMeta(structName, methodName string) *goMethodMeta {
 	for _, gfm := range gpm.pkgFileMap {
-		gmm := searchGoMethodMeta(gfm.fileAST, structName, methodName)
-		if gmm != nil && gmm.structMethodDecl != nil {
-			return gmm
+		if gfm.fileAST != nil && gfm.fileAST.Scope != nil {
+			gfm := searchGoFunctionMeta(gfm.fileAST, functionName)
+			if gfm != nil {
+				gpm.pkgFunctionDecl[gfm.FunctionName()] = gfm
+				break
+			}
 		}
 	}
+
+	return gpm.pkgFunctionDecl[functionName]
+}
+
+func (gpm *goPackageMeta) SearchMethodMeta(structName, methodName string) *goMethodMeta {
+	if len(gpm.pkgStructDecl) == 0 {
+		gsm := gpm.SearchStructMeta(structName)
+		if gsm.methodDecl == nil {
+			gsm.methodDecl = make(map[string]*goMethodMeta)
+		}
+	}
+	if gsm, hasGSM := gpm.pkgStructDecl[structName]; hasGSM {
+		if _, hasGMM := gsm.methodDecl[methodName]; hasGMM {
+			return gsm.methodDecl[methodName]
+		}
+	}
+
+	for _, gfm := range gpm.pkgFileMap {
+		if gfm.fileAST != nil && gfm.fileAST.Scope != nil {
+			gmm := searchGoMethodMeta(gfm.fileAST, structName, methodName)
+			if gmm != nil {
+				gpm.pkgStructDecl[structName].methodDecl[methodName] = gmm
+				return gmm
+			}
+		}
+	}
+
 	return nil
 }

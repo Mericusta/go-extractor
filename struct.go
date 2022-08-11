@@ -104,7 +104,8 @@ func ExtractGoFileStructDeclaration(r io.Reader) map[string]*GoStructInfo {
 }
 
 type goStructMeta struct {
-	typeSpec *ast.TypeSpec
+	typeSpec   *ast.TypeSpec
+	methodDecl map[string]*goMethodMeta
 }
 
 func extractGoStructMeta(extractFilepath string, structName string) (*goStructMeta, error) {

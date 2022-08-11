@@ -235,7 +235,7 @@ func Test_extractGoFunctionMeta(t *testing.T) {
 	}{
 		// TODO: Add test cases.
 		{
-			"test case 1",
+			"test case 1: function",
 			args{
 				extractFilepath: "./testdata/standardProject/pkg/pkg.go",
 				functionName:    "ExampleFunc",
@@ -248,6 +248,30 @@ func Test_extractGoFunctionMeta(t *testing.T) {
 				return fileAST
 			}(), "ExampleFunc"),
 			false,
+		},
+		{
+			"test case 2: method recv is not pointer",
+			args{
+				extractFilepath: "./testdata/standardProject/pkg/module/module.go",
+				functionName:    "ExampleFunc",
+			},
+			searchGoFunctionMeta(func() *ast.File {
+				fileAST, err := parser.ParseFile(token.NewFileSet(), "./testdata/standardProject/pkg/module/module.go", nil, parser.ParseComments)
+				if err != nil {
+					panic(err)
+				}
+				return fileAST
+			}(), "ExampleFunc"),
+			false,
+		},
+		{
+			"test case 3: method recv is pointer",
+			args{
+				extractFilepath: "./testdata/standardProject/pkg/module/module.go",
+				functionName:    "AnotherExampleFunc",
+			},
+			nil,
+			true,
 		},
 	}
 	for _, tt := range tests {
@@ -301,6 +325,50 @@ func Test_searchGoFunctionMeta(t *testing.T) {
 			if got := searchGoFunctionMeta(tt.args.fileAST, tt.args.functionName); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("searchGoFunctionMeta() = %v, want %v", got, tt.want)
 			}
+		})
+	}
+}
+
+func Test_goFunctionMeta_PrintAST(t *testing.T) {
+	tests := []struct {
+		name string
+		gfm  *goFunctionMeta
+	}{
+		// TODO: Add test cases.
+		{
+			"test case 1: function",
+			func() *goFunctionMeta {
+				gfm, err := extractGoFunctionMeta("./testdata/standardProject/pkg/pkg.go", "ExampleFunc")
+				if err != nil {
+					panic(err)
+				}
+				return gfm
+			}(),
+		},
+		{
+			"test case 2: method recv is not pointer",
+			func() *goFunctionMeta {
+				gfm, err := extractGoFunctionMeta("./testdata/standardProject/pkg/module/module.go", "ExampleFunc")
+				if err != nil {
+					panic(err)
+				}
+				return gfm
+			}(),
+		},
+		{
+			"test case 3: method recv is pointer",
+			func() *goFunctionMeta {
+				gfm, err := extractGoFunctionMeta("./testdata/standardProject/pkg/module/module.go", "AnotherExampleFunc")
+				if err != nil {
+					panic(err)
+				}
+				return gfm
+			}(),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			tt.gfm.PrintAST()
 		})
 	}
 }

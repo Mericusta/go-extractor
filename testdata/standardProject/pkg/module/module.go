@@ -11,7 +11,13 @@ func NewExampleStruct(v int) *ExampleStruct {
 }
 
 func (es ExampleStruct) ExampleFunc(v int) {
-	fmt.Println("module.ExampleStruct.ExampleFunc Hello go-extractor,", v)
+	nes := NewExampleStruct(v)
+	fmt.Println("module.ExampleStruct.ExampleFunc Hello go-extractor,", nes.V())
+}
+
+func (es *ExampleStruct) AnotherExampleFunc(v int) {
+	nes := NewExampleStruct(v)
+	fmt.Println("module.ExampleStruct.ExampleFunc Hello go-extractor,", nes.V())
 }
 
 func (es ExampleStruct) V() int {
