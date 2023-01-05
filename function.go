@@ -371,6 +371,9 @@ func searchGoFunctionMeta(fileAST *ast.File, functionName string) *goFunctionMet
 		}
 		return true
 	})
+	if funcDecl == nil {
+		return nil
+	}
 	return &goFunctionMeta{
 		funcDecl: funcDecl,
 	}
@@ -406,4 +409,52 @@ func (gfm *goFunctionMeta) RecvStruct() string {
 		return ""
 	}
 	return recvTypeIdent.Name
+}
+
+func (gfm *goFunctionMeta) CallMap() map[string]*ast.CallExpr {
+	ast.Print(token.NewFileSet(), gfm.funcDecl.Body)
+	callMap := make(map[string]*ast.CallExpr)
+	for _, e := range gfm.funcDecl.Body.List {
+		exprStmt, ok := e.(*ast.ExprStmt)
+		if exprStmt == nil || !ok || exprStmt.X == nil {
+			continue
+		}
+		callExpr, ok := exprStmt.X.(*ast.CallExpr)
+		if callExpr == nil || !ok {
+			continue
+		}
+
+		ident, ok := callExpr.Fun.(*ast.Ident)
+		if ident == nil || !ok {
+			continue
+		}
+		callMap[ident.Name] = callExpr
+	}
+	return callMap
+}
+
+func (gfm *goFunctionMeta) Comments() []string {
+	if gfm.funcDecl.Doc == nil {
+		return nil
+	}
+
+	commentSlice := make([]string, 0, len(gfm.funcDecl.Doc.List))
+	for _, comment := range gfm.funcDecl.Doc.List {
+		commentSlice = append(commentSlice, comment.Text)
+	}
+	return commentSlice
+}
+
+func (gfm *goFunctionMeta) UpdateComments(comments []string) {
+	if gfm.funcDecl.Doc == nil {
+		return
+	}
+
+	if len(gfm.funcDecl.Doc.List) != len(comments) {
+		return
+	}
+
+	for index, comment := range gfm.funcDecl.Doc.List {
+		comment.Text = comments[index]
+	}
 }

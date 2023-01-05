@@ -2,6 +2,8 @@ package extractor
 
 import (
 	"fmt"
+	"io/ioutil"
+	"os"
 	"path/filepath"
 	"regexp"
 )
@@ -42,7 +44,80 @@ func ExtractGoFilePackage(fileContent []byte) string {
 	return string(submatch[GoPackageRegexpSubmatchNameIndex])
 }
 
-type goPackageMeta struct {
+// ----------------------------------------------------------------
+
+func ExtractGoPackageMeta(projectPath string, ignoreFiles map[string]struct{}) (*GoPackageMeta, error) {
+	return extractGoPackageMeta(projectPath, ignoreFiles, false)
+}
+
+func ExtractGoPackageMetaWithSpecPaths(projectPath string, specFiles map[string]struct{}) (*GoPackageMeta, error) {
+	return extractGoPackageMeta(projectPath, specFiles, true)
+}
+
+func extractGoPackageMeta(packagePath string, filePaths map[string]struct{}, spec bool) (*GoPackageMeta, error) {
+	packagePathAbs, err := filepath.Abs(packagePath)
+	if err != nil {
+		return nil, err
+	}
+	packageDirStat, err := os.Stat(packagePath)
+	if err != nil {
+		return nil, err.(*os.PathError)
+	}
+
+	pathsAbsMap := make(map[string]struct{})
+	for path := range filePaths {
+		pathAbs, err := filepath.Abs(path)
+		if err != nil {
+			return nil, err
+		}
+		pathsAbsMap[pathAbs] = struct{}{}
+	}
+
+	packageMeta := &GoPackageMeta{
+		PkgPath:    packagePathAbs,
+		pkgFileMap: make(map[string]*goFileMeta),
+	}
+
+	if packageDirStat.IsDir() {
+		fileSlice, err := ioutil.ReadDir(packagePathAbs)
+		if err != nil {
+			return nil, err
+		}
+
+		for _, fileInfo := range fileSlice {
+			filePathAbs := filepath.Join(packagePathAbs, fileInfo.Name())
+			fileStat, err := os.Stat(filePathAbs)
+			if err != nil {
+				fmt.Printf("get file '%v' state occurs error: %v", filePathAbs, err)
+				continue
+			}
+
+			if fileStat.IsDir() || (!spec && isInPaths(pathsAbsMap, filePathAbs)) || (spec && !isInPaths(pathsAbsMap, filePathAbs)) || filepath.Ext(fileInfo.Name()) != ".go" {
+				continue
+			}
+
+			fileMeta, err := extractGoFileMeta(filePathAbs)
+			if err != nil {
+				fmt.Printf("extract go file meta from file path '%v' occurs error: %v", filePathAbs, err)
+				continue
+			}
+
+			filePkg := fileMeta.PkgName()
+			if len(packageMeta.Name) > 0 && packageMeta.Name != filePkg {
+				fmt.Printf("difference package name %v - %v in file %v", packageMeta.Name, filePkg, filePathAbs)
+				continue
+			}
+			packageMeta.Name = filePkg
+			packageMeta.pkgFileMap[fileInfo.Name()] = fileMeta
+		}
+	} else {
+		return nil, fmt.Errorf("package path '%v' is not a folder", packagePathAbs)
+	}
+
+	return packageMeta, nil
+}
+
+type GoPackageMeta struct {
 	Name             string                      // pkg name
 	PkgPath          string                      // pkg path
 	ImportPath       string                      // import path
@@ -52,7 +127,7 @@ type goPackageMeta struct {
 	pkgFunctionDecl  map[string]*goFunctionMeta  // all function meta
 }
 
-func (gpm *goPackageMeta) SearchStructMeta(structName string) *goStructMeta {
+func (gpm *GoPackageMeta) SearchStructMeta(structName string) *goStructMeta {
 	if len(gpm.pkgStructDecl) > 0 {
 		if _, has := gpm.pkgStructDecl[structName]; has {
 			return gpm.pkgStructDecl[structName]
@@ -76,7 +151,7 @@ func (gpm *goPackageMeta) SearchStructMeta(structName string) *goStructMeta {
 	return gpm.pkgStructDecl[structName]
 }
 
-func (gpm *goPackageMeta) SearchInterfaceMeta(interfaceName string) *goInterfaceMeta {
+func (gpm *GoPackageMeta) SearchInterfaceMeta(interfaceName string) *goInterfaceMeta {
 	if len(gpm.pkgInterfaceDecl) > 0 {
 		if _, has := gpm.pkgInterfaceDecl[interfaceName]; has {
 			return gpm.pkgInterfaceDecl[interfaceName]
@@ -100,7 +175,7 @@ func (gpm *goPackageMeta) SearchInterfaceMeta(interfaceName string) *goInterface
 	return gpm.pkgInterfaceDecl[interfaceName]
 }
 
-func (gpm *goPackageMeta) SearchFunctionMeta(functionName string) *goFunctionMeta {
+func (gpm *GoPackageMeta) SearchFunctionMeta(functionName string) *goFunctionMeta {
 	if len(gpm.pkgFunctionDecl) > 0 {
 		if _, has := gpm.pkgFunctionDecl[functionName]; has {
 			return gpm.pkgFunctionDecl[functionName]
@@ -124,7 +199,7 @@ func (gpm *goPackageMeta) SearchFunctionMeta(functionName string) *goFunctionMet
 	return gpm.pkgFunctionDecl[functionName]
 }
 
-func (gpm *goPackageMeta) SearchMethodMeta(structName, methodName string) *goMethodMeta {
+func (gpm *GoPackageMeta) SearchMethodMeta(structName, methodName string) *goMethodMeta {
 	if len(gpm.pkgStructDecl) == 0 {
 		gsm := gpm.SearchStructMeta(structName)
 		if gsm.methodDecl == nil {
