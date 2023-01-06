@@ -1,10 +1,13 @@
 package extractor
 
 import (
+	"bytes"
 	"fmt"
 	"go/ast"
+	"go/format"
 	"go/parser"
 	"go/token"
+	"os"
 	"regexp"
 	"strings"
 )
@@ -335,16 +338,18 @@ func ExtractorFunctionReturnList(content []byte) []*GoTypeDeclaration {
 // ----------------------------------------------------------------
 
 type goFunctionMeta struct {
+	fileMeta *goFileMeta
 	funcDecl *ast.FuncDecl
 }
 
 func extractGoFunctionMeta(extractFilepath string, functionName string) (*goFunctionMeta, error) {
-	fileAST, err := parser.ParseFile(token.NewFileSet(), extractFilepath, nil, parser.ParseComments)
+	fileSet := token.NewFileSet()
+	fileAST, err := parser.ParseFile(fileSet, extractFilepath, nil, parser.ParseComments)
 	if err != nil {
 		return nil, err
 	}
 
-	gfm := searchGoFunctionMeta(fileAST, functionName)
+	gfm := searchGoFunctionMeta(&goFileMeta{fileSet: fileSet, fileAST: fileAST}, functionName)
 	if gfm.funcDecl == nil {
 		return nil, fmt.Errorf("can not find function decl")
 	}
@@ -352,10 +357,10 @@ func extractGoFunctionMeta(extractFilepath string, functionName string) (*goFunc
 	return gfm, nil
 }
 
-func searchGoFunctionMeta(fileAST *ast.File, functionName string) *goFunctionMeta {
+func searchGoFunctionMeta(fileMeta *goFileMeta, functionName string) *goFunctionMeta {
 	var funcDecl *ast.FuncDecl
-	ast.Inspect(fileAST, func(n ast.Node) bool {
-		if n == fileAST {
+	ast.Inspect(fileMeta.fileAST, func(n ast.Node) bool {
+		if n == fileMeta.fileAST {
 			return true
 		}
 		if n == nil || funcDecl != nil {
@@ -375,6 +380,7 @@ func searchGoFunctionMeta(fileAST *ast.File, functionName string) *goFunctionMet
 		return nil
 	}
 	return &goFunctionMeta{
+		fileMeta: fileMeta,
 		funcDecl: funcDecl,
 	}
 }
@@ -411,9 +417,9 @@ func (gfm *goFunctionMeta) RecvStruct() string {
 	return recvTypeIdent.Name
 }
 
-func (gfm *goFunctionMeta) CallMap() map[string]*ast.CallExpr {
-	ast.Print(token.NewFileSet(), gfm.funcDecl.Body)
-	callMap := make(map[string]*ast.CallExpr)
+func (gfm *goFunctionMeta) CallMap() map[string][]*ast.CallExpr {
+	// ast.Print(token.NewFileSet(), gfm.funcDecl.Body)
+	callMap := make(map[string][]*ast.CallExpr)
 	for _, e := range gfm.funcDecl.Body.List {
 		exprStmt, ok := e.(*ast.ExprStmt)
 		if exprStmt == nil || !ok || exprStmt.X == nil {
@@ -428,7 +434,7 @@ func (gfm *goFunctionMeta) CallMap() map[string]*ast.CallExpr {
 		if ident == nil || !ok {
 			continue
 		}
-		callMap[ident.Name] = callExpr
+		callMap[ident.Name] = append(callMap[ident.Name], callExpr)
 	}
 	return callMap
 }
@@ -445,6 +451,24 @@ func (gfm *goFunctionMeta) Comments() []string {
 	return commentSlice
 }
 
+func (gfm *goFunctionMeta) ReturnTypes() []string {
+	if gfm.funcDecl.Type == nil || gfm.funcDecl.Type.Results == nil || len(gfm.funcDecl.Type.Results.List) == 0 {
+		return nil
+	}
+
+	rLen := len(gfm.funcDecl.Type.Results.List)
+	returnTypes := make([]string, 0, rLen)
+	for _, field := range gfm.funcDecl.Type.Results.List {
+		ident, ok := field.Type.(*ast.Ident)
+		if ident == nil || !ok {
+			continue
+		}
+		returnTypes = append(returnTypes, ident.Name)
+	}
+	return returnTypes
+}
+
+// TODO:
 func (gfm *goFunctionMeta) UpdateComments(comments []string) {
 	if gfm.funcDecl.Doc == nil {
 		return
@@ -456,5 +480,31 @@ func (gfm *goFunctionMeta) UpdateComments(comments []string) {
 
 	for index, comment := range gfm.funcDecl.Doc.List {
 		comment.Text = comments[index]
+	}
+
+	outputFile, err := os.OpenFile(gfm.fileMeta.Path, os.O_CREATE|os.O_TRUNC|os.O_RDWR, 0644)
+	if err != nil {
+		panic(err)
+	}
+	defer outputFile.Close()
+
+	buffer := &bytes.Buffer{}
+	if gfm.fileMeta.fileAST.Scope != nil {
+		for name, object := range gfm.fileMeta.fileAST.Scope.Objects {
+			if object.Kind == ast.Fun && name == gfm.FunctionName() {
+				decl := object.Decl.(*ast.FuncDecl)
+				if declLen := decl.End() - decl.Pos(); buffer.Cap() < int(declLen) {
+					buffer.Grow(int(declLen))
+				}
+				err = format.Node(buffer, gfm.fileMeta.fileSet, decl)
+				if err != nil {
+					panic(err)
+				}
+				outputFile.WriteAt(buffer.Bytes(), int64(decl.Pos()))
+				// outputFile.Write(buffer.Bytes())
+				buffer.Reset()
+				break
+			}
+		}
 	}
 }

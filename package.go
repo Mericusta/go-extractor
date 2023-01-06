@@ -188,7 +188,7 @@ func (gpm *GoPackageMeta) SearchFunctionMeta(functionName string) *goFunctionMet
 
 	for _, gfm := range gpm.pkgFileMap {
 		if gfm.fileAST != nil && gfm.fileAST.Scope != nil {
-			gfm := searchGoFunctionMeta(gfm.fileAST, functionName)
+			gfm := searchGoFunctionMeta(gfm, functionName)
 			if gfm != nil {
 				gpm.pkgFunctionDecl[gfm.FunctionName()] = gfm
 				break
