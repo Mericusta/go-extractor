@@ -11,7 +11,7 @@ var (
 	GO_MODULE_EXPRESSION                     = fmt.Sprintf(`module\s+(?P<%v>\S+)`, GO_MODULE_EXPRESSION_SUB_EXPRESSION_NAME)
 )
 
-func extractGoModuleName(goModFilePath string) (string, error) {
+func ExtractGoModuleName(goModFilePath string) (string, error) {
 	goModFileContent, err := os.ReadFile(goModFilePath)
 	if err != nil {
 		return "", err

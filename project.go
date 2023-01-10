@@ -31,8 +31,8 @@ func ExtractGoProjectMetaWithSpecPaths(projectPath string, specPaths map[string]
 	return extractGoProjectMeta(projectPath, specPaths, true)
 }
 
-func extractGoProjectMeta(projectPath string, paths map[string]struct{}, spec bool) (*GoProjectMeta, error) {
-	projectPathAbs, err := filepath.Abs(projectPath)
+func extractGoProjectMeta(projectPath string, toHandlePaths map[string]struct{}, spec bool) (*GoProjectMeta, error) {
+	projectAbsPath, err := filepath.Abs(projectPath)
 	if err != nil {
 		return nil, err
 	}
@@ -41,45 +41,45 @@ func extractGoProjectMeta(projectPath string, paths map[string]struct{}, spec bo
 		return nil, err.(*os.PathError)
 	}
 
-	pathsAbs := make(map[string]struct{})
-	for path := range paths {
-		pathAbs, err := filepath.Abs(path)
+	toHandleAbsPaths := make(map[string]struct{})
+	for toHandleRelPath := range toHandlePaths {
+		pathAbs, err := filepath.Abs(toHandleRelPath)
 		if err != nil {
 			return nil, err
 		}
-		pathsAbs[pathAbs] = struct{}{}
+		toHandleAbsPaths[pathAbs] = struct{}{}
 	}
 	if spec {
-		pathsAbs[filepath.Join(projectPathAbs, "go.mod")] = struct{}{}
+		toHandleAbsPaths[filepath.Join(projectAbsPath, "go.mod")] = struct{}{}
 	}
 
 	projectMeta := &GoProjectMeta{
-		ProjectPath: projectPathAbs,
+		ProjectPath: projectAbsPath,
 		PackageMap:  make(map[string]*GoPackageMeta),
 	}
 
 	if projectDirStat.IsDir() {
 		hasGoMod := false
-		err = filepath.WalkDir(projectPathAbs, func(path string, d fs.DirEntry, err error) error {
-			if path == projectPathAbs {
+		err = filepath.WalkDir(projectAbsPath, func(path string, d fs.DirEntry, err error) error {
+			if path == projectAbsPath {
 				return nil
 			}
 			if !d.IsDir() {
-				if (!spec && isInPaths(pathsAbs, path)) || (spec && !isInPaths(pathsAbs, path)) {
+				if (!spec && isInPaths(toHandleAbsPaths, path)) || (spec && !isInPaths(toHandleAbsPaths, path)) {
 					return nil
 				}
 				if d.Name() == "go.mod" {
-					if projectPathAbs != filepath.Dir(path) {
+					if projectAbsPath != filepath.Dir(path) {
 						return fmt.Errorf("go.mod not exists project root path")
 					}
 					hasGoMod = true
-					moduleName, err := extractGoModuleName(path)
+					moduleName, err := ExtractGoModuleName(path)
 					if err != nil {
 						return err
 					}
 					projectMeta.ModuleName = moduleName
 				} else if filepath.Ext(path) == ".go" {
-					fileMeta, err := extractGoFileMeta(path)
+					fileMeta, err := ExtractGoFileMeta(path)
 					if err != nil {
 						return err
 					}
@@ -89,7 +89,7 @@ func extractGoProjectMeta(projectPath string, paths map[string]struct{}, spec bo
 							projectMeta.PackageMap[filePkg] = &GoPackageMeta{
 								Name:    filePkg,
 								PkgPath: filepath.Dir(path),
-								pkgFileMap: map[string]*goFileMeta{
+								pkgFileMap: map[string]*GoFileMeta{
 									fileMeta.Name: fileMeta,
 								},
 							}
@@ -99,8 +99,8 @@ func extractGoProjectMeta(projectPath string, paths map[string]struct{}, spec bo
 					} else {
 						relPath := "."
 						fileDir := filepath.Dir(path)
-						if fileDir != projectPathAbs {
-							relPath, err = filepath.Rel(projectPathAbs, filepath.Dir(fileDir))
+						if fileDir != projectAbsPath {
+							relPath, err = filepath.Rel(projectAbsPath, filepath.Dir(fileDir))
 							if err != nil {
 								return err
 							}
@@ -111,7 +111,7 @@ func extractGoProjectMeta(projectPath string, paths map[string]struct{}, spec bo
 								Name:       filePkg,
 								ImportPath: pkgImportPath,
 								PkgPath:    filepath.Dir(path),
-								pkgFileMap: map[string]*goFileMeta{
+								pkgFileMap: map[string]*GoFileMeta{
 									fileMeta.Name: fileMeta,
 								},
 							}
@@ -132,19 +132,19 @@ func extractGoProjectMeta(projectPath string, paths map[string]struct{}, spec bo
 			return nil, fmt.Errorf("go.mod not exists in project path")
 		}
 	} else {
-		if (!spec && isInPaths(pathsAbs, projectPathAbs)) || (spec && !isInPaths(pathsAbs, projectPathAbs)) {
+		if (!spec && isInPaths(toHandleAbsPaths, projectAbsPath)) || (spec && !isInPaths(toHandleAbsPaths, projectAbsPath)) {
 			return nil, fmt.Errorf("project path not in handle list")
 		}
 
-		gfm, err := extractGoFileMeta(projectPathAbs)
+		gfm, err := ExtractGoFileMeta(projectAbsPath)
 		if err != nil {
 			return nil, err
 		}
 		projectMeta.PackageMap[gfm.PkgName()] = &GoPackageMeta{
 			Name:    gfm.PkgName(),
-			PkgPath: filepath.Dir(projectPathAbs),
-			pkgFileMap: map[string]*goFileMeta{
-				filepath.Base(projectPathAbs): gfm,
+			PkgPath: filepath.Dir(projectAbsPath),
+			pkgFileMap: map[string]*GoFileMeta{
+				filepath.Base(projectAbsPath): gfm,
 			},
 		}
 	}

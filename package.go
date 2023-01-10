@@ -2,49 +2,23 @@ package extractor
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
-	"regexp"
 )
 
 // 以文件为单位提取
 // 以包为单位整合
 // 以包为单位查找
 
-var (
-	GO_PACKAGE_EXPRESSION            string = `package\s+(?P<NAME>[[:alpha:]][_\w]+)`
-	GoPackageRegexp                         = regexp.MustCompile(GO_PACKAGE_EXPRESSION)
-	GoPackageRegexpSubmatchNameIndex        = GoPackageRegexp.SubexpIndex("NAME")
-	GO_IMPORT_EXPRESSION             string = `((?P<ALIAS>\w+)\s+)?"(?P<PATH>[/_\.\w-]+)"`
-	GoImportRegexp                          = regexp.MustCompile(GO_IMPORT_EXPRESSION)
-	GoImportRegexpSubmatchAliasIndex        = GoImportRegexp.SubexpIndex("ALIAS")
-	GoImportRegexpSubmatchPathIndex         = GoImportRegexp.SubexpIndex("PATH")
-)
-
-type GoPackageInfo struct {
-	Name    string
-	Path    string
-	FileMap map[string]*GoFileInfo
+type GoPackageMeta struct {
+	Name             string                      // pkg name
+	PkgPath          string                      // pkg path
+	ImportPath       string                      // import path
+	pkgFileMap       map[string]*GoFileMeta      // all file meta
+	pkgStructDecl    map[string]*GoStructMeta    // all struct meta
+	pkgInterfaceDecl map[string]*GoInterfaceMeta // all interface meta
+	pkgFunctionDecl  map[string]*GoFunctionMeta  // all function meta
 }
-
-func (gpi *GoPackageInfo) ImportPath(project string) string {
-	return filepath.ToSlash(fmt.Sprintf("%v/%v", project, gpi.Path))
-}
-
-func (gpi *GoPackageInfo) MakeUp() string {
-	return fmt.Sprintf("package %v", gpi.Name)
-}
-
-func ExtractGoFilePackage(fileContent []byte) string {
-	submatch := GoPackageRegexp.FindSubmatch(fileContent)
-	if GoPackageRegexpSubmatchNameIndex >= len(submatch) {
-		panic("can not match package")
-	}
-	return string(submatch[GoPackageRegexpSubmatchNameIndex])
-}
-
-// ----------------------------------------------------------------
 
 func ExtractGoPackageMeta(projectPath string, ignoreFiles map[string]struct{}) (*GoPackageMeta, error) {
 	return extractGoPackageMeta(projectPath, ignoreFiles, false)
@@ -75,11 +49,11 @@ func extractGoPackageMeta(packagePath string, filePaths map[string]struct{}, spe
 
 	packageMeta := &GoPackageMeta{
 		PkgPath:    packagePathAbs,
-		pkgFileMap: make(map[string]*goFileMeta),
+		pkgFileMap: make(map[string]*GoFileMeta),
 	}
 
 	if packageDirStat.IsDir() {
-		fileSlice, err := ioutil.ReadDir(packagePathAbs)
+		fileSlice, err := os.ReadDir(packagePathAbs)
 		if err != nil {
 			return nil, err
 		}
@@ -96,7 +70,7 @@ func extractGoPackageMeta(packagePath string, filePaths map[string]struct{}, spe
 				continue
 			}
 
-			fileMeta, err := extractGoFileMeta(filePathAbs)
+			fileMeta, err := ExtractGoFileMeta(filePathAbs)
 			if err != nil {
 				fmt.Printf("extract go file meta from file path '%v' occurs error: %v", filePathAbs, err)
 				continue
@@ -117,17 +91,7 @@ func extractGoPackageMeta(packagePath string, filePaths map[string]struct{}, spe
 	return packageMeta, nil
 }
 
-type GoPackageMeta struct {
-	Name             string                      // pkg name
-	PkgPath          string                      // pkg path
-	ImportPath       string                      // import path
-	pkgFileMap       map[string]*goFileMeta      // all file meta
-	pkgStructDecl    map[string]*goStructMeta    // all struct meta
-	pkgInterfaceDecl map[string]*goInterfaceMeta // all interface meta
-	pkgFunctionDecl  map[string]*goFunctionMeta  // all function meta
-}
-
-func (gpm *GoPackageMeta) SearchStructMeta(structName string) *goStructMeta {
+func (gpm *GoPackageMeta) SearchStructMeta(structName string) *GoStructMeta {
 	if len(gpm.pkgStructDecl) > 0 {
 		if _, has := gpm.pkgStructDecl[structName]; has {
 			return gpm.pkgStructDecl[structName]
@@ -135,12 +99,12 @@ func (gpm *GoPackageMeta) SearchStructMeta(structName string) *goStructMeta {
 	}
 
 	if gpm.pkgStructDecl == nil {
-		gpm.pkgStructDecl = make(map[string]*goStructMeta)
+		gpm.pkgStructDecl = make(map[string]*GoStructMeta)
 	}
 
 	for _, gfm := range gpm.pkgFileMap {
 		if gfm.fileAST != nil && gfm.fileAST.Scope != nil {
-			gsm := searchGoStructMeta(gfm.fileAST, structName)
+			gsm := SearchGoStructMeta(gfm.fileAST, structName)
 			if gsm != nil {
 				gpm.pkgStructDecl[gsm.StructName()] = gsm
 				break
@@ -151,7 +115,7 @@ func (gpm *GoPackageMeta) SearchStructMeta(structName string) *goStructMeta {
 	return gpm.pkgStructDecl[structName]
 }
 
-func (gpm *GoPackageMeta) SearchInterfaceMeta(interfaceName string) *goInterfaceMeta {
+func (gpm *GoPackageMeta) SearchInterfaceMeta(interfaceName string) *GoInterfaceMeta {
 	if len(gpm.pkgInterfaceDecl) > 0 {
 		if _, has := gpm.pkgInterfaceDecl[interfaceName]; has {
 			return gpm.pkgInterfaceDecl[interfaceName]
@@ -159,12 +123,12 @@ func (gpm *GoPackageMeta) SearchInterfaceMeta(interfaceName string) *goInterface
 	}
 
 	if gpm.pkgInterfaceDecl == nil {
-		gpm.pkgInterfaceDecl = make(map[string]*goInterfaceMeta)
+		gpm.pkgInterfaceDecl = make(map[string]*GoInterfaceMeta)
 	}
 
 	for _, gfm := range gpm.pkgFileMap {
 		if gfm.fileAST != nil && gfm.fileAST.Scope != nil {
-			gim := searchGoInterfaceMeta(gfm.fileAST, interfaceName)
+			gim := SearchGoInterfaceMeta(gfm.fileAST, interfaceName)
 			if gim != nil {
 				gpm.pkgInterfaceDecl[gim.InterfaceName()] = gim
 				break
@@ -175,7 +139,7 @@ func (gpm *GoPackageMeta) SearchInterfaceMeta(interfaceName string) *goInterface
 	return gpm.pkgInterfaceDecl[interfaceName]
 }
 
-func (gpm *GoPackageMeta) SearchFunctionMeta(functionName string) *goFunctionMeta {
+func (gpm *GoPackageMeta) SearchFunctionMeta(functionName string) *GoFunctionMeta {
 	if len(gpm.pkgFunctionDecl) > 0 {
 		if _, has := gpm.pkgFunctionDecl[functionName]; has {
 			return gpm.pkgFunctionDecl[functionName]
@@ -183,12 +147,12 @@ func (gpm *GoPackageMeta) SearchFunctionMeta(functionName string) *goFunctionMet
 	}
 
 	if gpm.pkgFunctionDecl == nil {
-		gpm.pkgFunctionDecl = make(map[string]*goFunctionMeta)
+		gpm.pkgFunctionDecl = make(map[string]*GoFunctionMeta)
 	}
 
 	for _, gfm := range gpm.pkgFileMap {
 		if gfm.fileAST != nil && gfm.fileAST.Scope != nil {
-			gfm := searchGoFunctionMeta(gfm, functionName)
+			gfm := SearchGoFunctionMeta(gfm, functionName)
 			if gfm != nil {
 				gpm.pkgFunctionDecl[gfm.FunctionName()] = gfm
 				break
@@ -199,11 +163,11 @@ func (gpm *GoPackageMeta) SearchFunctionMeta(functionName string) *goFunctionMet
 	return gpm.pkgFunctionDecl[functionName]
 }
 
-func (gpm *GoPackageMeta) SearchMethodMeta(structName, methodName string) *goMethodMeta {
+func (gpm *GoPackageMeta) SearchMethodMeta(structName, methodName string) *GoMethodMeta {
 	if len(gpm.pkgStructDecl) == 0 {
 		gsm := gpm.SearchStructMeta(structName)
 		if gsm.methodDecl == nil {
-			gsm.methodDecl = make(map[string]*goMethodMeta)
+			gsm.methodDecl = make(map[string]*GoMethodMeta)
 		}
 	}
 	if gsm, hasGSM := gpm.pkgStructDecl[structName]; hasGSM {
@@ -214,7 +178,7 @@ func (gpm *GoPackageMeta) SearchMethodMeta(structName, methodName string) *goMet
 
 	for _, gfm := range gpm.pkgFileMap {
 		if gfm.fileAST != nil && gfm.fileAST.Scope != nil {
-			gmm := searchGoMethodMeta(gfm.fileAST, structName, methodName)
+			gmm := SearchGoMethodMeta(gfm.fileAST, structName, methodName)
 			if gmm != nil {
 				gpm.pkgStructDecl[structName].methodDecl[methodName] = gmm
 				return gmm

@@ -7,17 +7,17 @@ import (
 	"go/token"
 )
 
-type goMethodMeta struct {
+type GoMethodMeta struct {
 	methodDecl *ast.FuncDecl
 }
 
-func extractGoMethodMeta(extractFilepath string, structName, methodName string) (*goMethodMeta, error) {
+func ExtractGoMethodMeta(extractFilepath string, structName, methodName string) (*GoMethodMeta, error) {
 	fileAST, err := parser.ParseFile(token.NewFileSet(), extractFilepath, nil, parser.ParseComments)
 	if err != nil {
 		return nil, err
 	}
 
-	gmm := searchGoMethodMeta(fileAST, structName, methodName)
+	gmm := SearchGoMethodMeta(fileAST, structName, methodName)
 	if gmm.methodDecl == nil {
 		return nil, fmt.Errorf("can not find method decl")
 	}
@@ -25,7 +25,7 @@ func extractGoMethodMeta(extractFilepath string, structName, methodName string) 
 	return gmm, nil
 }
 
-func searchGoMethodMeta(fileAST *ast.File, structName, methodName string) *goMethodMeta {
+func SearchGoMethodMeta(fileAST *ast.File, structName, methodName string) *GoMethodMeta {
 	var methodDecl *ast.FuncDecl
 	ast.Inspect(fileAST, func(n ast.Node) bool {
 		if n == fileAST {
@@ -57,11 +57,11 @@ func searchGoMethodMeta(fileAST *ast.File, structName, methodName string) *goMet
 		}
 		return true
 	})
-	return &goMethodMeta{
+	return &GoMethodMeta{
 		methodDecl: methodDecl,
 	}
 }
 
-func (gmm *goMethodMeta) MethodName() string {
+func (gmm *GoMethodMeta) MethodName() string {
 	return gmm.methodDecl.Name.String()
 }

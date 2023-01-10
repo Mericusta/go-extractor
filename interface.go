@@ -5,45 +5,24 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
-	"regexp"
 )
 
-type GoInterfaceInfo struct {
-	Name                   string
-	FunctionDeclarationMap map[string]*GoFunctionDeclaration
-}
-
-var (
-	GO_INTERFACE_DECLARATION_SCOPE_BEGIN_EXPRESSION                             string = `type\s+(?P<NAME>\w+)\s+interface\s+\{`
-	GoInterfaceDeclarationScopeBeginRegexp                                             = regexp.MustCompile(GO_INTERFACE_DECLARATION_SCOPE_BEGIN_EXPRESSION)
-	GoInterfaceRegexpSubmatchNameIndex                                                 = GoInterfaceDeclarationScopeBeginRegexp.SubexpIndex("NAME")
-	GoInterfaceDeclarationScopeBeginRune                                               = '{'
-	GO_INTERFACE_FUNCTION_DECLARATION_SCOPE_BEGIN_EXPRESSION                    string = `(?P<NAME>\w+)\s*(?P<PARAMS_SCOPE_BEGIN>\()`
-	GoInterfaceFunctionDeclarationScopeBeginRegexp                                     = regexp.MustCompile(GO_INTERFACE_FUNCTION_DECLARATION_SCOPE_BEGIN_EXPRESSION)
-	GoInterfaceFunctionDeclarationScopeBeginRegexpSubmatchNameIndex                    = GoInterfaceFunctionDeclarationScopeBeginRegexp.SubexpIndex("NAME")
-	GoInterfaceFunctionDeclarationScopeBeginRegexpSubmatchParamsScopeBeginIndex        = GoInterfaceFunctionDeclarationScopeBeginRegexp.SubexpIndex("PARAMS_SCOPE_BEGIN")
-)
-
-func ExtractGoFileInterfaceDeclaration(extractFilepath string, parseComments bool) (map[string]*GoInterfaceInfo, error) {
-	return nil, nil
-}
-
-type goInterfaceMeta struct {
+type GoInterfaceMeta struct {
 	typeSpec   *ast.TypeSpec
-	methodMeta map[string]*goInterfaceMethodMeta
+	methodMeta map[string]*GoInterfaceMethodMeta
 }
 
-type goInterfaceMethodMeta struct {
+type GoInterfaceMethodMeta struct {
 	methodField *ast.Field
 }
 
-func extractGoInterfaceMeta(extractFilepath string, interfaceName string) (*goInterfaceMeta, error) {
+func ExtractGoInterfaceMeta(extractFilepath string, interfaceName string) (*GoInterfaceMeta, error) {
 	fileAST, err := parser.ParseFile(token.NewFileSet(), extractFilepath, nil, parser.ParseComments)
 	if err != nil {
 		return nil, err
 	}
 
-	gim := searchGoInterfaceMeta(fileAST, interfaceName)
+	gim := SearchGoInterfaceMeta(fileAST, interfaceName)
 	if gim.typeSpec == nil {
 		return nil, fmt.Errorf("can not find interface decl")
 	}
@@ -51,7 +30,7 @@ func extractGoInterfaceMeta(extractFilepath string, interfaceName string) (*goIn
 	return gim, nil
 }
 
-func searchGoInterfaceMeta(fileAST *ast.File, interfaceName string) *goInterfaceMeta {
+func SearchGoInterfaceMeta(fileAST *ast.File, interfaceName string) *GoInterfaceMeta {
 	var interfaceDecl *ast.TypeSpec
 	ast.Inspect(fileAST, func(n ast.Node) bool {
 		if n == fileAST {
@@ -77,24 +56,24 @@ func searchGoInterfaceMeta(fileAST *ast.File, interfaceName string) *goInterface
 		}
 		return true
 	})
-	return &goInterfaceMeta{
+	return &GoInterfaceMeta{
 		typeSpec: interfaceDecl,
 	}
 }
 
-func (gim *goInterfaceMeta) PrintAST() {
+func (gim *GoInterfaceMeta) PrintAST() {
 	ast.Print(token.NewFileSet(), gim.typeSpec)
 }
 
-func (gim *goInterfaceMeta) InterfaceName() string {
+func (gim *GoInterfaceMeta) InterfaceName() string {
 	return gim.typeSpec.Name.String()
 }
 
 // SearchMethodDecl search method decl from node.(*ast.InterfaceType)
-func (gim *goInterfaceMeta) SearchMethodDecl(methodName string) *goInterfaceMethodMeta {
+func (gim *GoInterfaceMeta) SearchMethodDecl(methodName string) *GoInterfaceMethodMeta {
 	gim.ForeachMethodDecl(func(f *ast.Field) bool {
 		if f.Names[0].Name == methodName {
-			gim.methodMeta[methodName] = &goInterfaceMethodMeta{methodField: f}
+			gim.methodMeta[methodName] = &GoInterfaceMethodMeta{methodField: f}
 			return false
 		}
 		return true
@@ -102,7 +81,7 @@ func (gim *goInterfaceMeta) SearchMethodDecl(methodName string) *goInterfaceMeth
 	return gim.methodMeta[methodName]
 }
 
-func (gim *goInterfaceMeta) ForeachMethodDecl(f func(*ast.Field) bool) {
+func (gim *GoInterfaceMeta) ForeachMethodDecl(f func(*ast.Field) bool) {
 	interfaceType := gim.typeSpec.Type.(*ast.InterfaceType)
 	if interfaceType.Methods == nil {
 		return
