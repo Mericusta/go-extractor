@@ -44,6 +44,15 @@ func (gfm *GoFileMeta) PrintAST() {
 	ast.Print(gfm.fileSet, gfm.fileAST)
 }
 
+func (gfm *GoFileMeta) OutputAST() {
+	outputFile, err := os.OpenFile(fmt.Sprintf("%v.ast", gfm.Path), os.O_CREATE|os.O_TRUNC|os.O_RDWR, 0644)
+	if err != nil {
+		panic(err)
+	}
+	defer outputFile.Close()
+	ast.Fprint(outputFile, gfm.fileSet, gfm.fileAST, ast.NotNilFilter)
+}
+
 func (gfm *GoFileMeta) PkgName() string {
 	return gfm.fileAST.Name.Name
 }

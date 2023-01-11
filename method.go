@@ -65,3 +65,26 @@ func SearchGoMethodMeta(fileAST *ast.File, structName, methodName string) *GoMet
 func (gmm *GoMethodMeta) MethodName() string {
 	return gmm.methodDecl.Name.String()
 }
+
+func (gmm *GoMethodMeta) RecvStruct() (string, bool) {
+	if len(gmm.methodDecl.Recv.List) < 1 {
+		return "", false
+	}
+
+	var pointerReceiver bool
+	var recvTypeIdentNode ast.Node
+	switch gmm.methodDecl.Recv.List[0].Type.(type) {
+	case *ast.Ident:
+		pointerReceiver = false
+		recvTypeIdentNode = gmm.methodDecl.Recv.List[0].Type
+	case *ast.StarExpr:
+		pointerReceiver = true
+		recvTypeIdentNode = gmm.methodDecl.Recv.List[0].Type.(*ast.StarExpr).X
+	}
+
+	recvTypeIdent, ok := recvTypeIdentNode.(*ast.Ident)
+	if !ok {
+		return "", false
+	}
+	return recvTypeIdent.Name, pointerReceiver
+}

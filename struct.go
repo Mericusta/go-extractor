@@ -8,8 +8,9 @@ import (
 )
 
 type GoStructMeta struct {
-	typeSpec   *ast.TypeSpec
-	methodDecl map[string]*GoMethodMeta
+	typeSpec    *ast.TypeSpec
+	commentDecl *ast.CommentGroup
+	methodDecl  map[string]*GoMethodMeta
 }
 
 func ExtractGoStructMeta(extractFilepath string, structName string) (*GoStructMeta, error) {
@@ -28,6 +29,7 @@ func ExtractGoStructMeta(extractFilepath string, structName string) (*GoStructMe
 
 func SearchGoStructMeta(fileAST *ast.File, structName string) *GoStructMeta {
 	var structDecl *ast.TypeSpec
+	var commentDecl *ast.CommentGroup
 	ast.Inspect(fileAST, func(n ast.Node) bool {
 		if n == fileAST {
 			return true
@@ -35,25 +37,41 @@ func SearchGoStructMeta(fileAST *ast.File, structName string) *GoStructMeta {
 		if n == nil || structDecl != nil {
 			return false
 		}
-		typeSpec, ok := n.(*ast.TypeSpec)
+		genDecl, ok := n.(*ast.GenDecl)
 		if !ok {
-			return true
-		}
-		if typeSpec.Type == nil {
 			return false
 		}
-		_, ok = typeSpec.Type.(*ast.StructType)
-		if !ok {
+		ast.Inspect(genDecl, func(n ast.Node) bool {
+			if n == genDecl {
+				return true
+			}
+			if n == nil || structDecl != nil {
+				return false
+			}
+			typeSpec, ok := n.(*ast.TypeSpec)
+			if !ok {
+				return true
+			}
+			if typeSpec.Type == nil {
+				return false
+			}
+			_, ok = typeSpec.Type.(*ast.StructType)
+			if !ok {
+				return true
+			}
+			if typeSpec.Name.String() == structName {
+				structDecl = typeSpec
+				commentDecl = genDecl.Doc
+				return false
+			}
 			return true
-		}
-		if typeSpec.Name.String() == structName {
-			structDecl = typeSpec
-			return false
-		}
-		return true
+		})
+		return false
 	})
 	return &GoStructMeta{
-		typeSpec: structDecl,
+		typeSpec:    structDecl,
+		commentDecl: commentDecl,
+		methodDecl:  make(map[string]*GoMethodMeta),
 	}
 }
 
@@ -63,4 +81,15 @@ func (gsm *GoStructMeta) PrintAST() {
 
 func (gsm *GoStructMeta) StructName() string {
 	return gsm.typeSpec.Name.String()
+}
+
+func (gsm *GoStructMeta) Comments() []string {
+	if gsm.typeSpec == nil || gsm.commentDecl == nil || len(gsm.commentDecl.List) == 0 {
+		return nil
+	}
+	commentSlice := make([]string, 0, len(gsm.commentDecl.List))
+	for _, comment := range gsm.commentDecl.List {
+		commentSlice = append(commentSlice, comment.Text)
+	}
+	return commentSlice
 }

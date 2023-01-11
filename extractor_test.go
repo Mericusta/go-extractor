@@ -1,6 +1,7 @@
 package extractor
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -27,6 +28,7 @@ type compareGoFileMeta struct {
 
 type compareGoStructMeta struct {
 	StructName       string
+	comments         []string
 	structMethodDecl map[string]*compareGoMethodMeta
 }
 
@@ -39,7 +41,9 @@ type compareGoFunctionMeta struct {
 }
 
 type compareGoMethodMeta struct {
-	MethodName string
+	MethodName      string
+	RecvStruct      string
+	PointerReceiver bool
 }
 
 var (
@@ -117,15 +121,26 @@ var (
 				pkgStructDecl: map[string]*compareGoStructMeta{
 					"ExampleStruct": {
 						StructName: "ExampleStruct",
+						comments: []string{
+							"// ExampleStruct this is an example struct",
+							"// this is struct comment",
+							"// this is another struct comment",
+						},
 						structMethodDecl: map[string]*compareGoMethodMeta{
 							"ExampleFunc": {
-								MethodName: "ExampleFunc",
+								MethodName:      "ExampleFunc",
+								RecvStruct:      "ExampleStruct",
+								PointerReceiver: false,
 							},
 							"AnotherExampleFunc": {
-								MethodName: "AnotherExampleFunc",
+								MethodName:      "AnotherExampleFunc",
+								RecvStruct:      "ExampleStruct",
+								PointerReceiver: true,
 							},
 							"V": {
-								MethodName: "V",
+								MethodName:      "V",
+								RecvStruct:      "ExampleStruct",
+								PointerReceiver: false,
 							},
 						},
 					},
@@ -164,6 +179,7 @@ func TestExtractGoProjectMeta(t *testing.T) {
 				panic(fileName)
 			}
 			checkFileMeta(gfm, _gfm)
+			gfm.OutputAST()
 		}
 
 		for structName, _gsm := range _gpm.pkgStructDecl {
@@ -238,6 +254,15 @@ func checkStructMeta(gsm *GoStructMeta, _gsm *compareGoStructMeta) {
 	if gsm.StructName() != _gsm.StructName {
 		panic(gsm.StructName())
 	}
+	for _, _comment := range _gsm.comments {
+		for _, comment := range gsm.Comments() {
+			if comment == _comment {
+				goto CONTINUE
+			}
+		}
+		panic(_comment)
+	CONTINUE:
+	}
 }
 
 func checkInterfaceMeta(gim *GoInterfaceMeta, _gim *compareGoInterfaceMeta) {
@@ -252,8 +277,11 @@ func checkFunctionMeta(gfm *GoFunctionMeta, _gfm *compareGoFunctionMeta) {
 	}
 }
 
-func checkMethodMeta(gfm *GoMethodMeta, _gfm *compareGoMethodMeta) {
-	if gfm.MethodName() != _gfm.MethodName {
-		panic(gfm.MethodName())
+func checkMethodMeta(gmm *GoMethodMeta, _gmm *compareGoMethodMeta) {
+	if gmm.MethodName() != _gmm.MethodName {
+		panic(gmm.MethodName())
+	}
+	if recvStruct, pointerReceiver := gmm.RecvStruct(); recvStruct != _gmm.RecvStruct || pointerReceiver != _gmm.PointerReceiver {
+		panic(fmt.Sprintf("%v, %v", recvStruct, pointerReceiver))
 	}
 }

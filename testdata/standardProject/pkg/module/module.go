@@ -2,8 +2,11 @@ package module
 
 import "fmt"
 
+// ExampleStruct this is an example struct
+// this is struct comment
+// this is another struct comment
 type ExampleStruct struct {
-	v int
+	v int `ast:init,default=1`
 }
 
 func NewExampleStruct(v int) *ExampleStruct {

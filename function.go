@@ -66,30 +66,6 @@ func (gfm *GoFunctionMeta) FunctionName() string {
 	return gfm.funcDecl.Name.String()
 }
 
-func (gfm *GoFunctionMeta) IsMethod() bool {
-	return gfm.funcDecl.Recv != nil
-}
-
-func (gfm *GoFunctionMeta) RecvStruct() string {
-	if !gfm.IsMethod() || len(gfm.funcDecl.Recv.List) < 1 {
-		return ""
-	}
-
-	var recvTypeIdentNode ast.Node
-	switch gfm.funcDecl.Recv.List[0].Type.(type) {
-	case *ast.Ident:
-		recvTypeIdentNode = gfm.funcDecl.Recv.List[0].Type
-	case *ast.StarExpr:
-		recvTypeIdentNode = gfm.funcDecl.Recv.List[0].Type.(*ast.StarExpr).X
-	}
-
-	recvTypeIdent, ok := recvTypeIdentNode.(*ast.Ident)
-	if !ok {
-		return ""
-	}
-	return recvTypeIdent.Name
-}
-
 func (gfm *GoFunctionMeta) CallMap() map[string][]*ast.CallExpr {
 	// ast.Print(token.NewFileSet(), gfm.funcDecl.Body)
 	callMap := make(map[string][]*ast.CallExpr)
@@ -113,10 +89,9 @@ func (gfm *GoFunctionMeta) CallMap() map[string][]*ast.CallExpr {
 }
 
 func (gfm *GoFunctionMeta) Comments() []string {
-	if gfm.funcDecl.Doc == nil {
+	if gfm.funcDecl == nil || gfm.funcDecl.Doc == nil || len(gfm.funcDecl.Doc.List) == 0 {
 		return nil
 	}
-
 	commentSlice := make([]string, 0, len(gfm.funcDecl.Doc.List))
 	for _, comment := range gfm.funcDecl.Doc.List {
 		commentSlice = append(commentSlice, comment.Text)
