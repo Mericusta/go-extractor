@@ -16,9 +16,9 @@ type compareGoPackageMeta struct {
 	PkgPath          string
 	ImportPath       string
 	pkgFileMap       map[string]*compareGoFileMeta
-	pkgStructDecl    map[string]*compareGoStructMeta
-	pkgInterfaceDecl map[string]*compareGoInterfaceMeta
-	pkgFunctionDecl  map[string]*compareGoFunctionMeta
+	pkgStructMeta    map[string]*compareGoStructMeta
+	pkgInterfaceMeta map[string]*compareGoInterfaceMeta
+	pkgFunctionMeta  map[string]*compareGoFunctionMeta
 }
 
 type compareGoFileMeta struct {
@@ -28,8 +28,9 @@ type compareGoFileMeta struct {
 
 type compareGoStructMeta struct {
 	StructName       string
-	comments         []string
-	structMethodDecl map[string]*compareGoMethodMeta
+	Comments         []string
+	StructMemberMeta map[string]*compareGoMemberMeta
+	StructMethodMeta map[string]*compareGoMethodMeta
 }
 
 type compareGoInterfaceMeta struct {
@@ -38,6 +39,10 @@ type compareGoInterfaceMeta struct {
 
 type compareGoFunctionMeta struct {
 	FunctionName string
+}
+
+type compareGoMemberMeta struct {
+	Name string
 }
 
 type compareGoMethodMeta struct {
@@ -70,7 +75,7 @@ var (
 						Path: standardProjectAbsPath + "\\cmd\\init.go",
 					},
 				},
-				pkgFunctionDecl: map[string]*compareGoFunctionMeta{
+				pkgFunctionMeta: map[string]*compareGoFunctionMeta{
 					"main": {
 						FunctionName: "main",
 					},
@@ -86,7 +91,7 @@ var (
 						Path: standardProjectAbsPath + "\\pkg\\pkg.go",
 					},
 				},
-				pkgFunctionDecl: map[string]*compareGoFunctionMeta{
+				pkgFunctionMeta: map[string]*compareGoFunctionMeta{
 					"ExampleFunc": {
 						FunctionName: "ExampleFunc",
 					},
@@ -102,7 +107,7 @@ var (
 						Path: standardProjectAbsPath + "\\pkg\\interface\\interface.go",
 					},
 				},
-				pkgInterfaceDecl: map[string]*compareGoInterfaceMeta{
+				pkgInterfaceMeta: map[string]*compareGoInterfaceMeta{
 					"ExampleInterface": {
 						InterfaceName: "ExampleInterface",
 					},
@@ -118,15 +123,20 @@ var (
 						Path: standardProjectAbsPath + "\\pkg\\module\\module.go",
 					},
 				},
-				pkgStructDecl: map[string]*compareGoStructMeta{
+				pkgStructMeta: map[string]*compareGoStructMeta{
 					"ExampleStruct": {
 						StructName: "ExampleStruct",
-						comments: []string{
+						Comments: []string{
 							"// ExampleStruct this is an example struct",
 							"// this is struct comment",
 							"// this is another struct comment",
 						},
-						structMethodDecl: map[string]*compareGoMethodMeta{
+						StructMemberMeta: map[string]*compareGoMemberMeta{
+							"v": {
+								Name: "v",
+							},
+						},
+						StructMethodMeta: map[string]*compareGoMethodMeta{
 							"ExampleFunc": {
 								MethodName:      "ExampleFunc",
 								RecvStruct:      "ExampleStruct",
@@ -145,7 +155,7 @@ var (
 						},
 					},
 				},
-				pkgFunctionDecl: map[string]*compareGoFunctionMeta{
+				pkgFunctionMeta: map[string]*compareGoFunctionMeta{
 					"NewExampleStruct": {
 						FunctionName: "NewExampleStruct",
 					},
@@ -182,7 +192,7 @@ func TestExtractGoProjectMeta(t *testing.T) {
 			gfm.OutputAST()
 		}
 
-		for structName, _gsm := range _gpm.pkgStructDecl {
+		for structName, _gsm := range _gpm.pkgStructMeta {
 			gpm.SearchStructMeta(structName)
 			gsm, has := gpm.pkgStructDecl[structName]
 			if gsm == nil || !has {
@@ -190,7 +200,16 @@ func TestExtractGoProjectMeta(t *testing.T) {
 			}
 			checkStructMeta(gsm, _gsm)
 
-			for methodName, _gmm := range _gsm.structMethodDecl {
+			for memberName, _gmm := range _gsm.StructMemberMeta {
+				gsm.SearchMemberMeta(memberName)
+				gmm, has := gsm.memberDecl[memberName]
+				if gmm == nil || !has {
+					panic(memberName)
+				}
+				checkMemberMeta(gmm, _gmm)
+			}
+
+			for methodName, _gmm := range _gsm.StructMethodMeta {
 				gpm.SearchMethodMeta(structName, methodName)
 				gmm, has := gsm.methodDecl[methodName]
 				if gmm == nil || !has {
@@ -200,7 +219,7 @@ func TestExtractGoProjectMeta(t *testing.T) {
 			}
 		}
 
-		for interfaceName, _gim := range _gpm.pkgInterfaceDecl {
+		for interfaceName, _gim := range _gpm.pkgInterfaceMeta {
 			gpm.SearchInterfaceMeta(interfaceName)
 			gim, has := gpm.pkgInterfaceDecl[interfaceName]
 			if gim == nil || !has {
@@ -209,7 +228,7 @@ func TestExtractGoProjectMeta(t *testing.T) {
 			checkInterfaceMeta(gim, _gim)
 		}
 
-		for funcName, _gfm := range _gpm.pkgFunctionDecl {
+		for funcName, _gfm := range _gpm.pkgFunctionMeta {
 			gpm.SearchFunctionMeta(funcName)
 			gfm, has := gpm.pkgFunctionDecl[funcName]
 			if gfm == nil || !has {
@@ -254,14 +273,14 @@ func checkStructMeta(gsm *GoStructMeta, _gsm *compareGoStructMeta) {
 	if gsm.StructName() != _gsm.StructName {
 		panic(gsm.StructName())
 	}
-	for _, _comment := range _gsm.comments {
+	for _, _comment := range _gsm.Comments {
 		for _, comment := range gsm.Comments() {
 			if comment == _comment {
-				goto CONTINUE
+				goto NEXT_COMMENT
 			}
 		}
 		panic(_comment)
-	CONTINUE:
+	NEXT_COMMENT:
 	}
 }
 
@@ -274,6 +293,12 @@ func checkInterfaceMeta(gim *GoInterfaceMeta, _gim *compareGoInterfaceMeta) {
 func checkFunctionMeta(gfm *GoFunctionMeta, _gfm *compareGoFunctionMeta) {
 	if gfm.FunctionName() != _gfm.FunctionName {
 		panic(gfm.FunctionName())
+	}
+}
+
+func checkMemberMeta(gmm *GoMemberMeta, _gmm *compareGoMemberMeta) {
+	if gmm.MemberName() != _gmm.Name {
+		panic(gmm.MemberName())
 	}
 }
 

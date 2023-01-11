@@ -86,16 +86,9 @@ func extractGoProjectMeta(projectPath string, toHandlePaths map[string]struct{},
 					filePkg := fileMeta.PkgName()
 					if filePkg == "main" {
 						if _, has := projectMeta.PackageMap[filePkg]; !has {
-							projectMeta.PackageMap[filePkg] = &GoPackageMeta{
-								Name:    filePkg,
-								PkgPath: filepath.Dir(path),
-								pkgFileMap: map[string]*GoFileMeta{
-									fileMeta.Name: fileMeta,
-								},
-							}
-						} else {
-							projectMeta.PackageMap[filePkg].pkgFileMap[fileMeta.Name] = fileMeta
+							projectMeta.PackageMap[filePkg] = NewGoPackageMeta(filePkg, filepath.Dir(path), "")
 						}
+						projectMeta.PackageMap[filePkg].pkgFileMap[fileMeta.Name] = fileMeta
 					} else {
 						relPath := "."
 						fileDir := filepath.Dir(path)
@@ -107,17 +100,9 @@ func extractGoProjectMeta(projectPath string, toHandlePaths map[string]struct{},
 						}
 						pkgImportPath := FormatFilePathWithOS(filepath.Clean(fmt.Sprintf("%v/%v/%v", projectMeta.ModuleName, relPath, filePkg)), "linux")
 						if _, has := projectMeta.PackageMap[pkgImportPath]; !has {
-							projectMeta.PackageMap[pkgImportPath] = &GoPackageMeta{
-								Name:       filePkg,
-								ImportPath: pkgImportPath,
-								PkgPath:    filepath.Dir(path),
-								pkgFileMap: map[string]*GoFileMeta{
-									fileMeta.Name: fileMeta,
-								},
-							}
-						} else {
-							projectMeta.PackageMap[pkgImportPath].pkgFileMap[filepath.Base(path)] = fileMeta
+							projectMeta.PackageMap[pkgImportPath] = NewGoPackageMeta(filePkg, filepath.Dir(path), pkgImportPath)
 						}
+						projectMeta.PackageMap[pkgImportPath].pkgFileMap[fileMeta.Name] = fileMeta
 					}
 				}
 			}
@@ -140,13 +125,8 @@ func extractGoProjectMeta(projectPath string, toHandlePaths map[string]struct{},
 		if err != nil {
 			return nil, err
 		}
-		projectMeta.PackageMap[gfm.PkgName()] = &GoPackageMeta{
-			Name:    gfm.PkgName(),
-			PkgPath: filepath.Dir(projectAbsPath),
-			pkgFileMap: map[string]*GoFileMeta{
-				filepath.Base(projectAbsPath): gfm,
-			},
-		}
+		projectMeta.PackageMap[gfm.PkgName()] = NewGoPackageMeta(gfm.PkgName(), filepath.Dir(projectAbsPath), "")
+		projectMeta.PackageMap[gfm.PkgName()].pkgFileMap[filepath.Base(projectAbsPath)] = gfm
 	}
 
 	return projectMeta, nil

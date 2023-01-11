@@ -57,7 +57,8 @@ func SearchGoInterfaceMeta(fileAST *ast.File, interfaceName string) *GoInterface
 		return true
 	})
 	return &GoInterfaceMeta{
-		typeSpec: interfaceDecl,
+		typeSpec:   interfaceDecl,
+		methodMeta: make(map[string]*GoInterfaceMethodMeta),
 	}
 }
 

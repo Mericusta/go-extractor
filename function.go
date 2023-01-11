@@ -1,17 +1,14 @@
 package extractor
 
 import (
-	"bytes"
 	"fmt"
 	"go/ast"
-	"go/format"
 	"go/parser"
 	"go/token"
-	"os"
 )
 
 type GoFunctionMeta struct {
-	fileMeta *GoFileMeta
+	// fileMeta *GoFileMeta
 	funcDecl *ast.FuncDecl
 }
 
@@ -53,7 +50,7 @@ func SearchGoFunctionMeta(fileMeta *GoFileMeta, functionName string) *GoFunction
 		return nil
 	}
 	return &GoFunctionMeta{
-		fileMeta: fileMeta,
+		// fileMeta: fileMeta,
 		funcDecl: funcDecl,
 	}
 }
@@ -116,43 +113,43 @@ func (gfm *GoFunctionMeta) ReturnTypes() []string {
 	return returnTypes
 }
 
-// TODO:
-func (gfm *GoFunctionMeta) UpdateComments(comments []string) {
-	if gfm.funcDecl.Doc == nil {
-		return
-	}
+// // TODO:
+// func (gfm *GoFunctionMeta) UpdateComments(comments []string) {
+// 	if gfm.funcDecl.Doc == nil {
+// 		return
+// 	}
 
-	if len(gfm.funcDecl.Doc.List) != len(comments) {
-		return
-	}
+// 	if len(gfm.funcDecl.Doc.List) != len(comments) {
+// 		return
+// 	}
 
-	for index, comment := range gfm.funcDecl.Doc.List {
-		comment.Text = comments[index]
-	}
+// 	for index, comment := range gfm.funcDecl.Doc.List {
+// 		comment.Text = comments[index]
+// 	}
 
-	outputFile, err := os.OpenFile(gfm.fileMeta.Path, os.O_CREATE|os.O_TRUNC|os.O_RDWR, 0644)
-	if err != nil {
-		panic(err)
-	}
-	defer outputFile.Close()
+// 	outputFile, err := os.OpenFile(gfm.fileMeta.Path, os.O_CREATE|os.O_TRUNC|os.O_RDWR, 0644)
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	defer outputFile.Close()
 
-	buffer := &bytes.Buffer{}
-	if gfm.fileMeta.fileAST.Scope != nil {
-		for name, object := range gfm.fileMeta.fileAST.Scope.Objects {
-			if object.Kind == ast.Fun && name == gfm.FunctionName() {
-				decl := object.Decl.(*ast.FuncDecl)
-				if declLen := decl.End() - decl.Pos(); buffer.Cap() < int(declLen) {
-					buffer.Grow(int(declLen))
-				}
-				err = format.Node(buffer, gfm.fileMeta.fileSet, decl)
-				if err != nil {
-					panic(err)
-				}
-				outputFile.WriteAt(buffer.Bytes(), int64(decl.Pos()))
-				// outputFile.Write(buffer.Bytes())
-				buffer.Reset()
-				break
-			}
-		}
-	}
-}
+// 	buffer := &bytes.Buffer{}
+// 	if gfm.fileMeta.fileAST.Scope != nil {
+// 		for name, object := range gfm.fileMeta.fileAST.Scope.Objects {
+// 			if object.Kind == ast.Fun && name == gfm.FunctionName() {
+// 				decl := object.Decl.(*ast.FuncDecl)
+// 				if declLen := decl.End() - decl.Pos(); buffer.Cap() < int(declLen) {
+// 					buffer.Grow(int(declLen))
+// 				}
+// 				err = format.Node(buffer, gfm.fileMeta.fileSet, decl)
+// 				if err != nil {
+// 					panic(err)
+// 				}
+// 				outputFile.WriteAt(buffer.Bytes(), int64(decl.Pos()))
+// 				// outputFile.Write(buffer.Bytes())
+// 				buffer.Reset()
+// 				break
+// 			}
+// 		}
+// 	}
+// }

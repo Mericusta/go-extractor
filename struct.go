@@ -8,9 +8,10 @@ import (
 )
 
 type GoStructMeta struct {
-	typeSpec    *ast.TypeSpec
-	commentDecl *ast.CommentGroup
-	methodDecl  map[string]*GoMethodMeta
+	typeSpec     *ast.TypeSpec
+	commentGroup *ast.CommentGroup
+	memberDecl   map[string]*GoMemberMeta
+	methodDecl   map[string]*GoMethodMeta
 }
 
 func ExtractGoStructMeta(extractFilepath string, structName string) (*GoStructMeta, error) {
@@ -69,9 +70,10 @@ func SearchGoStructMeta(fileAST *ast.File, structName string) *GoStructMeta {
 		return false
 	})
 	return &GoStructMeta{
-		typeSpec:    structDecl,
-		commentDecl: commentDecl,
-		methodDecl:  make(map[string]*GoMethodMeta),
+		typeSpec:     structDecl,
+		commentGroup: commentDecl,
+		methodDecl:   make(map[string]*GoMethodMeta),
+		memberDecl:   make(map[string]*GoMemberMeta),
 	}
 }
 
@@ -84,12 +86,42 @@ func (gsm *GoStructMeta) StructName() string {
 }
 
 func (gsm *GoStructMeta) Comments() []string {
-	if gsm.typeSpec == nil || gsm.commentDecl == nil || len(gsm.commentDecl.List) == 0 {
+	if gsm.typeSpec == nil || gsm.commentGroup == nil || len(gsm.commentGroup.List) == 0 {
 		return nil
 	}
-	commentSlice := make([]string, 0, len(gsm.commentDecl.List))
-	for _, comment := range gsm.commentDecl.List {
+	commentSlice := make([]string, 0, len(gsm.commentGroup.List))
+	for _, comment := range gsm.commentGroup.List {
 		commentSlice = append(commentSlice, comment.Text)
 	}
 	return commentSlice
+}
+
+func (gsm *GoStructMeta) Members() []string {
+	if gsm.typeSpec == nil || gsm.typeSpec.Type == nil {
+		return nil
+	}
+	structType, ok := gsm.typeSpec.Type.(*ast.StructType)
+	if structType == nil || !ok || structType.Fields == nil || len(structType.Fields.List) == 0 {
+		return nil
+	}
+	members := make([]string, 0, len(structType.Fields.List))
+	for _, field := range structType.Fields.List {
+		members = append(members, field.Names[0].Name)
+	}
+	return members
+}
+
+func (gsm *GoStructMeta) SearchMemberMeta(member string) *GoMemberMeta {
+	if gmm, has := gsm.memberDecl[member]; gmm != nil && has {
+		return gmm
+	}
+
+	structType := gsm.typeSpec.Type.(*ast.StructType)
+	gmm := SearchGoMemberMeta(structType, member)
+	if gmm == nil {
+		return nil
+	}
+	gsm.memberDecl[member] = gmm
+
+	return gsm.memberDecl[member]
 }

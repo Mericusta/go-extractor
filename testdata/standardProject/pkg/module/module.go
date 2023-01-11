@@ -6,7 +6,7 @@ import "fmt"
 // this is struct comment
 // this is another struct comment
 type ExampleStruct struct {
-	v int `ast:init,default=1`
+	v int `ast:init,default=1` // this is member comment
 }
 
 func NewExampleStruct(v int) *ExampleStruct {
