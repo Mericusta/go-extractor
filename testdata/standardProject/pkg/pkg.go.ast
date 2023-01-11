@@ -143,15 +143,7 @@
    142  .  .  0: *(obj @ 69)
    143  .  .  1: *(obj @ 90)
    144  .  }
-   145  .  Comments: []*ast.CommentGroup (len = 2) {
+   145  .  Comments: []*ast.CommentGroup (len = 1) {
    146  .  .  0: *(obj @ 32)
-   147  .  .  1: *ast.CommentGroup {
-   148  .  .  .  List: []*ast.Comment (len = 1) {
-   149  .  .  .  .  0: *ast.Comment {
-   150  .  .  .  .  .  Slash: d:\Projects\go-extractor\testdata\standardProject\pkg\pkg.go:10:61
-   151  .  .  .  .  .  Text: "// `ast:init,default=bool ast:assign`"
-   152  .  .  .  .  }
-   153  .  .  .  }
-   154  .  .  }
-   155  .  }
-   156  }
+   147  .  }
+   148  }

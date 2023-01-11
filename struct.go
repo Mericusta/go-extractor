@@ -85,7 +85,7 @@ func (gsm *GoStructMeta) StructName() string {
 	return gsm.typeSpec.Name.String()
 }
 
-func (gsm *GoStructMeta) Comments() []string {
+func (gsm *GoStructMeta) Doc() []string {
 	if gsm.typeSpec == nil || gsm.commentGroup == nil || len(gsm.commentGroup.List) == 0 {
 		return nil
 	}

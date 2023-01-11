@@ -28,7 +28,7 @@ type compareGoFileMeta struct {
 
 type compareGoStructMeta struct {
 	StructName       string
-	Comments         []string
+	Doc              []string
 	StructMemberMeta map[string]*compareGoMemberMeta
 	StructMethodMeta map[string]*compareGoMethodMeta
 }
@@ -39,10 +39,14 @@ type compareGoInterfaceMeta struct {
 
 type compareGoFunctionMeta struct {
 	FunctionName string
+	Doc          []string
 }
 
 type compareGoMemberMeta struct {
-	Name string
+	Name    string
+	Tag     string
+	Doc     []string
+	Comment string
 }
 
 type compareGoMethodMeta struct {
@@ -94,6 +98,9 @@ var (
 				pkgFunctionMeta: map[string]*compareGoFunctionMeta{
 					"ExampleFunc": {
 						FunctionName: "ExampleFunc",
+						Doc: []string{
+							"// ExampleFunc this is example function",
+						},
 					},
 				},
 			},
@@ -126,7 +133,7 @@ var (
 				pkgStructMeta: map[string]*compareGoStructMeta{
 					"ExampleStruct": {
 						StructName: "ExampleStruct",
-						Comments: []string{
+						Doc: []string{
 							"// ExampleStruct this is an example struct",
 							"// this is struct comment",
 							"// this is another struct comment",
@@ -134,6 +141,12 @@ var (
 						StructMemberMeta: map[string]*compareGoMemberMeta{
 							"v": {
 								Name: "v",
+								Tag:  "`ast:init,default=1`",
+								Doc: []string{
+									"// v this is member doc line1",
+									"// v this is member doc line2",
+								},
+								Comment: "// this is member single comment line",
 							},
 						},
 						StructMethodMeta: map[string]*compareGoMethodMeta{
@@ -158,6 +171,11 @@ var (
 				pkgFunctionMeta: map[string]*compareGoFunctionMeta{
 					"NewExampleStruct": {
 						FunctionName: "NewExampleStruct",
+						Doc: []string{
+							"// NewExampleStruct this is new example struct",
+							"// @param           value",
+							"// @return          pointer to ExampleStruct",
+						},
 					},
 					"ExampleFunc": {
 						FunctionName: "ExampleFunc",
@@ -273,15 +291,7 @@ func checkStructMeta(gsm *GoStructMeta, _gsm *compareGoStructMeta) {
 	if gsm.StructName() != _gsm.StructName {
 		panic(gsm.StructName())
 	}
-	for _, _comment := range _gsm.Comments {
-		for _, comment := range gsm.Comments() {
-			if comment == _comment {
-				goto NEXT_COMMENT
-			}
-		}
-		panic(_comment)
-	NEXT_COMMENT:
-	}
+	checkDoc(gsm.Doc(), _gsm.Doc)
 }
 
 func checkInterfaceMeta(gim *GoInterfaceMeta, _gim *compareGoInterfaceMeta) {
@@ -294,11 +304,19 @@ func checkFunctionMeta(gfm *GoFunctionMeta, _gfm *compareGoFunctionMeta) {
 	if gfm.FunctionName() != _gfm.FunctionName {
 		panic(gfm.FunctionName())
 	}
+	checkDoc(gfm.Doc(), _gfm.Doc)
 }
 
 func checkMemberMeta(gmm *GoMemberMeta, _gmm *compareGoMemberMeta) {
 	if gmm.MemberName() != _gmm.Name {
 		panic(gmm.MemberName())
+	}
+	if gmm.Tag() != _gmm.Tag {
+		panic(gmm.Tag())
+	}
+	checkDoc(gmm.Doc(), _gmm.Doc)
+	if gmm.Comment() != _gmm.Comment {
+		panic(gmm.Comment())
 	}
 }
 
@@ -308,5 +326,113 @@ func checkMethodMeta(gmm *GoMethodMeta, _gmm *compareGoMethodMeta) {
 	}
 	if recvStruct, pointerReceiver := gmm.RecvStruct(); recvStruct != _gmm.RecvStruct || pointerReceiver != _gmm.PointerReceiver {
 		panic(fmt.Sprintf("%v, %v", recvStruct, pointerReceiver))
+	}
+}
+
+func checkDoc(doc, _doc []string) {
+	if len(doc) != len(_doc) {
+		panic(len(doc))
+	}
+	for _, _comment := range _doc {
+		for _, comment := range doc {
+			if comment == _comment {
+				goto NEXT_COMMENT
+			}
+		}
+		panic(_comment)
+	NEXT_COMMENT:
+	}
+}
+
+type replaceFunctionDoc struct {
+	originDoc      []string
+	replaceDoc     []string
+	originContent  string
+	replaceContent string
+}
+
+var (
+	replaceDoc = map[string]map[string]*replaceFunctionDoc{
+		standardProjectModuleName + "/pkg": {
+			"ExampleFunc": {
+				originDoc: []string{
+					"// ExampleFunc this is example function",
+				},
+				replaceDoc: []string{
+					"// ExampleFunc this is example function doc after replace, line 1",
+				},
+				originContent: `// ExampleFunc this is example function
+func ExampleFunc(s *module.ExampleStruct) {
+	fmt.Println("pkg.ExampleFunc, Hello go-extractor,", s.V())
+}`,
+				replaceContent: `// ExampleFunc this is example function doc after replace, line 1
+func ExampleFunc(s *module.ExampleStruct) {
+	fmt.Println("pkg.ExampleFunc, Hello go-extractor,", s.V())
+}`,
+			},
+			"NoDocExampleFunc": {
+				originDoc: nil,
+				replaceDoc: []string{
+					"// NoDocExampleFunc this is no-doc example function doc after replace, line 1",
+				},
+				originContent: `func NoDocExampleFunc(s *module.ExampleStruct) {
+	fmt.Println("pkg.ExampleFunc, Hello go-extractor,", s.V())
+}`,
+				replaceContent: `// NoDocExampleFunc this is no-doc example function doc after replace, line 1
+func NoDocExampleFunc(s *module.ExampleStruct) {
+	fmt.Println("pkg.ExampleFunc, Hello go-extractor,", s.V())
+}`,
+			},
+			"OneLineDocExampleFunc": {
+				originDoc: []string{
+					"// OneLineDocExampleFunc this is one-line-doc example function",
+				},
+				replaceDoc: []string{
+					"// OneLineDocExampleFunc this is one-line-doc example function doc after replace, line 1",
+					"// OneLineDocExampleFunc this is one-line-doc example function doc after replace, line 2",
+				},
+				originContent: `// OneLineDocExampleFunc this is one-line-doc example function
+func OneLineDocExampleFunc(s *module.ExampleStruct) {
+	fmt.Println("pkg.ExampleFunc, Hello go-extractor,", s.V())
+}`,
+				replaceContent: `// OneLineDocExampleFunc this is one-line-doc example function doc after replace, line 1
+// OneLineDocExampleFunc this is one-line-doc example function doc after replace, line 2
+func OneLineDocExampleFunc(s *module.ExampleStruct) {
+	fmt.Println("pkg.ExampleFunc, Hello go-extractor,", s.V())
+}`,
+			},
+		},
+	}
+)
+
+func TestReplaceGoProjectMeta(t *testing.T) {
+	goProjectMeta, err := ExtractGoProjectMeta(standardProjectRelPath, standardProjectIgnorePathMap)
+	if err != nil {
+		panic(err)
+	}
+
+	for pkgName, replaceFunctionDoc := range replaceDoc {
+		gpm, has := goProjectMeta.PackageMap[pkgName]
+		if gpm == nil || !has {
+			panic(pkgName)
+		}
+		for funcName, _replace := range replaceFunctionDoc {
+			gpm.SearchFunctionMeta(funcName)
+			gfm, has := gpm.pkgFunctionDecl[funcName]
+			if gfm == nil || !has {
+				panic(funcName)
+			}
+			checkDoc(gfm.Doc(), _replace.originDoc)
+			originContent, replaceContent, err := gfm.ReplaceFunctionDoc(_replace.replaceDoc)
+			if err != nil {
+				panic(err)
+			}
+			if originContent != _replace.originContent {
+				panic(originContent)
+			}
+			if replaceContent != _replace.replaceContent {
+				panic(replaceContent)
+			}
+		}
 	}
 }

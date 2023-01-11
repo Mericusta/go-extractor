@@ -1,14 +1,18 @@
 package extractor
 
 import (
+	"bytes"
 	"fmt"
 	"go/ast"
+	"go/format"
 	"go/parser"
 	"go/token"
+	"os"
+	"strings"
 )
 
 type GoFunctionMeta struct {
-	// fileMeta *GoFileMeta
+	fileMeta *GoFileMeta
 	funcDecl *ast.FuncDecl
 }
 
@@ -50,7 +54,7 @@ func SearchGoFunctionMeta(fileMeta *GoFileMeta, functionName string) *GoFunction
 		return nil
 	}
 	return &GoFunctionMeta{
-		// fileMeta: fileMeta,
+		fileMeta: fileMeta,
 		funcDecl: funcDecl,
 	}
 }
@@ -85,7 +89,7 @@ func (gfm *GoFunctionMeta) CallMap() map[string][]*ast.CallExpr {
 	return callMap
 }
 
-func (gfm *GoFunctionMeta) Comments() []string {
+func (gfm *GoFunctionMeta) Doc() []string {
 	if gfm.funcDecl == nil || gfm.funcDecl.Doc == nil || len(gfm.funcDecl.Doc.List) == 0 {
 		return nil
 	}
@@ -111,6 +115,37 @@ func (gfm *GoFunctionMeta) ReturnTypes() []string {
 		returnTypes = append(returnTypes, ident.Name)
 	}
 	return returnTypes
+}
+
+func (gfm *GoFunctionMeta) ReplaceFunctionDoc(newDoc []string) (string, string, error) {
+	fileContent, err := os.ReadFile(gfm.fileMeta.Path)
+	if err != nil {
+		return "", "", err
+	}
+
+	originPos := gfm.funcDecl.Pos()
+	originEnd := gfm.funcDecl.End()
+	if gfm.funcDecl.Doc != nil {
+		originPos = gfm.funcDecl.Doc.Pos()
+	}
+	originContent := string(fileContent[originPos-1 : originEnd])
+
+	gfm.funcDecl.Doc = &ast.CommentGroup{
+		List: make([]*ast.Comment, 0, len(newDoc)),
+	}
+	for _, comment := range newDoc {
+		gfm.funcDecl.Doc.List = append(gfm.funcDecl.Doc.List, &ast.Comment{
+			Text: comment,
+		})
+	}
+
+	buffer := &bytes.Buffer{}
+	err = format.Node(buffer, gfm.fileMeta.fileSet, gfm.funcDecl)
+	if err != nil {
+		panic(err)
+	}
+
+	return strings.ReplaceAll(originContent, "\r", ""), strings.ReplaceAll(buffer.String(), "\r", ""), nil
 }
 
 // // TODO:
