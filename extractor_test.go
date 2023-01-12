@@ -2,6 +2,7 @@ package extractor
 
 import (
 	"fmt"
+	"reflect"
 	"testing"
 )
 
@@ -433,6 +434,98 @@ func TestReplaceGoProjectMeta(t *testing.T) {
 			if replaceContent != _replace.replaceContent {
 				panic(replaceContent)
 			}
+		}
+	}
+}
+
+type compareCallMeta struct {
+	Expression string
+	Call       string
+	Args       []interface{}
+}
+
+var (
+	compareGoCallMetaSlice = []*compareCallMeta{
+		{
+			Expression: "HaveReadGP(1)",
+			Call:       "HaveReadGP",
+			Args:       []interface{}{int32(1)},
+		},
+		{
+			Expression: "GetPlayerLevel()",
+			Call:       "GetPlayerLevel",
+			Args:       nil,
+		},
+		{
+			Expression: `HaveReadGP("gamephone")`,
+			Call:       "HaveReadGP",
+			Args:       []interface{}{`"gamephone"`},
+		},
+		{
+			Expression: `HaveReadGP("gamephone",1,"remove")`,
+			Call:       "HaveReadGP",
+			Args: []interface{}{
+				`"gamephone"`, int32(1), `"remove"`,
+			},
+		},
+		// TODO: syntax tree
+		// {
+		// 	Expression: `HaveReadGP(1) && HaveReadGP(2)`,
+		// 	Call:       "HaveReadGP",
+		// 	Args: []interface{}{
+		// 		int32(1),
+		// 	},
+		// },
+		// {
+		// 	Expression: `HaveReadGP(1, HaveReadGP(2)) && HaveReadGP(3)`,
+		// 	Call:       "HaveReadGP",
+		// 	Args: []interface{}{
+		// 		int32(1),
+		// 	},
+		// },
+		// TODO: func wrapper
+		// {
+		// 	Expression: "func() { HaveReadGP(1,HaveReadGP(1));HaveReadGP(1,HaveReadGP(1)) }",
+		// 	Call:       "HaveReadGP",
+		// 	Args:       []interface{}{int32(1)},
+		// },
+		// TODO: not support
+		// {
+		// 	Expression: "HaveReadGP(1)HaveReadGP(2)HaveReadGP(3)",
+		// 	Call:       "HaveReadGP",
+		// 	Args:       []interface{}{int32(1)},
+		// },
+		// {
+		// 	Expression: "HaveReadGP(1) and HaveReadGP(2) and HaveReadGP(3)",
+		// 	Call:       "HaveReadGP",
+		// 	Args:       []interface{}{int32(1)},
+		// },
+	}
+)
+
+func TestParseGoCallMeta(t *testing.T) {
+	for _, _gcm := range compareGoCallMetaSlice {
+		gcm := ExtractGoCallMeta(_gcm.Expression)
+		gcm.PrintAST()
+
+		if gcm.Expression() != _gcm.Expression {
+			panic(gcm.Expression())
+		}
+		if gcm.Call() != _gcm.Call {
+			panic(gcm.Call())
+		}
+
+		if len(gcm.Args()) != len(_gcm.Args) {
+			panic(len(gcm.Args()))
+		}
+		for _, _arg := range _gcm.Args {
+			for _, arg := range gcm.Args() {
+				if reflect.DeepEqual(arg, _arg) {
+					goto NEXT_PARAM
+				}
+			}
+			panic(_arg)
+		NEXT_PARAM:
 		}
 	}
 }
