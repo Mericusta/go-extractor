@@ -32,49 +32,43 @@ func SearchGoStructMeta(fileAST *ast.File, structName string) *GoStructMeta {
 	var structDecl *ast.TypeSpec
 	var commentDecl *ast.CommentGroup
 	ast.Inspect(fileAST, func(n ast.Node) bool {
-		if n == fileAST {
-			return true
-		}
-		if n == nil || structDecl != nil {
-			return false
-		}
-		genDecl, ok := n.(*ast.GenDecl)
-		if !ok {
-			return false
-		}
-		ast.Inspect(genDecl, func(n ast.Node) bool {
-			if n == genDecl {
+		if genDecl, ok := n.(*ast.GenDecl); ok {
+			ast.Inspect(genDecl, func(n ast.Node) bool {
+				if IsStructNode(n) {
+					typeSpec := n.(*ast.TypeSpec)
+					if typeSpec.Name.String() == structName {
+						structDecl = typeSpec
+						commentDecl = genDecl.Doc
+						return false
+					}
+				}
 				return true
-			}
-			if n == nil || structDecl != nil {
-				return false
-			}
-			typeSpec, ok := n.(*ast.TypeSpec)
-			if !ok {
-				return true
-			}
-			if typeSpec.Type == nil {
-				return false
-			}
-			_, ok = typeSpec.Type.(*ast.StructType)
-			if !ok {
-				return true
-			}
-			if typeSpec.Name.String() == structName {
-				structDecl = typeSpec
-				commentDecl = genDecl.Doc
-				return false
-			}
-			return true
-		})
-		return false
+			})
+			return false // genDecl traverse done
+		}
+		return structDecl == nil // already found
 	})
+	if structDecl == nil {
+		return nil
+	}
 	return &GoStructMeta{
 		typeSpec:     structDecl,
 		commentGroup: commentDecl,
 		methodDecl:   make(map[string]*GoMethodMeta),
 		memberDecl:   make(map[string]*GoMemberMeta),
 	}
+}
+
+func IsStructNode(n ast.Node) bool {
+	typeSpec, ok := n.(*ast.TypeSpec)
+	if !ok {
+		return false
+	}
+	if typeSpec.Type == nil {
+		return false
+	}
+	_, ok = typeSpec.Type.(*ast.StructType)
+	return ok
 }
 
 func (gsm *GoStructMeta) PrintAST() {

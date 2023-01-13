@@ -28,38 +28,28 @@ func ExtractGoMethodMeta(extractFilepath string, structName, methodName string) 
 func SearchGoMethodMeta(fileAST *ast.File, structName, methodName string) *GoMethodMeta {
 	var methodDecl *ast.FuncDecl
 	ast.Inspect(fileAST, func(n ast.Node) bool {
-		if n == fileAST {
-			return true
-		}
-		if n == nil || methodDecl != nil {
-			return false
-		}
-		decl, ok := n.(*ast.FuncDecl)
-		if !ok {
-			return false
-		}
-		if decl.Name.String() == methodName {
-			if decl.Recv != nil && len(decl.Recv.List) > 0 {
-				var recvTypeIdentNode ast.Node
-				switch decl.Recv.List[0].Type.(type) {
-				case *ast.Ident:
-					recvTypeIdentNode = decl.Recv.List[0].Type
-				case *ast.StarExpr:
-					recvTypeIdentNode = decl.Recv.List[0].Type.(*ast.StarExpr).X
-				}
-				recvTypeIdent, ok := recvTypeIdentNode.(*ast.Ident)
-				if ok && recvTypeIdent.Name == structName {
+		if IsMethodNode(n) {
+			decl := n.(*ast.FuncDecl)
+			if decl.Name.String() == methodName {
+				recvStructName, _ := extractMethodRecvStruct(decl)
+				if recvStructName == structName {
 					methodDecl = decl
-					return false
 				}
 			}
-			return false
 		}
-		return true
+		return methodDecl == nil
 	})
+	if methodDecl == nil {
+		return nil
+	}
 	return &GoMethodMeta{
 		methodDecl: methodDecl,
 	}
+}
+
+func IsMethodNode(n ast.Node) bool {
+	decl, ok := n.(*ast.FuncDecl)
+	return ok && decl.Recv != nil && len(decl.Recv.List) > 0
 }
 
 func (gmm *GoMethodMeta) MethodName() string {
@@ -67,19 +57,23 @@ func (gmm *GoMethodMeta) MethodName() string {
 }
 
 func (gmm *GoMethodMeta) RecvStruct() (string, bool) {
-	if len(gmm.methodDecl.Recv.List) < 1 {
+	return extractMethodRecvStruct(gmm.methodDecl)
+}
+
+func extractMethodRecvStruct(methodDecl *ast.FuncDecl) (string, bool) {
+	if len(methodDecl.Recv.List) < 1 {
 		return "", false
 	}
 
 	var pointerReceiver bool
 	var recvTypeIdentNode ast.Node
-	switch gmm.methodDecl.Recv.List[0].Type.(type) {
+	switch methodDecl.Recv.List[0].Type.(type) {
 	case *ast.Ident:
 		pointerReceiver = false
-		recvTypeIdentNode = gmm.methodDecl.Recv.List[0].Type
+		recvTypeIdentNode = methodDecl.Recv.List[0].Type
 	case *ast.StarExpr:
 		pointerReceiver = true
-		recvTypeIdentNode = gmm.methodDecl.Recv.List[0].Type.(*ast.StarExpr).X
+		recvTypeIdentNode = methodDecl.Recv.List[0].Type.(*ast.StarExpr).X
 	}
 
 	recvTypeIdent, ok := recvTypeIdentNode.(*ast.Ident)

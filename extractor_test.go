@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"reflect"
 	"testing"
+
+	stpmap "github.com/Mericusta/go-stp/map"
 )
 
 type compareGoProjectMeta struct {
@@ -61,7 +63,8 @@ var (
 	standardProjectIgnorePathMap = map[string]struct{}{
 		standardProjectRelPath + "/vendor": {},
 	}
-	standardProjectAbsPath    = "d:\\Projects\\go-extractor\\testdata\\standardProject"
+	// standardProjectAbsPath    = "d:\\Projects\\go-extractor\\testdata\\standardProject"
+	standardProjectAbsPath    = "d:\\Projects\\SGAME\\server-dev\\gameServer\\game_server\\pkg\\github.com\\Mericusta\\go-extractor\\testdata\\standardProject"
 	standardProjectModuleName = "standardProject"
 	standardProjectMeta       = &compareGoProjectMeta{
 		ProjectPath: standardProjectAbsPath,
@@ -277,6 +280,73 @@ func checkPackageMeta(gpm *GoPackageMeta, _gpm *compareGoPackageMeta) {
 	if gpm.ImportPath != _gpm.ImportPath {
 		panic(gpm.ImportPath)
 	}
+	if len(gpm.FileNames()) != len(stpmap.Key(_gpm.pkgFileMap)) {
+		panic(len(gpm.FileNames()))
+	}
+	for _, _fileName := range stpmap.Key(_gpm.pkgFileMap) {
+		for _, fileName := range gpm.FileNames() {
+			if fileName == _fileName {
+				goto NEXT_FILE
+			}
+		}
+		panic(_fileName)
+	NEXT_FILE:
+	}
+	if len(gpm.StructNames()) != len(stpmap.Key(_gpm.pkgStructMeta)) {
+		panic(len(gpm.StructNames()))
+	}
+	for _, _structName := range stpmap.Key(_gpm.pkgStructMeta) {
+		for _, structName := range gpm.StructNames() {
+			if structName == _structName {
+				goto NEXT_STRUCT
+			}
+		}
+		panic(_structName)
+	NEXT_STRUCT:
+	}
+	if len(gpm.InterfaceNames()) != len(stpmap.Key(_gpm.pkgInterfaceMeta)) {
+		panic(len(gpm.InterfaceNames()))
+	}
+	for _, _structName := range stpmap.Key(_gpm.pkgInterfaceMeta) {
+		for _, structName := range gpm.InterfaceNames() {
+			if structName == _structName {
+				goto NEXT_INTERFACE
+			}
+		}
+		panic(_structName)
+	NEXT_INTERFACE:
+	}
+	if len(gpm.MethodNames()) != len(stpmap.Key(_gpm.pkgStructMeta)) {
+		panic(len(gpm.MethodNames()))
+	}
+	for _structName, _gsm := range _gpm.pkgStructMeta {
+		structMethodMap := gpm.MethodNames()
+		methods, has := structMethodMap[_structName]
+		if !has {
+			panic(_structName)
+		}
+		if len(methods) != len(_gsm.StructMethodMeta) {
+			panic(len(methods))
+		}
+		for _methodName := range _gsm.StructMethodMeta {
+			for _, methodName := range methods {
+				if _methodName == methodName {
+					goto NEXT_METHOD
+				}
+			}
+			panic(_methodName)
+		NEXT_METHOD:
+		}
+	}
+	// for _, _structName := range stpmap.Key(_gpm.pkgInterfaceMeta) {
+	// 	for _, structName := range gpm.MethodNames() {
+	// 		if structName == _structName {
+	// 			goto NEXT_INTERFACE
+	// 		}
+	// 	}
+	// 	panic(_structName)
+	// NEXT_INTERFACE:
+	// }
 }
 
 func checkFileMeta(gfm *GoFileMeta, _gfm *compareGoFileMeta) {

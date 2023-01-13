@@ -34,21 +34,13 @@ func ExtractGoFunctionMeta(extractFilepath string, functionName string) (*GoFunc
 func SearchGoFunctionMeta(fileMeta *GoFileMeta, functionName string) *GoFunctionMeta {
 	var funcDecl *ast.FuncDecl
 	ast.Inspect(fileMeta.fileAST, func(n ast.Node) bool {
-		if n == fileMeta.fileAST {
-			return true
+		if IsFuncNode(n) {
+			decl := n.(*ast.FuncDecl)
+			if decl.Name.String() == functionName {
+				funcDecl = decl
+			}
 		}
-		if n == nil || funcDecl != nil {
-			return false
-		}
-		decl, ok := n.(*ast.FuncDecl)
-		if !ok {
-			return true
-		}
-		if decl.Recv == nil && decl.Name.String() == functionName {
-			funcDecl = decl
-			return false
-		}
-		return true
+		return funcDecl == nil
 	})
 	if funcDecl == nil {
 		return nil
@@ -57,6 +49,11 @@ func SearchGoFunctionMeta(fileMeta *GoFileMeta, functionName string) *GoFunction
 		fileMeta: fileMeta,
 		funcDecl: funcDecl,
 	}
+}
+
+func IsFuncNode(n ast.Node) bool {
+	funcDecl, ok := n.(*ast.FuncDecl)
+	return ok && funcDecl.Recv == nil
 }
 
 func (gfm *GoFunctionMeta) PrintAST() {

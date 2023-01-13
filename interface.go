@@ -8,8 +8,9 @@ import (
 )
 
 type GoInterfaceMeta struct {
-	typeSpec   *ast.TypeSpec
-	methodMeta map[string]*GoInterfaceMethodMeta
+	typeSpec     *ast.TypeSpec
+	commentGroup *ast.CommentGroup
+	methodMeta   map[string]*GoInterfaceMethodMeta
 }
 
 type GoInterfaceMethodMeta struct {
@@ -32,34 +33,44 @@ func ExtractGoInterfaceMeta(extractFilepath string, interfaceName string) (*GoIn
 
 func SearchGoInterfaceMeta(fileAST *ast.File, interfaceName string) *GoInterfaceMeta {
 	var interfaceDecl *ast.TypeSpec
+	var commentDecl *ast.CommentGroup
 	ast.Inspect(fileAST, func(n ast.Node) bool {
-		if n == fileAST {
-			return true
+		if genDecl, ok := n.(*ast.GenDecl); ok {
+			ast.Inspect(genDecl, func(n ast.Node) bool {
+				if IsInterfaceNode(n) {
+					typeSpec := n.(*ast.TypeSpec)
+					if typeSpec.Name.String() == interfaceName {
+						interfaceDecl = typeSpec
+						commentDecl = genDecl.Doc
+						return false
+					}
+				}
+				return true
+			})
+			return false // genDecl traverse done
 		}
-		if n == nil || interfaceDecl != nil {
-			return false
-		}
-		typeSpec, ok := n.(*ast.TypeSpec)
-		if !ok {
-			return true
-		}
-		if typeSpec.Type == nil {
-			return false
-		}
-		_, ok = typeSpec.Type.(*ast.InterfaceType)
-		if !ok {
-			return true
-		}
-		if typeSpec.Name.String() == interfaceName {
-			interfaceDecl = typeSpec
-			return false
-		}
-		return true
+		return interfaceDecl == nil // already found
 	})
-	return &GoInterfaceMeta{
-		typeSpec:   interfaceDecl,
-		methodMeta: make(map[string]*GoInterfaceMethodMeta),
+	if interfaceDecl == nil {
+		return nil
 	}
+	return &GoInterfaceMeta{
+		typeSpec:     interfaceDecl,
+		commentGroup: commentDecl,
+		methodMeta:   make(map[string]*GoInterfaceMethodMeta),
+	}
+}
+
+func IsInterfaceNode(n ast.Node) bool {
+	typeSpec, ok := n.(*ast.TypeSpec)
+	if !ok {
+		return false
+	}
+	if typeSpec.Type == nil {
+		return false
+	}
+	_, ok = typeSpec.Type.(*ast.InterfaceType)
+	return ok
 }
 
 func (gim *GoInterfaceMeta) PrintAST() {

@@ -1,13 +1,13 @@
      0  *ast.File {
-     1  .  Package: d:\Projects\go-extractor\testdata\standardProject\cmd\init.go:1:1
+     1  .  Package: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\cmd\init.go:1:1
      2  .  Name: *ast.Ident {
-     3  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\cmd\init.go:1:9
+     3  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\cmd\init.go:1:9
      4  .  .  Name: "main"
      5  .  }
      6  .  Decls: []ast.Decl (len = 1) {
      7  .  .  0: *ast.FuncDecl {
      8  .  .  .  Name: *ast.Ident {
-     9  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\cmd\init.go:3:6
+     9  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\cmd\init.go:3:6
     10  .  .  .  .  Name: "Init"
     11  .  .  .  .  Obj: *ast.Object {
     12  .  .  .  .  .  Kind: func
@@ -16,15 +16,15 @@
     15  .  .  .  .  }
     16  .  .  .  }
     17  .  .  .  Type: *ast.FuncType {
-    18  .  .  .  .  Func: d:\Projects\go-extractor\testdata\standardProject\cmd\init.go:3:1
+    18  .  .  .  .  Func: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\cmd\init.go:3:1
     19  .  .  .  .  Params: *ast.FieldList {
-    20  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\cmd\init.go:3:10
-    21  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\cmd\init.go:3:11
+    20  .  .  .  .  .  Opening: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\cmd\init.go:3:10
+    21  .  .  .  .  .  Closing: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\cmd\init.go:3:11
     22  .  .  .  .  }
     23  .  .  .  }
     24  .  .  .  Body: *ast.BlockStmt {
-    25  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\cmd\init.go:3:13
-    26  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\cmd\init.go:5:1
+    25  .  .  .  .  Lbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\cmd\init.go:3:13
+    26  .  .  .  .  Rbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\cmd\init.go:5:1
     27  .  .  .  }
     28  .  .  }
     29  .  }
