@@ -12,12 +12,13 @@ type GoMethodMeta struct {
 }
 
 func ExtractGoMethodMeta(extractFilepath string, structName, methodName string) (*GoMethodMeta, error) {
-	fileAST, err := parser.ParseFile(token.NewFileSet(), extractFilepath, nil, parser.ParseComments)
+	fileSet := token.NewFileSet()
+	fileAST, err := parser.ParseFile(fileSet, extractFilepath, nil, parser.ParseComments)
 	if err != nil {
 		return nil, err
 	}
 
-	gmm := SearchGoMethodMeta(fileAST, structName, methodName)
+	gmm := SearchGoMethodMeta(&GoFileMeta{fileSet: fileSet, fileAST: fileAST}, structName, methodName)
 	if gmm.funcDecl == nil {
 		return nil, fmt.Errorf("can not find method decl")
 	}
@@ -25,9 +26,9 @@ func ExtractGoMethodMeta(extractFilepath string, structName, methodName string) 
 	return gmm, nil
 }
 
-func SearchGoMethodMeta(fileAST *ast.File, structName, methodName string) *GoMethodMeta {
+func SearchGoMethodMeta(fileMeta *GoFileMeta, structName, methodName string) *GoMethodMeta {
 	var methodDecl *ast.FuncDecl
-	ast.Inspect(fileAST, func(n ast.Node) bool {
+	ast.Inspect(fileMeta.fileAST, func(n ast.Node) bool {
 		if IsMethodNode(n) {
 			decl := n.(*ast.FuncDecl)
 			if decl.Name.String() == methodName {
@@ -44,7 +45,10 @@ func SearchGoMethodMeta(fileAST *ast.File, structName, methodName string) *GoMet
 	}
 	return &GoMethodMeta{
 		GoFunctionMeta: &GoFunctionMeta{
-			funcDecl: methodDecl,
+			fileMeta:            fileMeta,
+			funcDecl:            methodDecl,
+			nonSelectorCallMeta: make(map[string][]*GoCallMeta),
+			selectorCallMeta:    make(map[string]map[string][]*GoCallMeta),
 		},
 	}
 }
@@ -52,10 +56,6 @@ func SearchGoMethodMeta(fileAST *ast.File, structName, methodName string) *GoMet
 func IsMethodNode(n ast.Node) bool {
 	decl, ok := n.(*ast.FuncDecl)
 	return ok && decl.Recv != nil && len(decl.Recv.List) > 0
-}
-
-func (gmm *GoMethodMeta) MethodName() string {
-	return gmm.funcDecl.Name.String()
 }
 
 func (gmm *GoMethodMeta) RecvStruct() (string, bool) {

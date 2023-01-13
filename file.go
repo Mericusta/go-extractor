@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 )
 
 type GoFileMeta struct {
@@ -51,6 +52,18 @@ func (gfm *GoFileMeta) OutputAST() {
 	}
 	defer outputFile.Close()
 	ast.Fprint(outputFile, gfm.fileSet, gfm.fileAST, ast.NotNilFilter)
+}
+
+func (gfm *GoFileMeta) Expression(pos, end token.Pos) string {
+	fileContent, err := os.ReadFile(gfm.Path)
+	if err != nil {
+		return ""
+	}
+	fileContentLen := len(fileContent)
+	if pos > end || int(pos) >= fileContentLen || int(end) >= fileContentLen {
+		return ""
+	}
+	return strings.TrimSpace(string(fileContent[pos-1 : end-1]))
 }
 
 func (gfm *GoFileMeta) PkgName() string {

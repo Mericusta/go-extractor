@@ -240,7 +240,7 @@ func (gpm *GoPackageMeta) SearchMethodMeta(structName, methodName string) *GoMet
 
 	for _, gfm := range gpm.pkgFileMap {
 		if gfm.fileAST != nil && gfm.fileAST.Scope != nil {
-			gmm := SearchGoMethodMeta(gfm.fileAST, structName, methodName)
+			gmm := SearchGoMethodMeta(gfm, structName, methodName)
 			if gmm != nil {
 				gpm.pkgStructDecl[structName].methodDecl[methodName] = gmm
 				break

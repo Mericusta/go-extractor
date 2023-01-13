@@ -8,11 +8,12 @@ import (
 )
 
 type GoCallMeta struct {
-	expression string
-	callExpr   *ast.CallExpr
+	fileMeta *GoFileMeta
+	callExpr *ast.CallExpr
+	args     []*GoArgMeta
 }
 
-func ExtractGoCallMeta(expression string) *GoCallMeta {
+func ParseGoCallMeta(expression string) *GoCallMeta {
 	callAST, err := parser.ParseExpr(expression)
 	if err != nil {
 		panic(err)
@@ -23,54 +24,129 @@ func ExtractGoCallMeta(expression string) *GoCallMeta {
 		panic(callAST)
 	}
 	return &GoCallMeta{
-		expression: expression,
-		callExpr:   callExpr,
+		callExpr: callExpr,
+		args:     make([]*GoArgMeta, 0),
 	}
+}
+
+func SearchGoCallMeta(fileMeta *GoFileMeta, node ast.Node, call, from string) *GoCallMeta {
+	searchSelector := len(from) > 0
+	var callDecl *ast.CallExpr
+	ast.Inspect(node, func(n ast.Node) bool {
+		if searchSelector && IsSelectorCallNode(n) {
+			fromIdent := n.(*ast.CallExpr).Fun.(*ast.SelectorExpr).X.(*ast.Ident)
+			callIdent := n.(*ast.CallExpr).Fun.(*ast.SelectorExpr).Sel
+			if fromIdent.Name == from && callIdent.Name == call {
+				callDecl = n.(*ast.CallExpr)
+			}
+		} else if !searchSelector && IsNonSelectorCallNode(n) {
+			if n.(*ast.CallExpr).Fun.(*ast.Ident).Name == call {
+				callDecl = n.(*ast.CallExpr)
+			}
+		}
+		return callDecl == nil
+	})
+	return &GoCallMeta{
+		fileMeta: fileMeta,
+		callExpr: callDecl,
+	}
+}
+
+func IsNonSelectorCallNode(node ast.Node) bool {
+	callExpr, ok := node.(*ast.CallExpr)
+	if !ok {
+		return false
+	}
+	if callExpr.Fun == nil {
+		return false
+	}
+	_, ok = callExpr.Fun.(*ast.Ident)
+	return ok
+}
+
+func IsSelectorCallNode(node ast.Node) bool {
+	callExpr, ok := node.(*ast.CallExpr)
+	if !ok {
+		return false
+	}
+	if callExpr.Fun == nil {
+		return false
+	}
+	_, ok = callExpr.Fun.(*ast.SelectorExpr)
+	return ok
 }
 
 func (gcm *GoCallMeta) PrintAST() {
 	ast.Print(token.NewFileSet(), gcm.callExpr)
 }
 
+// TODO: 非必要不存储额外信息
 func (gcm *GoCallMeta) Expression() string {
-	return gcm.expression
+	return gcm.fileMeta.Expression(gcm.callExpr.Pos(), gcm.callExpr.End())
 }
 
 func (gcm *GoCallMeta) Call() string {
-	if gcm.callExpr == nil || gcm.callExpr.Fun == nil {
-		return ""
+	if IsNonSelectorCallNode(gcm.callExpr) {
+		return gcm.callExpr.Fun.(*ast.Ident).Name
+	} else if IsSelectorCallNode(gcm.callExpr) {
+		return gcm.callExpr.Fun.(*ast.SelectorExpr).Sel.Name
 	}
-	ident, ok := gcm.callExpr.Fun.(*ast.Ident)
-	if !ok {
-		return ""
-	}
-	return ident.Name
+	return ""
 }
 
-func (gcm *GoCallMeta) Args() []interface{} {
+func (gcm *GoCallMeta) From() string {
+	if IsSelectorCallNode(gcm.callExpr) {
+		return gcm.callExpr.Fun.(*ast.SelectorExpr).X.(*ast.Ident).Name
+	}
+	return ""
+}
+
+func (gcm *GoCallMeta) Args() []*GoArgMeta {
 	if gcm.callExpr == nil || len(gcm.callExpr.Args) == 0 {
 		return nil
 	}
-	args := make([]interface{}, 0, len(gcm.callExpr.Args))
+	args := make([]*GoArgMeta, 0, len(gcm.callExpr.Args))
 	for _, argExpr := range gcm.callExpr.Args {
-		switch argExpr.(type) {
+		switch argExpr := argExpr.(type) {
 		case *ast.BasicLit:
-			basicLit := argExpr.(*ast.BasicLit)
-			switch basicLit.Kind {
+			switch argExpr.Kind {
 			case token.INT:
-				arg, err := strconv.ParseInt(basicLit.Value, 10, 32)
+				argValue, err := strconv.ParseInt(argExpr.Value, 10, 32)
 				if err != nil {
 					panic(err)
 				}
-				args = append(args, int32(arg))
+				args = append(args, &GoArgMeta{
+					node:  argExpr,
+					arg:   argExpr.Value,
+					value: argValue,
+				})
 			case token.STRING:
-				args = append(args, basicLit.Value)
+				args = append(args, &GoArgMeta{
+					node:  argExpr,
+					arg:   argExpr.Value,
+					value: argExpr.Value,
+				})
 			}
-			// switch basicLit
+		case *ast.Ident:
+			args = append(args, &GoArgMeta{
+				node: argExpr,
+				arg:  argExpr.Name,
+			})
+		case *ast.SelectorExpr:
+			args = append(args, &GoArgMeta{
+				node: argExpr,
+				from: argExpr.X.(*ast.Ident).Name,
+				arg:  argExpr.Sel.Name,
+			})
+		case *ast.CallExpr:
+			args = append(args, &GoArgMeta{
+				node: argExpr,
+				callMeta: &GoCallMeta{
+					fileMeta: gcm.fileMeta,
+					callExpr: argExpr,
+				},
+			})
 		}
-		// switch basicLit, ok := argExpr.(*ast.BasicLit)
-
-		// args = append(args, arg)
 	}
 	return args
 }

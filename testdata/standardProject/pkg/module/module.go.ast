@@ -645,9 +645,9 @@
    644  .  }
    645  .  Scope: *ast.Scope {
    646  .  .  Objects: map[string]*ast.Object (len = 3) {
-   647  .  .  .  "ExampleStruct": *(obj @ 48)
-   648  .  .  .  "NewExampleStruct": *(obj @ 131)
-   649  .  .  .  "ExampleFunc": *(obj @ 570)
+   647  .  .  .  "ExampleFunc": *(obj @ 570)
+   648  .  .  .  "ExampleStruct": *(obj @ 48)
+   649  .  .  .  "NewExampleStruct": *(obj @ 131)
    650  .  .  }
    651  .  }
    652  .  Imports: []*ast.ImportSpec (len = 1) {

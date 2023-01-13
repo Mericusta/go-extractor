@@ -43,6 +43,7 @@ type compareGoInterfaceMeta struct {
 type compareGoFunctionMeta struct {
 	FunctionName string
 	Doc          []string
+	CallMeta     []*compareCallMeta
 }
 
 type compareGoMemberMeta struct {
@@ -53,9 +54,24 @@ type compareGoMemberMeta struct {
 }
 
 type compareGoMethodMeta struct {
-	MethodName      string
+	*compareGoFunctionMeta
 	RecvStruct      string
 	PointerReceiver bool
+}
+
+type compareCallMeta struct {
+	Expression string
+	Call       string
+	From       string
+	Args       []*compareArgMeta
+}
+
+type compareArgMeta struct {
+	Expression string
+	Arg        string
+	From       string
+	Value      interface{}
+	CallMeta   *compareCallMeta
 }
 
 var (
@@ -155,17 +171,93 @@ var (
 						},
 						StructMethodMeta: map[string]*compareGoMethodMeta{
 							"ExampleFunc": {
-								MethodName:      "ExampleFunc",
+								compareGoFunctionMeta: &compareGoFunctionMeta{
+									FunctionName: "ExampleFunc",
+									CallMeta: []*compareCallMeta{
+										{
+											Expression: `NewExampleStruct(v)`,
+											Call:       "NewExampleStruct",
+											Args: []*compareArgMeta{
+												{
+													Arg: "v",
+												},
+											},
+										},
+										{
+											Expression: `fmt.Println("module.ExampleStruct.ExampleFunc Hello go-extractor,", nes.V())`,
+											Call:       "Println",
+											From:       "fmt",
+											Args: []*compareArgMeta{
+												{
+													Arg:   `"module.ExampleStruct.ExampleFunc Hello go-extractor,"`,
+													Value: `"module.ExampleStruct.ExampleFunc Hello go-extractor,"`,
+												},
+												{
+													From: "nes",
+													CallMeta: &compareCallMeta{
+														Expression: `nes.V()`,
+														Call:       "V",
+														From:       "nes",
+													},
+												},
+											},
+										},
+										{
+											Expression: `nes.V()`,
+											Call:       "V",
+											From:       "nes",
+										},
+									},
+								},
 								RecvStruct:      "ExampleStruct",
 								PointerReceiver: false,
 							},
 							"AnotherExampleFunc": {
-								MethodName:      "AnotherExampleFunc",
+								compareGoFunctionMeta: &compareGoFunctionMeta{
+									FunctionName: "AnotherExampleFunc",
+									CallMeta: []*compareCallMeta{
+										{
+											Expression: `NewExampleStruct(v)`,
+											Call:       "NewExampleStruct",
+											Args: []*compareArgMeta{
+												{
+													Arg: "v",
+												},
+											},
+										},
+										{
+											Expression: `fmt.Println("module.ExampleStruct.ExampleFunc Hello go-extractor,", nes.V())`,
+											Call:       "Println",
+											From:       "fmt",
+											Args: []*compareArgMeta{
+												{
+													Arg:   `"module.ExampleStruct.ExampleFunc Hello go-extractor,"`,
+													Value: `"module.ExampleStruct.ExampleFunc Hello go-extractor,"`,
+												},
+												{
+													From: "nes",
+													CallMeta: &compareCallMeta{
+														Expression: `nes.V()`,
+														Call:       "V",
+														From:       "nes",
+													},
+												},
+											},
+										},
+										{
+											Expression: `nes.V()`,
+											Call:       "V",
+											From:       "nes",
+										},
+									},
+								},
 								RecvStruct:      "ExampleStruct",
 								PointerReceiver: true,
 							},
 							"V": {
-								MethodName:      "V",
+								compareGoFunctionMeta: &compareGoFunctionMeta{
+									FunctionName: "V",
+								},
 								RecvStruct:      "ExampleStruct",
 								PointerReceiver: false,
 							},
@@ -183,6 +275,20 @@ var (
 					},
 					"ExampleFunc": {
 						FunctionName: "ExampleFunc",
+						CallMeta: []*compareCallMeta{
+							{
+								Expression: `s.ExampleFunc(s.v)`,
+								From:       "s",
+								Call:       "ExampleFunc",
+								Args: []*compareArgMeta{
+									{
+										Expression: `s.v`,
+										Arg:        "v",
+										From:       "s",
+									},
+								},
+							},
+						},
 					},
 				},
 			},
@@ -338,15 +444,6 @@ func checkPackageMeta(gpm *GoPackageMeta, _gpm *compareGoPackageMeta) {
 		NEXT_METHOD:
 		}
 	}
-	// for _, _structName := range stpmap.Key(_gpm.pkgInterfaceMeta) {
-	// 	for _, structName := range gpm.MethodNames() {
-	// 		if structName == _structName {
-	// 			goto NEXT_INTERFACE
-	// 		}
-	// 	}
-	// 	panic(_structName)
-	// NEXT_INTERFACE:
-	// }
 }
 
 func checkFileMeta(gfm *GoFileMeta, _gfm *compareGoFileMeta) {
@@ -376,6 +473,11 @@ func checkFunctionMeta(gfm *GoFunctionMeta, _gfm *compareGoFunctionMeta) {
 		panic(gfm.FunctionName())
 	}
 	checkDoc(gfm.Doc(), _gfm.Doc)
+	for _, _gcm := range _gfm.CallMeta {
+		for _, gcm := range gfm.SearchCallMeta(_gcm.Call, _gcm.From) {
+			checkCallMeta(gcm, _gcm)
+		}
+	}
 }
 
 func checkMemberMeta(gmm *GoMemberMeta, _gmm *compareGoMemberMeta) {
@@ -392,11 +494,16 @@ func checkMemberMeta(gmm *GoMemberMeta, _gmm *compareGoMemberMeta) {
 }
 
 func checkMethodMeta(gmm *GoMethodMeta, _gmm *compareGoMethodMeta) {
-	if gmm.MethodName() != _gmm.MethodName {
-		panic(gmm.MethodName())
+	if gmm.FunctionName() != _gmm.FunctionName {
+		panic(gmm.FunctionName())
 	}
 	if recvStruct, pointerReceiver := gmm.RecvStruct(); recvStruct != _gmm.RecvStruct || pointerReceiver != _gmm.PointerReceiver {
 		panic(fmt.Sprintf("%v, %v", recvStruct, pointerReceiver))
+	}
+	for _, _gcm := range _gmm.CallMeta {
+		for _, gcm := range gmm.SearchCallMeta(_gcm.Call, _gcm.From) {
+			checkCallMeta(gcm, _gcm)
+		}
 	}
 }
 
@@ -412,6 +519,42 @@ func checkDoc(doc, _doc []string) {
 		}
 		panic(_comment)
 	NEXT_COMMENT:
+	}
+}
+
+func checkCallMeta(gcm *GoCallMeta, _gcm *compareCallMeta) {
+	if gcm.Expression() != _gcm.Expression {
+		panic(gcm.Expression())
+	}
+	if gcm.Call() != _gcm.Call {
+		panic(gcm.Call())
+	}
+	if gcm.From() != _gcm.From {
+		panic(gcm.From())
+	}
+	if len(gcm.Args()) != len(_gcm.Args) {
+		panic(len(gcm.Args()))
+	}
+	for _, _arg := range _gcm.Args {
+		for _, arg := range gcm.Args() {
+			if _arg.CallMeta == nil && arg.Arg() == _arg.Arg {
+				if arg.From() != _arg.From {
+					panic(arg.From())
+				}
+				if arg.Arg() != _arg.Arg {
+					panic(arg.Arg())
+				}
+				if !reflect.DeepEqual(arg.Value(), _arg.Value) {
+					panic(arg.Value())
+				}
+				goto NEXT_ARG
+			} else if arg.CallMeta() != nil {
+				checkCallMeta(arg.CallMeta(), _arg.CallMeta)
+				goto NEXT_ARG
+			}
+		}
+		panic(_arg)
+	NEXT_ARG:
 	}
 }
 
@@ -508,18 +651,16 @@ func TestReplaceGoProjectMeta(t *testing.T) {
 	}
 }
 
-type compareCallMeta struct {
-	Expression string
-	Call       string
-	Args       []interface{}
-}
-
 var (
 	compareGoCallMetaSlice = []*compareCallMeta{
 		{
 			Expression: "HaveReadGP(1)",
 			Call:       "HaveReadGP",
-			Args:       []interface{}{int32(1)},
+			Args: []*compareArgMeta{
+				{
+					Value: int32(1),
+				},
+			},
 		},
 		{
 			Expression: "GetPlayerLevel()",
@@ -529,13 +670,24 @@ var (
 		{
 			Expression: `HaveReadGP("gamephone")`,
 			Call:       "HaveReadGP",
-			Args:       []interface{}{`"gamephone"`},
+			Args: []*compareArgMeta{
+				{
+					Value: `"gamephone"`},
+			},
 		},
 		{
 			Expression: `HaveReadGP("gamephone",1,"remove")`,
 			Call:       "HaveReadGP",
-			Args: []interface{}{
-				`"gamephone"`, int32(1), `"remove"`,
+			Args: []*compareArgMeta{
+				{
+					Value: `"gamephone"`,
+				},
+				{
+					Value: int32(1),
+				},
+				{
+					Value: `"remove"`,
+				},
 			},
 		},
 		// TODO: syntax tree
@@ -575,7 +727,7 @@ var (
 
 func TestParseGoCallMeta(t *testing.T) {
 	for _, _gcm := range compareGoCallMetaSlice {
-		gcm := ExtractGoCallMeta(_gcm.Expression)
+		gcm := ParseGoCallMeta(_gcm.Expression)
 		gcm.PrintAST()
 
 		if gcm.Expression() != _gcm.Expression {

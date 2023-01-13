@@ -7,13 +7,14 @@ import (
 	"go/format"
 	"go/parser"
 	"go/token"
-	"os"
 	"strings"
 )
 
 type GoFunctionMeta struct {
-	fileMeta *GoFileMeta
-	funcDecl *ast.FuncDecl
+	fileMeta            *GoFileMeta
+	funcDecl            *ast.FuncDecl
+	nonSelectorCallMeta map[string][]*GoCallMeta
+	selectorCallMeta    map[string]map[string][]*GoCallMeta
 }
 
 func ExtractGoFunctionMeta(extractFilepath string, functionName string) (*GoFunctionMeta, error) {
@@ -46,8 +47,10 @@ func SearchGoFunctionMeta(fileMeta *GoFileMeta, functionName string) *GoFunction
 		return nil
 	}
 	return &GoFunctionMeta{
-		fileMeta: fileMeta,
-		funcDecl: funcDecl,
+		fileMeta:            fileMeta,
+		funcDecl:            funcDecl,
+		nonSelectorCallMeta: make(map[string][]*GoCallMeta),
+		selectorCallMeta:    make(map[string]map[string][]*GoCallMeta),
 	}
 }
 
@@ -62,28 +65,6 @@ func (gfm *GoFunctionMeta) PrintAST() {
 
 func (gfm *GoFunctionMeta) FunctionName() string {
 	return gfm.funcDecl.Name.String()
-}
-
-func (gfm *GoFunctionMeta) CallMap() map[string][]*ast.CallExpr {
-	// ast.Print(token.NewFileSet(), gfm.funcDecl.Body)
-	callMap := make(map[string][]*ast.CallExpr)
-	for _, e := range gfm.funcDecl.Body.List {
-		exprStmt, ok := e.(*ast.ExprStmt)
-		if exprStmt == nil || !ok || exprStmt.X == nil {
-			continue
-		}
-		callExpr, ok := exprStmt.X.(*ast.CallExpr)
-		if callExpr == nil || !ok {
-			continue
-		}
-
-		ident, ok := callExpr.Fun.(*ast.Ident)
-		if ident == nil || !ok {
-			continue
-		}
-		callMap[ident.Name] = append(callMap[ident.Name], callExpr)
-	}
-	return callMap
 }
 
 func (gfm *GoFunctionMeta) Doc() []string {
@@ -115,17 +96,12 @@ func (gfm *GoFunctionMeta) ReturnTypes() []string {
 }
 
 func (gfm *GoFunctionMeta) ReplaceFunctionDoc(newDoc []string) (string, string, error) {
-	fileContent, err := os.ReadFile(gfm.fileMeta.Path)
-	if err != nil {
-		return "", "", err
-	}
-
 	originPos := gfm.funcDecl.Pos()
 	originEnd := gfm.funcDecl.End()
 	if gfm.funcDecl.Doc != nil {
 		originPos = gfm.funcDecl.Doc.Pos()
 	}
-	originContent := string(fileContent[originPos-1 : originEnd])
+	originContent := gfm.fileMeta.Expression(originPos, originEnd)
 
 	gfm.funcDecl.Doc = &ast.CommentGroup{
 		List: make([]*ast.Comment, 0, len(newDoc)),
@@ -137,10 +113,44 @@ func (gfm *GoFunctionMeta) ReplaceFunctionDoc(newDoc []string) (string, string, 
 	}
 
 	buffer := &bytes.Buffer{}
-	err = format.Node(buffer, gfm.fileMeta.fileSet, gfm.funcDecl)
+	err := format.Node(buffer, gfm.fileMeta.fileSet, gfm.funcDecl)
 	if err != nil {
 		panic(err)
 	}
 
 	return strings.ReplaceAll(originContent, "\r", ""), strings.ReplaceAll(buffer.String(), "\r", ""), nil
+}
+
+func (gfm *GoFunctionMeta) SearchCallMeta(call, from string) []*GoCallMeta {
+	if len(from) == 0 {
+		if callMetaSlice, has := gfm.nonSelectorCallMeta[call]; has && len(callMetaSlice) > 0 {
+			return callMetaSlice
+		}
+	} else {
+		if selector, has := gfm.selectorCallMeta[from]; has && len(selector) > 0 {
+			if callMetaSlice, has := selector[call]; has && len(callMetaSlice) > 0 {
+				return callMetaSlice
+			}
+		}
+	}
+
+	if gfm.funcDecl == nil {
+		return nil
+	}
+
+	gcm := SearchGoCallMeta(gfm.fileMeta, gfm.funcDecl, call, from)
+	if gcm != nil {
+		if len(from) == 0 {
+			gfm.nonSelectorCallMeta[call] = append(gfm.nonSelectorCallMeta[call], gcm)
+			return gfm.nonSelectorCallMeta[call]
+		} else {
+			if gfm.selectorCallMeta[from] == nil {
+				gfm.selectorCallMeta[from] = make(map[string][]*GoCallMeta)
+			}
+			gfm.selectorCallMeta[from][call] = append(gfm.selectorCallMeta[from][call], gcm)
+			return gfm.selectorCallMeta[from][call]
+		}
+	}
+
+	return nil
 }
