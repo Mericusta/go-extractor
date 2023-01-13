@@ -8,7 +8,7 @@ import (
 )
 
 type GoMethodMeta struct {
-	methodDecl *ast.FuncDecl
+	*GoFunctionMeta
 }
 
 func ExtractGoMethodMeta(extractFilepath string, structName, methodName string) (*GoMethodMeta, error) {
@@ -18,7 +18,7 @@ func ExtractGoMethodMeta(extractFilepath string, structName, methodName string) 
 	}
 
 	gmm := SearchGoMethodMeta(fileAST, structName, methodName)
-	if gmm.methodDecl == nil {
+	if gmm.funcDecl == nil {
 		return nil, fmt.Errorf("can not find method decl")
 	}
 
@@ -43,7 +43,9 @@ func SearchGoMethodMeta(fileAST *ast.File, structName, methodName string) *GoMet
 		return nil
 	}
 	return &GoMethodMeta{
-		methodDecl: methodDecl,
+		GoFunctionMeta: &GoFunctionMeta{
+			funcDecl: methodDecl,
+		},
 	}
 }
 
@@ -53,11 +55,11 @@ func IsMethodNode(n ast.Node) bool {
 }
 
 func (gmm *GoMethodMeta) MethodName() string {
-	return gmm.methodDecl.Name.String()
+	return gmm.funcDecl.Name.String()
 }
 
 func (gmm *GoMethodMeta) RecvStruct() (string, bool) {
-	return extractMethodRecvStruct(gmm.methodDecl)
+	return extractMethodRecvStruct(gmm.funcDecl)
 }
 
 func extractMethodRecvStruct(methodDecl *ast.FuncDecl) (string, bool) {
