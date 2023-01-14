@@ -30,3 +30,7 @@ func (gam *GoArgMeta) Value() interface{} {
 func (gam *GoArgMeta) CallMeta() *GoCallMeta {
 	return gam.callMeta
 }
+
+// func (gam *GoArgMeta) Type() interface{} {
+
+// }

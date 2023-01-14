@@ -25,7 +25,7 @@ func (es ExampleStruct) ExampleFunc(v int) {
 
 func (es *ExampleStruct) AnotherExampleFunc(v int) {
 	nes := NewExampleStruct(v)
-	fmt.Println("module.ExampleStruct.ExampleFunc Hello go-extractor,", nes.V())
+	fmt.Println("module.ExampleStruct.ExampleFunc Hello go-extractor,", es, es.v, es.V(), nes, nes.v, nes.V())
 }
 
 func (es ExampleStruct) V() int {

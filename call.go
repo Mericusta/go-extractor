@@ -80,7 +80,6 @@ func (gcm *GoCallMeta) PrintAST() {
 	ast.Print(token.NewFileSet(), gcm.callExpr)
 }
 
-// TODO: 非必要不存储额外信息
 func (gcm *GoCallMeta) Expression() string {
 	return gcm.fileMeta.Expression(gcm.callExpr.Pos(), gcm.callExpr.End())
 }
