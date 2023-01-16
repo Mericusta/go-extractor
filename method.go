@@ -3,8 +3,6 @@ package extractor
 import (
 	"fmt"
 	"go/ast"
-	"go/parser"
-	"go/token"
 )
 
 type GoMethodMeta struct {
@@ -12,23 +10,22 @@ type GoMethodMeta struct {
 }
 
 func ExtractGoMethodMeta(extractFilepath string, structName, methodName string) (*GoMethodMeta, error) {
-	fileSet := token.NewFileSet()
-	fileAST, err := parser.ParseFile(fileSet, extractFilepath, nil, parser.ParseComments)
+	gfm, err := ExtractGoFileMeta(extractFilepath)
 	if err != nil {
 		return nil, err
 	}
 
-	gmm := SearchGoMethodMeta(&GoFileMeta{fileSet: fileSet, fileAST: fileAST}, structName, methodName)
-	if gmm.funcDecl == nil {
-		return nil, fmt.Errorf("can not find method decl")
+	gmm := SearchGoMethodMeta(gfm.meta, structName, methodName)
+	if gmm.node == nil {
+		return nil, fmt.Errorf("can not find method node")
 	}
 
 	return gmm, nil
 }
 
-func SearchGoMethodMeta(fileMeta *GoFileMeta, structName, methodName string) *GoMethodMeta {
+func SearchGoMethodMeta(m *meta, structName, methodName string) *GoMethodMeta {
 	var methodDecl *ast.FuncDecl
-	ast.Inspect(fileMeta.fileAST, func(n ast.Node) bool {
+	ast.Inspect(m.node, func(n ast.Node) bool {
 		if IsMethodNode(n) {
 			decl := n.(*ast.FuncDecl)
 			if decl.Name.String() == methodName {
@@ -45,10 +42,9 @@ func SearchGoMethodMeta(fileMeta *GoFileMeta, structName, methodName string) *Go
 	}
 	return &GoMethodMeta{
 		GoFunctionMeta: &GoFunctionMeta{
-			fileMeta:            fileMeta,
-			funcDecl:            methodDecl,
-			nonSelectorCallMeta: make(map[string][]*GoCallMeta),
-			selectorCallMeta:    make(map[string]map[string][]*GoCallMeta),
+			meta: m.newMeta(methodDecl),
+			// nonSelectorCallMeta: make(map[string][]*GoCallMeta),
+			// selectorCallMeta:    make(map[string]map[string][]*GoCallMeta),
 		},
 	}
 }
@@ -59,7 +55,7 @@ func IsMethodNode(n ast.Node) bool {
 }
 
 func (gmm *GoMethodMeta) RecvStruct() (string, bool) {
-	return extractMethodRecvStruct(gmm.funcDecl)
+	return extractMethodRecvStruct(gmm.node.(*ast.FuncDecl))
 }
 
 func extractMethodRecvStruct(methodDecl *ast.FuncDecl) (string, bool) {

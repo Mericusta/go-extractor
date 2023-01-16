@@ -14,9 +14,9 @@ import (
 // 以包为单位查找
 
 type GoPackageMeta struct {
-	Name             string                      // pkg name
-	PkgPath          string                      // pkg path
-	ImportPath       string                      // import path
+	name             string                      // pkg name
+	pkgPath          string                      // pkg path
+	importPath       string                      // import path
 	pkgFileMap       map[string]*GoFileMeta      // all file meta
 	pkgStructDecl    map[string]*GoStructMeta    // all struct meta
 	pkgInterfaceDecl map[string]*GoInterfaceMeta // all interface meta
@@ -25,9 +25,9 @@ type GoPackageMeta struct {
 
 func NewGoPackageMeta(name, pkgPath, importPath string) *GoPackageMeta {
 	return &GoPackageMeta{
-		Name:             name,
-		PkgPath:          pkgPath,
-		ImportPath:       importPath,
+		name:             name,
+		pkgPath:          pkgPath,
+		importPath:       importPath,
 		pkgFileMap:       make(map[string]*GoFileMeta),
 		pkgStructDecl:    make(map[string]*GoStructMeta),
 		pkgInterfaceDecl: make(map[string]*GoInterfaceMeta),
@@ -63,7 +63,7 @@ func extractGoPackageMeta(packagePath string, files map[string]struct{}, spec bo
 	}
 
 	packageMeta := &GoPackageMeta{
-		PkgPath:          packagePathAbs,
+		pkgPath:          packagePathAbs,
 		pkgFileMap:       make(map[string]*GoFileMeta),
 		pkgStructDecl:    make(map[string]*GoStructMeta),
 		pkgInterfaceDecl: make(map[string]*GoInterfaceMeta),
@@ -95,11 +95,11 @@ func extractGoPackageMeta(packagePath string, files map[string]struct{}, spec bo
 			}
 
 			filePkg := fileMeta.PkgName()
-			if len(packageMeta.Name) > 0 && packageMeta.Name != filePkg {
-				fmt.Printf("difference package name %v - %v in file %v", packageMeta.Name, filePkg, filePathAbs)
+			if len(packageMeta.name) > 0 && packageMeta.name != filePkg {
+				fmt.Printf("difference package name %v - %v in file %v", packageMeta.name, filePkg, filePathAbs)
 				continue
 			}
-			packageMeta.Name = filePkg
+			packageMeta.name = filePkg
 			packageMeta.pkgFileMap[fileInfo.Name()] = fileMeta
 		}
 	} else {
@@ -107,6 +107,18 @@ func extractGoPackageMeta(packagePath string, files map[string]struct{}, spec bo
 	}
 
 	return packageMeta, nil
+}
+
+func (gpm *GoPackageMeta) Name() string {
+	return gpm.name
+}
+
+func (gpm *GoPackageMeta) PkgPath() string {
+	return gpm.pkgPath
+}
+
+func (gpm *GoPackageMeta) ImportPath() string {
+	return gpm.importPath
 }
 
 func (gpm *GoPackageMeta) FileNames() []string {
@@ -120,7 +132,7 @@ func (gpm *GoPackageMeta) SearchFileMeta(fileName string) *GoFileMeta {
 func (gpm *GoPackageMeta) StructNames() []string {
 	structNames := make([]string, 0)
 	for _, gfm := range gpm.pkgFileMap {
-		ast.Inspect(gfm.fileAST, func(n ast.Node) bool {
+		ast.Inspect(gfm.node, func(n ast.Node) bool {
 			if IsStructNode(n) {
 				structNames = append(structNames, n.(*ast.TypeSpec).Name.String())
 				return false
@@ -137,8 +149,8 @@ func (gpm *GoPackageMeta) SearchStructMeta(structName string) *GoStructMeta {
 	}
 
 	for _, gfm := range gpm.pkgFileMap {
-		if gfm.fileAST != nil && gfm.fileAST.Scope != nil {
-			gsm := SearchGoStructMeta(gfm.fileAST, structName)
+		if gfm.node != nil {
+			gsm := SearchGoStructMeta(gfm.meta, structName)
 			if gsm != nil {
 				gpm.pkgStructDecl[gsm.StructName()] = gsm
 				break
@@ -152,7 +164,7 @@ func (gpm *GoPackageMeta) SearchStructMeta(structName string) *GoStructMeta {
 func (gpm *GoPackageMeta) InterfaceNames() []string {
 	interfaceNames := make([]string, 0)
 	for _, gfm := range gpm.pkgFileMap {
-		ast.Inspect(gfm.fileAST, func(n ast.Node) bool {
+		ast.Inspect(gfm.node, func(n ast.Node) bool {
 			if IsInterfaceNode(n) {
 				interfaceNames = append(interfaceNames, n.(*ast.TypeSpec).Name.String())
 				return false
@@ -169,8 +181,8 @@ func (gpm *GoPackageMeta) SearchInterfaceMeta(interfaceName string) *GoInterface
 	}
 
 	for _, gfm := range gpm.pkgFileMap {
-		if gfm.fileAST != nil && gfm.fileAST.Scope != nil {
-			gim := SearchGoInterfaceMeta(gfm.fileAST, interfaceName)
+		if gfm.node != nil {
+			gim := SearchGoInterfaceMeta(gfm.meta, interfaceName)
 			if gim != nil {
 				gpm.pkgInterfaceDecl[gim.InterfaceName()] = gim
 				break
@@ -184,7 +196,7 @@ func (gpm *GoPackageMeta) SearchInterfaceMeta(interfaceName string) *GoInterface
 func (gpm *GoPackageMeta) FunctionNames() []string {
 	functionNames := make([]string, 0)
 	for _, gfm := range gpm.pkgFileMap {
-		ast.Inspect(gfm.fileAST, func(n ast.Node) bool {
+		ast.Inspect(gfm.node, func(n ast.Node) bool {
 			if IsFuncNode(n) {
 				functionNames = append(functionNames, n.(*ast.FuncDecl).Name.String())
 				return false
@@ -201,8 +213,8 @@ func (gpm *GoPackageMeta) SearchFunctionMeta(functionName string) *GoFunctionMet
 	}
 
 	for _, gfm := range gpm.pkgFileMap {
-		if gfm.fileAST != nil && gfm.fileAST.Scope != nil {
-			gfm := SearchGoFunctionMeta(gfm, functionName)
+		if gfm.node != nil {
+			gfm := SearchGoFunctionMeta(gfm.meta, functionName)
 			if gfm != nil {
 				gpm.pkgFunctionDecl[gfm.FunctionName()] = gfm
 				break
@@ -217,7 +229,7 @@ func (gpm *GoPackageMeta) MethodNames() map[string][]string {
 	methodNames := make(map[string][]string, 0)
 
 	for _, gfm := range gpm.pkgFileMap {
-		ast.Inspect(gfm.fileAST, func(n ast.Node) bool {
+		ast.Inspect(gfm.node, func(n ast.Node) bool {
 			if IsMethodNode(n) {
 				decl := n.(*ast.FuncDecl)
 				recvStructName, _ := extractMethodRecvStruct(decl)
@@ -239,8 +251,8 @@ func (gpm *GoPackageMeta) SearchMethodMeta(structName, methodName string) *GoMet
 	}
 
 	for _, gfm := range gpm.pkgFileMap {
-		if gfm.fileAST != nil && gfm.fileAST.Scope != nil {
-			gmm := SearchGoMethodMeta(gfm, structName, methodName)
+		if gfm.node != nil {
+			gmm := SearchGoMethodMeta(gfm.meta, structName, methodName)
 			if gmm != nil {
 				gpm.pkgStructDecl[structName].methodDecl[methodName] = gmm
 				break
@@ -249,10 +261,4 @@ func (gpm *GoPackageMeta) SearchMethodMeta(structName, methodName string) *GoMet
 	}
 
 	return gpm.pkgStructDecl[structName].methodDecl[methodName]
-}
-
-func (gpm *GoPackageMeta) Inspect(f func(ast.Node) bool) {
-	for _, fileMeta := range gpm.pkgFileMap {
-		ast.Inspect(fileMeta.fileAST, f)
-	}
 }

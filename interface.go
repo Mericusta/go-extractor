@@ -3,12 +3,11 @@ package extractor
 import (
 	"fmt"
 	"go/ast"
-	"go/parser"
-	"go/token"
 )
 
 type GoInterfaceMeta struct {
-	typeSpec     *ast.TypeSpec
+	// typeSpec     *ast.TypeSpec
+	*meta
 	commentGroup *ast.CommentGroup
 	methodMeta   map[string]*GoInterfaceMethodMeta
 }
@@ -18,23 +17,23 @@ type GoInterfaceMethodMeta struct {
 }
 
 func ExtractGoInterfaceMeta(extractFilepath string, interfaceName string) (*GoInterfaceMeta, error) {
-	fileAST, err := parser.ParseFile(token.NewFileSet(), extractFilepath, nil, parser.ParseComments)
+	gfm, err := ExtractGoFileMeta(extractFilepath)
 	if err != nil {
 		return nil, err
 	}
 
-	gim := SearchGoInterfaceMeta(fileAST, interfaceName)
-	if gim.typeSpec == nil {
-		return nil, fmt.Errorf("can not find interface decl")
+	gim := SearchGoInterfaceMeta(gfm.meta, interfaceName)
+	if gim.node == nil {
+		return nil, fmt.Errorf("can not find interface node")
 	}
 
 	return gim, nil
 }
 
-func SearchGoInterfaceMeta(fileAST *ast.File, interfaceName string) *GoInterfaceMeta {
+func SearchGoInterfaceMeta(m *meta, interfaceName string) *GoInterfaceMeta {
 	var interfaceDecl *ast.TypeSpec
 	var commentDecl *ast.CommentGroup
-	ast.Inspect(fileAST, func(n ast.Node) bool {
+	ast.Inspect(m.node, func(n ast.Node) bool {
 		if genDecl, ok := n.(*ast.GenDecl); ok {
 			ast.Inspect(genDecl, func(n ast.Node) bool {
 				if IsInterfaceNode(n) {
@@ -55,7 +54,7 @@ func SearchGoInterfaceMeta(fileAST *ast.File, interfaceName string) *GoInterface
 		return nil
 	}
 	return &GoInterfaceMeta{
-		typeSpec:     interfaceDecl,
+		meta:         m.newMeta(interfaceDecl),
 		commentGroup: commentDecl,
 		methodMeta:   make(map[string]*GoInterfaceMethodMeta),
 	}
@@ -73,12 +72,8 @@ func IsInterfaceNode(n ast.Node) bool {
 	return ok
 }
 
-func (gim *GoInterfaceMeta) PrintAST() {
-	ast.Print(token.NewFileSet(), gim.typeSpec)
-}
-
 func (gim *GoInterfaceMeta) InterfaceName() string {
-	return gim.typeSpec.Name.String()
+	return gim.node.(*ast.TypeSpec).Name.String()
 }
 
 // SearchMethodDecl search method decl from node.(*ast.InterfaceType)
@@ -94,7 +89,7 @@ func (gim *GoInterfaceMeta) SearchMethodDecl(methodName string) *GoInterfaceMeth
 }
 
 func (gim *GoInterfaceMeta) ForeachMethodDecl(f func(*ast.Field) bool) {
-	interfaceType := gim.typeSpec.Type.(*ast.InterfaceType)
+	interfaceType := gim.node.(*ast.TypeSpec).Type.(*ast.InterfaceType)
 	if interfaceType.Methods == nil {
 		return
 	}

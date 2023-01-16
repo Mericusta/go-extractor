@@ -9,65 +9,56 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"strings"
 )
 
 type GoFileMeta struct {
+	*meta
 	fileSet *token.FileSet
-	fileAST *ast.File
-	Name    string // filename
-	Path    string // file path
 }
 
 func ExtractGoFileMeta(extractFilepath string) (*GoFileMeta, error) {
-	fileSet := token.NewFileSet()
-	fileAST, err := parser.ParseFile(fileSet, extractFilepath, nil, parser.ParseComments)
+	fileAbsPath, err := filepath.Abs(extractFilepath)
 	if err != nil {
 		return nil, err
 	}
 
-	for _, obj := range fileAST.Scope.Objects {
-		switch obj.Kind {
-		}
+	fileSet := token.NewFileSet()
+	fileAST, err := parser.ParseFile(fileSet, fileAbsPath, nil, parser.ParseComments)
+	if err != nil {
+		return nil, err
 	}
 
-	fileMeta := &GoFileMeta{
+	meta := &GoFileMeta{
+		meta: &meta{
+			node: fileAST,
+			name: filepath.Base(fileAbsPath),
+			path: fileAbsPath,
+		},
 		fileSet: fileSet,
-		fileAST: fileAST,
-		Name:    filepath.Base(extractFilepath),
-		Path:    extractFilepath,
 	}
 
-	return fileMeta, nil
-}
-
-func (gfm *GoFileMeta) PrintAST() {
-	ast.Print(gfm.fileSet, gfm.fileAST)
+	return meta, nil
 }
 
 func (gfm *GoFileMeta) OutputAST() {
-	outputFile, err := os.OpenFile(fmt.Sprintf("%v.ast", gfm.Path), os.O_CREATE|os.O_TRUNC|os.O_RDWR, 0644)
+	outputFile, err := os.OpenFile(fmt.Sprintf("%v.ast", gfm.path), os.O_CREATE|os.O_TRUNC|os.O_RDWR, 0644)
 	if err != nil {
 		panic(err)
 	}
 	defer outputFile.Close()
-	ast.Fprint(outputFile, gfm.fileSet, gfm.fileAST, ast.NotNilFilter)
+	ast.Fprint(outputFile, gfm.fileSet, gfm.node, ast.NotNilFilter)
 }
 
-func (gfm *GoFileMeta) Expression(pos, end token.Pos) string {
-	fileContent, err := os.ReadFile(gfm.Path)
-	if err != nil {
-		return ""
-	}
-	fileContentLen := len(fileContent)
-	if pos > end || int(pos) >= fileContentLen || int(end) >= fileContentLen {
-		return ""
-	}
-	return strings.TrimSpace(string(fileContent[pos-1 : end-1]))
+func (gfm *GoFileMeta) Name() string {
+	return gfm.name
+}
+
+func (gfm *GoFileMeta) Path() string {
+	return gfm.path
 }
 
 func (gfm *GoFileMeta) PkgName() string {
-	return gfm.fileAST.Name.Name
+	return gfm.node.(*ast.File).Name.Name
 }
 
 // GoFmtFile go fmt 格式化文件

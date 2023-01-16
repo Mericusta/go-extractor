@@ -5,22 +5,24 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+
+	stpmap "github.com/Mericusta/go-stp/map"
 )
 
 // GoProjectMeta
 type GoProjectMeta struct {
 	// projects absolute path
-	ProjectPath string
+	projectPath string
 
 	// projects module name, extract from go.mod
 	// if there is no module name
 	// that means project doesn't have go.mod file
 	// and also can not export
-	ModuleName string
+	moduleName string
 
 	// projects all package meta
 	// package import path as key
-	PackageMap map[string]*GoPackageMeta
+	packageMap map[string]*GoPackageMeta
 }
 
 func ExtractGoProjectMeta(projectPath string, ignorePaths map[string]struct{}) (*GoProjectMeta, error) {
@@ -54,8 +56,8 @@ func extractGoProjectMeta(projectPath string, toHandlePaths map[string]struct{},
 	}
 
 	projectMeta := &GoProjectMeta{
-		ProjectPath: projectAbsPath,
-		PackageMap:  make(map[string]*GoPackageMeta),
+		projectPath: projectAbsPath,
+		packageMap:  make(map[string]*GoPackageMeta),
 	}
 
 	if projectDirStat.IsDir() {
@@ -77,7 +79,7 @@ func extractGoProjectMeta(projectPath string, toHandlePaths map[string]struct{},
 					if err != nil {
 						return err
 					}
-					projectMeta.ModuleName = moduleName
+					projectMeta.moduleName = moduleName
 				} else if filepath.Ext(path) == ".go" {
 					fileMeta, err := ExtractGoFileMeta(path)
 					if err != nil {
@@ -85,10 +87,10 @@ func extractGoProjectMeta(projectPath string, toHandlePaths map[string]struct{},
 					}
 					filePkg := fileMeta.PkgName()
 					if filePkg == "main" {
-						if _, has := projectMeta.PackageMap[filePkg]; !has {
-							projectMeta.PackageMap[filePkg] = NewGoPackageMeta(filePkg, filepath.Dir(path), "")
+						if _, has := projectMeta.packageMap[filePkg]; !has {
+							projectMeta.packageMap[filePkg] = NewGoPackageMeta(filePkg, filepath.Dir(path), "")
 						}
-						projectMeta.PackageMap[filePkg].pkgFileMap[fileMeta.Name] = fileMeta
+						projectMeta.packageMap[filePkg].pkgFileMap[fileMeta.name] = fileMeta
 					} else {
 						relPath := "."
 						fileDir := filepath.Dir(path)
@@ -98,11 +100,11 @@ func extractGoProjectMeta(projectPath string, toHandlePaths map[string]struct{},
 								return err
 							}
 						}
-						pkgImportPath := FormatFilePathWithOS(filepath.Clean(fmt.Sprintf("%v/%v/%v", projectMeta.ModuleName, relPath, filePkg)), "linux")
-						if _, has := projectMeta.PackageMap[pkgImportPath]; !has {
-							projectMeta.PackageMap[pkgImportPath] = NewGoPackageMeta(filePkg, filepath.Dir(path), pkgImportPath)
+						pkgImportPath := FormatFilePathWithOS(filepath.Clean(fmt.Sprintf("%v/%v/%v", projectMeta.moduleName, relPath, filePkg)), "linux")
+						if _, has := projectMeta.packageMap[pkgImportPath]; !has {
+							projectMeta.packageMap[pkgImportPath] = NewGoPackageMeta(filePkg, filepath.Dir(path), pkgImportPath)
 						}
-						projectMeta.PackageMap[pkgImportPath].pkgFileMap[fileMeta.Name] = fileMeta
+						projectMeta.packageMap[pkgImportPath].pkgFileMap[fileMeta.name] = fileMeta
 					}
 				}
 			}
@@ -125,9 +127,25 @@ func extractGoProjectMeta(projectPath string, toHandlePaths map[string]struct{},
 		if err != nil {
 			return nil, err
 		}
-		projectMeta.PackageMap[gfm.PkgName()] = NewGoPackageMeta(gfm.PkgName(), filepath.Dir(projectAbsPath), "")
-		projectMeta.PackageMap[gfm.PkgName()].pkgFileMap[filepath.Base(projectAbsPath)] = gfm
+		projectMeta.packageMap[gfm.PkgName()] = NewGoPackageMeta(gfm.PkgName(), filepath.Dir(projectAbsPath), "")
+		projectMeta.packageMap[gfm.PkgName()].pkgFileMap[filepath.Base(projectAbsPath)] = gfm
 	}
 
 	return projectMeta, nil
+}
+
+func (gpm *GoProjectMeta) ProjectPath() string {
+	return gpm.projectPath
+}
+
+func (gpm *GoProjectMeta) ModuleName() string {
+	return gpm.moduleName
+}
+
+func (gpm *GoProjectMeta) Packages() []string {
+	return stpmap.Key(gpm.packageMap)
+}
+
+func (gpm *GoProjectMeta) SearchPackageMeta(pkgImportPath string) *GoPackageMeta {
+	return gpm.packageMap[pkgImportPath]
 }

@@ -12,7 +12,7 @@ func SearchGoMemberMeta(structType *ast.StructType, memberName string) *GoMember
 	}
 	var memberDecl *ast.Field
 	for _, field := range structType.Fields.List {
-		if field.Names[0].Name == memberName {
+		if searchMemberName(field) == memberName {
 			memberDecl = field
 			break
 		}
@@ -23,10 +23,20 @@ func SearchGoMemberMeta(structType *ast.StructType, memberName string) *GoMember
 }
 
 func (gmm *GoMemberMeta) MemberName() string {
-	return gmm.field.Names[0].Name
+	return searchMemberName(gmm.field)
+}
+
+func searchMemberName(field *ast.Field) string {
+	if field.Names == nil {
+		return field.Type.(*ast.StarExpr).X.(*ast.Ident).Name
+	}
+	return field.Names[0].Name
 }
 
 func (gmm *GoMemberMeta) Tag() string {
+	if gmm.field.Tag == nil {
+		return ""
+	}
 	return gmm.field.Tag.Value
 }
 
