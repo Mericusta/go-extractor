@@ -32,6 +32,7 @@ type compareGoFileMeta struct {
 }
 
 type compareGoStructMeta struct {
+	Expression       string
 	StructName       string
 	Doc              []string
 	StructMemberMeta map[string]*compareGoMemberMeta
@@ -45,14 +46,15 @@ type compareGoInterfaceMeta struct {
 type compareGoFunctionMeta struct {
 	FunctionName string
 	Doc          []string
-	CallMeta     []*compareCallMeta
+	CallMeta     map[string][]*compareCallMeta
 }
 
 type compareGoMemberMeta struct {
-	Name    string
-	Tag     string
-	Doc     []string
-	Comment string
+	Expression string
+	MemberName string
+	Tag        string
+	Comment    string
+	Doc        []string
 }
 
 type compareGoMethodMeta struct {
@@ -130,12 +132,66 @@ var (
 						Doc: []string{
 							"// ExampleFunc this is example function",
 						},
+						CallMeta: map[string][]*compareCallMeta{
+							"fmt.Println": {
+								{
+									From: "fmt",
+									Call: "Println",
+									Args: []*compareArgMeta{
+										{Expression: `"pkg.ExampleFunc, Hello go-extractor"`},
+										{Expression: `s.V()`},
+									},
+								},
+							},
+							"s.V": {
+								{
+									From: "s",
+									Call: "V",
+								},
+							},
+						},
 					},
 					"NoDocExampleFunc": {
 						FunctionName: "NoDocExampleFunc",
+						CallMeta: map[string][]*compareCallMeta{
+							"fmt.Println": {
+								{
+									From: "fmt",
+									Call: "Println",
+									Args: []*compareArgMeta{
+										{Expression: `"pkg.NoDocExampleFunc, Hello go-extractor"`},
+										{Expression: `s.V()`},
+									},
+								},
+							},
+							"s.V": {
+								{
+									From: "s",
+									Call: "V",
+								},
+							},
+						},
 					},
 					"OneLineDocExampleFunc": {
 						FunctionName: "OneLineDocExampleFunc",
+						CallMeta: map[string][]*compareCallMeta{
+							"fmt.Println": {
+								{
+									From: "fmt",
+									Call: "Println",
+									Args: []*compareArgMeta{
+										{Expression: `"pkg.OneLineDocExampleFunc, Hello go-extractor"`},
+										{Expression: `s.V()`},
+									},
+								},
+							},
+							"s.V": {
+								{
+									From: "s",
+									Call: "V",
+								},
+							},
+						},
 					},
 				},
 			},
@@ -172,7 +228,8 @@ var (
 						StructName: "ParentStruct",
 						StructMemberMeta: map[string]*compareGoMemberMeta{
 							"P": {
-								Name: "P",
+								MemberName: "P",
+								Comment:    "// parent value",
 							},
 						},
 					},
@@ -185,11 +242,12 @@ var (
 						},
 						StructMemberMeta: map[string]*compareGoMemberMeta{
 							"ParentStruct": {
-								Name: "ParentStruct",
+								MemberName: "ParentStruct",
+								Comment:    "// parent struct",
 							},
 							"v": {
-								Name: "v",
-								Tag:  "`ast:init,default=1`",
+								MemberName: "v",
+								Tag:        "`ast:init,default=1`",
 								Doc: []string{
 									"// v this is member doc line1",
 									"// v this is member doc line2",
@@ -197,38 +255,64 @@ var (
 								Comment: "// this is member single comment line",
 							},
 							"sub": {
-								Name: "sub",
+								MemberName: "sub",
 							},
 						},
 						StructMethodMeta: map[string]*compareGoMethodMeta{
 							"ExampleFunc": {
 								compareGoFunctionMeta: &compareGoFunctionMeta{
 									FunctionName: "ExampleFunc",
-									CallMeta: []*compareCallMeta{
-										{
-											Expression: `NewExampleStruct(v)`,
-											Call:       "NewExampleStruct",
-											Args: []*compareArgMeta{
-												{
-													Arg: "v",
+									CallMeta: map[string][]*compareCallMeta{
+										"NewExampleStruct": {
+											{
+												Call: "NewExampleStruct",
+												Args: []*compareArgMeta{
+													{Expression: `v`},
+												},
+											},
+											{
+												Call: "NewExampleStruct",
+												Args: []*compareArgMeta{
+													{Expression: `nes.sub.V()`},
 												},
 											},
 										},
-										{
-											Expression: `fmt.Println("module.ExampleStruct.ExampleFunc Hello go-extractor", es, es.v, es.V(), nes, nes.v, nes.V(), nes.sub.v, es.sub.V(), globalExampleStruct)`,
-											Call:       "Println",
-											From:       "fmt",
-											Args: []*compareArgMeta{
-												{Expression: `"module.ExampleStruct.ExampleFunc Hello go-extractor"`},
-												{Expression: `"es"`},
-												{Expression: `"es.v"`},
-												{Expression: `"es.V()"`},
-												{Expression: `"nes"`},
-												{Expression: `"nes.v"`},
-												{Expression: `"nes.V()"`},
-												{Expression: `"nes.sub.v"`},
-												{Expression: `"es.sub.V()"`},
-												{Expression: `"globalExampleStruct"`},
+										"fmt.Println": {
+											{
+												From: "fmt",
+												Call: "Println",
+												Args: []*compareArgMeta{
+													{Expression: `"module.ExampleStruct.ExampleFunc Hello go-extractor"`},
+													{Expression: `es`}, {Expression: `es.v`}, {Expression: `es.V()`},
+													{Expression: `nes`}, {Expression: `nes.v`}, {Expression: `nes.V()`},
+													{Expression: `nes.sub.v`}, {Expression: `es.sub.V()`},
+													{Expression: `globalExampleStruct`},
+													{Expression: `NewExampleStruct(nes.sub.V())`},
+												},
+											},
+										},
+										"es.V": {
+											{
+												From: "es",
+												Call: "V",
+											},
+										},
+										"nes.V": {
+											{
+												From: "nes",
+												Call: "V",
+											},
+										},
+										"es.sub.V": {
+											{
+												From: "es.sub",
+												Call: "V",
+											},
+										},
+										"nes.sub.V": {
+											{
+												From: "nes.sub",
+												Call: "V",
 											},
 										},
 									},
@@ -239,13 +323,14 @@ var (
 							"ExampleFuncWithPointerReceiver": {
 								compareGoFunctionMeta: &compareGoFunctionMeta{
 									FunctionName: "ExampleFuncWithPointerReceiver",
-									CallMeta: []*compareCallMeta{
-										{
-											Expression: `fmt.Println("module.ExampleStruct.ExampleFuncWithPointerReceiver Hello go-extractor")`,
-											Call:       "Println",
-											From:       "fmt",
-											Args: []*compareArgMeta{
-												{Expression: `"module.ExampleStruct.ExampleFuncWithPointerReceiver Hello go-extractor"`},
+									CallMeta: map[string][]*compareCallMeta{
+										"fmt.Println": {
+											{
+												From: "fmt",
+												Call: "Println",
+												Args: []*compareArgMeta{
+													{Expression: `"module.ExampleStruct.ExampleFuncWithPointerReceiver Hello go-extractor"`},
+												},
 											},
 										},
 									},
@@ -274,13 +359,14 @@ var (
 					},
 					"ExampleFunc": {
 						FunctionName: "ExampleFunc",
-						CallMeta: []*compareCallMeta{
-							{
-								Expression: `s.ExampleFunc(s.v)`,
-								From:       "s",
-								Call:       "ExampleFunc",
-								Args: []*compareArgMeta{
-									{Expression: `s.v`},
+						CallMeta: map[string][]*compareCallMeta{
+							"s.ExampleFunc": {
+								{
+									From: "s",
+									Call: "ExampleFunc",
+									Args: []*compareArgMeta{
+										{Expression: `s.v`},
+									},
 								},
 							},
 						},
@@ -321,47 +407,43 @@ func TestExtractGoProjectMeta(t *testing.T) {
 			}
 			checkStructMeta(gsm, _gsm)
 
-			// for memberName, _gmm := range _gsm.StructMemberMeta {
-			// 	gsm.SearchMemberMeta(memberName)
-			// 	gmm, has := gsm.memberDecl[memberName]
-			// 	if gmm == nil || !has {
-			// 		panic(memberName)
-			// 	}
-			// 	checkMemberMeta(gmm, _gmm)
-			// }
+			for memberName, _gmm := range _gsm.StructMemberMeta {
+				gmm := gsm.SearchMemberMeta(memberName)
+				if gmm == nil {
+					Panic(gmm, _gmm)
+				}
+				checkMemberMeta(gmm, _gmm)
+			}
 
-			// for methodName, _gmm := range _gsm.StructMethodMeta {
-			// 	gpm.SearchMethodMeta(_structName, methodName)
-			// 	gmm, has := gsm.methodDecl[methodName]
-			// 	if gmm == nil || !has {
-			// 		panic(methodName)
-			// 	}
-			// 	checkMethodMeta(gmm, _gmm)
-			// }
+			for methodName, _gmm := range _gsm.StructMethodMeta {
+				gmm := gpm.SearchMethodMeta(_structName, methodName)
+				if gmm == nil {
+					Panic(gmm, _gmm)
+				}
+				checkMethodMeta(gmm, _gmm)
+			}
 		}
 
-		// 	for interfaceName, _gim := range _gpm.pkgInterfaceMeta {
-		// 		gpm.SearchInterfaceMeta(interfaceName)
-		// 		gim, has := gpm.pkgInterfaceDecl[interfaceName]
-		// 		if gim == nil || !has {
-		// 			panic(interfaceName)
-		// 		}
-		// 		checkInterfaceMeta(gim, _gim)
-		// 	}
+		for interfaceName, _gim := range _gpm.pkgInterfaceMeta {
+			gim := gpm.SearchInterfaceMeta(interfaceName)
+			if gim == nil {
+				Panic(gim, _gim)
+			}
+			checkInterfaceMeta(gim, _gim)
+		}
 
-		// 	for funcName, _gfm := range _gpm.pkgFunctionMeta {
-		// 		gpm.SearchFunctionMeta(funcName)
-		// 		gfm, has := gpm.pkgFunctionDecl[funcName]
-		// 		if gfm == nil || !has {
-		// 			panic(funcName)
-		// 		}
-		// 		checkFunctionMeta(gfm, _gfm)
-		// 	}
+		for funcName, _gfm := range _gpm.pkgFunctionMeta {
+			gfm := gpm.SearchFunctionMeta(funcName)
+			if gfm == nil {
+				Panic(gfm, _gfm)
+			}
+			checkFunctionMeta(gfm, _gfm)
+		}
 	}
 }
 
 func Panic(v, c any) {
-	panic(fmt.Sprintf("%v != %v", v, c))
+	panic(fmt.Sprintf("%+v != %+v", v, c))
 }
 
 func checkProjectMeta(gpm *GoProjectMeta, _gpm *compareGoProjectMeta) {
@@ -452,7 +534,7 @@ func checkStructMeta(gsm *GoStructMeta, _gsm *compareGoStructMeta) {
 	}
 	stpslice.Compare(gsm.Doc(), _gsm.Doc)
 
-	// file
+	// member
 	memberNames := gsm.Members()
 	sort.Strings(memberNames)
 	_memberNames := stpmap.Key(_gsm.StructMemberMeta)
@@ -464,92 +546,75 @@ func checkStructMeta(gsm *GoStructMeta, _gsm *compareGoStructMeta) {
 
 func checkInterfaceMeta(gim *GoInterfaceMeta, _gim *compareGoInterfaceMeta) {
 	if gim.InterfaceName() != _gim.InterfaceName {
-		panic(gim.InterfaceName())
+		Panic(gim.InterfaceName(), _gim.InterfaceName)
 	}
 }
 
 func checkFunctionMeta(gfm *GoFunctionMeta, _gfm *compareGoFunctionMeta) {
 	if gfm.FunctionName() != _gfm.FunctionName {
-		panic(gfm.FunctionName())
+		Panic(gfm.FunctionName(), _gfm.FunctionName)
 	}
 	stpslice.Compare(gfm.Doc(), _gfm.Doc)
-	// for _, _gcm := range _gfm.CallMeta {
-	// 	for _, gcm := range gfm.SearchCallMeta(_gcm.Call, _gcm.From) {
-	// 		checkCallMeta(gcm, _gcm)
-	// 	}
-	// }
+	for _call, _gcmSlice := range _gfm.CallMeta {
+		gcmSlice := gfm.SearchCallMeta(_call)
+		if len(gcmSlice) != len(_gcmSlice) {
+			Panic(gcmSlice, _gcmSlice)
+		}
+		for index, _gcm := range _gcmSlice {
+			gcm := gcmSlice[index]
+			checkCallMeta(gcm, _gcm)
+		}
+	}
 }
 
 func checkMemberMeta(gmm *GoMemberMeta, _gmm *compareGoMemberMeta) {
-	if gmm.MemberName() != _gmm.Name {
-		panic(gmm.MemberName())
+	if gmm.MemberName() != _gmm.MemberName {
+		Panic(gmm.MemberName(), _gmm.MemberName)
 	}
 	if gmm.Tag() != _gmm.Tag {
-		panic(gmm.Tag())
+		Panic(gmm.Tag(), _gmm.Tag)
+	}
+	if gmm.Comment() != _gmm.Comment {
+		Panic(gmm.Comment(), _gmm.Comment)
 	}
 	stpslice.Compare(gmm.Doc(), _gmm.Doc)
-	if gmm.Comment() != _gmm.Comment {
-		panic(gmm.Comment())
-	}
 }
 
 func checkMethodMeta(gmm *GoMethodMeta, _gmm *compareGoMethodMeta) {
-	if gmm.FunctionName() != _gmm.FunctionName {
-		panic(gmm.FunctionName())
+	recvStruct, pointerReceiver := gmm.RecvStruct()
+	if recvStruct != _gmm.RecvStruct {
+		Panic(recvStruct, _gmm.RecvStruct)
 	}
-	if recvStruct, pointerReceiver := gmm.RecvStruct(); recvStruct != _gmm.RecvStruct || pointerReceiver != _gmm.PointerReceiver {
-		panic(fmt.Sprintf("%v, %v", recvStruct, pointerReceiver))
+	if pointerReceiver != _gmm.PointerReceiver {
+		Panic(pointerReceiver, _gmm.PointerReceiver)
 	}
-	// for _, _gcm := range _gmm.CallMeta {
-	// 	for _, gcm := range gmm.SearchCallMeta(_gcm.Call, _gcm.From) {
-	// 		checkCallMeta(gcm, _gcm)
-	// 	}
-	// }
+	checkFunctionMeta(gmm.GoFunctionMeta, _gmm.compareGoFunctionMeta)
 }
 
-// func checkCallMeta(gcm *GoCallMeta, _gcm *compareCallMeta) {
-// 	if (gcm != nil) != (_gcm != nil) {
-// 		panic(gcm != nil)
-// 	}
-// 	if gcm == nil {
-// 		return
-// 	}
-// 	if gcm.Expression() != _gcm.Expression {
-// 		panic(gcm.Expression())
-// 	}
-// 	if gcm.Call() != _gcm.Call {
-// 		panic(gcm.Call())
-// 	}
-// 	if gcm.From() != _gcm.From {
-// 		panic(gcm.From())
-// 	}
-// 	if len(gcm.Args()) != len(_gcm.Args) {
-// 		panic(len(gcm.Args()))
-// 	}
-// 	for _, _arg := range _gcm.Args {
-// 		for _, arg := range gcm.Args() {
-// 			fmt.Printf("compare %v with %v\n", arg.Expression(), _arg.Expression)
-// 			if arg.Expression() == _arg.Expression {
-// 				// if arg.ArgType() != _arg.ArgType {
-// 				// 	panic(arg.ArgType())
-// 				// }
-// 				// if arg.Arg() != _arg.Arg {
-// 				// 	panic(arg.Arg())
-// 				// }
-// 				// if arg.From() != _arg.From {
-// 				// 	panic(arg.From())
-// 				// }
-// 				// if !reflect.DeepEqual(arg.Value(), _arg.Value) {
-// 				// 	panic(arg.Value())
-// 				// }
-// 				// checkCallMeta(arg.CallMeta(), _arg.CallMeta)
-// 				goto NEXT_ARG
-// 			}
-// 		}
-// 		panic(_arg)
-// 	NEXT_ARG:
-// 	}
-// }
+func checkCallMeta(gcm *GoCallMeta, _gcm *compareCallMeta) {
+	if (gcm != nil) != (_gcm != nil) {
+		Panic(gcm, _gcm)
+	}
+	if gcm == nil {
+		return
+	}
+	if gcm.From() != _gcm.From {
+		Panic(gcm.From(), _gcm.From)
+	}
+	if gcm.Call() != _gcm.Call {
+		Panic(gcm.Call(), _gcm.Call)
+	}
+	if len(gcm.Args()) != len(_gcm.Args) {
+		Panic(gcm.Args(), _gcm.Args)
+	}
+	args := gcm.Args()
+	for index, _arg := range _gcm.Args {
+		arg := args[index]
+		if arg.Expression() != _arg.Expression {
+			Panic(arg.Expression(), _arg.Expression)
+		}
+	}
+}
 
 type replaceFunctionDoc struct {
 	originDoc      []string

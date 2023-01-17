@@ -79,7 +79,7 @@ func (gim *GoInterfaceMeta) InterfaceName() string {
 // SearchMethodDecl search method decl from node.(*ast.InterfaceType)
 func (gim *GoInterfaceMeta) SearchMethodDecl(methodName string) *GoInterfaceMethodMeta {
 	gim.ForeachMethodDecl(func(f *ast.Field) bool {
-		if f.Names[0].Name == methodName {
+		if f.Names[0].String() == methodName {
 			gim.methodMeta[methodName] = &GoInterfaceMethodMeta{methodField: f}
 			return false
 		}

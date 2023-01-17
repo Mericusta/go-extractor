@@ -58,7 +58,7 @@ func (gfm *GoFileMeta) Path() string {
 }
 
 func (gfm *GoFileMeta) PkgName() string {
-	return gfm.node.(*ast.File).Name.Name
+	return gfm.node.(*ast.File).Name.String()
 }
 
 // GoFmtFile go fmt 格式化文件

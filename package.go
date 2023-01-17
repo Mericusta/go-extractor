@@ -18,6 +18,7 @@ type GoPackageMeta struct {
 	pkgPath          string                      // pkg path
 	importPath       string                      // import path
 	pkgFileMap       map[string]*GoFileMeta      // all file meta
+	pkgVariableDecl  map[string]*GoVariableMeta  // all file global variable meta
 	pkgStructDecl    map[string]*GoStructMeta    // all struct meta
 	pkgInterfaceDecl map[string]*GoInterfaceMeta // all interface meta
 	pkgFunctionDecl  map[string]*GoFunctionMeta  // all function meta
@@ -29,6 +30,7 @@ func NewGoPackageMeta(name, pkgPath, importPath string) *GoPackageMeta {
 		pkgPath:          pkgPath,
 		importPath:       importPath,
 		pkgFileMap:       make(map[string]*GoFileMeta),
+		pkgVariableDecl:  make(map[string]*GoVariableMeta),
 		pkgStructDecl:    make(map[string]*GoStructMeta),
 		pkgInterfaceDecl: make(map[string]*GoInterfaceMeta),
 		pkgFunctionDecl:  make(map[string]*GoFunctionMeta),
@@ -63,8 +65,9 @@ func extractGoPackageMeta(packagePath string, files map[string]struct{}, spec bo
 	}
 
 	packageMeta := &GoPackageMeta{
-		pkgPath:          packagePathAbs,
-		pkgFileMap:       make(map[string]*GoFileMeta),
+		pkgPath:    packagePathAbs,
+		pkgFileMap: make(map[string]*GoFileMeta),
+		// pkgVariableDecl: make
 		pkgStructDecl:    make(map[string]*GoStructMeta),
 		pkgInterfaceDecl: make(map[string]*GoInterfaceMeta),
 		pkgFunctionDecl:  make(map[string]*GoFunctionMeta),
@@ -127,6 +130,20 @@ func (gpm *GoPackageMeta) FileNames() []string {
 
 func (gpm *GoPackageMeta) SearchFileMeta(fileName string) *GoFileMeta {
 	return gpm.pkgFileMap[fileName]
+}
+
+func (gpm *GoPackageMeta) VariableNames() []string {
+	variableNames := make([]string, 0)
+	for _, gfm := range gpm.pkgFileMap {
+		ast.Inspect(gfm.node, func(n ast.Node) bool {
+			if IsVarNode(n) {
+				variableNames = append(variableNames, n.(*ast.ValueSpec).Names[0].String())
+				return false
+			}
+			return true
+		})
+	}
+	return variableNames
 }
 
 func (gpm *GoPackageMeta) StructNames() []string {

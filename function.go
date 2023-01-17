@@ -10,8 +10,16 @@ import (
 type GoFunctionMeta struct {
 	// funcDecl            *ast.FuncDecl
 	*meta
+	callMeta map[string][]*GoCallMeta
 	// nonSelectorCallMeta map[string][]*GoCallMeta
 	// selectorCallMeta    map[string]map[string][]*GoCallMeta
+}
+
+func NewGoFunctionMeta(m *meta) *GoFunctionMeta {
+	return &GoFunctionMeta{
+		meta:     m,
+		callMeta: make(map[string][]*GoCallMeta),
+	}
 }
 
 func ExtractGoFunctionMeta(extractFilepath string, functionName string) (*GoFunctionMeta, error) {
@@ -43,7 +51,8 @@ func SearchGoFunctionMeta(m *meta, functionName string) *GoFunctionMeta {
 		return nil
 	}
 	return &GoFunctionMeta{
-		meta: m.newMeta(funcDecl),
+		meta:     m.newMeta(funcDecl),
+		callMeta: make(map[string][]*GoCallMeta),
 		// nonSelectorCallMeta: make(map[string][]*GoCallMeta),
 		// selectorCallMeta:    make(map[string]map[string][]*GoCallMeta),
 	}
@@ -81,7 +90,7 @@ func (gfm *GoFunctionMeta) ReturnTypes() []string {
 		if ident == nil || !ok {
 			continue
 		}
-		returnTypes = append(returnTypes, ident.Name)
+		returnTypes = append(returnTypes, ident.String())
 	}
 	return returnTypes
 }
@@ -125,36 +134,48 @@ func (gfm *GoFunctionMeta) Expression() string {
 // 	return strings.ReplaceAll(originContent, "\r", ""), strings.ReplaceAll(buffer.String(), "\r", ""), nil
 // }
 
-// func (gfm *GoFunctionMeta) SearchCallMeta(call, from string) []*GoCallMeta {
-// 	if len(from) == 0 {
-// 		if callMetaSlice, has := gfm.nonSelectorCallMeta[call]; has && len(callMetaSlice) > 0 {
-// 			return callMetaSlice
-// 		}
-// 	} else {
-// 		if selector, has := gfm.selectorCallMeta[from]; has && len(selector) > 0 {
-// 			if callMetaSlice, has := selector[call]; has && len(callMetaSlice) > 0 {
-// 				return callMetaSlice
-// 			}
-// 		}
-// 	}
+func (gfm *GoFunctionMeta) SearchCallMeta(call string) []*GoCallMeta {
+	if gcm, has := gfm.callMeta[call]; gcm != nil && has {
+		return gcm
+	}
 
-// 	if gfm.node.(*ast.FuncDecl) == nil {
-// 		return nil
-// 	}
+	if gfm.node.(*ast.FuncDecl) == nil {
+		return nil
+	}
 
-// 	gcm := SearchGoCallMeta(gfm.meta, gfm.node.(*ast.FuncDecl), call, from)
-// 	if gcm != nil {
-// 		if len(from) == 0 {
-// 			gfm.nonSelectorCallMeta[call] = append(gfm.nonSelectorCallMeta[call], gcm)
-// 			return gfm.nonSelectorCallMeta[call]
-// 		} else {
-// 			if gfm.selectorCallMeta[from] == nil {
-// 				gfm.selectorCallMeta[from] = make(map[string][]*GoCallMeta)
-// 			}
-// 			gfm.selectorCallMeta[from][call] = append(gfm.selectorCallMeta[from][call], gcm)
-// 			return gfm.selectorCallMeta[from][call]
-// 		}
-// 	}
+	gfm.callMeta[call] = SearchGoCallMeta(gfm.meta, call)
 
-// 	return nil
-// }
+	return gfm.callMeta[call]
+
+	// if len(from) == 0 {
+	// 	if callMetaSlice, has := gfm.nonSelectorCallMeta[call]; has && len(callMetaSlice) > 0 {
+	// 		return callMetaSlice
+	// 	}
+	// } else {
+	// 	if selector, has := gfm.selectorCallMeta[from]; has && len(selector) > 0 {
+	// 		if callMetaSlice, has := selector[call]; has && len(callMetaSlice) > 0 {
+	// 			return callMetaSlice
+	// 		}
+	// 	}
+	// }
+
+	// if gfm.node.(*ast.FuncDecl) == nil {
+	// 	return nil
+	// }
+
+	// gcm := SearchGoCallMeta(gfm.meta, gfm.node.(*ast.FuncDecl), call)
+	// if gcm != nil {
+	// 	if len(from) == 0 {
+	// 		gfm.nonSelectorCallMeta[call] = append(gfm.nonSelectorCallMeta[call], gcm)
+	// 		return gfm.nonSelectorCallMeta[call]
+	// 	} else {
+	// 		if gfm.selectorCallMeta[from] == nil {
+	// 			gfm.selectorCallMeta[from] = make(map[string][]*GoCallMeta)
+	// 		}
+	// 		gfm.selectorCallMeta[from][call] = append(gfm.selectorCallMeta[from][call], gcm)
+	// 		return gfm.selectorCallMeta[from][call]
+	// 	}
+	// }
+
+	return nil
+}

@@ -41,11 +41,7 @@ func SearchGoMethodMeta(m *meta, structName, methodName string) *GoMethodMeta {
 		return nil
 	}
 	return &GoMethodMeta{
-		GoFunctionMeta: &GoFunctionMeta{
-			meta: m.newMeta(methodDecl),
-			// nonSelectorCallMeta: make(map[string][]*GoCallMeta),
-			// selectorCallMeta:    make(map[string]map[string][]*GoCallMeta),
-		},
+		GoFunctionMeta: NewGoFunctionMeta(m.newMeta(methodDecl)),
 	}
 }
 
@@ -78,5 +74,5 @@ func extractMethodRecvStruct(methodDecl *ast.FuncDecl) (string, bool) {
 	if !ok {
 		return "", false
 	}
-	return recvTypeIdent.Name, pointerReceiver
+	return recvTypeIdent.String(), pointerReceiver
 }

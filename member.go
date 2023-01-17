@@ -3,10 +3,10 @@ package extractor
 import "go/ast"
 
 type GoMemberMeta struct {
-	field *ast.Field
+	*meta
 }
 
-func SearchGoMemberMeta(structType *ast.StructType, memberName string) *GoMemberMeta {
+func SearchGoMemberMeta(m *meta, structType *ast.StructType, memberName string) *GoMemberMeta {
 	if structType.Fields == nil || len(structType.Fields.List) == 0 {
 		return nil
 	}
@@ -18,42 +18,49 @@ func SearchGoMemberMeta(structType *ast.StructType, memberName string) *GoMember
 		}
 	}
 	return &GoMemberMeta{
-		field: memberDecl,
+		meta: m.newMeta(memberDecl),
 	}
 }
 
 func (gmm *GoMemberMeta) MemberName() string {
-	return searchMemberName(gmm.field)
+	return searchMemberName(gmm.node.(*ast.Field))
 }
 
 func searchMemberName(field *ast.Field) string {
-	if field.Names == nil {
-		return field.Type.(*ast.StarExpr).X.(*ast.Ident).Name
+	if field.Names == nil { // anonymous struct member
+		switch fieldType := field.Type.(type) {
+		case *ast.Ident:
+			return fieldType.Name
+		case *ast.StarExpr:
+			return fieldType.X.(*ast.Ident).Name
+		}
+	} else { // named struct member
+		return field.Names[0].Name
 	}
-	return field.Names[0].Name
+	return ""
 }
 
 func (gmm *GoMemberMeta) Tag() string {
-	if gmm.field.Tag == nil {
+	if gmm.node.(*ast.Field).Tag == nil {
 		return ""
 	}
-	return gmm.field.Tag.Value
+	return gmm.node.(*ast.Field).Tag.Value
 }
 
 func (gmm *GoMemberMeta) Doc() []string {
-	if gmm.field.Doc == nil {
+	if gmm.node.(*ast.Field).Doc == nil {
 		return nil
 	}
-	commentSlice := make([]string, 0, len(gmm.field.Doc.List))
-	for _, comment := range gmm.field.Doc.List {
+	commentSlice := make([]string, 0, len(gmm.node.(*ast.Field).Doc.List))
+	for _, comment := range gmm.node.(*ast.Field).Doc.List {
 		commentSlice = append(commentSlice, comment.Text)
 	}
 	return commentSlice
 }
 
 func (gmm *GoMemberMeta) Comment() string {
-	if gmm.field.Comment == nil || len(gmm.field.Comment.List) == 0 {
+	if gmm.node.(*ast.Field).Comment == nil || len(gmm.node.(*ast.Field).Comment.List) == 0 {
 		return ""
 	}
-	return gmm.field.Comment.List[0].Text
+	return gmm.node.(*ast.Field).Comment.List[0].Text
 }

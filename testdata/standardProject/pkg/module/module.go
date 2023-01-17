@@ -3,14 +3,14 @@ package module
 import "fmt"
 
 type ParentStruct struct {
-	P int
+	P int // parent value
 }
 
 // ExampleStruct this is an example struct
 // this is struct comment
 // this is another struct comment
 type ExampleStruct struct {
-	*ParentStruct
+	*ParentStruct // parent struct
 	// v this is member doc line1
 	// v this is member doc line2
 	v   int `ast:init,default=1` // this is member single comment line
@@ -29,7 +29,13 @@ func NewExampleStruct(v int) *ExampleStruct {
 
 func (es ExampleStruct) ExampleFunc(v int) {
 	nes := NewExampleStruct(v)
-	fmt.Println("module.ExampleStruct.ExampleFunc Hello go-extractor", es, es.v, es.V(), nes, nes.v, nes.V(), nes.sub.v, es.sub.V(), globalExampleStruct)
+	fmt.Println("module.ExampleStruct.ExampleFunc Hello go-extractor",
+		es, es.v, es.V(),
+		nes, nes.v, nes.V(),
+		nes.sub.v, es.sub.V(),
+		globalExampleStruct,
+		NewExampleStruct(nes.sub.V()),
+	)
 }
 
 func (es *ExampleStruct) ExampleFuncWithPointerReceiver(v int) {

@@ -7,14 +7,14 @@ import (
 
 // ExampleFunc this is example function
 func ExampleFunc(s *module.ExampleStruct) {
-	fmt.Println("pkg.ExampleFunc, Hello go-extractor,", s.V())
+	fmt.Println("pkg.ExampleFunc, Hello go-extractor", s.V())
 }
 
 func NoDocExampleFunc(s *module.ExampleStruct) {
-	fmt.Println("pkg.ExampleFunc, Hello go-extractor,", s.V())
+	fmt.Println("pkg.NoDocExampleFunc, Hello go-extractor", s.V())
 }
 
 // OneLineDocExampleFunc this is one-line-doc example function
 func OneLineDocExampleFunc(s *module.ExampleStruct) {
-	fmt.Println("pkg.ExampleFunc, Hello go-extractor,", s.V())
+	fmt.Println("pkg.OneLineDocExampleFunc, Hello go-extractor", s.V())
 }

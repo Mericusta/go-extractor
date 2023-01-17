@@ -95,17 +95,8 @@ func (gsm *GoStructMeta) Members() []string {
 	}
 	members := make([]string, 0, len(structType.Fields.List))
 	for _, field := range structType.Fields.List {
-		// anonymous struct member
-		if field.Names == nil {
-			switch fieldType := field.Type.(type) {
-			case *ast.Ident:
-				members = append(members, fieldType.Name)
-			case *ast.StarExpr:
-				members = append(members, fieldType.X.(*ast.Ident).Name)
-			}
-		} else {
-			// named struct member
-			members = append(members, field.Names[0].Name)
+		if memberName := searchMemberName(field); len(memberName) != 0 {
+			members = append(members, memberName)
 		}
 	}
 	return members
@@ -117,7 +108,7 @@ func (gsm *GoStructMeta) SearchMemberMeta(member string) *GoMemberMeta {
 	}
 
 	structType := gsm.node.(*ast.TypeSpec).Type.(*ast.StructType)
-	gmm := SearchGoMemberMeta(structType, member)
+	gmm := SearchGoMemberMeta(gsm.meta, structType, member)
 	if gmm == nil {
 		return nil
 	}
