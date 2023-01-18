@@ -149,3 +149,5 @@ func (gpm *GoProjectMeta) Packages() []string {
 func (gpm *GoProjectMeta) SearchPackageMeta(pkgImportPath string) *GoPackageMeta {
 	return gpm.packageMap[pkgImportPath]
 }
+
+// func (gpm *GoProjectMeta)

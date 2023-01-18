@@ -18,3 +18,7 @@ func NoDocExampleFunc(s *module.ExampleStruct) {
 func OneLineDocExampleFunc(s *module.ExampleStruct) {
 	fmt.Println("pkg.OneLineDocExampleFunc, Hello go-extractor", s.V())
 }
+
+func ImportSelectorFunc(s *module.ExampleStruct) {
+	fmt.Println("pkg.ImportSelectorFunc, Hello go-extractor", module.NewExampleStruct(s.V()).Sub().ParentStruct.P)
+}

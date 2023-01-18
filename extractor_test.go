@@ -72,11 +72,12 @@ type compareCallMeta struct {
 
 type compareArgMeta struct {
 	Expression string
-	ArgType    int
-	Arg        string
-	From       string
-	Value      interface{}
-	CallMeta   *compareCallMeta
+	Head       string
+	// ArgType    int
+	// Arg        string
+	// From       string
+	// Value      interface{}
+	// CallMeta   *compareCallMeta
 }
 
 var (
@@ -138,8 +139,14 @@ var (
 									From: "fmt",
 									Call: "Println",
 									Args: []*compareArgMeta{
-										{Expression: `"pkg.ExampleFunc, Hello go-extractor"`},
-										{Expression: `s.V()`},
+										{
+											Expression: `"pkg.ExampleFunc, Hello go-extractor"`,
+											Head:       `"pkg.ExampleFunc, Hello go-extractor"`,
+										},
+										{
+											Expression: `s.V()`,
+											Head:       "s",
+										},
 									},
 								},
 							},
@@ -159,8 +166,14 @@ var (
 									From: "fmt",
 									Call: "Println",
 									Args: []*compareArgMeta{
-										{Expression: `"pkg.NoDocExampleFunc, Hello go-extractor"`},
-										{Expression: `s.V()`},
+										{
+											Expression: `"pkg.NoDocExampleFunc, Hello go-extractor"`,
+											Head:       `"pkg.NoDocExampleFunc, Hello go-extractor"`,
+										},
+										{
+											Expression: `s.V()`,
+											Head:       "s",
+										},
 									},
 								},
 							},
@@ -180,9 +193,60 @@ var (
 									From: "fmt",
 									Call: "Println",
 									Args: []*compareArgMeta{
-										{Expression: `"pkg.OneLineDocExampleFunc, Hello go-extractor"`},
-										{Expression: `s.V()`},
+										{
+											Expression: `"pkg.OneLineDocExampleFunc, Hello go-extractor"`,
+											Head:       `"pkg.OneLineDocExampleFunc, Hello go-extractor"`,
+										},
+										{
+											Expression: `s.V()`,
+											Head:       "s",
+										},
 									},
+								},
+							},
+							"s.V": {
+								{
+									From: "s",
+									Call: "V",
+								},
+							},
+						},
+					},
+					"ImportSelectorFunc": {
+						FunctionName: "ImportSelectorFunc",
+						CallMeta: map[string][]*compareCallMeta{
+							"fmt.Println": {
+								&compareCallMeta{
+									From: "fmt",
+									Call: "Println",
+									Args: []*compareArgMeta{
+										{
+											Expression: `"pkg.ImportSelectorFunc, Hello go-extractor"`,
+											Head:       `"pkg.ImportSelectorFunc, Hello go-extractor"`,
+										},
+										{
+											Expression: `module.NewExampleStruct(s.V()).Sub().ParentStruct.P`,
+											Head:       "module",
+										},
+									},
+								},
+							},
+							"module.NewExampleStruct": {
+								{
+									From: "module",
+									Call: "NewExampleStruct",
+									Args: []*compareArgMeta{
+										{
+											Expression: `s.V()`,
+											Head:       "s",
+										},
+									},
+								},
+							},
+							"module.NewExampleStruct(s.V()).Sub": {
+								{
+									From: "module.NewExampleStruct(s.V())",
+									Call: "Sub",
 								},
 							},
 							"s.V": {
@@ -267,13 +331,19 @@ var (
 											{
 												Call: "NewExampleStruct",
 												Args: []*compareArgMeta{
-													{Expression: `v`},
+													{
+														Expression: `v`,
+														Head:       "v",
+													},
 												},
 											},
 											{
 												Call: "NewExampleStruct",
 												Args: []*compareArgMeta{
-													{Expression: `nes.sub.V()`},
+													{
+														Expression: `nes.sub.V()`,
+														Head:       "nes",
+													},
 												},
 											},
 										},
@@ -282,12 +352,50 @@ var (
 												From: "fmt",
 												Call: "Println",
 												Args: []*compareArgMeta{
-													{Expression: `"module.ExampleStruct.ExampleFunc Hello go-extractor"`},
-													{Expression: `es`}, {Expression: `es.v`}, {Expression: `es.V()`},
-													{Expression: `nes`}, {Expression: `nes.v`}, {Expression: `nes.V()`},
-													{Expression: `nes.sub.v`}, {Expression: `es.sub.V()`},
-													{Expression: `globalExampleStruct`},
-													{Expression: `NewExampleStruct(nes.sub.V())`},
+													{
+														Expression: `"module.ExampleStruct.ExampleFunc Hello go-extractor"`,
+														Head:       `"module.ExampleStruct.ExampleFunc Hello go-extractor"`,
+													},
+													{
+														Expression: `es`,
+														Head:       "es",
+													},
+													{
+														Expression: `es.v`,
+														Head:       "es",
+													},
+													{
+														Expression: `es.V()`,
+														Head:       "es",
+													},
+													{
+														Expression: `nes`,
+														Head:       "nes",
+													},
+													{
+														Expression: `nes.v`,
+														Head:       "nes",
+													},
+													{
+														Expression: `nes.V()`,
+														Head:       "nes",
+													},
+													{
+														Expression: `nes.sub.v`,
+														Head:       "nes",
+													},
+													{
+														Expression: `es.sub.V()`,
+														Head:       "es",
+													},
+													{
+														Expression: `globalExampleStruct`,
+														Head:       "globalExampleStruct",
+													},
+													{
+														Expression: `NewExampleStruct(nes.sub.V())`,
+														Head:       "NewExampleStruct",
+													},
 												},
 											},
 										},
@@ -329,7 +437,10 @@ var (
 												From: "fmt",
 												Call: "Println",
 												Args: []*compareArgMeta{
-													{Expression: `"module.ExampleStruct.ExampleFuncWithPointerReceiver Hello go-extractor"`},
+													{
+														Expression: `"module.ExampleStruct.ExampleFuncWithPointerReceiver Hello go-extractor"`,
+														Head:       `"module.ExampleStruct.ExampleFuncWithPointerReceiver Hello go-extractor"`,
+													},
 												},
 											},
 										},
@@ -356,6 +467,20 @@ var (
 							"// @param           value",
 							"// @return          pointer to ExampleStruct",
 						},
+						CallMeta: map[string][]*compareCallMeta{
+							"rand.Intn": {
+								{
+									From: "rand",
+									Call: "Intn",
+									Args: []*compareArgMeta{
+										{
+											Expression: "v",
+											Head:       "v",
+										},
+									},
+								},
+							},
+						},
 					},
 					"ExampleFunc": {
 						FunctionName: "ExampleFunc",
@@ -365,7 +490,10 @@ var (
 									From: "s",
 									Call: "ExampleFunc",
 									Args: []*compareArgMeta{
-										{Expression: `s.v`},
+										{
+											Expression: `s.v`,
+											Head:       "s",
+										},
 									},
 								},
 							},
@@ -613,6 +741,9 @@ func checkCallMeta(gcm *GoCallMeta, _gcm *compareCallMeta) {
 		if arg.Expression() != _arg.Expression {
 			Panic(arg.Expression(), _arg.Expression)
 		}
+		if arg.Head() != _arg.Head {
+			Panic(arg.Head(), _arg.Head)
+		}
 	}
 }
 
@@ -711,43 +842,43 @@ func TestReplaceGoProjectMeta(t *testing.T) {
 
 var (
 	compareGoCallMetaSlice = []*compareCallMeta{
-		{
-			Expression: `HaveReadGP(1)`,
-			Call:       "HaveReadGP",
-			Args: []*compareArgMeta{
-				{
-					Value: int32(1),
-				},
-			},
-		},
-		{
-			Expression: `GetPlayerLevel()`,
-			Call:       "GetPlayerLevel",
-			Args:       nil,
-		},
-		{
-			Expression: `HaveReadGP("gamephone")`,
-			Call:       "HaveReadGP",
-			Args: []*compareArgMeta{
-				{
-					Value: `"gamephone"`},
-			},
-		},
-		{
-			Expression: `HaveReadGP("gamephone",1,"remove")`,
-			Call:       "HaveReadGP",
-			Args: []*compareArgMeta{
-				{
-					Value: `"gamephone"`,
-				},
-				{
-					Value: int32(1),
-				},
-				{
-					Value: `"remove"`,
-				},
-			},
-		},
+		// {
+		// 	Expression: `HaveReadGP(1)`,
+		// 	Call:       "HaveReadGP",
+		// 	Args: []*compareArgMeta{
+		// 		{
+		// 			Value: int32(1),
+		// 		},
+		// 	},
+		// },
+		// {
+		// 	Expression: `GetPlayerLevel()`,
+		// 	Call:       "GetPlayerLevel",
+		// 	Args:       nil,
+		// },
+		// {
+		// 	Expression: `HaveReadGP("gamephone")`,
+		// 	Call:       "HaveReadGP",
+		// 	Args: []*compareArgMeta{
+		// 		{
+		// 			Value: `"gamephone"`},
+		// 	},
+		// },
+		// {
+		// 	Expression: `HaveReadGP("gamephone",1,"remove")`,
+		// 	Call:       "HaveReadGP",
+		// 	Args: []*compareArgMeta{
+		// 		{
+		// 			Value: `"gamephone"`,
+		// 		},
+		// 		{
+		// 			Value: int32(1),
+		// 		},
+		// 		{
+		// 			Value: `"remove"`,
+		// 		},
+		// 	},
+		// },
 		// TODO: syntax tree
 		// {
 		// 	Expression: `HaveReadGP(1) && HaveReadGP(2)`,

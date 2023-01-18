@@ -1,6 +1,9 @@
 package module
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+)
 
 type ParentStruct struct {
 	P int // parent value
@@ -23,8 +26,17 @@ var globalExampleStruct *ExampleStruct
 // @param           value
 // @return          pointer to ExampleStruct
 func NewExampleStruct(v int) *ExampleStruct {
-	globalExampleStruct = &ExampleStruct{v: v + 1}
-	return &ExampleStruct{v: v, sub: globalExampleStruct}
+	es := &ExampleStruct{
+		ParentStruct: &ParentStruct{P: v * 10},
+		v:            v,
+	}
+	globalExampleStruct = &ExampleStruct{
+		ParentStruct: &ParentStruct{P: rand.Intn(v)},
+		v:            v / 10,
+	}
+	es.sub = globalExampleStruct
+	globalExampleStruct.ParentStruct = es.ParentStruct
+	return es
 }
 
 func (es ExampleStruct) ExampleFunc(v int) {
@@ -44,6 +56,10 @@ func (es *ExampleStruct) ExampleFuncWithPointerReceiver(v int) {
 
 func (es ExampleStruct) V() int {
 	return es.v
+}
+
+func (es *ExampleStruct) Sub() *ExampleStruct {
+	return es.sub
 }
 
 func ExampleFunc(s *ExampleStruct) {

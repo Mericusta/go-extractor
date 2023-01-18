@@ -1,5 +1,7 @@
 package extractor
 
+import "go/ast"
+
 const (
 	ARG_TYPE_VARIABLE = 1 // 变量
 	ARG_TYPE_BUILTIN  = 2 // 内建类型
@@ -35,3 +37,26 @@ type GoArgMeta struct {
 // func (gam *GoArgMeta) CallMeta() *GoCallMeta {
 // 	return gam.callMeta
 // }
+
+func (gam *GoArgMeta) Head() string {
+	// var headIdent string
+	// var headType int
+	n := gam.node
+FOR:
+	for {
+		switch headExpr := n.(type) {
+		case *ast.SelectorExpr:
+			n = headExpr.X
+			goto FOR
+		case *ast.CallExpr:
+			n = headExpr.Fun
+			goto FOR
+		case *ast.Ident:
+			return headExpr.String()
+		case *ast.BasicLit:
+			return headExpr.Value
+		default:
+			return ""
+		}
+	}
+}

@@ -4,936 +4,1186 @@
      3  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:1:9
      4  .  .  Name: "module"
      5  .  }
-     6  .  Decls: []ast.Decl (len = 9) {
+     6  .  Decls: []ast.Decl (len = 10) {
      7  .  .  0: *ast.GenDecl {
      8  .  .  .  TokPos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:3:1
      9  .  .  .  Tok: import
-    10  .  .  .  Lparen: -
-    11  .  .  .  Specs: []ast.Spec (len = 1) {
+    10  .  .  .  Lparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:3:8
+    11  .  .  .  Specs: []ast.Spec (len = 2) {
     12  .  .  .  .  0: *ast.ImportSpec {
     13  .  .  .  .  .  Path: *ast.BasicLit {
-    14  .  .  .  .  .  .  ValuePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:3:8
+    14  .  .  .  .  .  .  ValuePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:4:2
     15  .  .  .  .  .  .  Kind: STRING
     16  .  .  .  .  .  .  Value: "\"fmt\""
     17  .  .  .  .  .  }
     18  .  .  .  .  .  EndPos: -
     19  .  .  .  .  }
-    20  .  .  .  }
-    21  .  .  .  Rparen: -
-    22  .  .  }
-    23  .  .  1: *ast.GenDecl {
-    24  .  .  .  TokPos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:5:1
-    25  .  .  .  Tok: type
-    26  .  .  .  Lparen: -
-    27  .  .  .  Specs: []ast.Spec (len = 1) {
-    28  .  .  .  .  0: *ast.TypeSpec {
-    29  .  .  .  .  .  Name: *ast.Ident {
-    30  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:5:6
-    31  .  .  .  .  .  .  Name: "ParentStruct"
-    32  .  .  .  .  .  .  Obj: *ast.Object {
-    33  .  .  .  .  .  .  .  Kind: type
-    34  .  .  .  .  .  .  .  Name: "ParentStruct"
-    35  .  .  .  .  .  .  .  Decl: *(obj @ 28)
-    36  .  .  .  .  .  .  }
-    37  .  .  .  .  .  }
-    38  .  .  .  .  .  Assign: -
-    39  .  .  .  .  .  Type: *ast.StructType {
-    40  .  .  .  .  .  .  Struct: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:5:19
-    41  .  .  .  .  .  .  Fields: *ast.FieldList {
-    42  .  .  .  .  .  .  .  Opening: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:5:26
-    43  .  .  .  .  .  .  .  List: []*ast.Field (len = 1) {
-    44  .  .  .  .  .  .  .  .  0: *ast.Field {
-    45  .  .  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
-    46  .  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
-    47  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:6:2
-    48  .  .  .  .  .  .  .  .  .  .  .  Name: "P"
-    49  .  .  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-    50  .  .  .  .  .  .  .  .  .  .  .  .  Kind: var
-    51  .  .  .  .  .  .  .  .  .  .  .  .  Name: "P"
-    52  .  .  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 44)
-    53  .  .  .  .  .  .  .  .  .  .  .  }
-    54  .  .  .  .  .  .  .  .  .  .  }
-    55  .  .  .  .  .  .  .  .  .  }
-    56  .  .  .  .  .  .  .  .  .  Type: *ast.Ident {
-    57  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:6:4
-    58  .  .  .  .  .  .  .  .  .  .  Name: "int"
-    59  .  .  .  .  .  .  .  .  .  }
-    60  .  .  .  .  .  .  .  .  .  Comment: *ast.CommentGroup {
-    61  .  .  .  .  .  .  .  .  .  .  List: []*ast.Comment (len = 1) {
-    62  .  .  .  .  .  .  .  .  .  .  .  0: *ast.Comment {
-    63  .  .  .  .  .  .  .  .  .  .  .  .  Slash: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:6:8
-    64  .  .  .  .  .  .  .  .  .  .  .  .  Text: "// parent value"
-    65  .  .  .  .  .  .  .  .  .  .  .  }
-    66  .  .  .  .  .  .  .  .  .  .  }
+    20  .  .  .  .  1: *ast.ImportSpec {
+    21  .  .  .  .  .  Path: *ast.BasicLit {
+    22  .  .  .  .  .  .  ValuePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:5:2
+    23  .  .  .  .  .  .  Kind: STRING
+    24  .  .  .  .  .  .  Value: "\"math/rand\""
+    25  .  .  .  .  .  }
+    26  .  .  .  .  .  EndPos: -
+    27  .  .  .  .  }
+    28  .  .  .  }
+    29  .  .  .  Rparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:6:1
+    30  .  .  }
+    31  .  .  1: *ast.GenDecl {
+    32  .  .  .  TokPos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:8:1
+    33  .  .  .  Tok: type
+    34  .  .  .  Lparen: -
+    35  .  .  .  Specs: []ast.Spec (len = 1) {
+    36  .  .  .  .  0: *ast.TypeSpec {
+    37  .  .  .  .  .  Name: *ast.Ident {
+    38  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:8:6
+    39  .  .  .  .  .  .  Name: "ParentStruct"
+    40  .  .  .  .  .  .  Obj: *ast.Object {
+    41  .  .  .  .  .  .  .  Kind: type
+    42  .  .  .  .  .  .  .  Name: "ParentStruct"
+    43  .  .  .  .  .  .  .  Decl: *(obj @ 36)
+    44  .  .  .  .  .  .  }
+    45  .  .  .  .  .  }
+    46  .  .  .  .  .  Assign: -
+    47  .  .  .  .  .  Type: *ast.StructType {
+    48  .  .  .  .  .  .  Struct: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:8:19
+    49  .  .  .  .  .  .  Fields: *ast.FieldList {
+    50  .  .  .  .  .  .  .  Opening: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:8:26
+    51  .  .  .  .  .  .  .  List: []*ast.Field (len = 1) {
+    52  .  .  .  .  .  .  .  .  0: *ast.Field {
+    53  .  .  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+    54  .  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
+    55  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:9:2
+    56  .  .  .  .  .  .  .  .  .  .  .  Name: "P"
+    57  .  .  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+    58  .  .  .  .  .  .  .  .  .  .  .  .  Kind: var
+    59  .  .  .  .  .  .  .  .  .  .  .  .  Name: "P"
+    60  .  .  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 52)
+    61  .  .  .  .  .  .  .  .  .  .  .  }
+    62  .  .  .  .  .  .  .  .  .  .  }
+    63  .  .  .  .  .  .  .  .  .  }
+    64  .  .  .  .  .  .  .  .  .  Type: *ast.Ident {
+    65  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:9:4
+    66  .  .  .  .  .  .  .  .  .  .  Name: "int"
     67  .  .  .  .  .  .  .  .  .  }
-    68  .  .  .  .  .  .  .  .  }
-    69  .  .  .  .  .  .  .  }
-    70  .  .  .  .  .  .  .  Closing: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:7:1
-    71  .  .  .  .  .  .  }
-    72  .  .  .  .  .  .  Incomplete: false
-    73  .  .  .  .  .  }
-    74  .  .  .  .  }
-    75  .  .  .  }
-    76  .  .  .  Rparen: -
-    77  .  .  }
-    78  .  .  2: *ast.GenDecl {
-    79  .  .  .  Doc: *ast.CommentGroup {
-    80  .  .  .  .  List: []*ast.Comment (len = 3) {
-    81  .  .  .  .  .  0: *ast.Comment {
-    82  .  .  .  .  .  .  Slash: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:9:1
-    83  .  .  .  .  .  .  Text: "// ExampleStruct this is an example struct"
-    84  .  .  .  .  .  }
-    85  .  .  .  .  .  1: *ast.Comment {
-    86  .  .  .  .  .  .  Slash: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:10:1
-    87  .  .  .  .  .  .  Text: "// this is struct comment"
-    88  .  .  .  .  .  }
-    89  .  .  .  .  .  2: *ast.Comment {
-    90  .  .  .  .  .  .  Slash: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:11:1
-    91  .  .  .  .  .  .  Text: "// this is another struct comment"
+    68  .  .  .  .  .  .  .  .  .  Comment: *ast.CommentGroup {
+    69  .  .  .  .  .  .  .  .  .  .  List: []*ast.Comment (len = 1) {
+    70  .  .  .  .  .  .  .  .  .  .  .  0: *ast.Comment {
+    71  .  .  .  .  .  .  .  .  .  .  .  .  Slash: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:9:8
+    72  .  .  .  .  .  .  .  .  .  .  .  .  Text: "// parent value"
+    73  .  .  .  .  .  .  .  .  .  .  .  }
+    74  .  .  .  .  .  .  .  .  .  .  }
+    75  .  .  .  .  .  .  .  .  .  }
+    76  .  .  .  .  .  .  .  .  }
+    77  .  .  .  .  .  .  .  }
+    78  .  .  .  .  .  .  .  Closing: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:10:1
+    79  .  .  .  .  .  .  }
+    80  .  .  .  .  .  .  Incomplete: false
+    81  .  .  .  .  .  }
+    82  .  .  .  .  }
+    83  .  .  .  }
+    84  .  .  .  Rparen: -
+    85  .  .  }
+    86  .  .  2: *ast.GenDecl {
+    87  .  .  .  Doc: *ast.CommentGroup {
+    88  .  .  .  .  List: []*ast.Comment (len = 3) {
+    89  .  .  .  .  .  0: *ast.Comment {
+    90  .  .  .  .  .  .  Slash: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:12:1
+    91  .  .  .  .  .  .  Text: "// ExampleStruct this is an example struct"
     92  .  .  .  .  .  }
-    93  .  .  .  .  }
-    94  .  .  .  }
-    95  .  .  .  TokPos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:12:1
-    96  .  .  .  Tok: type
-    97  .  .  .  Lparen: -
-    98  .  .  .  Specs: []ast.Spec (len = 1) {
-    99  .  .  .  .  0: *ast.TypeSpec {
-   100  .  .  .  .  .  Name: *ast.Ident {
-   101  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:12:6
-   102  .  .  .  .  .  .  Name: "ExampleStruct"
-   103  .  .  .  .  .  .  Obj: *ast.Object {
-   104  .  .  .  .  .  .  .  Kind: type
-   105  .  .  .  .  .  .  .  Name: "ExampleStruct"
-   106  .  .  .  .  .  .  .  Decl: *(obj @ 99)
-   107  .  .  .  .  .  .  }
-   108  .  .  .  .  .  }
-   109  .  .  .  .  .  Assign: -
-   110  .  .  .  .  .  Type: *ast.StructType {
-   111  .  .  .  .  .  .  Struct: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:12:20
-   112  .  .  .  .  .  .  Fields: *ast.FieldList {
-   113  .  .  .  .  .  .  .  Opening: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:12:27
-   114  .  .  .  .  .  .  .  List: []*ast.Field (len = 3) {
-   115  .  .  .  .  .  .  .  .  0: *ast.Field {
-   116  .  .  .  .  .  .  .  .  .  Type: *ast.StarExpr {
-   117  .  .  .  .  .  .  .  .  .  .  Star: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:13:2
-   118  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   119  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:13:3
-   120  .  .  .  .  .  .  .  .  .  .  .  Name: "ParentStruct"
-   121  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 32)
-   122  .  .  .  .  .  .  .  .  .  .  }
-   123  .  .  .  .  .  .  .  .  .  }
-   124  .  .  .  .  .  .  .  .  .  Comment: *ast.CommentGroup {
-   125  .  .  .  .  .  .  .  .  .  .  List: []*ast.Comment (len = 1) {
-   126  .  .  .  .  .  .  .  .  .  .  .  0: *ast.Comment {
-   127  .  .  .  .  .  .  .  .  .  .  .  .  Slash: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:13:16
-   128  .  .  .  .  .  .  .  .  .  .  .  .  Text: "// parent struct"
-   129  .  .  .  .  .  .  .  .  .  .  .  }
+    93  .  .  .  .  .  1: *ast.Comment {
+    94  .  .  .  .  .  .  Slash: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:13:1
+    95  .  .  .  .  .  .  Text: "// this is struct comment"
+    96  .  .  .  .  .  }
+    97  .  .  .  .  .  2: *ast.Comment {
+    98  .  .  .  .  .  .  Slash: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:14:1
+    99  .  .  .  .  .  .  Text: "// this is another struct comment"
+   100  .  .  .  .  .  }
+   101  .  .  .  .  }
+   102  .  .  .  }
+   103  .  .  .  TokPos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:15:1
+   104  .  .  .  Tok: type
+   105  .  .  .  Lparen: -
+   106  .  .  .  Specs: []ast.Spec (len = 1) {
+   107  .  .  .  .  0: *ast.TypeSpec {
+   108  .  .  .  .  .  Name: *ast.Ident {
+   109  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:15:6
+   110  .  .  .  .  .  .  Name: "ExampleStruct"
+   111  .  .  .  .  .  .  Obj: *ast.Object {
+   112  .  .  .  .  .  .  .  Kind: type
+   113  .  .  .  .  .  .  .  Name: "ExampleStruct"
+   114  .  .  .  .  .  .  .  Decl: *(obj @ 107)
+   115  .  .  .  .  .  .  }
+   116  .  .  .  .  .  }
+   117  .  .  .  .  .  Assign: -
+   118  .  .  .  .  .  Type: *ast.StructType {
+   119  .  .  .  .  .  .  Struct: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:15:20
+   120  .  .  .  .  .  .  Fields: *ast.FieldList {
+   121  .  .  .  .  .  .  .  Opening: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:15:27
+   122  .  .  .  .  .  .  .  List: []*ast.Field (len = 3) {
+   123  .  .  .  .  .  .  .  .  0: *ast.Field {
+   124  .  .  .  .  .  .  .  .  .  Type: *ast.StarExpr {
+   125  .  .  .  .  .  .  .  .  .  .  Star: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:16:2
+   126  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   127  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:16:3
+   128  .  .  .  .  .  .  .  .  .  .  .  Name: "ParentStruct"
+   129  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 40)
    130  .  .  .  .  .  .  .  .  .  .  }
    131  .  .  .  .  .  .  .  .  .  }
-   132  .  .  .  .  .  .  .  .  }
-   133  .  .  .  .  .  .  .  .  1: *ast.Field {
-   134  .  .  .  .  .  .  .  .  .  Doc: *ast.CommentGroup {
-   135  .  .  .  .  .  .  .  .  .  .  List: []*ast.Comment (len = 2) {
-   136  .  .  .  .  .  .  .  .  .  .  .  0: *ast.Comment {
-   137  .  .  .  .  .  .  .  .  .  .  .  .  Slash: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:14:2
-   138  .  .  .  .  .  .  .  .  .  .  .  .  Text: "// v this is member doc line1"
-   139  .  .  .  .  .  .  .  .  .  .  .  }
-   140  .  .  .  .  .  .  .  .  .  .  .  1: *ast.Comment {
-   141  .  .  .  .  .  .  .  .  .  .  .  .  Slash: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:15:2
-   142  .  .  .  .  .  .  .  .  .  .  .  .  Text: "// v this is member doc line2"
-   143  .  .  .  .  .  .  .  .  .  .  .  }
-   144  .  .  .  .  .  .  .  .  .  .  }
-   145  .  .  .  .  .  .  .  .  .  }
-   146  .  .  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
-   147  .  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   148  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:16:2
-   149  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
-   150  .  .  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-   151  .  .  .  .  .  .  .  .  .  .  .  .  Kind: var
-   152  .  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
-   153  .  .  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 133)
-   154  .  .  .  .  .  .  .  .  .  .  .  }
-   155  .  .  .  .  .  .  .  .  .  .  }
-   156  .  .  .  .  .  .  .  .  .  }
-   157  .  .  .  .  .  .  .  .  .  Type: *ast.Ident {
-   158  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:16:6
-   159  .  .  .  .  .  .  .  .  .  .  Name: "int"
-   160  .  .  .  .  .  .  .  .  .  }
-   161  .  .  .  .  .  .  .  .  .  Tag: *ast.BasicLit {
-   162  .  .  .  .  .  .  .  .  .  .  ValuePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:16:10
-   163  .  .  .  .  .  .  .  .  .  .  Kind: STRING
-   164  .  .  .  .  .  .  .  .  .  .  Value: "`ast:init,default=1`"
-   165  .  .  .  .  .  .  .  .  .  }
-   166  .  .  .  .  .  .  .  .  .  Comment: *ast.CommentGroup {
-   167  .  .  .  .  .  .  .  .  .  .  List: []*ast.Comment (len = 1) {
-   168  .  .  .  .  .  .  .  .  .  .  .  0: *ast.Comment {
-   169  .  .  .  .  .  .  .  .  .  .  .  .  Slash: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:16:31
-   170  .  .  .  .  .  .  .  .  .  .  .  .  Text: "// this is member single comment line"
-   171  .  .  .  .  .  .  .  .  .  .  .  }
-   172  .  .  .  .  .  .  .  .  .  .  }
+   132  .  .  .  .  .  .  .  .  .  Comment: *ast.CommentGroup {
+   133  .  .  .  .  .  .  .  .  .  .  List: []*ast.Comment (len = 1) {
+   134  .  .  .  .  .  .  .  .  .  .  .  0: *ast.Comment {
+   135  .  .  .  .  .  .  .  .  .  .  .  .  Slash: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:16:16
+   136  .  .  .  .  .  .  .  .  .  .  .  .  Text: "// parent struct"
+   137  .  .  .  .  .  .  .  .  .  .  .  }
+   138  .  .  .  .  .  .  .  .  .  .  }
+   139  .  .  .  .  .  .  .  .  .  }
+   140  .  .  .  .  .  .  .  .  }
+   141  .  .  .  .  .  .  .  .  1: *ast.Field {
+   142  .  .  .  .  .  .  .  .  .  Doc: *ast.CommentGroup {
+   143  .  .  .  .  .  .  .  .  .  .  List: []*ast.Comment (len = 2) {
+   144  .  .  .  .  .  .  .  .  .  .  .  0: *ast.Comment {
+   145  .  .  .  .  .  .  .  .  .  .  .  .  Slash: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:17:2
+   146  .  .  .  .  .  .  .  .  .  .  .  .  Text: "// v this is member doc line1"
+   147  .  .  .  .  .  .  .  .  .  .  .  }
+   148  .  .  .  .  .  .  .  .  .  .  .  1: *ast.Comment {
+   149  .  .  .  .  .  .  .  .  .  .  .  .  Slash: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:18:2
+   150  .  .  .  .  .  .  .  .  .  .  .  .  Text: "// v this is member doc line2"
+   151  .  .  .  .  .  .  .  .  .  .  .  }
+   152  .  .  .  .  .  .  .  .  .  .  }
+   153  .  .  .  .  .  .  .  .  .  }
+   154  .  .  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   155  .  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   156  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:19:2
+   157  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
+   158  .  .  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   159  .  .  .  .  .  .  .  .  .  .  .  .  Kind: var
+   160  .  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
+   161  .  .  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 141)
+   162  .  .  .  .  .  .  .  .  .  .  .  }
+   163  .  .  .  .  .  .  .  .  .  .  }
+   164  .  .  .  .  .  .  .  .  .  }
+   165  .  .  .  .  .  .  .  .  .  Type: *ast.Ident {
+   166  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:19:6
+   167  .  .  .  .  .  .  .  .  .  .  Name: "int"
+   168  .  .  .  .  .  .  .  .  .  }
+   169  .  .  .  .  .  .  .  .  .  Tag: *ast.BasicLit {
+   170  .  .  .  .  .  .  .  .  .  .  ValuePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:19:10
+   171  .  .  .  .  .  .  .  .  .  .  Kind: STRING
+   172  .  .  .  .  .  .  .  .  .  .  Value: "`ast:init,default=1`"
    173  .  .  .  .  .  .  .  .  .  }
-   174  .  .  .  .  .  .  .  .  }
-   175  .  .  .  .  .  .  .  .  2: *ast.Field {
-   176  .  .  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
-   177  .  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   178  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:17:2
-   179  .  .  .  .  .  .  .  .  .  .  .  Name: "sub"
-   180  .  .  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-   181  .  .  .  .  .  .  .  .  .  .  .  .  Kind: var
-   182  .  .  .  .  .  .  .  .  .  .  .  .  Name: "sub"
-   183  .  .  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 175)
-   184  .  .  .  .  .  .  .  .  .  .  .  }
-   185  .  .  .  .  .  .  .  .  .  .  }
-   186  .  .  .  .  .  .  .  .  .  }
-   187  .  .  .  .  .  .  .  .  .  Type: *ast.StarExpr {
-   188  .  .  .  .  .  .  .  .  .  .  Star: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:17:6
-   189  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   190  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:17:7
-   191  .  .  .  .  .  .  .  .  .  .  .  Name: "ExampleStruct"
-   192  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 103)
+   174  .  .  .  .  .  .  .  .  .  Comment: *ast.CommentGroup {
+   175  .  .  .  .  .  .  .  .  .  .  List: []*ast.Comment (len = 1) {
+   176  .  .  .  .  .  .  .  .  .  .  .  0: *ast.Comment {
+   177  .  .  .  .  .  .  .  .  .  .  .  .  Slash: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:19:31
+   178  .  .  .  .  .  .  .  .  .  .  .  .  Text: "// this is member single comment line"
+   179  .  .  .  .  .  .  .  .  .  .  .  }
+   180  .  .  .  .  .  .  .  .  .  .  }
+   181  .  .  .  .  .  .  .  .  .  }
+   182  .  .  .  .  .  .  .  .  }
+   183  .  .  .  .  .  .  .  .  2: *ast.Field {
+   184  .  .  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   185  .  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   186  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:20:2
+   187  .  .  .  .  .  .  .  .  .  .  .  Name: "sub"
+   188  .  .  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   189  .  .  .  .  .  .  .  .  .  .  .  .  Kind: var
+   190  .  .  .  .  .  .  .  .  .  .  .  .  Name: "sub"
+   191  .  .  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 183)
+   192  .  .  .  .  .  .  .  .  .  .  .  }
    193  .  .  .  .  .  .  .  .  .  .  }
    194  .  .  .  .  .  .  .  .  .  }
-   195  .  .  .  .  .  .  .  .  }
-   196  .  .  .  .  .  .  .  }
-   197  .  .  .  .  .  .  .  Closing: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:18:1
-   198  .  .  .  .  .  .  }
-   199  .  .  .  .  .  .  Incomplete: false
-   200  .  .  .  .  .  }
-   201  .  .  .  .  }
-   202  .  .  .  }
-   203  .  .  .  Rparen: -
-   204  .  .  }
-   205  .  .  3: *ast.GenDecl {
-   206  .  .  .  TokPos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:20:1
-   207  .  .  .  Tok: var
-   208  .  .  .  Lparen: -
-   209  .  .  .  Specs: []ast.Spec (len = 1) {
-   210  .  .  .  .  0: *ast.ValueSpec {
-   211  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
-   212  .  .  .  .  .  .  0: *ast.Ident {
-   213  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:20:5
-   214  .  .  .  .  .  .  .  Name: "globalExampleStruct"
-   215  .  .  .  .  .  .  .  Obj: *ast.Object {
-   216  .  .  .  .  .  .  .  .  Kind: var
-   217  .  .  .  .  .  .  .  .  Name: "globalExampleStruct"
-   218  .  .  .  .  .  .  .  .  Decl: *(obj @ 210)
-   219  .  .  .  .  .  .  .  .  Data: 0
-   220  .  .  .  .  .  .  .  }
-   221  .  .  .  .  .  .  }
-   222  .  .  .  .  .  }
-   223  .  .  .  .  .  Type: *ast.StarExpr {
-   224  .  .  .  .  .  .  Star: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:20:25
-   225  .  .  .  .  .  .  X: *ast.Ident {
-   226  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:20:26
-   227  .  .  .  .  .  .  .  Name: "ExampleStruct"
-   228  .  .  .  .  .  .  .  Obj: *(obj @ 103)
+   195  .  .  .  .  .  .  .  .  .  Type: *ast.StarExpr {
+   196  .  .  .  .  .  .  .  .  .  .  Star: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:20:6
+   197  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   198  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:20:7
+   199  .  .  .  .  .  .  .  .  .  .  .  Name: "ExampleStruct"
+   200  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 111)
+   201  .  .  .  .  .  .  .  .  .  .  }
+   202  .  .  .  .  .  .  .  .  .  }
+   203  .  .  .  .  .  .  .  .  }
+   204  .  .  .  .  .  .  .  }
+   205  .  .  .  .  .  .  .  Closing: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:21:1
+   206  .  .  .  .  .  .  }
+   207  .  .  .  .  .  .  Incomplete: false
+   208  .  .  .  .  .  }
+   209  .  .  .  .  }
+   210  .  .  .  }
+   211  .  .  .  Rparen: -
+   212  .  .  }
+   213  .  .  3: *ast.GenDecl {
+   214  .  .  .  TokPos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:23:1
+   215  .  .  .  Tok: var
+   216  .  .  .  Lparen: -
+   217  .  .  .  Specs: []ast.Spec (len = 1) {
+   218  .  .  .  .  0: *ast.ValueSpec {
+   219  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   220  .  .  .  .  .  .  0: *ast.Ident {
+   221  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:23:5
+   222  .  .  .  .  .  .  .  Name: "globalExampleStruct"
+   223  .  .  .  .  .  .  .  Obj: *ast.Object {
+   224  .  .  .  .  .  .  .  .  Kind: var
+   225  .  .  .  .  .  .  .  .  Name: "globalExampleStruct"
+   226  .  .  .  .  .  .  .  .  Decl: *(obj @ 218)
+   227  .  .  .  .  .  .  .  .  Data: 0
+   228  .  .  .  .  .  .  .  }
    229  .  .  .  .  .  .  }
    230  .  .  .  .  .  }
-   231  .  .  .  .  }
-   232  .  .  .  }
-   233  .  .  .  Rparen: -
-   234  .  .  }
-   235  .  .  4: *ast.FuncDecl {
-   236  .  .  .  Doc: *ast.CommentGroup {
-   237  .  .  .  .  List: []*ast.Comment (len = 3) {
-   238  .  .  .  .  .  0: *ast.Comment {
-   239  .  .  .  .  .  .  Slash: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:22:1
-   240  .  .  .  .  .  .  Text: "// NewExampleStruct this is new example struct"
-   241  .  .  .  .  .  }
-   242  .  .  .  .  .  1: *ast.Comment {
-   243  .  .  .  .  .  .  Slash: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:23:1
-   244  .  .  .  .  .  .  Text: "// @param           value"
-   245  .  .  .  .  .  }
-   246  .  .  .  .  .  2: *ast.Comment {
-   247  .  .  .  .  .  .  Slash: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:24:1
-   248  .  .  .  .  .  .  Text: "// @return          pointer to ExampleStruct"
+   231  .  .  .  .  .  Type: *ast.StarExpr {
+   232  .  .  .  .  .  .  Star: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:23:25
+   233  .  .  .  .  .  .  X: *ast.Ident {
+   234  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:23:26
+   235  .  .  .  .  .  .  .  Name: "ExampleStruct"
+   236  .  .  .  .  .  .  .  Obj: *(obj @ 111)
+   237  .  .  .  .  .  .  }
+   238  .  .  .  .  .  }
+   239  .  .  .  .  }
+   240  .  .  .  }
+   241  .  .  .  Rparen: -
+   242  .  .  }
+   243  .  .  4: *ast.FuncDecl {
+   244  .  .  .  Doc: *ast.CommentGroup {
+   245  .  .  .  .  List: []*ast.Comment (len = 3) {
+   246  .  .  .  .  .  0: *ast.Comment {
+   247  .  .  .  .  .  .  Slash: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:25:1
+   248  .  .  .  .  .  .  Text: "// NewExampleStruct this is new example struct"
    249  .  .  .  .  .  }
-   250  .  .  .  .  }
-   251  .  .  .  }
-   252  .  .  .  Name: *ast.Ident {
-   253  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:25:6
-   254  .  .  .  .  Name: "NewExampleStruct"
-   255  .  .  .  .  Obj: *ast.Object {
-   256  .  .  .  .  .  Kind: func
-   257  .  .  .  .  .  Name: "NewExampleStruct"
-   258  .  .  .  .  .  Decl: *(obj @ 235)
-   259  .  .  .  .  }
-   260  .  .  .  }
-   261  .  .  .  Type: *ast.FuncType {
-   262  .  .  .  .  Func: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:25:1
-   263  .  .  .  .  Params: *ast.FieldList {
-   264  .  .  .  .  .  Opening: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:25:22
-   265  .  .  .  .  .  List: []*ast.Field (len = 1) {
-   266  .  .  .  .  .  .  0: *ast.Field {
-   267  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
-   268  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   269  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:25:23
-   270  .  .  .  .  .  .  .  .  .  Name: "v"
-   271  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-   272  .  .  .  .  .  .  .  .  .  .  Kind: var
-   273  .  .  .  .  .  .  .  .  .  .  Name: "v"
-   274  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 266)
-   275  .  .  .  .  .  .  .  .  .  }
-   276  .  .  .  .  .  .  .  .  }
-   277  .  .  .  .  .  .  .  }
-   278  .  .  .  .  .  .  .  Type: *ast.Ident {
-   279  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:25:25
-   280  .  .  .  .  .  .  .  .  Name: "int"
-   281  .  .  .  .  .  .  .  }
-   282  .  .  .  .  .  .  }
-   283  .  .  .  .  .  }
-   284  .  .  .  .  .  Closing: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:25:28
-   285  .  .  .  .  }
-   286  .  .  .  .  Results: *ast.FieldList {
-   287  .  .  .  .  .  Opening: -
-   288  .  .  .  .  .  List: []*ast.Field (len = 1) {
-   289  .  .  .  .  .  .  0: *ast.Field {
-   290  .  .  .  .  .  .  .  Type: *ast.StarExpr {
-   291  .  .  .  .  .  .  .  .  Star: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:25:30
-   292  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   293  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:25:31
-   294  .  .  .  .  .  .  .  .  .  Name: "ExampleStruct"
-   295  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 103)
-   296  .  .  .  .  .  .  .  .  }
-   297  .  .  .  .  .  .  .  }
-   298  .  .  .  .  .  .  }
-   299  .  .  .  .  .  }
-   300  .  .  .  .  .  Closing: -
-   301  .  .  .  .  }
-   302  .  .  .  }
-   303  .  .  .  Body: *ast.BlockStmt {
-   304  .  .  .  .  Lbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:25:45
-   305  .  .  .  .  List: []ast.Stmt (len = 2) {
-   306  .  .  .  .  .  0: *ast.AssignStmt {
-   307  .  .  .  .  .  .  Lhs: []ast.Expr (len = 1) {
-   308  .  .  .  .  .  .  .  0: *ast.Ident {
-   309  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:26:2
-   310  .  .  .  .  .  .  .  .  Name: "globalExampleStruct"
-   311  .  .  .  .  .  .  .  .  Obj: *(obj @ 215)
-   312  .  .  .  .  .  .  .  }
-   313  .  .  .  .  .  .  }
-   314  .  .  .  .  .  .  TokPos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:26:22
-   315  .  .  .  .  .  .  Tok: =
-   316  .  .  .  .  .  .  Rhs: []ast.Expr (len = 1) {
-   317  .  .  .  .  .  .  .  0: *ast.UnaryExpr {
-   318  .  .  .  .  .  .  .  .  OpPos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:26:24
-   319  .  .  .  .  .  .  .  .  Op: &
-   320  .  .  .  .  .  .  .  .  X: *ast.CompositeLit {
-   321  .  .  .  .  .  .  .  .  .  Type: *ast.Ident {
-   322  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:26:25
-   323  .  .  .  .  .  .  .  .  .  .  Name: "ExampleStruct"
-   324  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 103)
-   325  .  .  .  .  .  .  .  .  .  }
-   326  .  .  .  .  .  .  .  .  .  Lbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:26:38
-   327  .  .  .  .  .  .  .  .  .  Elts: []ast.Expr (len = 1) {
-   328  .  .  .  .  .  .  .  .  .  .  0: *ast.KeyValueExpr {
-   329  .  .  .  .  .  .  .  .  .  .  .  Key: *ast.Ident {
-   330  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:26:39
-   331  .  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
-   332  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 271)
-   333  .  .  .  .  .  .  .  .  .  .  .  }
-   334  .  .  .  .  .  .  .  .  .  .  .  Colon: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:26:40
-   335  .  .  .  .  .  .  .  .  .  .  .  Value: *ast.BinaryExpr {
-   336  .  .  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   337  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:26:42
-   338  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
-   339  .  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 271)
-   340  .  .  .  .  .  .  .  .  .  .  .  .  }
-   341  .  .  .  .  .  .  .  .  .  .  .  .  OpPos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:26:44
-   342  .  .  .  .  .  .  .  .  .  .  .  .  Op: +
-   343  .  .  .  .  .  .  .  .  .  .  .  .  Y: *ast.BasicLit {
-   344  .  .  .  .  .  .  .  .  .  .  .  .  .  ValuePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:26:46
-   345  .  .  .  .  .  .  .  .  .  .  .  .  .  Kind: INT
-   346  .  .  .  .  .  .  .  .  .  .  .  .  .  Value: "1"
-   347  .  .  .  .  .  .  .  .  .  .  .  .  }
-   348  .  .  .  .  .  .  .  .  .  .  .  }
-   349  .  .  .  .  .  .  .  .  .  .  }
-   350  .  .  .  .  .  .  .  .  .  }
-   351  .  .  .  .  .  .  .  .  .  Rbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:26:47
-   352  .  .  .  .  .  .  .  .  .  Incomplete: false
-   353  .  .  .  .  .  .  .  .  }
-   354  .  .  .  .  .  .  .  }
-   355  .  .  .  .  .  .  }
-   356  .  .  .  .  .  }
-   357  .  .  .  .  .  1: *ast.ReturnStmt {
-   358  .  .  .  .  .  .  Return: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:27:2
-   359  .  .  .  .  .  .  Results: []ast.Expr (len = 1) {
-   360  .  .  .  .  .  .  .  0: *ast.UnaryExpr {
-   361  .  .  .  .  .  .  .  .  OpPos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:27:9
-   362  .  .  .  .  .  .  .  .  Op: &
-   363  .  .  .  .  .  .  .  .  X: *ast.CompositeLit {
-   364  .  .  .  .  .  .  .  .  .  Type: *ast.Ident {
-   365  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:27:10
-   366  .  .  .  .  .  .  .  .  .  .  Name: "ExampleStruct"
-   367  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 103)
-   368  .  .  .  .  .  .  .  .  .  }
-   369  .  .  .  .  .  .  .  .  .  Lbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:27:23
-   370  .  .  .  .  .  .  .  .  .  Elts: []ast.Expr (len = 2) {
-   371  .  .  .  .  .  .  .  .  .  .  0: *ast.KeyValueExpr {
-   372  .  .  .  .  .  .  .  .  .  .  .  Key: *ast.Ident {
-   373  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:27:24
-   374  .  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
-   375  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 271)
-   376  .  .  .  .  .  .  .  .  .  .  .  }
-   377  .  .  .  .  .  .  .  .  .  .  .  Colon: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:27:25
-   378  .  .  .  .  .  .  .  .  .  .  .  Value: *ast.Ident {
-   379  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:27:27
-   380  .  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
-   381  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 271)
-   382  .  .  .  .  .  .  .  .  .  .  .  }
-   383  .  .  .  .  .  .  .  .  .  .  }
-   384  .  .  .  .  .  .  .  .  .  .  1: *ast.KeyValueExpr {
-   385  .  .  .  .  .  .  .  .  .  .  .  Key: *ast.Ident {
-   386  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:27:30
-   387  .  .  .  .  .  .  .  .  .  .  .  .  Name: "sub"
-   388  .  .  .  .  .  .  .  .  .  .  .  }
-   389  .  .  .  .  .  .  .  .  .  .  .  Colon: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:27:33
-   390  .  .  .  .  .  .  .  .  .  .  .  Value: *ast.Ident {
-   391  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:27:35
-   392  .  .  .  .  .  .  .  .  .  .  .  .  Name: "globalExampleStruct"
-   393  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 215)
-   394  .  .  .  .  .  .  .  .  .  .  .  }
-   395  .  .  .  .  .  .  .  .  .  .  }
-   396  .  .  .  .  .  .  .  .  .  }
-   397  .  .  .  .  .  .  .  .  .  Rbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:27:54
-   398  .  .  .  .  .  .  .  .  .  Incomplete: false
-   399  .  .  .  .  .  .  .  .  }
-   400  .  .  .  .  .  .  .  }
-   401  .  .  .  .  .  .  }
-   402  .  .  .  .  .  }
-   403  .  .  .  .  }
-   404  .  .  .  .  Rbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:28:1
-   405  .  .  .  }
-   406  .  .  }
-   407  .  .  5: *ast.FuncDecl {
-   408  .  .  .  Recv: *ast.FieldList {
-   409  .  .  .  .  Opening: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:30:6
-   410  .  .  .  .  List: []*ast.Field (len = 1) {
-   411  .  .  .  .  .  0: *ast.Field {
-   412  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
-   413  .  .  .  .  .  .  .  0: *ast.Ident {
-   414  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:30:7
-   415  .  .  .  .  .  .  .  .  Name: "es"
-   416  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-   417  .  .  .  .  .  .  .  .  .  Kind: var
-   418  .  .  .  .  .  .  .  .  .  Name: "es"
-   419  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 411)
-   420  .  .  .  .  .  .  .  .  }
-   421  .  .  .  .  .  .  .  }
-   422  .  .  .  .  .  .  }
-   423  .  .  .  .  .  .  Type: *ast.Ident {
-   424  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:30:10
-   425  .  .  .  .  .  .  .  Name: "ExampleStruct"
-   426  .  .  .  .  .  .  .  Obj: *(obj @ 103)
-   427  .  .  .  .  .  .  }
-   428  .  .  .  .  .  }
-   429  .  .  .  .  }
-   430  .  .  .  .  Closing: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:30:23
-   431  .  .  .  }
-   432  .  .  .  Name: *ast.Ident {
-   433  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:30:25
-   434  .  .  .  .  Name: "ExampleFunc"
-   435  .  .  .  }
-   436  .  .  .  Type: *ast.FuncType {
-   437  .  .  .  .  Func: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:30:1
-   438  .  .  .  .  Params: *ast.FieldList {
-   439  .  .  .  .  .  Opening: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:30:36
-   440  .  .  .  .  .  List: []*ast.Field (len = 1) {
-   441  .  .  .  .  .  .  0: *ast.Field {
-   442  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
-   443  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   444  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:30:37
-   445  .  .  .  .  .  .  .  .  .  Name: "v"
-   446  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-   447  .  .  .  .  .  .  .  .  .  .  Kind: var
-   448  .  .  .  .  .  .  .  .  .  .  Name: "v"
-   449  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 441)
-   450  .  .  .  .  .  .  .  .  .  }
-   451  .  .  .  .  .  .  .  .  }
-   452  .  .  .  .  .  .  .  }
-   453  .  .  .  .  .  .  .  Type: *ast.Ident {
-   454  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:30:39
-   455  .  .  .  .  .  .  .  .  Name: "int"
-   456  .  .  .  .  .  .  .  }
-   457  .  .  .  .  .  .  }
-   458  .  .  .  .  .  }
-   459  .  .  .  .  .  Closing: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:30:42
-   460  .  .  .  .  }
-   461  .  .  .  }
-   462  .  .  .  Body: *ast.BlockStmt {
-   463  .  .  .  .  Lbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:30:44
-   464  .  .  .  .  List: []ast.Stmt (len = 2) {
-   465  .  .  .  .  .  0: *ast.AssignStmt {
-   466  .  .  .  .  .  .  Lhs: []ast.Expr (len = 1) {
-   467  .  .  .  .  .  .  .  0: *ast.Ident {
-   468  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:31:2
-   469  .  .  .  .  .  .  .  .  Name: "nes"
-   470  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-   471  .  .  .  .  .  .  .  .  .  Kind: var
-   472  .  .  .  .  .  .  .  .  .  Name: "nes"
-   473  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 465)
-   474  .  .  .  .  .  .  .  .  }
-   475  .  .  .  .  .  .  .  }
-   476  .  .  .  .  .  .  }
-   477  .  .  .  .  .  .  TokPos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:31:6
-   478  .  .  .  .  .  .  Tok: :=
-   479  .  .  .  .  .  .  Rhs: []ast.Expr (len = 1) {
-   480  .  .  .  .  .  .  .  0: *ast.CallExpr {
-   481  .  .  .  .  .  .  .  .  Fun: *ast.Ident {
-   482  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:31:9
-   483  .  .  .  .  .  .  .  .  .  Name: "NewExampleStruct"
-   484  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 255)
-   485  .  .  .  .  .  .  .  .  }
-   486  .  .  .  .  .  .  .  .  Lparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:31:25
-   487  .  .  .  .  .  .  .  .  Args: []ast.Expr (len = 1) {
-   488  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   489  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:31:26
-   490  .  .  .  .  .  .  .  .  .  .  Name: "v"
-   491  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 446)
-   492  .  .  .  .  .  .  .  .  .  }
-   493  .  .  .  .  .  .  .  .  }
-   494  .  .  .  .  .  .  .  .  Ellipsis: -
-   495  .  .  .  .  .  .  .  .  Rparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:31:27
-   496  .  .  .  .  .  .  .  }
-   497  .  .  .  .  .  .  }
-   498  .  .  .  .  .  }
-   499  .  .  .  .  .  1: *ast.ExprStmt {
-   500  .  .  .  .  .  .  X: *ast.CallExpr {
-   501  .  .  .  .  .  .  .  Fun: *ast.SelectorExpr {
-   502  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   503  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:32:2
-   504  .  .  .  .  .  .  .  .  .  Name: "fmt"
+   250  .  .  .  .  .  1: *ast.Comment {
+   251  .  .  .  .  .  .  Slash: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:26:1
+   252  .  .  .  .  .  .  Text: "// @param           value"
+   253  .  .  .  .  .  }
+   254  .  .  .  .  .  2: *ast.Comment {
+   255  .  .  .  .  .  .  Slash: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:27:1
+   256  .  .  .  .  .  .  Text: "// @return          pointer to ExampleStruct"
+   257  .  .  .  .  .  }
+   258  .  .  .  .  }
+   259  .  .  .  }
+   260  .  .  .  Name: *ast.Ident {
+   261  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:28:6
+   262  .  .  .  .  Name: "NewExampleStruct"
+   263  .  .  .  .  Obj: *ast.Object {
+   264  .  .  .  .  .  Kind: func
+   265  .  .  .  .  .  Name: "NewExampleStruct"
+   266  .  .  .  .  .  Decl: *(obj @ 243)
+   267  .  .  .  .  }
+   268  .  .  .  }
+   269  .  .  .  Type: *ast.FuncType {
+   270  .  .  .  .  Func: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:28:1
+   271  .  .  .  .  Params: *ast.FieldList {
+   272  .  .  .  .  .  Opening: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:28:22
+   273  .  .  .  .  .  List: []*ast.Field (len = 1) {
+   274  .  .  .  .  .  .  0: *ast.Field {
+   275  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   276  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   277  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:28:23
+   278  .  .  .  .  .  .  .  .  .  Name: "v"
+   279  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   280  .  .  .  .  .  .  .  .  .  .  Kind: var
+   281  .  .  .  .  .  .  .  .  .  .  Name: "v"
+   282  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 274)
+   283  .  .  .  .  .  .  .  .  .  }
+   284  .  .  .  .  .  .  .  .  }
+   285  .  .  .  .  .  .  .  }
+   286  .  .  .  .  .  .  .  Type: *ast.Ident {
+   287  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:28:25
+   288  .  .  .  .  .  .  .  .  Name: "int"
+   289  .  .  .  .  .  .  .  }
+   290  .  .  .  .  .  .  }
+   291  .  .  .  .  .  }
+   292  .  .  .  .  .  Closing: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:28:28
+   293  .  .  .  .  }
+   294  .  .  .  .  Results: *ast.FieldList {
+   295  .  .  .  .  .  Opening: -
+   296  .  .  .  .  .  List: []*ast.Field (len = 1) {
+   297  .  .  .  .  .  .  0: *ast.Field {
+   298  .  .  .  .  .  .  .  Type: *ast.StarExpr {
+   299  .  .  .  .  .  .  .  .  Star: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:28:30
+   300  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   301  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:28:31
+   302  .  .  .  .  .  .  .  .  .  Name: "ExampleStruct"
+   303  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 111)
+   304  .  .  .  .  .  .  .  .  }
+   305  .  .  .  .  .  .  .  }
+   306  .  .  .  .  .  .  }
+   307  .  .  .  .  .  }
+   308  .  .  .  .  .  Closing: -
+   309  .  .  .  .  }
+   310  .  .  .  }
+   311  .  .  .  Body: *ast.BlockStmt {
+   312  .  .  .  .  Lbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:28:45
+   313  .  .  .  .  List: []ast.Stmt (len = 5) {
+   314  .  .  .  .  .  0: *ast.AssignStmt {
+   315  .  .  .  .  .  .  Lhs: []ast.Expr (len = 1) {
+   316  .  .  .  .  .  .  .  0: *ast.Ident {
+   317  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:29:2
+   318  .  .  .  .  .  .  .  .  Name: "es"
+   319  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   320  .  .  .  .  .  .  .  .  .  Kind: var
+   321  .  .  .  .  .  .  .  .  .  Name: "es"
+   322  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 314)
+   323  .  .  .  .  .  .  .  .  }
+   324  .  .  .  .  .  .  .  }
+   325  .  .  .  .  .  .  }
+   326  .  .  .  .  .  .  TokPos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:29:5
+   327  .  .  .  .  .  .  Tok: :=
+   328  .  .  .  .  .  .  Rhs: []ast.Expr (len = 1) {
+   329  .  .  .  .  .  .  .  0: *ast.UnaryExpr {
+   330  .  .  .  .  .  .  .  .  OpPos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:29:8
+   331  .  .  .  .  .  .  .  .  Op: &
+   332  .  .  .  .  .  .  .  .  X: *ast.CompositeLit {
+   333  .  .  .  .  .  .  .  .  .  Type: *ast.Ident {
+   334  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:29:9
+   335  .  .  .  .  .  .  .  .  .  .  Name: "ExampleStruct"
+   336  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 111)
+   337  .  .  .  .  .  .  .  .  .  }
+   338  .  .  .  .  .  .  .  .  .  Lbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:29:22
+   339  .  .  .  .  .  .  .  .  .  Elts: []ast.Expr (len = 2) {
+   340  .  .  .  .  .  .  .  .  .  .  0: *ast.KeyValueExpr {
+   341  .  .  .  .  .  .  .  .  .  .  .  Key: *ast.Ident {
+   342  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:30:3
+   343  .  .  .  .  .  .  .  .  .  .  .  .  Name: "ParentStruct"
+   344  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 40)
+   345  .  .  .  .  .  .  .  .  .  .  .  }
+   346  .  .  .  .  .  .  .  .  .  .  .  Colon: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:30:15
+   347  .  .  .  .  .  .  .  .  .  .  .  Value: *ast.UnaryExpr {
+   348  .  .  .  .  .  .  .  .  .  .  .  .  OpPos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:30:17
+   349  .  .  .  .  .  .  .  .  .  .  .  .  Op: &
+   350  .  .  .  .  .  .  .  .  .  .  .  .  X: *ast.CompositeLit {
+   351  .  .  .  .  .  .  .  .  .  .  .  .  .  Type: *ast.Ident {
+   352  .  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:30:18
+   353  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "ParentStruct"
+   354  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 40)
+   355  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   356  .  .  .  .  .  .  .  .  .  .  .  .  .  Lbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:30:30
+   357  .  .  .  .  .  .  .  .  .  .  .  .  .  Elts: []ast.Expr (len = 1) {
+   358  .  .  .  .  .  .  .  .  .  .  .  .  .  .  0: *ast.KeyValueExpr {
+   359  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Key: *ast.Ident {
+   360  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:30:31
+   361  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "P"
+   362  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   363  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Colon: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:30:32
+   364  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Value: *ast.BinaryExpr {
+   365  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   366  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:30:34
+   367  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
+   368  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 279)
+   369  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   370  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  OpPos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:30:36
+   371  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Op: *
+   372  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Y: *ast.BasicLit {
+   373  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  ValuePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:30:38
+   374  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Kind: INT
+   375  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Value: "10"
+   376  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   377  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   378  .  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   379  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   380  .  .  .  .  .  .  .  .  .  .  .  .  .  Rbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:30:40
+   381  .  .  .  .  .  .  .  .  .  .  .  .  .  Incomplete: false
+   382  .  .  .  .  .  .  .  .  .  .  .  .  }
+   383  .  .  .  .  .  .  .  .  .  .  .  }
+   384  .  .  .  .  .  .  .  .  .  .  }
+   385  .  .  .  .  .  .  .  .  .  .  1: *ast.KeyValueExpr {
+   386  .  .  .  .  .  .  .  .  .  .  .  Key: *ast.Ident {
+   387  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:31:3
+   388  .  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
+   389  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 279)
+   390  .  .  .  .  .  .  .  .  .  .  .  }
+   391  .  .  .  .  .  .  .  .  .  .  .  Colon: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:31:4
+   392  .  .  .  .  .  .  .  .  .  .  .  Value: *ast.Ident {
+   393  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:31:17
+   394  .  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
+   395  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 279)
+   396  .  .  .  .  .  .  .  .  .  .  .  }
+   397  .  .  .  .  .  .  .  .  .  .  }
+   398  .  .  .  .  .  .  .  .  .  }
+   399  .  .  .  .  .  .  .  .  .  Rbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:32:2
+   400  .  .  .  .  .  .  .  .  .  Incomplete: false
+   401  .  .  .  .  .  .  .  .  }
+   402  .  .  .  .  .  .  .  }
+   403  .  .  .  .  .  .  }
+   404  .  .  .  .  .  }
+   405  .  .  .  .  .  1: *ast.AssignStmt {
+   406  .  .  .  .  .  .  Lhs: []ast.Expr (len = 1) {
+   407  .  .  .  .  .  .  .  0: *ast.Ident {
+   408  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:33:2
+   409  .  .  .  .  .  .  .  .  Name: "globalExampleStruct"
+   410  .  .  .  .  .  .  .  .  Obj: *(obj @ 223)
+   411  .  .  .  .  .  .  .  }
+   412  .  .  .  .  .  .  }
+   413  .  .  .  .  .  .  TokPos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:33:22
+   414  .  .  .  .  .  .  Tok: =
+   415  .  .  .  .  .  .  Rhs: []ast.Expr (len = 1) {
+   416  .  .  .  .  .  .  .  0: *ast.UnaryExpr {
+   417  .  .  .  .  .  .  .  .  OpPos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:33:24
+   418  .  .  .  .  .  .  .  .  Op: &
+   419  .  .  .  .  .  .  .  .  X: *ast.CompositeLit {
+   420  .  .  .  .  .  .  .  .  .  Type: *ast.Ident {
+   421  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:33:25
+   422  .  .  .  .  .  .  .  .  .  .  Name: "ExampleStruct"
+   423  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 111)
+   424  .  .  .  .  .  .  .  .  .  }
+   425  .  .  .  .  .  .  .  .  .  Lbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:33:38
+   426  .  .  .  .  .  .  .  .  .  Elts: []ast.Expr (len = 2) {
+   427  .  .  .  .  .  .  .  .  .  .  0: *ast.KeyValueExpr {
+   428  .  .  .  .  .  .  .  .  .  .  .  Key: *ast.Ident {
+   429  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:34:3
+   430  .  .  .  .  .  .  .  .  .  .  .  .  Name: "ParentStruct"
+   431  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 40)
+   432  .  .  .  .  .  .  .  .  .  .  .  }
+   433  .  .  .  .  .  .  .  .  .  .  .  Colon: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:34:15
+   434  .  .  .  .  .  .  .  .  .  .  .  Value: *ast.UnaryExpr {
+   435  .  .  .  .  .  .  .  .  .  .  .  .  OpPos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:34:17
+   436  .  .  .  .  .  .  .  .  .  .  .  .  Op: &
+   437  .  .  .  .  .  .  .  .  .  .  .  .  X: *ast.CompositeLit {
+   438  .  .  .  .  .  .  .  .  .  .  .  .  .  Type: *ast.Ident {
+   439  .  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:34:18
+   440  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "ParentStruct"
+   441  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 40)
+   442  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   443  .  .  .  .  .  .  .  .  .  .  .  .  .  Lbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:34:30
+   444  .  .  .  .  .  .  .  .  .  .  .  .  .  Elts: []ast.Expr (len = 1) {
+   445  .  .  .  .  .  .  .  .  .  .  .  .  .  .  0: *ast.KeyValueExpr {
+   446  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Key: *ast.Ident {
+   447  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:34:31
+   448  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "P"
+   449  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   450  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Colon: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:34:32
+   451  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Value: *ast.CallExpr {
+   452  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Fun: *ast.SelectorExpr {
+   453  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   454  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:34:34
+   455  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "rand"
+   456  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   457  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+   458  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:34:39
+   459  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "Intn"
+   460  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   461  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   462  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Lparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:34:43
+   463  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Args: []ast.Expr (len = 1) {
+   464  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   465  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:34:44
+   466  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
+   467  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 279)
+   468  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   469  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   470  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Ellipsis: -
+   471  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Rparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:34:45
+   472  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   473  .  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   474  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   475  .  .  .  .  .  .  .  .  .  .  .  .  .  Rbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:34:46
+   476  .  .  .  .  .  .  .  .  .  .  .  .  .  Incomplete: false
+   477  .  .  .  .  .  .  .  .  .  .  .  .  }
+   478  .  .  .  .  .  .  .  .  .  .  .  }
+   479  .  .  .  .  .  .  .  .  .  .  }
+   480  .  .  .  .  .  .  .  .  .  .  1: *ast.KeyValueExpr {
+   481  .  .  .  .  .  .  .  .  .  .  .  Key: *ast.Ident {
+   482  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:35:3
+   483  .  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
+   484  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 279)
+   485  .  .  .  .  .  .  .  .  .  .  .  }
+   486  .  .  .  .  .  .  .  .  .  .  .  Colon: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:35:4
+   487  .  .  .  .  .  .  .  .  .  .  .  Value: *ast.BinaryExpr {
+   488  .  .  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   489  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:35:17
+   490  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
+   491  .  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 279)
+   492  .  .  .  .  .  .  .  .  .  .  .  .  }
+   493  .  .  .  .  .  .  .  .  .  .  .  .  OpPos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:35:19
+   494  .  .  .  .  .  .  .  .  .  .  .  .  Op: /
+   495  .  .  .  .  .  .  .  .  .  .  .  .  Y: *ast.BasicLit {
+   496  .  .  .  .  .  .  .  .  .  .  .  .  .  ValuePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:35:21
+   497  .  .  .  .  .  .  .  .  .  .  .  .  .  Kind: INT
+   498  .  .  .  .  .  .  .  .  .  .  .  .  .  Value: "10"
+   499  .  .  .  .  .  .  .  .  .  .  .  .  }
+   500  .  .  .  .  .  .  .  .  .  .  .  }
+   501  .  .  .  .  .  .  .  .  .  .  }
+   502  .  .  .  .  .  .  .  .  .  }
+   503  .  .  .  .  .  .  .  .  .  Rbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:36:2
+   504  .  .  .  .  .  .  .  .  .  Incomplete: false
    505  .  .  .  .  .  .  .  .  }
-   506  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
-   507  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:32:6
-   508  .  .  .  .  .  .  .  .  .  Name: "Println"
-   509  .  .  .  .  .  .  .  .  }
-   510  .  .  .  .  .  .  .  }
-   511  .  .  .  .  .  .  .  Lparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:32:13
-   512  .  .  .  .  .  .  .  Args: []ast.Expr (len = 11) {
-   513  .  .  .  .  .  .  .  .  0: *ast.BasicLit {
-   514  .  .  .  .  .  .  .  .  .  ValuePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:32:14
-   515  .  .  .  .  .  .  .  .  .  Kind: STRING
-   516  .  .  .  .  .  .  .  .  .  Value: "\"module.ExampleStruct.ExampleFunc Hello go-extractor\""
-   517  .  .  .  .  .  .  .  .  }
-   518  .  .  .  .  .  .  .  .  1: *ast.Ident {
-   519  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:33:3
-   520  .  .  .  .  .  .  .  .  .  Name: "es"
-   521  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 416)
-   522  .  .  .  .  .  .  .  .  }
-   523  .  .  .  .  .  .  .  .  2: *ast.SelectorExpr {
-   524  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   525  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:33:7
-   526  .  .  .  .  .  .  .  .  .  .  Name: "es"
-   527  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 416)
-   528  .  .  .  .  .  .  .  .  .  }
-   529  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
-   530  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:33:10
-   531  .  .  .  .  .  .  .  .  .  .  Name: "v"
-   532  .  .  .  .  .  .  .  .  .  }
-   533  .  .  .  .  .  .  .  .  }
-   534  .  .  .  .  .  .  .  .  3: *ast.CallExpr {
-   535  .  .  .  .  .  .  .  .  .  Fun: *ast.SelectorExpr {
-   536  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   537  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:33:13
-   538  .  .  .  .  .  .  .  .  .  .  .  Name: "es"
-   539  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 416)
-   540  .  .  .  .  .  .  .  .  .  .  }
-   541  .  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
-   542  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:33:16
-   543  .  .  .  .  .  .  .  .  .  .  .  Name: "V"
-   544  .  .  .  .  .  .  .  .  .  .  }
-   545  .  .  .  .  .  .  .  .  .  }
-   546  .  .  .  .  .  .  .  .  .  Lparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:33:17
-   547  .  .  .  .  .  .  .  .  .  Ellipsis: -
-   548  .  .  .  .  .  .  .  .  .  Rparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:33:18
-   549  .  .  .  .  .  .  .  .  }
-   550  .  .  .  .  .  .  .  .  4: *ast.Ident {
-   551  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:34:3
-   552  .  .  .  .  .  .  .  .  .  Name: "nes"
-   553  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 470)
-   554  .  .  .  .  .  .  .  .  }
-   555  .  .  .  .  .  .  .  .  5: *ast.SelectorExpr {
-   556  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   557  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:34:8
-   558  .  .  .  .  .  .  .  .  .  .  Name: "nes"
-   559  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 470)
-   560  .  .  .  .  .  .  .  .  .  }
-   561  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
-   562  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:34:12
-   563  .  .  .  .  .  .  .  .  .  .  Name: "v"
-   564  .  .  .  .  .  .  .  .  .  }
-   565  .  .  .  .  .  .  .  .  }
-   566  .  .  .  .  .  .  .  .  6: *ast.CallExpr {
-   567  .  .  .  .  .  .  .  .  .  Fun: *ast.SelectorExpr {
-   568  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   569  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:34:15
-   570  .  .  .  .  .  .  .  .  .  .  .  Name: "nes"
-   571  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 470)
-   572  .  .  .  .  .  .  .  .  .  .  }
-   573  .  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
-   574  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:34:19
-   575  .  .  .  .  .  .  .  .  .  .  .  Name: "V"
-   576  .  .  .  .  .  .  .  .  .  .  }
-   577  .  .  .  .  .  .  .  .  .  }
-   578  .  .  .  .  .  .  .  .  .  Lparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:34:20
-   579  .  .  .  .  .  .  .  .  .  Ellipsis: -
-   580  .  .  .  .  .  .  .  .  .  Rparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:34:21
-   581  .  .  .  .  .  .  .  .  }
-   582  .  .  .  .  .  .  .  .  7: *ast.SelectorExpr {
-   583  .  .  .  .  .  .  .  .  .  X: *ast.SelectorExpr {
-   584  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   585  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:35:3
-   586  .  .  .  .  .  .  .  .  .  .  .  Name: "nes"
-   587  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 470)
-   588  .  .  .  .  .  .  .  .  .  .  }
-   589  .  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
-   590  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:35:7
-   591  .  .  .  .  .  .  .  .  .  .  .  Name: "sub"
-   592  .  .  .  .  .  .  .  .  .  .  }
-   593  .  .  .  .  .  .  .  .  .  }
-   594  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
-   595  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:35:11
-   596  .  .  .  .  .  .  .  .  .  .  Name: "v"
-   597  .  .  .  .  .  .  .  .  .  }
-   598  .  .  .  .  .  .  .  .  }
-   599  .  .  .  .  .  .  .  .  8: *ast.CallExpr {
-   600  .  .  .  .  .  .  .  .  .  Fun: *ast.SelectorExpr {
-   601  .  .  .  .  .  .  .  .  .  .  X: *ast.SelectorExpr {
-   602  .  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   603  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:35:14
-   604  .  .  .  .  .  .  .  .  .  .  .  .  Name: "es"
-   605  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 416)
-   606  .  .  .  .  .  .  .  .  .  .  .  }
-   607  .  .  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
-   608  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:35:17
-   609  .  .  .  .  .  .  .  .  .  .  .  .  Name: "sub"
-   610  .  .  .  .  .  .  .  .  .  .  .  }
-   611  .  .  .  .  .  .  .  .  .  .  }
-   612  .  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
-   613  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:35:21
-   614  .  .  .  .  .  .  .  .  .  .  .  Name: "V"
-   615  .  .  .  .  .  .  .  .  .  .  }
-   616  .  .  .  .  .  .  .  .  .  }
-   617  .  .  .  .  .  .  .  .  .  Lparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:35:22
-   618  .  .  .  .  .  .  .  .  .  Ellipsis: -
-   619  .  .  .  .  .  .  .  .  .  Rparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:35:23
-   620  .  .  .  .  .  .  .  .  }
-   621  .  .  .  .  .  .  .  .  9: *ast.Ident {
-   622  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:36:3
-   623  .  .  .  .  .  .  .  .  .  Name: "globalExampleStruct"
-   624  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 215)
-   625  .  .  .  .  .  .  .  .  }
-   626  .  .  .  .  .  .  .  .  10: *ast.CallExpr {
-   627  .  .  .  .  .  .  .  .  .  Fun: *ast.Ident {
-   628  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:37:3
-   629  .  .  .  .  .  .  .  .  .  .  Name: "NewExampleStruct"
-   630  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 255)
-   631  .  .  .  .  .  .  .  .  .  }
-   632  .  .  .  .  .  .  .  .  .  Lparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:37:19
-   633  .  .  .  .  .  .  .  .  .  Args: []ast.Expr (len = 1) {
-   634  .  .  .  .  .  .  .  .  .  .  0: *ast.CallExpr {
-   635  .  .  .  .  .  .  .  .  .  .  .  Fun: *ast.SelectorExpr {
-   636  .  .  .  .  .  .  .  .  .  .  .  .  X: *ast.SelectorExpr {
-   637  .  .  .  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   638  .  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:37:20
-   639  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "nes"
-   640  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 470)
-   641  .  .  .  .  .  .  .  .  .  .  .  .  .  }
-   642  .  .  .  .  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
-   643  .  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:37:24
-   644  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "sub"
-   645  .  .  .  .  .  .  .  .  .  .  .  .  .  }
-   646  .  .  .  .  .  .  .  .  .  .  .  .  }
-   647  .  .  .  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
-   648  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:37:28
-   649  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "V"
-   650  .  .  .  .  .  .  .  .  .  .  .  .  }
-   651  .  .  .  .  .  .  .  .  .  .  .  }
-   652  .  .  .  .  .  .  .  .  .  .  .  Lparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:37:29
-   653  .  .  .  .  .  .  .  .  .  .  .  Ellipsis: -
-   654  .  .  .  .  .  .  .  .  .  .  .  Rparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:37:30
-   655  .  .  .  .  .  .  .  .  .  .  }
-   656  .  .  .  .  .  .  .  .  .  }
-   657  .  .  .  .  .  .  .  .  .  Ellipsis: -
-   658  .  .  .  .  .  .  .  .  .  Rparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:37:31
-   659  .  .  .  .  .  .  .  .  }
-   660  .  .  .  .  .  .  .  }
-   661  .  .  .  .  .  .  .  Ellipsis: -
-   662  .  .  .  .  .  .  .  Rparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:38:2
-   663  .  .  .  .  .  .  }
-   664  .  .  .  .  .  }
-   665  .  .  .  .  }
-   666  .  .  .  .  Rbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:39:1
-   667  .  .  .  }
-   668  .  .  }
-   669  .  .  6: *ast.FuncDecl {
-   670  .  .  .  Recv: *ast.FieldList {
-   671  .  .  .  .  Opening: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:41:6
-   672  .  .  .  .  List: []*ast.Field (len = 1) {
-   673  .  .  .  .  .  0: *ast.Field {
-   674  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
-   675  .  .  .  .  .  .  .  0: *ast.Ident {
-   676  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:41:7
-   677  .  .  .  .  .  .  .  .  Name: "es"
-   678  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-   679  .  .  .  .  .  .  .  .  .  Kind: var
-   680  .  .  .  .  .  .  .  .  .  Name: "es"
-   681  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 673)
-   682  .  .  .  .  .  .  .  .  }
-   683  .  .  .  .  .  .  .  }
-   684  .  .  .  .  .  .  }
-   685  .  .  .  .  .  .  Type: *ast.StarExpr {
-   686  .  .  .  .  .  .  .  Star: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:41:10
-   687  .  .  .  .  .  .  .  X: *ast.Ident {
-   688  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:41:11
-   689  .  .  .  .  .  .  .  .  Name: "ExampleStruct"
-   690  .  .  .  .  .  .  .  .  Obj: *(obj @ 103)
-   691  .  .  .  .  .  .  .  }
-   692  .  .  .  .  .  .  }
-   693  .  .  .  .  .  }
-   694  .  .  .  .  }
-   695  .  .  .  .  Closing: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:41:24
-   696  .  .  .  }
-   697  .  .  .  Name: *ast.Ident {
-   698  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:41:26
-   699  .  .  .  .  Name: "ExampleFuncWithPointerReceiver"
-   700  .  .  .  }
-   701  .  .  .  Type: *ast.FuncType {
-   702  .  .  .  .  Func: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:41:1
-   703  .  .  .  .  Params: *ast.FieldList {
-   704  .  .  .  .  .  Opening: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:41:56
-   705  .  .  .  .  .  List: []*ast.Field (len = 1) {
-   706  .  .  .  .  .  .  0: *ast.Field {
-   707  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
-   708  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   709  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:41:57
-   710  .  .  .  .  .  .  .  .  .  Name: "v"
-   711  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-   712  .  .  .  .  .  .  .  .  .  .  Kind: var
-   713  .  .  .  .  .  .  .  .  .  .  Name: "v"
-   714  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 706)
+   506  .  .  .  .  .  .  .  }
+   507  .  .  .  .  .  .  }
+   508  .  .  .  .  .  }
+   509  .  .  .  .  .  2: *ast.AssignStmt {
+   510  .  .  .  .  .  .  Lhs: []ast.Expr (len = 1) {
+   511  .  .  .  .  .  .  .  0: *ast.SelectorExpr {
+   512  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   513  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:37:2
+   514  .  .  .  .  .  .  .  .  .  Name: "es"
+   515  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 319)
+   516  .  .  .  .  .  .  .  .  }
+   517  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+   518  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:37:5
+   519  .  .  .  .  .  .  .  .  .  Name: "sub"
+   520  .  .  .  .  .  .  .  .  }
+   521  .  .  .  .  .  .  .  }
+   522  .  .  .  .  .  .  }
+   523  .  .  .  .  .  .  TokPos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:37:9
+   524  .  .  .  .  .  .  Tok: =
+   525  .  .  .  .  .  .  Rhs: []ast.Expr (len = 1) {
+   526  .  .  .  .  .  .  .  0: *ast.Ident {
+   527  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:37:11
+   528  .  .  .  .  .  .  .  .  Name: "globalExampleStruct"
+   529  .  .  .  .  .  .  .  .  Obj: *(obj @ 223)
+   530  .  .  .  .  .  .  .  }
+   531  .  .  .  .  .  .  }
+   532  .  .  .  .  .  }
+   533  .  .  .  .  .  3: *ast.AssignStmt {
+   534  .  .  .  .  .  .  Lhs: []ast.Expr (len = 1) {
+   535  .  .  .  .  .  .  .  0: *ast.SelectorExpr {
+   536  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   537  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:38:2
+   538  .  .  .  .  .  .  .  .  .  Name: "globalExampleStruct"
+   539  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 223)
+   540  .  .  .  .  .  .  .  .  }
+   541  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+   542  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:38:22
+   543  .  .  .  .  .  .  .  .  .  Name: "ParentStruct"
+   544  .  .  .  .  .  .  .  .  }
+   545  .  .  .  .  .  .  .  }
+   546  .  .  .  .  .  .  }
+   547  .  .  .  .  .  .  TokPos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:38:35
+   548  .  .  .  .  .  .  Tok: =
+   549  .  .  .  .  .  .  Rhs: []ast.Expr (len = 1) {
+   550  .  .  .  .  .  .  .  0: *ast.SelectorExpr {
+   551  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   552  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:38:37
+   553  .  .  .  .  .  .  .  .  .  Name: "es"
+   554  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 319)
+   555  .  .  .  .  .  .  .  .  }
+   556  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+   557  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:38:40
+   558  .  .  .  .  .  .  .  .  .  Name: "ParentStruct"
+   559  .  .  .  .  .  .  .  .  }
+   560  .  .  .  .  .  .  .  }
+   561  .  .  .  .  .  .  }
+   562  .  .  .  .  .  }
+   563  .  .  .  .  .  4: *ast.ReturnStmt {
+   564  .  .  .  .  .  .  Return: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:39:2
+   565  .  .  .  .  .  .  Results: []ast.Expr (len = 1) {
+   566  .  .  .  .  .  .  .  0: *ast.Ident {
+   567  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:39:9
+   568  .  .  .  .  .  .  .  .  Name: "es"
+   569  .  .  .  .  .  .  .  .  Obj: *(obj @ 319)
+   570  .  .  .  .  .  .  .  }
+   571  .  .  .  .  .  .  }
+   572  .  .  .  .  .  }
+   573  .  .  .  .  }
+   574  .  .  .  .  Rbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:40:1
+   575  .  .  .  }
+   576  .  .  }
+   577  .  .  5: *ast.FuncDecl {
+   578  .  .  .  Recv: *ast.FieldList {
+   579  .  .  .  .  Opening: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:42:6
+   580  .  .  .  .  List: []*ast.Field (len = 1) {
+   581  .  .  .  .  .  0: *ast.Field {
+   582  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   583  .  .  .  .  .  .  .  0: *ast.Ident {
+   584  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:42:7
+   585  .  .  .  .  .  .  .  .  Name: "es"
+   586  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   587  .  .  .  .  .  .  .  .  .  Kind: var
+   588  .  .  .  .  .  .  .  .  .  Name: "es"
+   589  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 581)
+   590  .  .  .  .  .  .  .  .  }
+   591  .  .  .  .  .  .  .  }
+   592  .  .  .  .  .  .  }
+   593  .  .  .  .  .  .  Type: *ast.Ident {
+   594  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:42:10
+   595  .  .  .  .  .  .  .  Name: "ExampleStruct"
+   596  .  .  .  .  .  .  .  Obj: *(obj @ 111)
+   597  .  .  .  .  .  .  }
+   598  .  .  .  .  .  }
+   599  .  .  .  .  }
+   600  .  .  .  .  Closing: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:42:23
+   601  .  .  .  }
+   602  .  .  .  Name: *ast.Ident {
+   603  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:42:25
+   604  .  .  .  .  Name: "ExampleFunc"
+   605  .  .  .  }
+   606  .  .  .  Type: *ast.FuncType {
+   607  .  .  .  .  Func: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:42:1
+   608  .  .  .  .  Params: *ast.FieldList {
+   609  .  .  .  .  .  Opening: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:42:36
+   610  .  .  .  .  .  List: []*ast.Field (len = 1) {
+   611  .  .  .  .  .  .  0: *ast.Field {
+   612  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   613  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   614  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:42:37
+   615  .  .  .  .  .  .  .  .  .  Name: "v"
+   616  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   617  .  .  .  .  .  .  .  .  .  .  Kind: var
+   618  .  .  .  .  .  .  .  .  .  .  Name: "v"
+   619  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 611)
+   620  .  .  .  .  .  .  .  .  .  }
+   621  .  .  .  .  .  .  .  .  }
+   622  .  .  .  .  .  .  .  }
+   623  .  .  .  .  .  .  .  Type: *ast.Ident {
+   624  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:42:39
+   625  .  .  .  .  .  .  .  .  Name: "int"
+   626  .  .  .  .  .  .  .  }
+   627  .  .  .  .  .  .  }
+   628  .  .  .  .  .  }
+   629  .  .  .  .  .  Closing: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:42:42
+   630  .  .  .  .  }
+   631  .  .  .  }
+   632  .  .  .  Body: *ast.BlockStmt {
+   633  .  .  .  .  Lbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:42:44
+   634  .  .  .  .  List: []ast.Stmt (len = 2) {
+   635  .  .  .  .  .  0: *ast.AssignStmt {
+   636  .  .  .  .  .  .  Lhs: []ast.Expr (len = 1) {
+   637  .  .  .  .  .  .  .  0: *ast.Ident {
+   638  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:43:2
+   639  .  .  .  .  .  .  .  .  Name: "nes"
+   640  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   641  .  .  .  .  .  .  .  .  .  Kind: var
+   642  .  .  .  .  .  .  .  .  .  Name: "nes"
+   643  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 635)
+   644  .  .  .  .  .  .  .  .  }
+   645  .  .  .  .  .  .  .  }
+   646  .  .  .  .  .  .  }
+   647  .  .  .  .  .  .  TokPos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:43:6
+   648  .  .  .  .  .  .  Tok: :=
+   649  .  .  .  .  .  .  Rhs: []ast.Expr (len = 1) {
+   650  .  .  .  .  .  .  .  0: *ast.CallExpr {
+   651  .  .  .  .  .  .  .  .  Fun: *ast.Ident {
+   652  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:43:9
+   653  .  .  .  .  .  .  .  .  .  Name: "NewExampleStruct"
+   654  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 263)
+   655  .  .  .  .  .  .  .  .  }
+   656  .  .  .  .  .  .  .  .  Lparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:43:25
+   657  .  .  .  .  .  .  .  .  Args: []ast.Expr (len = 1) {
+   658  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   659  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:43:26
+   660  .  .  .  .  .  .  .  .  .  .  Name: "v"
+   661  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 616)
+   662  .  .  .  .  .  .  .  .  .  }
+   663  .  .  .  .  .  .  .  .  }
+   664  .  .  .  .  .  .  .  .  Ellipsis: -
+   665  .  .  .  .  .  .  .  .  Rparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:43:27
+   666  .  .  .  .  .  .  .  }
+   667  .  .  .  .  .  .  }
+   668  .  .  .  .  .  }
+   669  .  .  .  .  .  1: *ast.ExprStmt {
+   670  .  .  .  .  .  .  X: *ast.CallExpr {
+   671  .  .  .  .  .  .  .  Fun: *ast.SelectorExpr {
+   672  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   673  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:44:2
+   674  .  .  .  .  .  .  .  .  .  Name: "fmt"
+   675  .  .  .  .  .  .  .  .  }
+   676  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+   677  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:44:6
+   678  .  .  .  .  .  .  .  .  .  Name: "Println"
+   679  .  .  .  .  .  .  .  .  }
+   680  .  .  .  .  .  .  .  }
+   681  .  .  .  .  .  .  .  Lparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:44:13
+   682  .  .  .  .  .  .  .  Args: []ast.Expr (len = 11) {
+   683  .  .  .  .  .  .  .  .  0: *ast.BasicLit {
+   684  .  .  .  .  .  .  .  .  .  ValuePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:44:14
+   685  .  .  .  .  .  .  .  .  .  Kind: STRING
+   686  .  .  .  .  .  .  .  .  .  Value: "\"module.ExampleStruct.ExampleFunc Hello go-extractor\""
+   687  .  .  .  .  .  .  .  .  }
+   688  .  .  .  .  .  .  .  .  1: *ast.Ident {
+   689  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:45:3
+   690  .  .  .  .  .  .  .  .  .  Name: "es"
+   691  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 586)
+   692  .  .  .  .  .  .  .  .  }
+   693  .  .  .  .  .  .  .  .  2: *ast.SelectorExpr {
+   694  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   695  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:45:7
+   696  .  .  .  .  .  .  .  .  .  .  Name: "es"
+   697  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 586)
+   698  .  .  .  .  .  .  .  .  .  }
+   699  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+   700  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:45:10
+   701  .  .  .  .  .  .  .  .  .  .  Name: "v"
+   702  .  .  .  .  .  .  .  .  .  }
+   703  .  .  .  .  .  .  .  .  }
+   704  .  .  .  .  .  .  .  .  3: *ast.CallExpr {
+   705  .  .  .  .  .  .  .  .  .  Fun: *ast.SelectorExpr {
+   706  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   707  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:45:13
+   708  .  .  .  .  .  .  .  .  .  .  .  Name: "es"
+   709  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 586)
+   710  .  .  .  .  .  .  .  .  .  .  }
+   711  .  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+   712  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:45:16
+   713  .  .  .  .  .  .  .  .  .  .  .  Name: "V"
+   714  .  .  .  .  .  .  .  .  .  .  }
    715  .  .  .  .  .  .  .  .  .  }
-   716  .  .  .  .  .  .  .  .  }
-   717  .  .  .  .  .  .  .  }
-   718  .  .  .  .  .  .  .  Type: *ast.Ident {
-   719  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:41:59
-   720  .  .  .  .  .  .  .  .  Name: "int"
-   721  .  .  .  .  .  .  .  }
-   722  .  .  .  .  .  .  }
-   723  .  .  .  .  .  }
-   724  .  .  .  .  .  Closing: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:41:62
-   725  .  .  .  .  }
-   726  .  .  .  }
-   727  .  .  .  Body: *ast.BlockStmt {
-   728  .  .  .  .  Lbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:41:64
-   729  .  .  .  .  List: []ast.Stmt (len = 1) {
-   730  .  .  .  .  .  0: *ast.ExprStmt {
-   731  .  .  .  .  .  .  X: *ast.CallExpr {
-   732  .  .  .  .  .  .  .  Fun: *ast.SelectorExpr {
-   733  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   734  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:42:2
-   735  .  .  .  .  .  .  .  .  .  Name: "fmt"
-   736  .  .  .  .  .  .  .  .  }
-   737  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
-   738  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:42:6
-   739  .  .  .  .  .  .  .  .  .  Name: "Println"
-   740  .  .  .  .  .  .  .  .  }
-   741  .  .  .  .  .  .  .  }
-   742  .  .  .  .  .  .  .  Lparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:42:13
-   743  .  .  .  .  .  .  .  Args: []ast.Expr (len = 1) {
-   744  .  .  .  .  .  .  .  .  0: *ast.BasicLit {
-   745  .  .  .  .  .  .  .  .  .  ValuePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:42:14
-   746  .  .  .  .  .  .  .  .  .  Kind: STRING
-   747  .  .  .  .  .  .  .  .  .  Value: "\"module.ExampleStruct.ExampleFuncWithPointerReceiver Hello go-extractor\""
-   748  .  .  .  .  .  .  .  .  }
-   749  .  .  .  .  .  .  .  }
-   750  .  .  .  .  .  .  .  Ellipsis: -
-   751  .  .  .  .  .  .  .  Rparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:42:86
-   752  .  .  .  .  .  .  }
-   753  .  .  .  .  .  }
-   754  .  .  .  .  }
-   755  .  .  .  .  Rbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:43:1
-   756  .  .  .  }
-   757  .  .  }
-   758  .  .  7: *ast.FuncDecl {
-   759  .  .  .  Recv: *ast.FieldList {
-   760  .  .  .  .  Opening: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:45:6
-   761  .  .  .  .  List: []*ast.Field (len = 1) {
-   762  .  .  .  .  .  0: *ast.Field {
-   763  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
-   764  .  .  .  .  .  .  .  0: *ast.Ident {
-   765  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:45:7
-   766  .  .  .  .  .  .  .  .  Name: "es"
-   767  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-   768  .  .  .  .  .  .  .  .  .  Kind: var
-   769  .  .  .  .  .  .  .  .  .  Name: "es"
-   770  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 762)
-   771  .  .  .  .  .  .  .  .  }
-   772  .  .  .  .  .  .  .  }
-   773  .  .  .  .  .  .  }
-   774  .  .  .  .  .  .  Type: *ast.Ident {
-   775  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:45:10
-   776  .  .  .  .  .  .  .  Name: "ExampleStruct"
-   777  .  .  .  .  .  .  .  Obj: *(obj @ 103)
-   778  .  .  .  .  .  .  }
-   779  .  .  .  .  .  }
-   780  .  .  .  .  }
-   781  .  .  .  .  Closing: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:45:23
-   782  .  .  .  }
-   783  .  .  .  Name: *ast.Ident {
-   784  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:45:25
-   785  .  .  .  .  Name: "V"
-   786  .  .  .  }
-   787  .  .  .  Type: *ast.FuncType {
-   788  .  .  .  .  Func: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:45:1
-   789  .  .  .  .  Params: *ast.FieldList {
-   790  .  .  .  .  .  Opening: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:45:26
-   791  .  .  .  .  .  Closing: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:45:27
-   792  .  .  .  .  }
-   793  .  .  .  .  Results: *ast.FieldList {
-   794  .  .  .  .  .  Opening: -
-   795  .  .  .  .  .  List: []*ast.Field (len = 1) {
-   796  .  .  .  .  .  .  0: *ast.Field {
-   797  .  .  .  .  .  .  .  Type: *ast.Ident {
-   798  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:45:29
-   799  .  .  .  .  .  .  .  .  Name: "int"
-   800  .  .  .  .  .  .  .  }
-   801  .  .  .  .  .  .  }
-   802  .  .  .  .  .  }
-   803  .  .  .  .  .  Closing: -
-   804  .  .  .  .  }
-   805  .  .  .  }
-   806  .  .  .  Body: *ast.BlockStmt {
-   807  .  .  .  .  Lbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:45:33
-   808  .  .  .  .  List: []ast.Stmt (len = 1) {
-   809  .  .  .  .  .  0: *ast.ReturnStmt {
-   810  .  .  .  .  .  .  Return: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:46:2
-   811  .  .  .  .  .  .  Results: []ast.Expr (len = 1) {
-   812  .  .  .  .  .  .  .  0: *ast.SelectorExpr {
-   813  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   814  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:46:9
-   815  .  .  .  .  .  .  .  .  .  Name: "es"
-   816  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 767)
-   817  .  .  .  .  .  .  .  .  }
-   818  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
-   819  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:46:12
-   820  .  .  .  .  .  .  .  .  .  Name: "v"
-   821  .  .  .  .  .  .  .  .  }
-   822  .  .  .  .  .  .  .  }
-   823  .  .  .  .  .  .  }
-   824  .  .  .  .  .  }
-   825  .  .  .  .  }
-   826  .  .  .  .  Rbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:47:1
-   827  .  .  .  }
-   828  .  .  }
-   829  .  .  8: *ast.FuncDecl {
-   830  .  .  .  Name: *ast.Ident {
-   831  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:49:6
-   832  .  .  .  .  Name: "ExampleFunc"
-   833  .  .  .  .  Obj: *ast.Object {
-   834  .  .  .  .  .  Kind: func
-   835  .  .  .  .  .  Name: "ExampleFunc"
-   836  .  .  .  .  .  Decl: *(obj @ 829)
-   837  .  .  .  .  }
-   838  .  .  .  }
-   839  .  .  .  Type: *ast.FuncType {
-   840  .  .  .  .  Func: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:49:1
-   841  .  .  .  .  Params: *ast.FieldList {
-   842  .  .  .  .  .  Opening: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:49:17
-   843  .  .  .  .  .  List: []*ast.Field (len = 1) {
-   844  .  .  .  .  .  .  0: *ast.Field {
-   845  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
-   846  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   847  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:49:18
-   848  .  .  .  .  .  .  .  .  .  Name: "s"
-   849  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-   850  .  .  .  .  .  .  .  .  .  .  Kind: var
-   851  .  .  .  .  .  .  .  .  .  .  Name: "s"
-   852  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 844)
-   853  .  .  .  .  .  .  .  .  .  }
-   854  .  .  .  .  .  .  .  .  }
-   855  .  .  .  .  .  .  .  }
-   856  .  .  .  .  .  .  .  Type: *ast.StarExpr {
-   857  .  .  .  .  .  .  .  .  Star: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:49:20
-   858  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   859  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:49:21
-   860  .  .  .  .  .  .  .  .  .  Name: "ExampleStruct"
-   861  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 103)
-   862  .  .  .  .  .  .  .  .  }
-   863  .  .  .  .  .  .  .  }
-   864  .  .  .  .  .  .  }
-   865  .  .  .  .  .  }
-   866  .  .  .  .  .  Closing: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:49:34
-   867  .  .  .  .  }
-   868  .  .  .  }
-   869  .  .  .  Body: *ast.BlockStmt {
-   870  .  .  .  .  Lbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:49:36
-   871  .  .  .  .  List: []ast.Stmt (len = 1) {
-   872  .  .  .  .  .  0: *ast.ExprStmt {
-   873  .  .  .  .  .  .  X: *ast.CallExpr {
-   874  .  .  .  .  .  .  .  Fun: *ast.SelectorExpr {
-   875  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   876  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:50:2
-   877  .  .  .  .  .  .  .  .  .  Name: "s"
-   878  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 849)
-   879  .  .  .  .  .  .  .  .  }
-   880  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
-   881  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:50:4
-   882  .  .  .  .  .  .  .  .  .  Name: "ExampleFunc"
-   883  .  .  .  .  .  .  .  .  }
-   884  .  .  .  .  .  .  .  }
-   885  .  .  .  .  .  .  .  Lparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:50:15
-   886  .  .  .  .  .  .  .  Args: []ast.Expr (len = 1) {
-   887  .  .  .  .  .  .  .  .  0: *ast.SelectorExpr {
-   888  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   889  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:50:16
-   890  .  .  .  .  .  .  .  .  .  .  Name: "s"
-   891  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 849)
-   892  .  .  .  .  .  .  .  .  .  }
-   893  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
-   894  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:50:18
-   895  .  .  .  .  .  .  .  .  .  .  Name: "v"
-   896  .  .  .  .  .  .  .  .  .  }
-   897  .  .  .  .  .  .  .  .  }
-   898  .  .  .  .  .  .  .  }
-   899  .  .  .  .  .  .  .  Ellipsis: -
-   900  .  .  .  .  .  .  .  Rparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:50:19
-   901  .  .  .  .  .  .  }
-   902  .  .  .  .  .  }
-   903  .  .  .  .  }
-   904  .  .  .  .  Rbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:51:1
-   905  .  .  .  }
-   906  .  .  }
-   907  .  }
-   908  .  Scope: *ast.Scope {
-   909  .  .  Objects: map[string]*ast.Object (len = 5) {
-   910  .  .  .  "ExampleFunc": *(obj @ 833)
-   911  .  .  .  "ParentStruct": *(obj @ 32)
-   912  .  .  .  "ExampleStruct": *(obj @ 103)
-   913  .  .  .  "globalExampleStruct": *(obj @ 215)
-   914  .  .  .  "NewExampleStruct": *(obj @ 255)
-   915  .  .  }
-   916  .  }
-   917  .  Imports: []*ast.ImportSpec (len = 1) {
-   918  .  .  0: *(obj @ 12)
-   919  .  }
-   920  .  Unresolved: []*ast.Ident (len = 8) {
-   921  .  .  0: *(obj @ 56)
-   922  .  .  1: *(obj @ 157)
-   923  .  .  2: *(obj @ 278)
-   924  .  .  3: *(obj @ 453)
-   925  .  .  4: *(obj @ 502)
-   926  .  .  5: *(obj @ 718)
-   927  .  .  6: *(obj @ 733)
-   928  .  .  7: *(obj @ 797)
-   929  .  }
-   930  .  Comments: []*ast.CommentGroup (len = 6) {
-   931  .  .  0: *(obj @ 60)
-   932  .  .  1: *(obj @ 79)
-   933  .  .  2: *(obj @ 124)
-   934  .  .  3: *(obj @ 134)
-   935  .  .  4: *(obj @ 166)
-   936  .  .  5: *(obj @ 236)
-   937  .  }
-   938  }
+   716  .  .  .  .  .  .  .  .  .  Lparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:45:17
+   717  .  .  .  .  .  .  .  .  .  Ellipsis: -
+   718  .  .  .  .  .  .  .  .  .  Rparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:45:18
+   719  .  .  .  .  .  .  .  .  }
+   720  .  .  .  .  .  .  .  .  4: *ast.Ident {
+   721  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:46:3
+   722  .  .  .  .  .  .  .  .  .  Name: "nes"
+   723  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 640)
+   724  .  .  .  .  .  .  .  .  }
+   725  .  .  .  .  .  .  .  .  5: *ast.SelectorExpr {
+   726  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   727  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:46:8
+   728  .  .  .  .  .  .  .  .  .  .  Name: "nes"
+   729  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 640)
+   730  .  .  .  .  .  .  .  .  .  }
+   731  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+   732  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:46:12
+   733  .  .  .  .  .  .  .  .  .  .  Name: "v"
+   734  .  .  .  .  .  .  .  .  .  }
+   735  .  .  .  .  .  .  .  .  }
+   736  .  .  .  .  .  .  .  .  6: *ast.CallExpr {
+   737  .  .  .  .  .  .  .  .  .  Fun: *ast.SelectorExpr {
+   738  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   739  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:46:15
+   740  .  .  .  .  .  .  .  .  .  .  .  Name: "nes"
+   741  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 640)
+   742  .  .  .  .  .  .  .  .  .  .  }
+   743  .  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+   744  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:46:19
+   745  .  .  .  .  .  .  .  .  .  .  .  Name: "V"
+   746  .  .  .  .  .  .  .  .  .  .  }
+   747  .  .  .  .  .  .  .  .  .  }
+   748  .  .  .  .  .  .  .  .  .  Lparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:46:20
+   749  .  .  .  .  .  .  .  .  .  Ellipsis: -
+   750  .  .  .  .  .  .  .  .  .  Rparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:46:21
+   751  .  .  .  .  .  .  .  .  }
+   752  .  .  .  .  .  .  .  .  7: *ast.SelectorExpr {
+   753  .  .  .  .  .  .  .  .  .  X: *ast.SelectorExpr {
+   754  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   755  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:47:3
+   756  .  .  .  .  .  .  .  .  .  .  .  Name: "nes"
+   757  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 640)
+   758  .  .  .  .  .  .  .  .  .  .  }
+   759  .  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+   760  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:47:7
+   761  .  .  .  .  .  .  .  .  .  .  .  Name: "sub"
+   762  .  .  .  .  .  .  .  .  .  .  }
+   763  .  .  .  .  .  .  .  .  .  }
+   764  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+   765  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:47:11
+   766  .  .  .  .  .  .  .  .  .  .  Name: "v"
+   767  .  .  .  .  .  .  .  .  .  }
+   768  .  .  .  .  .  .  .  .  }
+   769  .  .  .  .  .  .  .  .  8: *ast.CallExpr {
+   770  .  .  .  .  .  .  .  .  .  Fun: *ast.SelectorExpr {
+   771  .  .  .  .  .  .  .  .  .  .  X: *ast.SelectorExpr {
+   772  .  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   773  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:47:14
+   774  .  .  .  .  .  .  .  .  .  .  .  .  Name: "es"
+   775  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 586)
+   776  .  .  .  .  .  .  .  .  .  .  .  }
+   777  .  .  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+   778  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:47:17
+   779  .  .  .  .  .  .  .  .  .  .  .  .  Name: "sub"
+   780  .  .  .  .  .  .  .  .  .  .  .  }
+   781  .  .  .  .  .  .  .  .  .  .  }
+   782  .  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+   783  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:47:21
+   784  .  .  .  .  .  .  .  .  .  .  .  Name: "V"
+   785  .  .  .  .  .  .  .  .  .  .  }
+   786  .  .  .  .  .  .  .  .  .  }
+   787  .  .  .  .  .  .  .  .  .  Lparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:47:22
+   788  .  .  .  .  .  .  .  .  .  Ellipsis: -
+   789  .  .  .  .  .  .  .  .  .  Rparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:47:23
+   790  .  .  .  .  .  .  .  .  }
+   791  .  .  .  .  .  .  .  .  9: *ast.Ident {
+   792  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:48:3
+   793  .  .  .  .  .  .  .  .  .  Name: "globalExampleStruct"
+   794  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 223)
+   795  .  .  .  .  .  .  .  .  }
+   796  .  .  .  .  .  .  .  .  10: *ast.CallExpr {
+   797  .  .  .  .  .  .  .  .  .  Fun: *ast.Ident {
+   798  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:49:3
+   799  .  .  .  .  .  .  .  .  .  .  Name: "NewExampleStruct"
+   800  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 263)
+   801  .  .  .  .  .  .  .  .  .  }
+   802  .  .  .  .  .  .  .  .  .  Lparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:49:19
+   803  .  .  .  .  .  .  .  .  .  Args: []ast.Expr (len = 1) {
+   804  .  .  .  .  .  .  .  .  .  .  0: *ast.CallExpr {
+   805  .  .  .  .  .  .  .  .  .  .  .  Fun: *ast.SelectorExpr {
+   806  .  .  .  .  .  .  .  .  .  .  .  .  X: *ast.SelectorExpr {
+   807  .  .  .  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   808  .  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:49:20
+   809  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "nes"
+   810  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 640)
+   811  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   812  .  .  .  .  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+   813  .  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:49:24
+   814  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "sub"
+   815  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   816  .  .  .  .  .  .  .  .  .  .  .  .  }
+   817  .  .  .  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+   818  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:49:28
+   819  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "V"
+   820  .  .  .  .  .  .  .  .  .  .  .  .  }
+   821  .  .  .  .  .  .  .  .  .  .  .  }
+   822  .  .  .  .  .  .  .  .  .  .  .  Lparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:49:29
+   823  .  .  .  .  .  .  .  .  .  .  .  Ellipsis: -
+   824  .  .  .  .  .  .  .  .  .  .  .  Rparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:49:30
+   825  .  .  .  .  .  .  .  .  .  .  }
+   826  .  .  .  .  .  .  .  .  .  }
+   827  .  .  .  .  .  .  .  .  .  Ellipsis: -
+   828  .  .  .  .  .  .  .  .  .  Rparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:49:31
+   829  .  .  .  .  .  .  .  .  }
+   830  .  .  .  .  .  .  .  }
+   831  .  .  .  .  .  .  .  Ellipsis: -
+   832  .  .  .  .  .  .  .  Rparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:50:2
+   833  .  .  .  .  .  .  }
+   834  .  .  .  .  .  }
+   835  .  .  .  .  }
+   836  .  .  .  .  Rbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:51:1
+   837  .  .  .  }
+   838  .  .  }
+   839  .  .  6: *ast.FuncDecl {
+   840  .  .  .  Recv: *ast.FieldList {
+   841  .  .  .  .  Opening: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:53:6
+   842  .  .  .  .  List: []*ast.Field (len = 1) {
+   843  .  .  .  .  .  0: *ast.Field {
+   844  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   845  .  .  .  .  .  .  .  0: *ast.Ident {
+   846  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:53:7
+   847  .  .  .  .  .  .  .  .  Name: "es"
+   848  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   849  .  .  .  .  .  .  .  .  .  Kind: var
+   850  .  .  .  .  .  .  .  .  .  Name: "es"
+   851  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 843)
+   852  .  .  .  .  .  .  .  .  }
+   853  .  .  .  .  .  .  .  }
+   854  .  .  .  .  .  .  }
+   855  .  .  .  .  .  .  Type: *ast.StarExpr {
+   856  .  .  .  .  .  .  .  Star: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:53:10
+   857  .  .  .  .  .  .  .  X: *ast.Ident {
+   858  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:53:11
+   859  .  .  .  .  .  .  .  .  Name: "ExampleStruct"
+   860  .  .  .  .  .  .  .  .  Obj: *(obj @ 111)
+   861  .  .  .  .  .  .  .  }
+   862  .  .  .  .  .  .  }
+   863  .  .  .  .  .  }
+   864  .  .  .  .  }
+   865  .  .  .  .  Closing: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:53:24
+   866  .  .  .  }
+   867  .  .  .  Name: *ast.Ident {
+   868  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:53:26
+   869  .  .  .  .  Name: "ExampleFuncWithPointerReceiver"
+   870  .  .  .  }
+   871  .  .  .  Type: *ast.FuncType {
+   872  .  .  .  .  Func: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:53:1
+   873  .  .  .  .  Params: *ast.FieldList {
+   874  .  .  .  .  .  Opening: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:53:56
+   875  .  .  .  .  .  List: []*ast.Field (len = 1) {
+   876  .  .  .  .  .  .  0: *ast.Field {
+   877  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   878  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   879  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:53:57
+   880  .  .  .  .  .  .  .  .  .  Name: "v"
+   881  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   882  .  .  .  .  .  .  .  .  .  .  Kind: var
+   883  .  .  .  .  .  .  .  .  .  .  Name: "v"
+   884  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 876)
+   885  .  .  .  .  .  .  .  .  .  }
+   886  .  .  .  .  .  .  .  .  }
+   887  .  .  .  .  .  .  .  }
+   888  .  .  .  .  .  .  .  Type: *ast.Ident {
+   889  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:53:59
+   890  .  .  .  .  .  .  .  .  Name: "int"
+   891  .  .  .  .  .  .  .  }
+   892  .  .  .  .  .  .  }
+   893  .  .  .  .  .  }
+   894  .  .  .  .  .  Closing: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:53:62
+   895  .  .  .  .  }
+   896  .  .  .  }
+   897  .  .  .  Body: *ast.BlockStmt {
+   898  .  .  .  .  Lbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:53:64
+   899  .  .  .  .  List: []ast.Stmt (len = 1) {
+   900  .  .  .  .  .  0: *ast.ExprStmt {
+   901  .  .  .  .  .  .  X: *ast.CallExpr {
+   902  .  .  .  .  .  .  .  Fun: *ast.SelectorExpr {
+   903  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   904  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:54:2
+   905  .  .  .  .  .  .  .  .  .  Name: "fmt"
+   906  .  .  .  .  .  .  .  .  }
+   907  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+   908  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:54:6
+   909  .  .  .  .  .  .  .  .  .  Name: "Println"
+   910  .  .  .  .  .  .  .  .  }
+   911  .  .  .  .  .  .  .  }
+   912  .  .  .  .  .  .  .  Lparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:54:13
+   913  .  .  .  .  .  .  .  Args: []ast.Expr (len = 1) {
+   914  .  .  .  .  .  .  .  .  0: *ast.BasicLit {
+   915  .  .  .  .  .  .  .  .  .  ValuePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:54:14
+   916  .  .  .  .  .  .  .  .  .  Kind: STRING
+   917  .  .  .  .  .  .  .  .  .  Value: "\"module.ExampleStruct.ExampleFuncWithPointerReceiver Hello go-extractor\""
+   918  .  .  .  .  .  .  .  .  }
+   919  .  .  .  .  .  .  .  }
+   920  .  .  .  .  .  .  .  Ellipsis: -
+   921  .  .  .  .  .  .  .  Rparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:54:86
+   922  .  .  .  .  .  .  }
+   923  .  .  .  .  .  }
+   924  .  .  .  .  }
+   925  .  .  .  .  Rbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:55:1
+   926  .  .  .  }
+   927  .  .  }
+   928  .  .  7: *ast.FuncDecl {
+   929  .  .  .  Recv: *ast.FieldList {
+   930  .  .  .  .  Opening: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:57:6
+   931  .  .  .  .  List: []*ast.Field (len = 1) {
+   932  .  .  .  .  .  0: *ast.Field {
+   933  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   934  .  .  .  .  .  .  .  0: *ast.Ident {
+   935  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:57:7
+   936  .  .  .  .  .  .  .  .  Name: "es"
+   937  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   938  .  .  .  .  .  .  .  .  .  Kind: var
+   939  .  .  .  .  .  .  .  .  .  Name: "es"
+   940  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 932)
+   941  .  .  .  .  .  .  .  .  }
+   942  .  .  .  .  .  .  .  }
+   943  .  .  .  .  .  .  }
+   944  .  .  .  .  .  .  Type: *ast.Ident {
+   945  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:57:10
+   946  .  .  .  .  .  .  .  Name: "ExampleStruct"
+   947  .  .  .  .  .  .  .  Obj: *(obj @ 111)
+   948  .  .  .  .  .  .  }
+   949  .  .  .  .  .  }
+   950  .  .  .  .  }
+   951  .  .  .  .  Closing: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:57:23
+   952  .  .  .  }
+   953  .  .  .  Name: *ast.Ident {
+   954  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:57:25
+   955  .  .  .  .  Name: "V"
+   956  .  .  .  }
+   957  .  .  .  Type: *ast.FuncType {
+   958  .  .  .  .  Func: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:57:1
+   959  .  .  .  .  Params: *ast.FieldList {
+   960  .  .  .  .  .  Opening: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:57:26
+   961  .  .  .  .  .  Closing: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:57:27
+   962  .  .  .  .  }
+   963  .  .  .  .  Results: *ast.FieldList {
+   964  .  .  .  .  .  Opening: -
+   965  .  .  .  .  .  List: []*ast.Field (len = 1) {
+   966  .  .  .  .  .  .  0: *ast.Field {
+   967  .  .  .  .  .  .  .  Type: *ast.Ident {
+   968  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:57:29
+   969  .  .  .  .  .  .  .  .  Name: "int"
+   970  .  .  .  .  .  .  .  }
+   971  .  .  .  .  .  .  }
+   972  .  .  .  .  .  }
+   973  .  .  .  .  .  Closing: -
+   974  .  .  .  .  }
+   975  .  .  .  }
+   976  .  .  .  Body: *ast.BlockStmt {
+   977  .  .  .  .  Lbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:57:33
+   978  .  .  .  .  List: []ast.Stmt (len = 1) {
+   979  .  .  .  .  .  0: *ast.ReturnStmt {
+   980  .  .  .  .  .  .  Return: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:58:2
+   981  .  .  .  .  .  .  Results: []ast.Expr (len = 1) {
+   982  .  .  .  .  .  .  .  0: *ast.SelectorExpr {
+   983  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   984  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:58:9
+   985  .  .  .  .  .  .  .  .  .  Name: "es"
+   986  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 937)
+   987  .  .  .  .  .  .  .  .  }
+   988  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+   989  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:58:12
+   990  .  .  .  .  .  .  .  .  .  Name: "v"
+   991  .  .  .  .  .  .  .  .  }
+   992  .  .  .  .  .  .  .  }
+   993  .  .  .  .  .  .  }
+   994  .  .  .  .  .  }
+   995  .  .  .  .  }
+   996  .  .  .  .  Rbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:59:1
+   997  .  .  .  }
+   998  .  .  }
+   999  .  .  8: *ast.FuncDecl {
+  1000  .  .  .  Recv: *ast.FieldList {
+  1001  .  .  .  .  Opening: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:61:6
+  1002  .  .  .  .  List: []*ast.Field (len = 1) {
+  1003  .  .  .  .  .  0: *ast.Field {
+  1004  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+  1005  .  .  .  .  .  .  .  0: *ast.Ident {
+  1006  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:61:7
+  1007  .  .  .  .  .  .  .  .  Name: "es"
+  1008  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+  1009  .  .  .  .  .  .  .  .  .  Kind: var
+  1010  .  .  .  .  .  .  .  .  .  Name: "es"
+  1011  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 1003)
+  1012  .  .  .  .  .  .  .  .  }
+  1013  .  .  .  .  .  .  .  }
+  1014  .  .  .  .  .  .  }
+  1015  .  .  .  .  .  .  Type: *ast.StarExpr {
+  1016  .  .  .  .  .  .  .  Star: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:61:10
+  1017  .  .  .  .  .  .  .  X: *ast.Ident {
+  1018  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:61:11
+  1019  .  .  .  .  .  .  .  .  Name: "ExampleStruct"
+  1020  .  .  .  .  .  .  .  .  Obj: *(obj @ 111)
+  1021  .  .  .  .  .  .  .  }
+  1022  .  .  .  .  .  .  }
+  1023  .  .  .  .  .  }
+  1024  .  .  .  .  }
+  1025  .  .  .  .  Closing: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:61:24
+  1026  .  .  .  }
+  1027  .  .  .  Name: *ast.Ident {
+  1028  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:61:26
+  1029  .  .  .  .  Name: "Sub"
+  1030  .  .  .  }
+  1031  .  .  .  Type: *ast.FuncType {
+  1032  .  .  .  .  Func: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:61:1
+  1033  .  .  .  .  Params: *ast.FieldList {
+  1034  .  .  .  .  .  Opening: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:61:29
+  1035  .  .  .  .  .  Closing: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:61:30
+  1036  .  .  .  .  }
+  1037  .  .  .  .  Results: *ast.FieldList {
+  1038  .  .  .  .  .  Opening: -
+  1039  .  .  .  .  .  List: []*ast.Field (len = 1) {
+  1040  .  .  .  .  .  .  0: *ast.Field {
+  1041  .  .  .  .  .  .  .  Type: *ast.StarExpr {
+  1042  .  .  .  .  .  .  .  .  Star: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:61:32
+  1043  .  .  .  .  .  .  .  .  X: *ast.Ident {
+  1044  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:61:33
+  1045  .  .  .  .  .  .  .  .  .  Name: "ExampleStruct"
+  1046  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 111)
+  1047  .  .  .  .  .  .  .  .  }
+  1048  .  .  .  .  .  .  .  }
+  1049  .  .  .  .  .  .  }
+  1050  .  .  .  .  .  }
+  1051  .  .  .  .  .  Closing: -
+  1052  .  .  .  .  }
+  1053  .  .  .  }
+  1054  .  .  .  Body: *ast.BlockStmt {
+  1055  .  .  .  .  Lbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:61:47
+  1056  .  .  .  .  List: []ast.Stmt (len = 1) {
+  1057  .  .  .  .  .  0: *ast.ReturnStmt {
+  1058  .  .  .  .  .  .  Return: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:62:2
+  1059  .  .  .  .  .  .  Results: []ast.Expr (len = 1) {
+  1060  .  .  .  .  .  .  .  0: *ast.SelectorExpr {
+  1061  .  .  .  .  .  .  .  .  X: *ast.Ident {
+  1062  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:62:9
+  1063  .  .  .  .  .  .  .  .  .  Name: "es"
+  1064  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 1008)
+  1065  .  .  .  .  .  .  .  .  }
+  1066  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+  1067  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:62:12
+  1068  .  .  .  .  .  .  .  .  .  Name: "sub"
+  1069  .  .  .  .  .  .  .  .  }
+  1070  .  .  .  .  .  .  .  }
+  1071  .  .  .  .  .  .  }
+  1072  .  .  .  .  .  }
+  1073  .  .  .  .  }
+  1074  .  .  .  .  Rbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:63:1
+  1075  .  .  .  }
+  1076  .  .  }
+  1077  .  .  9: *ast.FuncDecl {
+  1078  .  .  .  Name: *ast.Ident {
+  1079  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:65:6
+  1080  .  .  .  .  Name: "ExampleFunc"
+  1081  .  .  .  .  Obj: *ast.Object {
+  1082  .  .  .  .  .  Kind: func
+  1083  .  .  .  .  .  Name: "ExampleFunc"
+  1084  .  .  .  .  .  Decl: *(obj @ 1077)
+  1085  .  .  .  .  }
+  1086  .  .  .  }
+  1087  .  .  .  Type: *ast.FuncType {
+  1088  .  .  .  .  Func: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:65:1
+  1089  .  .  .  .  Params: *ast.FieldList {
+  1090  .  .  .  .  .  Opening: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:65:17
+  1091  .  .  .  .  .  List: []*ast.Field (len = 1) {
+  1092  .  .  .  .  .  .  0: *ast.Field {
+  1093  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+  1094  .  .  .  .  .  .  .  .  0: *ast.Ident {
+  1095  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:65:18
+  1096  .  .  .  .  .  .  .  .  .  Name: "s"
+  1097  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+  1098  .  .  .  .  .  .  .  .  .  .  Kind: var
+  1099  .  .  .  .  .  .  .  .  .  .  Name: "s"
+  1100  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 1092)
+  1101  .  .  .  .  .  .  .  .  .  }
+  1102  .  .  .  .  .  .  .  .  }
+  1103  .  .  .  .  .  .  .  }
+  1104  .  .  .  .  .  .  .  Type: *ast.StarExpr {
+  1105  .  .  .  .  .  .  .  .  Star: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:65:20
+  1106  .  .  .  .  .  .  .  .  X: *ast.Ident {
+  1107  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:65:21
+  1108  .  .  .  .  .  .  .  .  .  Name: "ExampleStruct"
+  1109  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 111)
+  1110  .  .  .  .  .  .  .  .  }
+  1111  .  .  .  .  .  .  .  }
+  1112  .  .  .  .  .  .  }
+  1113  .  .  .  .  .  }
+  1114  .  .  .  .  .  Closing: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:65:34
+  1115  .  .  .  .  }
+  1116  .  .  .  }
+  1117  .  .  .  Body: *ast.BlockStmt {
+  1118  .  .  .  .  Lbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:65:36
+  1119  .  .  .  .  List: []ast.Stmt (len = 1) {
+  1120  .  .  .  .  .  0: *ast.ExprStmt {
+  1121  .  .  .  .  .  .  X: *ast.CallExpr {
+  1122  .  .  .  .  .  .  .  Fun: *ast.SelectorExpr {
+  1123  .  .  .  .  .  .  .  .  X: *ast.Ident {
+  1124  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:66:2
+  1125  .  .  .  .  .  .  .  .  .  Name: "s"
+  1126  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 1097)
+  1127  .  .  .  .  .  .  .  .  }
+  1128  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+  1129  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:66:4
+  1130  .  .  .  .  .  .  .  .  .  Name: "ExampleFunc"
+  1131  .  .  .  .  .  .  .  .  }
+  1132  .  .  .  .  .  .  .  }
+  1133  .  .  .  .  .  .  .  Lparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:66:15
+  1134  .  .  .  .  .  .  .  Args: []ast.Expr (len = 1) {
+  1135  .  .  .  .  .  .  .  .  0: *ast.SelectorExpr {
+  1136  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
+  1137  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:66:16
+  1138  .  .  .  .  .  .  .  .  .  .  Name: "s"
+  1139  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 1097)
+  1140  .  .  .  .  .  .  .  .  .  }
+  1141  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+  1142  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:66:18
+  1143  .  .  .  .  .  .  .  .  .  .  Name: "v"
+  1144  .  .  .  .  .  .  .  .  .  }
+  1145  .  .  .  .  .  .  .  .  }
+  1146  .  .  .  .  .  .  .  }
+  1147  .  .  .  .  .  .  .  Ellipsis: -
+  1148  .  .  .  .  .  .  .  Rparen: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:66:19
+  1149  .  .  .  .  .  .  }
+  1150  .  .  .  .  .  }
+  1151  .  .  .  .  }
+  1152  .  .  .  .  Rbrace: d:\Projects\SGAME\server-dev\gameServer\game_server\pkg\github.com\Mericusta\go-extractor\testdata\standardProject\pkg\module\module.go:67:1
+  1153  .  .  .  }
+  1154  .  .  }
+  1155  .  }
+  1156  .  Scope: *ast.Scope {
+  1157  .  .  Objects: map[string]*ast.Object (len = 5) {
+  1158  .  .  .  "globalExampleStruct": *(obj @ 223)
+  1159  .  .  .  "NewExampleStruct": *(obj @ 263)
+  1160  .  .  .  "ExampleFunc": *(obj @ 1081)
+  1161  .  .  .  "ParentStruct": *(obj @ 40)
+  1162  .  .  .  "ExampleStruct": *(obj @ 111)
+  1163  .  .  }
+  1164  .  }
+  1165  .  Imports: []*ast.ImportSpec (len = 2) {
+  1166  .  .  0: *(obj @ 12)
+  1167  .  .  1: *(obj @ 20)
+  1168  .  }
+  1169  .  Unresolved: []*ast.Ident (len = 9) {
+  1170  .  .  0: *(obj @ 64)
+  1171  .  .  1: *(obj @ 165)
+  1172  .  .  2: *(obj @ 286)
+  1173  .  .  3: *(obj @ 453)
+  1174  .  .  4: *(obj @ 623)
+  1175  .  .  5: *(obj @ 672)
+  1176  .  .  6: *(obj @ 888)
+  1177  .  .  7: *(obj @ 903)
+  1178  .  .  8: *(obj @ 967)
+  1179  .  }
+  1180  .  Comments: []*ast.CommentGroup (len = 6) {
+  1181  .  .  0: *(obj @ 68)
+  1182  .  .  1: *(obj @ 87)
+  1183  .  .  2: *(obj @ 132)
+  1184  .  .  3: *(obj @ 142)
+  1185  .  .  4: *(obj @ 174)
+  1186  .  .  5: *(obj @ 244)
+  1187  .  }
+  1188  }
