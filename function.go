@@ -5,8 +5,6 @@ import (
 	"go/ast"
 	"os"
 	"strings"
-
-	stpmap "github.com/Mericusta/go-stp/map"
 )
 
 type GoFunctionMeta struct {
@@ -148,44 +146,8 @@ func (gfm *GoFunctionMeta) SearchCallMeta(call string) []*GoCallMeta {
 	gfm.callMeta[call] = SearchGoCallMeta(gfm.meta, call)
 
 	return gfm.callMeta[call]
-
-	// if len(from) == 0 {
-	// 	if callMetaSlice, has := gfm.nonSelectorCallMeta[call]; has && len(callMetaSlice) > 0 {
-	// 		return callMetaSlice
-	// 	}
-	// } else {
-	// 	if selector, has := gfm.selectorCallMeta[from]; has && len(selector) > 0 {
-	// 		if callMetaSlice, has := selector[call]; has && len(callMetaSlice) > 0 {
-	// 			return callMetaSlice
-	// 		}
-	// 	}
-	// }
-
-	// if gfm.node.(*ast.FuncDecl) == nil {
-	// 	return nil
-	// }
-
-	// gcm := SearchGoCallMeta(gfm.meta, gfm.node.(*ast.FuncDecl), call)
-	// if gcm != nil {
-	// 	if len(from) == 0 {
-	// 		gfm.nonSelectorCallMeta[call] = append(gfm.nonSelectorCallMeta[call], gcm)
-	// 		return gfm.nonSelectorCallMeta[call]
-	// 	} else {
-	// 		if gfm.selectorCallMeta[from] == nil {
-	// 			gfm.selectorCallMeta[from] = make(map[string][]*GoCallMeta)
-	// 		}
-	// 		gfm.selectorCallMeta[from][call] = append(gfm.selectorCallMeta[from][call], gcm)
-	// 		return gfm.selectorCallMeta[from][call]
-	// 	}
-	// }
-
-	// return nil
 }
 
-func (gfm *GoFunctionMeta) CallMap() map[string][]*GoCallMeta {
+func (gfm *GoFunctionMeta) Calls() map[string][]*GoCallMeta {
 	return ExtractGoCallMeta(gfm.meta)
-}
-
-func (gfm *GoFunctionMeta) Calls() []string {
-	return stpmap.Key(ExtractGoCallMeta(gfm.meta))
 }

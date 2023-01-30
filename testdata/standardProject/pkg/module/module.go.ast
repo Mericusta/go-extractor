@@ -1241,11 +1241,11 @@
   1240  .  }
   1241  .  Scope: *ast.Scope {
   1242  .  .  Objects: map[string]*ast.Object (len = 5) {
-  1243  .  .  .  "NewExampleStruct": *(obj @ 337)
-  1244  .  .  .  "ExampleFunc": *(obj @ 1166)
-  1245  .  .  .  "ParentStruct": *(obj @ 40)
-  1246  .  .  .  "ExampleStruct": *(obj @ 185)
-  1247  .  .  .  "globalExampleStruct": *(obj @ 297)
+  1243  .  .  .  "ExampleStruct": *(obj @ 185)
+  1244  .  .  .  "globalExampleStruct": *(obj @ 297)
+  1245  .  .  .  "NewExampleStruct": *(obj @ 337)
+  1246  .  .  .  "ExampleFunc": *(obj @ 1166)
+  1247  .  .  .  "ParentStruct": *(obj @ 40)
   1248  .  .  }
   1249  .  }
   1250  .  Imports: []*ast.ImportSpec (len = 2) {

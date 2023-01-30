@@ -744,7 +744,7 @@ func checkFunctionMeta(gfm *GoFunctionMeta, _gfm *compareGoFunctionMeta) {
 	stpslice.Compare(gfm.Doc(), _gfm.Doc)
 
 	// call
-	calls := gfm.Calls()
+	calls := stpmap.Key(gfm.Calls())
 	sort.Strings(calls)
 	_calls := stpmap.Key(_gfm.CallMeta)
 	sort.Strings(_calls)
