@@ -6,7 +6,11 @@ import (
 )
 
 type ParentStruct struct {
-	P int // parent value
+	p int // parent value
+}
+
+func (s *ParentStruct) P() int {
+	return s.p
 }
 
 // ExampleStruct this is an example struct
@@ -27,11 +31,11 @@ var globalExampleStruct *ExampleStruct
 // @return          pointer to ExampleStruct
 func NewExampleStruct(v int) *ExampleStruct {
 	es := &ExampleStruct{
-		ParentStruct: &ParentStruct{P: v * 10},
+		ParentStruct: &ParentStruct{p: v * 10},
 		v:            v,
 	}
 	globalExampleStruct = &ExampleStruct{
-		ParentStruct: &ParentStruct{P: rand.Intn(v)},
+		ParentStruct: &ParentStruct{p: rand.Intn(v)},
 		v:            v / 10,
 	}
 	es.sub = globalExampleStruct
@@ -46,7 +50,7 @@ func (es ExampleStruct) ExampleFunc(v int) {
 		nes, nes.v, nes.V(),
 		nes.sub.v, es.sub.V(),
 		globalExampleStruct,
-		NewExampleStruct(nes.sub.V()),
+		NewExampleStruct(nes.Sub().ParentStruct.P()),
 	)
 }
 

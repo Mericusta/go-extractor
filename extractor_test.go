@@ -110,6 +110,58 @@ var (
 				pkgFunctionMeta: map[string]*compareGoFunctionMeta{
 					"main": {
 						FunctionName: "main",
+						CallMeta: map[string][]*compareCallMeta{
+							"pkg.ExampleFunc": {
+								{
+									Call: "ExampleFunc",
+									From: "pkg",
+									Args: []*compareArgMeta{
+										{
+											Expression: `module.NewExampleStruct(10)`,
+											Head:       "module",
+										},
+									}},
+							},
+							"module.ExampleFunc": {
+								{
+									Call: "ExampleFunc",
+									From: "module",
+									Args: []*compareArgMeta{
+										{
+											Expression: `module.NewExampleStruct(11)`,
+											Head:       "module",
+										},
+									},
+								},
+							},
+							"module.NewExampleStruct": {
+								{
+									Call: "NewExampleStruct",
+									From: "module",
+									Args: []*compareArgMeta{
+										{
+											Expression: `10`,
+											Head:       "10",
+										},
+									},
+								},
+								{
+									Call: "NewExampleStruct",
+									From: "module",
+									Args: []*compareArgMeta{
+										{
+											Expression: `11`,
+											Head:       "11",
+										},
+									},
+								},
+							},
+							"Init": {
+								{
+									Call: "Init",
+								},
+							},
+						},
 					},
 					"Init": {
 						FunctionName: "Init",
@@ -291,8 +343,8 @@ var (
 					"ParentStruct": {
 						StructName: "ParentStruct",
 						StructMemberMeta: map[string]*compareGoMemberMeta{
-							"P": {
-								MemberName: "P",
+							"p": {
+								MemberName: "p",
 								Comment:    "// parent value",
 							},
 						},
@@ -341,7 +393,7 @@ var (
 												Call: "NewExampleStruct",
 												Args: []*compareArgMeta{
 													{
-														Expression: `nes.sub.V()`,
+														Expression: `nes.Sub().ParentStruct.P()`,
 														Head:       "nes",
 													},
 												},
@@ -393,7 +445,7 @@ var (
 														Head:       "globalExampleStruct",
 													},
 													{
-														Expression: `NewExampleStruct(nes.sub.V())`,
+														Expression: `NewExampleStruct(nes.Sub().ParentStruct.P())`,
 														Head:       "NewExampleStruct",
 													},
 												},
@@ -417,10 +469,16 @@ var (
 												Call: "V",
 											},
 										},
-										"nes.sub.V": {
+										"nes.Sub": {
 											{
-												From: "nes.sub",
-												Call: "V",
+												From: "nes",
+												Call: "Sub",
+											},
+										},
+										"nes.Sub().ParentStruct.P": {
+											{
+												From: "nes.Sub().ParentStruct",
+												Call: "P",
 											},
 										},
 									},
@@ -679,10 +737,22 @@ func checkInterfaceMeta(gim *GoInterfaceMeta, _gim *compareGoInterfaceMeta) {
 }
 
 func checkFunctionMeta(gfm *GoFunctionMeta, _gfm *compareGoFunctionMeta) {
+	// basic
 	if gfm.FunctionName() != _gfm.FunctionName {
 		Panic(gfm.FunctionName(), _gfm.FunctionName)
 	}
 	stpslice.Compare(gfm.Doc(), _gfm.Doc)
+
+	// call
+	calls := gfm.Calls()
+	sort.Strings(calls)
+	_calls := stpmap.Key(_gfm.CallMeta)
+	sort.Strings(_calls)
+	if !stpslice.Compare(calls, _calls) {
+		gfm.Calls()
+		Panic(calls, _calls)
+	}
+
 	for _call, _gcmSlice := range _gfm.CallMeta {
 		gcmSlice := gfm.SearchCallMeta(_call)
 		if len(gcmSlice) != len(_gcmSlice) {

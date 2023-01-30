@@ -5,6 +5,8 @@ import (
 	"go/ast"
 	"os"
 	"strings"
+
+	stpmap "github.com/Mericusta/go-stp/map"
 )
 
 type GoFunctionMeta struct {
@@ -177,5 +179,13 @@ func (gfm *GoFunctionMeta) SearchCallMeta(call string) []*GoCallMeta {
 	// 	}
 	// }
 
-	return nil
+	// return nil
+}
+
+func (gfm *GoFunctionMeta) CallMap() map[string][]*GoCallMeta {
+	return ExtractGoCallMeta(gfm.meta)
+}
+
+func (gfm *GoFunctionMeta) Calls() []string {
+	return stpmap.Key(ExtractGoCallMeta(gfm.meta))
 }

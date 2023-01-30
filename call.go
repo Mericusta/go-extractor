@@ -1,6 +1,7 @@
 package extractor
 
 import (
+	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/token"
@@ -54,6 +55,27 @@ func SearchGoCallMeta(m *meta, call string) []*GoCallMeta {
 		return true
 	})
 	return callMetaSlice
+}
+
+func ExtractGoCallMeta(m *meta) map[string][]*GoCallMeta {
+	callMetaMap := make(map[string][]*GoCallMeta, 0)
+	ast.Inspect(m.node, func(n ast.Node) bool {
+		if IsSelectorCallNode(n) {
+			fromMeta := &GoFromMeta{meta: m.newMeta(n.(*ast.CallExpr).Fun.(*ast.SelectorExpr).X)}
+			callExpression := fmt.Sprintf("%v.%v", fromMeta.Expression(), n.(*ast.CallExpr).Fun.(*ast.SelectorExpr).Sel.String())
+			callMetaMap[callExpression] = append(callMetaMap[callExpression], &GoCallMeta{
+				meta: m.newMeta(n.(*ast.CallExpr)),
+				from: fromMeta,
+			})
+		} else if IsNonSelectorCallNode(n) {
+			callExpression := n.(*ast.CallExpr).Fun.(*ast.Ident).String()
+			callMetaMap[callExpression] = append(callMetaMap[callExpression], &GoCallMeta{
+				meta: m.newMeta(n.(*ast.CallExpr)),
+			})
+		}
+		return true
+	})
+	return callMetaMap
 }
 
 func IsNonSelectorCallNode(node ast.Node) bool {
