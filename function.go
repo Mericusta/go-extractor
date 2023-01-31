@@ -151,3 +151,5 @@ func (gfm *GoFunctionMeta) SearchCallMeta(call string) []*GoCallMeta {
 func (gfm *GoFunctionMeta) Calls() map[string][]*GoCallMeta {
 	return ExtractGoCallMeta(gfm.meta)
 }
+
+// func (gfm *GoFunctionMeta) Search

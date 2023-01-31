@@ -46,7 +46,8 @@ type compareGoInterfaceMeta struct {
 type compareGoFunctionMeta struct {
 	FunctionName string
 	Doc          []string
-	CallMeta     map[string][]*compareCallMeta
+	CallMeta     map[string][]*compareGoCallMeta
+	// VarMeta map[string]
 }
 
 type compareGoMemberMeta struct {
@@ -63,21 +64,22 @@ type compareGoMethodMeta struct {
 	PointerReceiver bool
 }
 
-type compareCallMeta struct {
+type compareGoCallMeta struct {
 	Expression string
 	Call       string
 	From       string
-	Args       []*compareArgMeta
+	Args       []*compareGoArgMeta
 }
 
-type compareArgMeta struct {
+type compareGoArgMeta struct {
 	Expression string
-	Head       string
-	// ArgType    int
-	// Arg        string
-	// From       string
-	// Value      interface{}
-	// CallMeta   *compareCallMeta
+	Head       *compareGoVariableMeta
+}
+
+type compareGoVariableMeta struct {
+	Expression string
+	Name       string
+	Type       string
 }
 
 var (
@@ -110,15 +112,19 @@ var (
 				pkgFunctionMeta: map[string]*compareGoFunctionMeta{
 					"main": {
 						FunctionName: "main",
-						CallMeta: map[string][]*compareCallMeta{
+						CallMeta: map[string][]*compareGoCallMeta{
 							"pkg.ExampleFunc": {
 								{
 									Call: "ExampleFunc",
 									From: "pkg",
-									Args: []*compareArgMeta{
+									Args: []*compareGoArgMeta{
 										{
 											Expression: `module.NewExampleStruct(10)`,
-											Head:       "module",
+											Head: &compareGoVariableMeta{
+												Expression: `module`,
+												Name:       "module",
+												Type:       `"standardProject/pkg/module"`,
+											},
 										},
 									}},
 							},
@@ -126,10 +132,14 @@ var (
 								{
 									Call: "ExampleFunc",
 									From: "module",
-									Args: []*compareArgMeta{
+									Args: []*compareGoArgMeta{
 										{
 											Expression: `module.NewExampleStruct(11)`,
-											Head:       "module",
+											Head: &compareGoVariableMeta{
+												Expression: `module`,
+												Name:       "module",
+												Type:       `"standardProject/pkg/module"`,
+											},
 										},
 									},
 								},
@@ -138,20 +148,28 @@ var (
 								{
 									Call: "NewExampleStruct",
 									From: "module",
-									Args: []*compareArgMeta{
+									Args: []*compareGoArgMeta{
 										{
 											Expression: `10`,
-											Head:       "10",
+											Head: &compareGoVariableMeta{
+												Expression: `10`,
+												Name:       "10",
+												Type:       `10`,
+											},
 										},
 									},
 								},
 								{
 									Call: "NewExampleStruct",
 									From: "module",
-									Args: []*compareArgMeta{
+									Args: []*compareGoArgMeta{
 										{
 											Expression: `11`,
-											Head:       "11",
+											Head: &compareGoVariableMeta{
+												Expression: `11`,
+												Name:       "11",
+												Type:       `11`,
+											},
 										},
 									},
 								},
@@ -185,19 +203,27 @@ var (
 						Doc: []string{
 							"// ExampleFunc this is example function",
 						},
-						CallMeta: map[string][]*compareCallMeta{
+						CallMeta: map[string][]*compareGoCallMeta{
 							"fmt.Println": {
 								{
 									From: "fmt",
 									Call: "Println",
-									Args: []*compareArgMeta{
+									Args: []*compareGoArgMeta{
 										{
 											Expression: `"pkg.ExampleFunc, Hello go-extractor"`,
-											Head:       `"pkg.ExampleFunc, Hello go-extractor"`,
+											Head: &compareGoVariableMeta{
+												Expression: `"pkg.ExampleFunc, Hello go-extractor"`,
+												Name:       `"pkg.ExampleFunc, Hello go-extractor"`,
+												Type:       `"pkg.ExampleFunc, Hello go-extractor"`,
+											},
 										},
 										{
 											Expression: `s.V()`,
-											Head:       "s",
+											Head: &compareGoVariableMeta{
+												Expression: `s *module.ExampleStruct`,
+												Name:       "s",
+												Type:       `*module.ExampleStruct`,
+											},
 										},
 									},
 								},
@@ -212,19 +238,27 @@ var (
 					},
 					"NoDocExampleFunc": {
 						FunctionName: "NoDocExampleFunc",
-						CallMeta: map[string][]*compareCallMeta{
+						CallMeta: map[string][]*compareGoCallMeta{
 							"fmt.Println": {
 								{
 									From: "fmt",
 									Call: "Println",
-									Args: []*compareArgMeta{
+									Args: []*compareGoArgMeta{
 										{
 											Expression: `"pkg.NoDocExampleFunc, Hello go-extractor"`,
-											Head:       `"pkg.NoDocExampleFunc, Hello go-extractor"`,
+											Head: &compareGoVariableMeta{
+												Expression: `"pkg.NoDocExampleFunc, Hello go-extractor"`,
+												Name:       `"pkg.NoDocExampleFunc, Hello go-extractor"`,
+												Type:       `"pkg.NoDocExampleFunc, Hello go-extractor"`,
+											},
 										},
 										{
 											Expression: `s.V()`,
-											Head:       "s",
+											Head: &compareGoVariableMeta{
+												Expression: `s *module.ExampleStruct`,
+												Name:       "s",
+												Type:       `*module.ExampleStruct`,
+											},
 										},
 									},
 								},
@@ -239,19 +273,27 @@ var (
 					},
 					"OneLineDocExampleFunc": {
 						FunctionName: "OneLineDocExampleFunc",
-						CallMeta: map[string][]*compareCallMeta{
+						CallMeta: map[string][]*compareGoCallMeta{
 							"fmt.Println": {
 								{
 									From: "fmt",
 									Call: "Println",
-									Args: []*compareArgMeta{
+									Args: []*compareGoArgMeta{
 										{
 											Expression: `"pkg.OneLineDocExampleFunc, Hello go-extractor"`,
-											Head:       `"pkg.OneLineDocExampleFunc, Hello go-extractor"`,
+											Head: &compareGoVariableMeta{
+												Expression: `"pkg.OneLineDocExampleFunc, Hello go-extractor"`,
+												Name:       `"pkg.OneLineDocExampleFunc, Hello go-extractor"`,
+												Type:       `"pkg.OneLineDocExampleFunc, Hello go-extractor"`,
+											},
 										},
 										{
 											Expression: `s.V()`,
-											Head:       "s",
+											Head: &compareGoVariableMeta{
+												Expression: `s *module.ExampleStruct`,
+												Name:       "s",
+												Type:       `*module.ExampleStruct`,
+											},
 										},
 									},
 								},
@@ -266,19 +308,27 @@ var (
 					},
 					"ImportSelectorFunc": {
 						FunctionName: "ImportSelectorFunc",
-						CallMeta: map[string][]*compareCallMeta{
+						CallMeta: map[string][]*compareGoCallMeta{
 							"fmt.Println": {
-								&compareCallMeta{
+								&compareGoCallMeta{
 									From: "fmt",
 									Call: "Println",
-									Args: []*compareArgMeta{
+									Args: []*compareGoArgMeta{
 										{
 											Expression: `"pkg.ImportSelectorFunc, Hello go-extractor"`,
-											Head:       `"pkg.ImportSelectorFunc, Hello go-extractor"`,
+											Head: &compareGoVariableMeta{
+												Expression: `"pkg.ImportSelectorFunc, Hello go-extractor"`,
+												Name:       `"pkg.ImportSelectorFunc, Hello go-extractor"`,
+												Type:       `"pkg.ImportSelectorFunc, Hello go-extractor"`,
+											},
 										},
 										{
 											Expression: `module.NewExampleStruct(s.V()).Sub().ParentStruct.P`,
-											Head:       "module",
+											Head: &compareGoVariableMeta{
+												Expression: `module`,
+												Name:       "module",
+												Type:       `"standardProject/pkg/module"`,
+											},
 										},
 									},
 								},
@@ -287,10 +337,14 @@ var (
 								{
 									From: "module",
 									Call: "NewExampleStruct",
-									Args: []*compareArgMeta{
+									Args: []*compareGoArgMeta{
 										{
 											Expression: `s.V()`,
-											Head:       "s",
+											Head: &compareGoVariableMeta{
+												Expression: `s *module.ExampleStruct`,
+												Name:       "s",
+												Type:       `*module.ExampleStruct`,
+											},
 										},
 									},
 								},
@@ -378,75 +432,155 @@ var (
 							"ExampleFunc": {
 								compareGoFunctionMeta: &compareGoFunctionMeta{
 									FunctionName: "ExampleFunc",
-									CallMeta: map[string][]*compareCallMeta{
+									CallMeta: map[string][]*compareGoCallMeta{
 										"NewExampleStruct": {
 											{
 												Call: "NewExampleStruct",
-												Args: []*compareArgMeta{
+												Args: []*compareGoArgMeta{
 													{
 														Expression: `v`,
-														Head:       "v",
+														Head: &compareGoVariableMeta{
+															Expression: `v int`,
+															Name:       "v",
+															Type:       `int`,
+														},
 													},
 												},
 											},
 											{
 												Call: "NewExampleStruct",
-												Args: []*compareArgMeta{
+												Args: []*compareGoArgMeta{
 													{
 														Expression: `nes.Sub().ParentStruct.P()`,
-														Head:       "nes",
+														Head: &compareGoVariableMeta{
+															Expression: `nes := NewExampleStruct(v)`,
+															Name:       "nes",
+															Type:       `NewExampleStruct(v)`,
+														},
 													},
 												},
+											},
+										},
+										"es.DoubleReturnFunc": {
+											{
+												From: "es",
+												Call: "DoubleReturnFunc",
+											},
+										},
+										"nes.DoubleReturnFunc": {
+											{
+												From: "nes",
+												Call: "DoubleReturnFunc",
 											},
 										},
 										"fmt.Println": {
 											{
 												From: "fmt",
 												Call: "Println",
-												Args: []*compareArgMeta{
+												Args: []*compareGoArgMeta{
 													{
 														Expression: `"module.ExampleStruct.ExampleFunc Hello go-extractor"`,
-														Head:       `"module.ExampleStruct.ExampleFunc Hello go-extractor"`,
+														Head: &compareGoVariableMeta{
+															Expression: `"module.ExampleStruct.ExampleFunc Hello go-extractor"`,
+															Name:       `"module.ExampleStruct.ExampleFunc Hello go-extractor"`,
+															Type:       `"module.ExampleStruct.ExampleFunc Hello go-extractor"`,
+														},
 													},
 													{
 														Expression: `es`,
-														Head:       "es",
+														Head: &compareGoVariableMeta{
+															Expression: `es ExampleStruct`,
+															Name:       "es",
+															Type:       `ExampleStruct`,
+														},
 													},
 													{
 														Expression: `es.v`,
-														Head:       "es",
+														Head: &compareGoVariableMeta{
+															Expression: `es ExampleStruct`,
+															Name:       "es",
+															Type:       `ExampleStruct`,
+														},
 													},
 													{
 														Expression: `es.V()`,
-														Head:       "es",
+														Head: &compareGoVariableMeta{
+															Expression: `es ExampleStruct`,
+															Name:       "es",
+															Type:       `ExampleStruct`,
+														},
+													},
+													{
+														Expression: `esP`,
+														Head: &compareGoVariableMeta{
+															Expression: `esP, esSubV := es.DoubleReturnFunc()`,
+															Name:       "esP",
+															Type:       `es.DoubleReturnFunc()`,
+														},
+													},
+													{
+														Expression: `esSubV`,
+														Head: &compareGoVariableMeta{
+															Expression: `esP, esSubV := es.DoubleReturnFunc()`,
+															Name:       "esSubV",
+															Type:       `es.DoubleReturnFunc()`,
+														},
 													},
 													{
 														Expression: `nes`,
-														Head:       "nes",
+														Head: &compareGoVariableMeta{
+															Expression: `nes := NewExampleStruct(v)`,
+															Name:       "nes",
+															Type:       `NewExampleStruct(v)`,
+														},
 													},
 													{
 														Expression: `nes.v`,
-														Head:       "nes",
+														Head: &compareGoVariableMeta{
+															Expression: `nes := NewExampleStruct(v)`,
+															Name:       "nes",
+															Type:       `NewExampleStruct(v)`,
+														},
 													},
 													{
 														Expression: `nes.V()`,
-														Head:       "nes",
+														Head: &compareGoVariableMeta{
+															Expression: `nes := NewExampleStruct(v)`,
+															Name:       "nes",
+															Type:       `NewExampleStruct(v)`,
+														},
 													},
 													{
-														Expression: `nes.sub.v`,
-														Head:       "nes",
+														Expression: `nesP`,
+														Head: &compareGoVariableMeta{
+															Expression: `nesP, nesSubV := nes.DoubleReturnFunc()`,
+															Name:       "nesP",
+															Type:       `nes.DoubleReturnFunc()`,
+														},
 													},
 													{
-														Expression: `es.sub.V()`,
-														Head:       "es",
+														Expression: `nesSubV`,
+														Head: &compareGoVariableMeta{
+															Expression: `nesP, nesSubV := nes.DoubleReturnFunc()`,
+															Name:       "nesSubV",
+															Type:       `nes.DoubleReturnFunc()`,
+														},
 													},
 													{
 														Expression: `globalExampleStruct`,
-														Head:       "globalExampleStruct",
+														Head: &compareGoVariableMeta{
+															Expression: `var globalExampleStruct *ExampleStruct`,
+															Name:       "globalExampleStruct",
+															Type:       `*ExampleStruct`,
+														},
 													},
 													{
 														Expression: `NewExampleStruct(nes.Sub().ParentStruct.P())`,
-														Head:       "NewExampleStruct",
+														Head: &compareGoVariableMeta{
+															Expression: `NewExampleStruct`,
+															Name:       "NewExampleStruct",
+															Type:       `*ExampleStruct`,
+														},
 													},
 												},
 											},
@@ -460,12 +594,6 @@ var (
 										"nes.V": {
 											{
 												From: "nes",
-												Call: "V",
-											},
-										},
-										"es.sub.V": {
-											{
-												From: "es.sub",
 												Call: "V",
 											},
 										},
@@ -489,17 +617,42 @@ var (
 							"ExampleFuncWithPointerReceiver": {
 								compareGoFunctionMeta: &compareGoFunctionMeta{
 									FunctionName: "ExampleFuncWithPointerReceiver",
-									CallMeta: map[string][]*compareCallMeta{
+									CallMeta: map[string][]*compareGoCallMeta{
 										"fmt.Println": {
 											{
 												From: "fmt",
 												Call: "Println",
-												Args: []*compareArgMeta{
+												Args: []*compareGoArgMeta{
 													{
 														Expression: `"module.ExampleStruct.ExampleFuncWithPointerReceiver Hello go-extractor"`,
-														Head:       `"module.ExampleStruct.ExampleFuncWithPointerReceiver Hello go-extractor"`,
+														Head: &compareGoVariableMeta{
+															Expression: `"module.ExampleStruct.ExampleFuncWithPointerReceiver Hello go-extractor"`,
+															Name:       `"module.ExampleStruct.ExampleFuncWithPointerReceiver Hello go-extractor"`,
+															Type:       `"module.ExampleStruct.ExampleFuncWithPointerReceiver Hello go-extractor"`,
+														},
 													},
 												},
+											},
+										},
+									},
+								},
+								RecvStruct:      "ExampleStruct",
+								PointerReceiver: true,
+							},
+							"DoubleReturnFunc": {
+								compareGoFunctionMeta: &compareGoFunctionMeta{
+									FunctionName: "DoubleReturnFunc",
+									CallMeta: map[string][]*compareGoCallMeta{
+										"es.P": {
+											{
+												From: "es",
+												Call: "P",
+											},
+										},
+										"es.sub.V": {
+											{
+												From: "es.sub",
+												Call: "V",
 											},
 										},
 									},
@@ -525,15 +678,19 @@ var (
 							"// @param           value",
 							"// @return          pointer to ExampleStruct",
 						},
-						CallMeta: map[string][]*compareCallMeta{
-							"rand.Intn": {
+						CallMeta: map[string][]*compareGoCallMeta{
+							"random.Intn": {
 								{
-									From: "rand",
+									From: "random",
 									Call: "Intn",
-									Args: []*compareArgMeta{
+									Args: []*compareGoArgMeta{
 										{
-											Expression: "v",
-											Head:       "v",
+											Expression: `v`,
+											Head: &compareGoVariableMeta{
+												Expression: `v int`,
+												Name:       "v",
+												Type:       `int`,
+											},
 										},
 									},
 								},
@@ -542,15 +699,19 @@ var (
 					},
 					"ExampleFunc": {
 						FunctionName: "ExampleFunc",
-						CallMeta: map[string][]*compareCallMeta{
+						CallMeta: map[string][]*compareGoCallMeta{
 							"s.ExampleFunc": {
 								{
 									From: "s",
 									Call: "ExampleFunc",
-									Args: []*compareArgMeta{
+									Args: []*compareGoArgMeta{
 										{
 											Expression: `s.v`,
-											Head:       "s",
+											Head: &compareGoVariableMeta{
+												Expression: `s *ExampleStruct`,
+												Name:       "s",
+												Type:       `*ExampleStruct`,
+											},
 										},
 									},
 								},
@@ -731,6 +892,7 @@ func checkStructMeta(gsm *GoStructMeta, _gsm *compareGoStructMeta) {
 }
 
 func checkInterfaceMeta(gim *GoInterfaceMeta, _gim *compareGoInterfaceMeta) {
+	// basic
 	if gim.InterfaceName() != _gim.InterfaceName {
 		Panic(gim.InterfaceName(), _gim.InterfaceName)
 	}
@@ -766,6 +928,7 @@ func checkFunctionMeta(gfm *GoFunctionMeta, _gfm *compareGoFunctionMeta) {
 }
 
 func checkMemberMeta(gmm *GoMemberMeta, _gmm *compareGoMemberMeta) {
+	// basic
 	if gmm.MemberName() != _gmm.MemberName {
 		Panic(gmm.MemberName(), _gmm.MemberName)
 	}
@@ -779,6 +942,7 @@ func checkMemberMeta(gmm *GoMemberMeta, _gmm *compareGoMemberMeta) {
 }
 
 func checkMethodMeta(gmm *GoMethodMeta, _gmm *compareGoMethodMeta) {
+	// basic
 	recvStruct, pointerReceiver := gmm.RecvStruct()
 	if recvStruct != _gmm.RecvStruct {
 		Panic(recvStruct, _gmm.RecvStruct)
@@ -786,10 +950,13 @@ func checkMethodMeta(gmm *GoMethodMeta, _gmm *compareGoMethodMeta) {
 	if pointerReceiver != _gmm.PointerReceiver {
 		Panic(pointerReceiver, _gmm.PointerReceiver)
 	}
+
+	// function
 	checkFunctionMeta(gmm.GoFunctionMeta, _gmm.compareGoFunctionMeta)
 }
 
-func checkCallMeta(gcm *GoCallMeta, _gcm *compareCallMeta) {
+func checkCallMeta(gcm *GoCallMeta, _gcm *compareGoCallMeta) {
+	// basic
 	if (gcm != nil) != (_gcm != nil) {
 		Panic(gcm, _gcm)
 	}
@@ -802,6 +969,8 @@ func checkCallMeta(gcm *GoCallMeta, _gcm *compareCallMeta) {
 	if gcm.Call() != _gcm.Call {
 		Panic(gcm.Call(), _gcm.Call)
 	}
+
+	// args
 	if len(gcm.Args()) != len(_gcm.Args) {
 		Panic(gcm.Args(), _gcm.Args)
 	}
@@ -811,9 +980,16 @@ func checkCallMeta(gcm *GoCallMeta, _gcm *compareCallMeta) {
 		if arg.Expression() != _arg.Expression {
 			Panic(arg.Expression(), _arg.Expression)
 		}
-		if arg.Head() != _arg.Head {
-			Panic(arg.Head(), _arg.Head)
-		}
+		checkVariableMeta(arg.Head(), _arg.Head)
+	}
+}
+
+func checkVariableMeta(gvm *GoVariableMeta, _gvm *compareGoVariableMeta) {
+	if gvm.Name() != _gvm.Name {
+		Panic(gvm.Name(), _gvm.Name)
+	}
+	if gvm.Type() != _gvm.Type {
+		Panic(gvm.Type(), _gvm.Type)
 	}
 }
 
@@ -911,7 +1087,7 @@ func TestReplaceGoProjectMeta(t *testing.T) {
 }
 
 var (
-	compareGoCallMetaSlice = []*compareCallMeta{
+	compareGoCallMetaSlice = []*compareGoCallMeta{
 		// {
 		// 	Expression: `HaveReadGP(1)`,
 		// 	Call:       "HaveReadGP",

@@ -10,7 +10,7 @@ import (
 
 type GoCallMeta struct {
 	*meta
-	from *GoFromMeta
+	from *GoFromMeta // TODO: 改成 GoVariableMeta
 	args []*GoArgMeta
 }
 
@@ -126,44 +126,6 @@ func (gcm *GoCallMeta) Args() []*GoArgMeta {
 	args := make([]*GoArgMeta, 0, len(callExpr.Args))
 	for _, argExpr := range callExpr.Args {
 		args = append(args, &GoArgMeta{meta: gcm.meta.newMeta(argExpr)})
-		// switch argExpr := argExpr.(type) {
-		// case *ast.BasicLit: // 内建类型
-		// 	switch argExpr.Kind {
-		// 	case token.INT:
-		// 		argValue, err := strconv.ParseInt(argExpr.Value, 10, 32)
-		// 		if err != nil {
-		// 			panic(err)
-		// 		}
-		// 		args = append(args, &GoArgMeta{
-		// 			node:  argExpr,
-		// 			value: argValue,
-		// 		})
-		// 	case token.STRING:
-		// 		args = append(args, &GoArgMeta{
-		// 			node:  argExpr,
-		// 			value: argExpr.Value,
-		// 		})
-		// 	}
-		// case *ast.Ident: // 变量
-		// 	args = append(args, &GoArgMeta{
-		// 		node: argExpr,
-		// 		arg:  argExpr.String(),
-		// 	})
-		// case *ast.SelectorExpr: // 变量及其 from
-		// 	args = append(args, &GoArgMeta{
-		// 		node: argExpr,
-		// 		from: argExpr.X.(*ast.Ident).String(),
-		// 		arg:  argExpr.Sel.String(),
-		// 	})
-		// case *ast.CallExpr: // 函数调用
-		// 	args = append(args, &GoArgMeta{
-		// 		node: argExpr,
-		// 		callMeta: &GoCallMeta{
-		// 			fileMeta: gcm.fileMeta,
-		// 			callExpr: argExpr,
-		// 		},
-		// 	})
-		// }
 	}
 	return args
 }

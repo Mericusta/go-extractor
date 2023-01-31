@@ -2,7 +2,7 @@ package module
 
 import (
 	"fmt"
-	"math/rand"
+	random "math/rand"
 )
 
 type ParentStruct struct {
@@ -35,7 +35,7 @@ func NewExampleStruct(v int) *ExampleStruct {
 		v:            v,
 	}
 	globalExampleStruct = &ExampleStruct{
-		ParentStruct: &ParentStruct{p: rand.Intn(v)},
+		ParentStruct: &ParentStruct{p: random.Intn(v)},
 		v:            v / 10,
 	}
 	es.sub = globalExampleStruct
@@ -45,10 +45,11 @@ func NewExampleStruct(v int) *ExampleStruct {
 
 func (es ExampleStruct) ExampleFunc(v int) {
 	nes := NewExampleStruct(v)
+	esP, esSubV := es.DoubleReturnFunc()
+	nesP, nesSubV := nes.DoubleReturnFunc()
 	fmt.Println("module.ExampleStruct.ExampleFunc Hello go-extractor",
-		es, es.v, es.V(),
-		nes, nes.v, nes.V(),
-		nes.sub.v, es.sub.V(),
+		es, es.v, es.V(), esP, esSubV,
+		nes, nes.v, nes.V(), nesP, nesSubV,
 		globalExampleStruct,
 		NewExampleStruct(nes.Sub().ParentStruct.P()),
 	)
@@ -56,6 +57,10 @@ func (es ExampleStruct) ExampleFunc(v int) {
 
 func (es *ExampleStruct) ExampleFuncWithPointerReceiver(v int) {
 	fmt.Println("module.ExampleStruct.ExampleFuncWithPointerReceiver Hello go-extractor")
+}
+
+func (es *ExampleStruct) DoubleReturnFunc() (int, int) {
+	return es.P(), es.sub.V()
 }
 
 func (es ExampleStruct) V() int {
