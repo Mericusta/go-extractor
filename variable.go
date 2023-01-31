@@ -6,11 +6,23 @@ import (
 )
 
 // 包别名
-// 全局变量
-// 局部变量
-// 参数表
-// 返回值
+// - name 别名
+// - typeMeta *GoImportMeta
+// 变量赋值
+// - name 变量名
+// - typeMeta 赋值表达式 *meta // TODO: 区分出来
+// 变量声明
+// - name 变量名
+// - typeMeta 类型 *meta
+// 函数参数表
+// - name 变量名
+// - typeMeta 类型 *meta
+// 函数调用
+// - name 函数名
+// - typeMeta 返回值类型 *meta
 // 常量
+// - name 值
+// - typeMeta 常量 *meta
 type GoVariableMeta struct {
 	*meta
 	name     string

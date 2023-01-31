@@ -456,10 +456,10 @@
    455  .  }
    456  .  Scope: *ast.Scope {
    457  .  .  Objects: map[string]*ast.Object (len = 4) {
-   458  .  .  .  "OneLineDocExampleFunc": *(obj @ 235)
-   459  .  .  .  "ImportSelectorFunc": *(obj @ 327)
-   460  .  .  .  "ExampleFunc": *(obj @ 43)
-   461  .  .  .  "NoDocExampleFunc": *(obj @ 135)
+   458  .  .  .  "ImportSelectorFunc": *(obj @ 327)
+   459  .  .  .  "ExampleFunc": *(obj @ 43)
+   460  .  .  .  "NoDocExampleFunc": *(obj @ 135)
+   461  .  .  .  "OneLineDocExampleFunc": *(obj @ 235)
    462  .  .  }
    463  .  }
    464  .  Imports: []*ast.ImportSpec (len = 2) {

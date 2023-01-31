@@ -65,9 +65,9 @@ func extractGoPackageMeta(packagePath string, files map[string]struct{}, spec bo
 	}
 
 	packageMeta := &GoPackageMeta{
-		pkgPath:    packagePathAbs,
-		pkgFileMap: make(map[string]*GoFileMeta),
-		// pkgVariableDecl: make
+		pkgPath:          packagePathAbs,
+		pkgFileMap:       make(map[string]*GoFileMeta),
+		pkgVariableDecl:  make(map[string]*GoVariableMeta),
 		pkgStructDecl:    make(map[string]*GoStructMeta),
 		pkgInterfaceDecl: make(map[string]*GoInterfaceMeta),
 		pkgFunctionDecl:  make(map[string]*GoFunctionMeta),

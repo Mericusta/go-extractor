@@ -40,6 +40,14 @@ func ExtractGoFileMeta(extractFilepath string) (*GoFileMeta, error) {
 	return meta, nil
 }
 
+func extractGoFilePkgName(fileAbsPath string) (string, error) {
+	fileAST, err := parser.ParseFile(token.NewFileSet(), fileAbsPath, nil, parser.PackageClauseOnly)
+	if err != nil {
+		return "", err
+	}
+	return fileAST.Name.String(), nil
+}
+
 func (gfm *GoFileMeta) OutputAST() {
 	outputFile, err := os.OpenFile(fmt.Sprintf("%v.ast", gfm.path), os.O_CREATE|os.O_TRUNC|os.O_RDWR, 0644)
 	if err != nil {

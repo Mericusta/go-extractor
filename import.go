@@ -9,8 +9,8 @@ import (
 
 type GoImportMeta struct {
 	*meta
-	alias string
-	path  string
+	alias      string
+	importPath string
 }
 
 func ExtractGoImportMeta(extractFilepath string, alias string) (*GoImportMeta, error) {
@@ -44,13 +44,21 @@ func SearchGoImportMeta(m *meta, alias string) *GoImportMeta {
 		return nil
 	}
 	return &GoImportMeta{
-		meta:  m.newMeta(importSpec),
-		alias: alias,
-		path:  importSpec.Path.Value,
+		meta:       m.newMeta(importSpec),
+		alias:      alias,
+		importPath: importSpec.Path.Value,
 	}
 }
 
 func IsImportNode(n ast.Node) bool {
 	_, ok := n.(*ast.ImportSpec)
 	return ok
+}
+
+func (gim *GoImportMeta) Alias() string {
+	return gim.alias
+}
+
+func (gim *GoImportMeta) ImportPath() string {
+	return gim.importPath
 }

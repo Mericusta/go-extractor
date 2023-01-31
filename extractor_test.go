@@ -79,7 +79,13 @@ type compareGoArgMeta struct {
 type compareGoVariableMeta struct {
 	Expression string
 	Name       string
-	Type       string
+	Type       interface{}
+}
+
+type compareGoImportMeta struct {
+	Expression string
+	Alias      string
+	ImportPath string
 }
 
 var (
@@ -123,7 +129,11 @@ var (
 											Head: &compareGoVariableMeta{
 												Expression: `module`,
 												Name:       "module",
-												Type:       `"standardProject/pkg/module"`,
+												Type: &compareGoImportMeta{
+													Expression: `"standardProject/pkg/module"`,
+													Alias:      "module",
+													ImportPath: `"standardProject/pkg/module"`,
+												},
 											},
 										},
 									}},
@@ -138,7 +148,11 @@ var (
 											Head: &compareGoVariableMeta{
 												Expression: `module`,
 												Name:       "module",
-												Type:       `"standardProject/pkg/module"`,
+												Type: &compareGoImportMeta{
+													Expression: `"standardProject/pkg/module"`,
+													Alias:      "module",
+													ImportPath: `"standardProject/pkg/module"`,
+												},
 											},
 										},
 									},
@@ -327,7 +341,11 @@ var (
 											Head: &compareGoVariableMeta{
 												Expression: `module`,
 												Name:       "module",
-												Type:       `"standardProject/pkg/module"`,
+												Type: &compareGoImportMeta{
+													Expression: `"standardProject/pkg/module"`,
+													Alias:      "module",
+													ImportPath: `"standardProject/pkg/module"`,
+												},
 											},
 										},
 									},
@@ -453,9 +471,9 @@ var (
 													{
 														Expression: `nes.Sub().ParentStruct.P()`,
 														Head: &compareGoVariableMeta{
-															Expression: `nes := NewExampleStruct(v)`,
+															Expression: `nes *ExampleStruct`,
 															Name:       "nes",
-															Type:       `NewExampleStruct(v)`,
+															Type:       `*ExampleStruct`,
 														},
 													},
 												},
@@ -529,25 +547,25 @@ var (
 													{
 														Expression: `nes`,
 														Head: &compareGoVariableMeta{
-															Expression: `nes := NewExampleStruct(v)`,
+															Expression: `nes *ExampleStruct`,
 															Name:       "nes",
-															Type:       `NewExampleStruct(v)`,
+															Type:       `*ExampleStruct`,
 														},
 													},
 													{
 														Expression: `nes.v`,
 														Head: &compareGoVariableMeta{
-															Expression: `nes := NewExampleStruct(v)`,
+															Expression: `nes *ExampleStruct`,
 															Name:       "nes",
-															Type:       `NewExampleStruct(v)`,
+															Type:       `*ExampleStruct`,
 														},
 													},
 													{
 														Expression: `nes.V()`,
 														Head: &compareGoVariableMeta{
-															Expression: `nes := NewExampleStruct(v)`,
+															Expression: `nes *ExampleStruct`,
 															Name:       "nes",
-															Type:       `NewExampleStruct(v)`,
+															Type:       `*ExampleStruct`,
 														},
 													},
 													{
@@ -569,7 +587,7 @@ var (
 													{
 														Expression: `globalExampleStruct`,
 														Head: &compareGoVariableMeta{
-															Expression: `var globalExampleStruct *ExampleStruct`,
+															Expression: `globalExampleStruct *ExampleStruct`,
 															Name:       "globalExampleStruct",
 															Type:       `*ExampleStruct`,
 														},
@@ -985,11 +1003,28 @@ func checkCallMeta(gcm *GoCallMeta, _gcm *compareGoCallMeta) {
 }
 
 func checkVariableMeta(gvm *GoVariableMeta, _gvm *compareGoVariableMeta) {
+	if gvm.Expression() != _gvm.Expression {
+		Panic(gvm.Expression(), _gvm.Expression)
+	}
 	if gvm.Name() != _gvm.Name {
 		Panic(gvm.Name(), _gvm.Name)
 	}
-	if gvm.Type() != _gvm.Type {
+	if importMeta, ok := gvm.typeMeta.(*GoImportMeta); ok {
+		checkImportMeta(importMeta, _gvm.Type.(*compareGoImportMeta))
+	} else if gvm.Type() != _gvm.Type.(string) {
 		Panic(gvm.Type(), _gvm.Type)
+	}
+}
+
+func checkImportMeta(gim *GoImportMeta, _gim *compareGoImportMeta) {
+	if gim.alias != _gim.Alias {
+		Panic(gim.alias, _gim.Alias)
+	}
+	if gim.alias != _gim.Alias {
+		Panic(gim.alias, _gim.Alias)
+	}
+	if gim.alias != _gim.Alias {
+		Panic(gim.alias, _gim.Alias)
 	}
 }
 
@@ -1054,37 +1089,37 @@ func OneLineDocExampleFunc(s *module.ExampleStruct) {
 	}
 )
 
-func TestReplaceGoProjectMeta(t *testing.T) {
-	// goProjectMeta, err := ExtractGoProjectMeta(standardProjectRelPath, standardProjectIgnorePathMap)
-	// if err != nil {
-	// 	panic(err)
-	// }
+// func TestReplaceGoProjectMeta(t *testing.T) {
+// 	goProjectMeta, err := ExtractGoProjectMeta(standardProjectRelPath, standardProjectIgnorePathMap)
+// 	if err != nil {
+// 		panic(err)
+// 	}
 
-	// for pkgName, replaceFunctionDoc := range replaceDoc {
-	// 	gpm, has := goProjectMeta.PackageMap[pkgName]
-	// 	if gpm == nil || !has {
-	// 		panic(pkgName)
-	// 	}
-	// 	for funcName, _replace := range replaceFunctionDoc {
-	// 		gpm.SearchFunctionMeta(funcName)
-	// 		gfm, has := gpm.pkgFunctionDecl[funcName]
-	// 		if gfm == nil || !has {
-	// 			panic(funcName)
-	// 		}
-	// 		checkDoc(gfm.Doc(), _replace.originDoc)
-	// 		originContent, replaceContent, err := gfm.ReplaceFunctionDoc(_replace.replaceDoc)
-	// 		if err != nil {
-	// 			panic(err)
-	// 		}
-	// 		if originContent != _replace.originContent {
-	// 			panic(originContent)
-	// 		}
-	// 		if replaceContent != _replace.replaceContent {
-	// 			panic(replaceContent)
-	// 		}
-	// 	}
-	// }
-}
+// 	for pkgName, replaceFunctionDoc := range replaceDoc {
+// 		gpm, has := goProjectMeta.PackageMap[pkgName]
+// 		if gpm == nil || !has {
+// 			panic(pkgName)
+// 		}
+// 		for funcName, _replace := range replaceFunctionDoc {
+// 			gpm.SearchFunctionMeta(funcName)
+// 			gfm, has := gpm.pkgFunctionDecl[funcName]
+// 			if gfm == nil || !has {
+// 				panic(funcName)
+// 			}
+// 			checkDoc(gfm.Doc(), _replace.originDoc)
+// 			originContent, replaceContent, err := gfm.ReplaceFunctionDoc(_replace.replaceDoc)
+// 			if err != nil {
+// 				panic(err)
+// 			}
+// 			if originContent != _replace.originContent {
+// 				panic(originContent)
+// 			}
+// 			if replaceContent != _replace.replaceContent {
+// 				panic(replaceContent)
+// 			}
+// 		}
+// 	}
+// }
 
 var (
 	compareGoCallMetaSlice = []*compareGoCallMeta{
@@ -1160,29 +1195,29 @@ var (
 	}
 )
 
-func TestParseGoCallMeta(t *testing.T) {
-	// for _, _gcm := range compareGoCallMetaSlice {
-	// 	gcm := ParseGoCallMeta(_gcm.Expression)
-	// 	gcm.PrintAST()
+// func TestParseGoCallMeta(t *testing.T) {
+// 	for _, _gcm := range compareGoCallMetaSlice {
+// 		gcm := ParseGoCallMeta(_gcm.Expression)
+// 		gcm.PrintAST()
 
-	// 	if gcm.Expression() != _gcm.Expression {
-	// 		panic(gcm.Expression())
-	// 	}
-	// 	if gcm.Call() != _gcm.Call {
-	// 		panic(gcm.Call())
-	// 	}
+// 		if gcm.Expression() != _gcm.Expression {
+// 			panic(gcm.Expression())
+// 		}
+// 		if gcm.Call() != _gcm.Call {
+// 			panic(gcm.Call())
+// 		}
 
-	// 	if len(gcm.Args()) != len(_gcm.Args) {
-	// 		panic(len(gcm.Args()))
-	// 	}
-	// 	for _, _arg := range _gcm.Args {
-	// 		for _, arg := range gcm.Args() {
-	// 			if reflect.DeepEqual(arg, _arg) {
-	// 				goto NEXT_PARAM
-	// 			}
-	// 		}
-	// 		panic(_arg)
-	// 	NEXT_PARAM:
-	// 	}
-	// }
-}
+// 		if len(gcm.Args()) != len(_gcm.Args) {
+// 			panic(len(gcm.Args()))
+// 		}
+// 		for _, _arg := range _gcm.Args {
+// 			for _, arg := range gcm.Args() {
+// 				if reflect.DeepEqual(arg, _arg) {
+// 					goto NEXT_PARAM
+// 				}
+// 			}
+// 			panic(_arg)
+// 		NEXT_PARAM:
+// 		}
+// 	}
+// }

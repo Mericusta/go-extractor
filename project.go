@@ -25,6 +25,8 @@ type GoProjectMeta struct {
 	packageMap map[string]*GoPackageMeta
 }
 
+// NOTE: 不用 parser.ParseDir 是因为我需要自行组织结构
+
 func ExtractGoProjectMeta(projectPath string, ignorePaths map[string]struct{}) (*GoProjectMeta, error) {
 	return extractGoProjectMeta(projectPath, ignorePaths, false)
 }
@@ -150,4 +152,35 @@ func (gpm *GoProjectMeta) SearchPackageMeta(pkgImportPath string) *GoPackageMeta
 	return gpm.packageMap[pkgImportPath]
 }
 
-// func (gpm *GoProjectMeta)
+func (gpm *GoProjectMeta) SearchArgType(gam *GoArgMeta) string {
+	var goPackageMeta *GoPackageMeta
+	var importPkgPath string
+	headMeta := gam.Head()
+	importMeta, ok := headMeta.typeMeta.(*GoImportMeta)
+	if ok {
+		importPkgPath = importMeta.ImportPath()
+	} else {
+		filePkg, err := extractGoFilePkgName(gam.meta.path)
+		if err != nil {
+			fmt.Printf("extract go file %v pkg name occurs error: %v\n", gam.meta.path, err)
+			return ""
+		}
+		if filePkg == "main" {
+			importPkgPath = filePkg
+		} else {
+			// relPath := "."
+			// fileDir := filepath.Dir(path)
+			// if fileDir != projectAbsPath {
+			// 	relPath, err = filepath.Rel(projectAbsPath, filepath.Dir(fileDir))
+			// 	if err != nil {
+			// 		return err
+			// 	}
+			// }
+			// pkgImportPath := FormatFilePathWithOS(filepath.Clean(fmt.Sprintf("%v/%v/%v", projectMeta.moduleName, relPath, filePkg)), "linux")
+		}
+	}
+	goPackageMeta = gpm.SearchPackageMeta(importPkgPath)
+	fmt.Printf("goPackageMeta = %v\n", goPackageMeta)
+
+	return ""
+}

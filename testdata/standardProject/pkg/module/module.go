@@ -44,7 +44,10 @@ func NewExampleStruct(v int) *ExampleStruct {
 }
 
 func (es ExampleStruct) ExampleFunc(v int) {
-	nes := NewExampleStruct(v)
+	var nes *ExampleStruct
+	if v != 0 {
+		nes = NewExampleStruct(v)
+	}
 	esP, esSubV := es.DoubleReturnFunc()
 	nesP, nesSubV := nes.DoubleReturnFunc()
 	fmt.Println("module.ExampleStruct.ExampleFunc Hello go-extractor",
