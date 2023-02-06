@@ -5,6 +5,17 @@ import (
 	"go/ast"
 )
 
+type VariableTypeEnum int
+
+const (
+	TYPE_UNKNOWN = iota
+	TYPE_PKG_ALIAS
+	TYPE_ASSIGNMENT
+	TYPE_FUNC_CALL
+	TYPE_VAR_FIELD
+	TYPE_CONSTANTS
+)
+
 // 包别名
 // - name 别名
 // - typeMeta *GoImportMeta
@@ -27,6 +38,7 @@ type GoVariableMeta struct {
 	*meta
 	name     string
 	typeMeta Meta
+	typeEnum VariableTypeEnum
 }
 
 func ExtractGoVariableMeta(extractFilepath string, variableName string) (*GoVariableMeta, error) {

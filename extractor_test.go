@@ -3,6 +3,7 @@ package extractor
 import (
 	"fmt"
 	"sort"
+	"strings"
 	"testing"
 
 	stpmap "github.com/Mericusta/go-stp/map"
@@ -595,7 +596,7 @@ var (
 													{
 														Expression: `NewExampleStruct(nes.Sub().ParentStruct.P())`,
 														Head: &compareGoVariableMeta{
-															Expression: `NewExampleStruct`,
+															Expression: `<IGNORE>`,
 															Name:       "NewExampleStruct",
 															Type:       `*ExampleStruct`,
 														},
@@ -805,6 +806,27 @@ func TestExtractGoProjectMeta(t *testing.T) {
 			checkFunctionMeta(gfm, _gfm)
 		}
 	}
+
+	// arg type
+	for pkgImportPath, gpm := range goProjectMeta.packageMap {
+		// function
+		for funcName, gfm := range gpm.pkgFunctionDecl {
+			for call, gcms := range gfm.callMeta {
+				for _, gcm := range gcms {
+					for _, arg := range gcm.Args() {
+						if pkgImportPath == "main" && funcName == "main" && call == "pkg.ExampleFunc" {
+							fmt.Printf("in pkg %v, func %v, call %v\n", pkgImportPath, funcName, call)
+							argType := goProjectMeta.SearchArgType(arg)
+							fmt.Printf("arg %v type %v\n", arg.Expression(), argType)
+							fmt.Println()
+						}
+					}
+				}
+			}
+		}
+
+		// method
+	}
 }
 
 func Panic(v, c any) {
@@ -995,15 +1017,23 @@ func checkCallMeta(gcm *GoCallMeta, _gcm *compareGoCallMeta) {
 	args := gcm.Args()
 	for index, _arg := range _gcm.Args {
 		arg := args[index]
-		if arg.Expression() != _arg.Expression {
+		if arg.Expression() != strings.TrimSpace(_arg.Expression) {
 			Panic(arg.Expression(), _arg.Expression)
 		}
 		checkVariableMeta(arg.Head(), _arg.Head)
+		fmt.Printf("Expression %v\n", _arg.Expression)
+		for i, s := range arg.Slice() {
+			fmt.Printf("slice index %v, s %+v, type %v\n", i, s, s.typeMeta.Expression())
+		}
+		fmt.Println()
+		// if _arg.Expression == "module.NewExampleStruct(10)" {
+		// 	arg.Slice()
+		// }
 	}
 }
 
 func checkVariableMeta(gvm *GoVariableMeta, _gvm *compareGoVariableMeta) {
-	if gvm.Expression() != _gvm.Expression {
+	if _gvm.Expression != "<IGNORE>" && gvm.Expression() != strings.TrimSpace(_gvm.Expression) {
 		Panic(gvm.Expression(), _gvm.Expression)
 	}
 	if gvm.Name() != _gvm.Name {

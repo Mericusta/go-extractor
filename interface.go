@@ -23,7 +23,7 @@ func ExtractGoInterfaceMeta(extractFilepath string, interfaceName string) (*GoIn
 	}
 
 	gim := SearchGoInterfaceMeta(gfm.meta, interfaceName)
-	if gim.node == nil {
+	if gim == nil {
 		return nil, fmt.Errorf("can not find interface node")
 	}
 

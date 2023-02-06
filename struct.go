@@ -20,7 +20,7 @@ func ExtractGoStructMeta(extractFilepath string, structName string) (*GoStructMe
 	}
 
 	gsm := SearchGoStructMeta(gfm.meta, structName)
-	if gsm.node == nil {
+	if gsm == nil {
 		return nil, fmt.Errorf("can not find struct node")
 	}
 

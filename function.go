@@ -29,7 +29,7 @@ func ExtractGoFunctionMeta(extractFilepath string, functionName string) (*GoFunc
 	}
 
 	gfm := SearchGoFunctionMeta(goFileMeta.meta, functionName)
-	if gfm.node == nil {
+	if gfm == nil {
 		return nil, fmt.Errorf("can not find function node")
 	}
 

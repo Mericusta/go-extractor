@@ -2,8 +2,13 @@ package extractor
 
 import (
 	"fmt"
+	"io/fs"
+	"os"
+	"path"
+	"path/filepath"
 	"runtime"
 	"strings"
+	"syscall"
 	"unicode/utf8"
 )
 
@@ -446,4 +451,40 @@ func isInPaths(paths map[string]struct{}, checkPath string) bool {
 		}
 	}
 	return false
+}
+
+// TraverseDirectorySpecificFileWithFunction 遍历文件夹获取所有绑定类型的文件
+func TraverseDirectorySpecificFileWithFunction(directory, syntax string, operate func(string, fs.DirEntry) error) error {
+	syntaxExt := fmt.Sprintf(".%v", syntax)
+	return filepath.WalkDir(directory, func(filePath string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if filePath != directory {
+			if d.IsDir() {
+				return err
+			}
+			if path.Ext(filePath) == syntaxExt {
+				err := operate(filePath, d)
+				return err
+			}
+		}
+		return nil
+	})
+}
+
+// CreateDir 创建文件夹
+func CreateDir(directoryPath string) error {
+	err := os.Mkdir(directoryPath, os.ModePerm)
+	if err != nil {
+		if pathError, ok := err.(*fs.PathError); ok {
+			if pathError.Err != nil {
+				if syscallError := pathError.Err.(syscall.Errno); syscallError == syscall.ERROR_ALREADY_EXISTS {
+					return nil
+				}
+			}
+		}
+		return err
+	}
+	return nil
 }

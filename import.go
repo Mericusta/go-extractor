@@ -20,7 +20,7 @@ func ExtractGoImportMeta(extractFilepath string, alias string) (*GoImportMeta, e
 	}
 
 	gim := SearchGoImportMeta(gfm.meta, alias)
-	if gim.node == nil {
+	if gim == nil {
 		return nil, fmt.Errorf("can not find import node")
 	}
 

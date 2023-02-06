@@ -16,7 +16,7 @@ func ExtractGoMethodMeta(extractFilepath string, structName, methodName string) 
 	}
 
 	gmm := SearchGoMethodMeta(gfm.meta, structName, methodName)
-	if gmm.node == nil {
+	if gmm == nil {
 		return nil, fmt.Errorf("can not find method node")
 	}
 
