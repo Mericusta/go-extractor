@@ -47,6 +47,9 @@ type compareGoInterfaceMeta struct {
 type compareGoFunctionMeta struct {
 	FunctionName string
 	Doc          []string
+	TypeParams   []*compareGoVariableMeta
+	Params       []*compareGoVariableMeta
+	ReturnTypes  []*compareGoVariableMeta
 	CallMeta     map[string][]*compareGoCallMeta
 	// VarMeta map[string]
 }
@@ -74,13 +77,13 @@ type compareGoCallMeta struct {
 
 type compareGoArgMeta struct {
 	Expression string
-	Head       *compareGoVariableMeta
+	// Head       *compareGoVariableMeta
 }
 
 type compareGoVariableMeta struct {
 	Expression string
 	Name       string
-	Type       interface{}
+	Type       string
 }
 
 type compareGoImportMeta struct {
@@ -94,8 +97,8 @@ var (
 	standardProjectIgnorePathMap = map[string]struct{}{
 		standardProjectRelPath + "/vendor": {},
 	}
-	// standardProjectAbsPath    = "d:\\Projects\\go-extractor\\testdata\\standardProject"
-	standardProjectAbsPath    = "d:\\Projects\\SGAME\\server-dev\\gameServer\\game_server\\pkg\\github.com\\Mericusta\\go-extractor\\testdata\\standardProject"
+	standardProjectAbsPath = "d:\\Projects\\go-extractor\\testdata\\standardProject"
+	// standardProjectAbsPath    = "d:\\Projects\\SGAME\\server-dev\\gameServer\\game_server\\pkg\\github.com\\Mericusta\\go-extractor\\testdata\\standardProject"
 	standardProjectModuleName = "standardProject"
 	standardProjectMeta       = &compareGoProjectMeta{
 		ProjectPath: standardProjectAbsPath,
@@ -127,15 +130,15 @@ var (
 									Args: []*compareGoArgMeta{
 										{
 											Expression: `module.NewExampleStruct(10)`,
-											Head: &compareGoVariableMeta{
-												Expression: `module`,
-												Name:       "module",
-												Type: &compareGoImportMeta{
-													Expression: `"standardProject/pkg/module"`,
-													Alias:      "module",
-													ImportPath: `"standardProject/pkg/module"`,
-												},
-											},
+											// Head: &compareGoVariableMeta{
+											// 	Expression: `module`,
+											// 	Name:       "module",
+											// 	Type: &compareGoImportMeta{
+											// 		Expression: `"standardProject/pkg/module"`,
+											// 		Alias:      "module",
+											// 		ImportPath: `"standardProject/pkg/module"`,
+											// 	},
+											// },
 										},
 									}},
 							},
@@ -146,15 +149,15 @@ var (
 									Args: []*compareGoArgMeta{
 										{
 											Expression: `module.NewExampleStruct(11)`,
-											Head: &compareGoVariableMeta{
-												Expression: `module`,
-												Name:       "module",
-												Type: &compareGoImportMeta{
-													Expression: `"standardProject/pkg/module"`,
-													Alias:      "module",
-													ImportPath: `"standardProject/pkg/module"`,
-												},
-											},
+											// Head: &compareGoVariableMeta{
+											// 	Expression: `module`,
+											// 	Name:       "module",
+											// 	Type: &compareGoImportMeta{
+											// 		Expression: `"standardProject/pkg/module"`,
+											// 		Alias:      "module",
+											// 		ImportPath: `"standardProject/pkg/module"`,
+											// 	},
+											// },
 										},
 									},
 								},
@@ -166,11 +169,11 @@ var (
 									Args: []*compareGoArgMeta{
 										{
 											Expression: `10`,
-											Head: &compareGoVariableMeta{
-												Expression: `10`,
-												Name:       "10",
-												Type:       `10`,
-											},
+											// Head: &compareGoVariableMeta{
+											// 	Expression: `10`,
+											// 	Name:       "10",
+											// 	Type:       `10`,
+											// },
 										},
 									},
 								},
@@ -180,11 +183,11 @@ var (
 									Args: []*compareGoArgMeta{
 										{
 											Expression: `11`,
-											Head: &compareGoVariableMeta{
-												Expression: `11`,
-												Name:       "11",
-												Type:       `11`,
-											},
+											// Head: &compareGoVariableMeta{
+											// 	Expression: `11`,
+											// 	Name:       "11",
+											// 	Type:       `11`,
+											// },
 										},
 									},
 								},
@@ -218,6 +221,13 @@ var (
 						Doc: []string{
 							"// ExampleFunc this is example function",
 						},
+						Params: []*compareGoVariableMeta{
+							{
+								Expression: `s *module.ExampleStruct`,
+								Name:       "s",
+								Type:       "*module.ExampleStruct",
+							},
+						},
 						CallMeta: map[string][]*compareGoCallMeta{
 							"fmt.Println": {
 								{
@@ -226,19 +236,19 @@ var (
 									Args: []*compareGoArgMeta{
 										{
 											Expression: `"pkg.ExampleFunc, Hello go-extractor"`,
-											Head: &compareGoVariableMeta{
-												Expression: `"pkg.ExampleFunc, Hello go-extractor"`,
-												Name:       `"pkg.ExampleFunc, Hello go-extractor"`,
-												Type:       `"pkg.ExampleFunc, Hello go-extractor"`,
-											},
+											// Head: &compareGoVariableMeta{
+											// 	Expression: `"pkg.ExampleFunc, Hello go-extractor"`,
+											// 	Name:       `"pkg.ExampleFunc, Hello go-extractor"`,
+											// 	Type:       `"pkg.ExampleFunc, Hello go-extractor"`,
+											// },
 										},
 										{
 											Expression: `s.V()`,
-											Head: &compareGoVariableMeta{
-												Expression: `s *module.ExampleStruct`,
-												Name:       "s",
-												Type:       `*module.ExampleStruct`,
-											},
+											// Head: &compareGoVariableMeta{
+											// 	Expression: `s *module.ExampleStruct`,
+											// 	Name:       "s",
+											// 	Type:       `*module.ExampleStruct`,
+											// },
 										},
 									},
 								},
@@ -253,6 +263,13 @@ var (
 					},
 					"NoDocExampleFunc": {
 						FunctionName: "NoDocExampleFunc",
+						Params: []*compareGoVariableMeta{
+							{
+								Expression: `s *module.ExampleStruct`,
+								Name:       "s",
+								Type:       "*module.ExampleStruct",
+							},
+						},
 						CallMeta: map[string][]*compareGoCallMeta{
 							"fmt.Println": {
 								{
@@ -261,19 +278,19 @@ var (
 									Args: []*compareGoArgMeta{
 										{
 											Expression: `"pkg.NoDocExampleFunc, Hello go-extractor"`,
-											Head: &compareGoVariableMeta{
-												Expression: `"pkg.NoDocExampleFunc, Hello go-extractor"`,
-												Name:       `"pkg.NoDocExampleFunc, Hello go-extractor"`,
-												Type:       `"pkg.NoDocExampleFunc, Hello go-extractor"`,
-											},
+											// Head: &compareGoVariableMeta{
+											// 	Expression: `"pkg.NoDocExampleFunc, Hello go-extractor"`,
+											// 	Name:       `"pkg.NoDocExampleFunc, Hello go-extractor"`,
+											// 	Type:       `"pkg.NoDocExampleFunc, Hello go-extractor"`,
+											// },
 										},
 										{
 											Expression: `s.V()`,
-											Head: &compareGoVariableMeta{
-												Expression: `s *module.ExampleStruct`,
-												Name:       "s",
-												Type:       `*module.ExampleStruct`,
-											},
+											// Head: &compareGoVariableMeta{
+											// 	Expression: `s *module.ExampleStruct`,
+											// 	Name:       "s",
+											// 	Type:       `*module.ExampleStruct`,
+											// },
 										},
 									},
 								},
@@ -288,6 +305,13 @@ var (
 					},
 					"OneLineDocExampleFunc": {
 						FunctionName: "OneLineDocExampleFunc",
+						Params: []*compareGoVariableMeta{
+							{
+								Expression: `s *module.ExampleStruct`,
+								Name:       "s",
+								Type:       "*module.ExampleStruct",
+							},
+						},
 						CallMeta: map[string][]*compareGoCallMeta{
 							"fmt.Println": {
 								{
@@ -296,19 +320,19 @@ var (
 									Args: []*compareGoArgMeta{
 										{
 											Expression: `"pkg.OneLineDocExampleFunc, Hello go-extractor"`,
-											Head: &compareGoVariableMeta{
-												Expression: `"pkg.OneLineDocExampleFunc, Hello go-extractor"`,
-												Name:       `"pkg.OneLineDocExampleFunc, Hello go-extractor"`,
-												Type:       `"pkg.OneLineDocExampleFunc, Hello go-extractor"`,
-											},
+											// Head: &compareGoVariableMeta{
+											// 	Expression: `"pkg.OneLineDocExampleFunc, Hello go-extractor"`,
+											// 	Name:       `"pkg.OneLineDocExampleFunc, Hello go-extractor"`,
+											// 	Type:       `"pkg.OneLineDocExampleFunc, Hello go-extractor"`,
+											// },
 										},
 										{
 											Expression: `s.V()`,
-											Head: &compareGoVariableMeta{
-												Expression: `s *module.ExampleStruct`,
-												Name:       "s",
-												Type:       `*module.ExampleStruct`,
-											},
+											// Head: &compareGoVariableMeta{
+											// 	Expression: `s *module.ExampleStruct`,
+											// 	Name:       "s",
+											// 	Type:       `*module.ExampleStruct`,
+											// },
 										},
 									},
 								},
@@ -323,6 +347,13 @@ var (
 					},
 					"ImportSelectorFunc": {
 						FunctionName: "ImportSelectorFunc",
+						Params: []*compareGoVariableMeta{
+							{
+								Expression: `s *module.ExampleStruct`,
+								Name:       "s",
+								Type:       "*module.ExampleStruct",
+							},
+						},
 						CallMeta: map[string][]*compareGoCallMeta{
 							"fmt.Println": {
 								&compareGoCallMeta{
@@ -331,23 +362,23 @@ var (
 									Args: []*compareGoArgMeta{
 										{
 											Expression: `"pkg.ImportSelectorFunc, Hello go-extractor"`,
-											Head: &compareGoVariableMeta{
-												Expression: `"pkg.ImportSelectorFunc, Hello go-extractor"`,
-												Name:       `"pkg.ImportSelectorFunc, Hello go-extractor"`,
-												Type:       `"pkg.ImportSelectorFunc, Hello go-extractor"`,
-											},
+											// Head: &compareGoVariableMeta{
+											// 	Expression: `"pkg.ImportSelectorFunc, Hello go-extractor"`,
+											// 	Name:       `"pkg.ImportSelectorFunc, Hello go-extractor"`,
+											// 	Type:       `"pkg.ImportSelectorFunc, Hello go-extractor"`,
+											// },
 										},
 										{
 											Expression: `module.NewExampleStruct(s.V()).Sub().ParentStruct.P`,
-											Head: &compareGoVariableMeta{
-												Expression: `module`,
-												Name:       "module",
-												Type: &compareGoImportMeta{
-													Expression: `"standardProject/pkg/module"`,
-													Alias:      "module",
-													ImportPath: `"standardProject/pkg/module"`,
-												},
-											},
+											// Head: &compareGoVariableMeta{
+											// 	Expression: `module`,
+											// 	Name:       "module",
+											// 	Type: &compareGoImportMeta{
+											// 		Expression: `"standardProject/pkg/module"`,
+											// 		Alias:      "module",
+											// 		ImportPath: `"standardProject/pkg/module"`,
+											// 	},
+											// },
 										},
 									},
 								},
@@ -359,11 +390,11 @@ var (
 									Args: []*compareGoArgMeta{
 										{
 											Expression: `s.V()`,
-											Head: &compareGoVariableMeta{
-												Expression: `s *module.ExampleStruct`,
-												Name:       "s",
-												Type:       `*module.ExampleStruct`,
-											},
+											// Head: &compareGoVariableMeta{
+											// 	Expression: `s *module.ExampleStruct`,
+											// 	Name:       "s",
+											// 	Type:       `*module.ExampleStruct`,
+											// },
 										},
 									},
 								},
@@ -451,6 +482,13 @@ var (
 							"ExampleFunc": {
 								compareGoFunctionMeta: &compareGoFunctionMeta{
 									FunctionName: "ExampleFunc",
+									Params: []*compareGoVariableMeta{
+										{
+											Expression: `v int`,
+											Name:       "v",
+											Type:       "int",
+										},
+									},
 									CallMeta: map[string][]*compareGoCallMeta{
 										"NewExampleStruct": {
 											{
@@ -458,11 +496,11 @@ var (
 												Args: []*compareGoArgMeta{
 													{
 														Expression: `v`,
-														Head: &compareGoVariableMeta{
-															Expression: `v int`,
-															Name:       "v",
-															Type:       `int`,
-														},
+														// Head: &compareGoVariableMeta{
+														// 	Expression: `v int`,
+														// 	Name:       "v",
+														// 	Type:       `int`,
+														// },
 													},
 												},
 											},
@@ -471,11 +509,11 @@ var (
 												Args: []*compareGoArgMeta{
 													{
 														Expression: `nes.Sub().ParentStruct.P()`,
-														Head: &compareGoVariableMeta{
-															Expression: `nes *ExampleStruct`,
-															Name:       "nes",
-															Type:       `*ExampleStruct`,
-														},
+														// Head: &compareGoVariableMeta{
+														// 	Expression: `nes *ExampleStruct`,
+														// 	Name:       "nes",
+														// 	Type:       `*ExampleStruct`,
+														// },
 													},
 												},
 											},
@@ -499,107 +537,107 @@ var (
 												Args: []*compareGoArgMeta{
 													{
 														Expression: `"module.ExampleStruct.ExampleFunc Hello go-extractor"`,
-														Head: &compareGoVariableMeta{
-															Expression: `"module.ExampleStruct.ExampleFunc Hello go-extractor"`,
-															Name:       `"module.ExampleStruct.ExampleFunc Hello go-extractor"`,
-															Type:       `"module.ExampleStruct.ExampleFunc Hello go-extractor"`,
-														},
+														// Head: &compareGoVariableMeta{
+														// 	Expression: `"module.ExampleStruct.ExampleFunc Hello go-extractor"`,
+														// 	Name:       `"module.ExampleStruct.ExampleFunc Hello go-extractor"`,
+														// 	Type:       `"module.ExampleStruct.ExampleFunc Hello go-extractor"`,
+														// },
 													},
 													{
 														Expression: `es`,
-														Head: &compareGoVariableMeta{
-															Expression: `es ExampleStruct`,
-															Name:       "es",
-															Type:       `ExampleStruct`,
-														},
+														// Head: &compareGoVariableMeta{
+														// 	Expression: `es ExampleStruct`,
+														// 	Name:       "es",
+														// 	Type:       `ExampleStruct`,
+														// },
 													},
 													{
 														Expression: `es.v`,
-														Head: &compareGoVariableMeta{
-															Expression: `es ExampleStruct`,
-															Name:       "es",
-															Type:       `ExampleStruct`,
-														},
+														// Head: &compareGoVariableMeta{
+														// 	Expression: `es ExampleStruct`,
+														// 	Name:       "es",
+														// 	Type:       `ExampleStruct`,
+														// },
 													},
 													{
 														Expression: `es.V()`,
-														Head: &compareGoVariableMeta{
-															Expression: `es ExampleStruct`,
-															Name:       "es",
-															Type:       `ExampleStruct`,
-														},
+														// Head: &compareGoVariableMeta{
+														// 	Expression: `es ExampleStruct`,
+														// 	Name:       "es",
+														// 	Type:       `ExampleStruct`,
+														// },
 													},
 													{
 														Expression: `esP`,
-														Head: &compareGoVariableMeta{
-															Expression: `esP, esSubV := es.DoubleReturnFunc()`,
-															Name:       "esP",
-															Type:       `es.DoubleReturnFunc()`,
-														},
+														// Head: &compareGoVariableMeta{
+														// 	Expression: `esP, esSubV := es.DoubleReturnFunc()`,
+														// 	Name:       "esP",
+														// 	Type:       `es.DoubleReturnFunc()`,
+														// },
 													},
 													{
 														Expression: `esSubV`,
-														Head: &compareGoVariableMeta{
-															Expression: `esP, esSubV := es.DoubleReturnFunc()`,
-															Name:       "esSubV",
-															Type:       `es.DoubleReturnFunc()`,
-														},
+														// Head: &compareGoVariableMeta{
+														// 	Expression: `esP, esSubV := es.DoubleReturnFunc()`,
+														// 	Name:       "esSubV",
+														// 	Type:       `es.DoubleReturnFunc()`,
+														// },
 													},
 													{
 														Expression: `nes`,
-														Head: &compareGoVariableMeta{
-															Expression: `nes *ExampleStruct`,
-															Name:       "nes",
-															Type:       `*ExampleStruct`,
-														},
+														// Head: &compareGoVariableMeta{
+														// 	Expression: `nes *ExampleStruct`,
+														// 	Name:       "nes",
+														// 	Type:       `*ExampleStruct`,
+														// },
 													},
 													{
 														Expression: `nes.v`,
-														Head: &compareGoVariableMeta{
-															Expression: `nes *ExampleStruct`,
-															Name:       "nes",
-															Type:       `*ExampleStruct`,
-														},
+														// Head: &compareGoVariableMeta{
+														// 	Expression: `nes *ExampleStruct`,
+														// 	Name:       "nes",
+														// 	Type:       `*ExampleStruct`,
+														// },
 													},
 													{
 														Expression: `nes.V()`,
-														Head: &compareGoVariableMeta{
-															Expression: `nes *ExampleStruct`,
-															Name:       "nes",
-															Type:       `*ExampleStruct`,
-														},
+														// Head: &compareGoVariableMeta{
+														// 	Expression: `nes *ExampleStruct`,
+														// 	Name:       "nes",
+														// 	Type:       `*ExampleStruct`,
+														// },
 													},
 													{
 														Expression: `nesP`,
-														Head: &compareGoVariableMeta{
-															Expression: `nesP, nesSubV := nes.DoubleReturnFunc()`,
-															Name:       "nesP",
-															Type:       `nes.DoubleReturnFunc()`,
-														},
+														// Head: &compareGoVariableMeta{
+														// 	Expression: `nesP, nesSubV := nes.DoubleReturnFunc()`,
+														// 	Name:       "nesP",
+														// 	Type:       `nes.DoubleReturnFunc()`,
+														// },
 													},
 													{
 														Expression: `nesSubV`,
-														Head: &compareGoVariableMeta{
-															Expression: `nesP, nesSubV := nes.DoubleReturnFunc()`,
-															Name:       "nesSubV",
-															Type:       `nes.DoubleReturnFunc()`,
-														},
+														// Head: &compareGoVariableMeta{
+														// 	Expression: `nesP, nesSubV := nes.DoubleReturnFunc()`,
+														// 	Name:       "nesSubV",
+														// 	Type:       `nes.DoubleReturnFunc()`,
+														// },
 													},
 													{
 														Expression: `globalExampleStruct`,
-														Head: &compareGoVariableMeta{
-															Expression: `globalExampleStruct *ExampleStruct`,
-															Name:       "globalExampleStruct",
-															Type:       `*ExampleStruct`,
-														},
+														// Head: &compareGoVariableMeta{
+														// 	Expression: `globalExampleStruct *ExampleStruct`,
+														// 	Name:       "globalExampleStruct",
+														// 	Type:       `*ExampleStruct`,
+														// },
 													},
 													{
 														Expression: `NewExampleStruct(nes.Sub().ParentStruct.P())`,
-														Head: &compareGoVariableMeta{
-															Expression: `<IGNORE>`,
-															Name:       "NewExampleStruct",
-															Type:       `*ExampleStruct`,
-														},
+														// Head: &compareGoVariableMeta{
+														// 	Expression: `<IGNORE>`,
+														// 	Name:       "NewExampleStruct",
+														// 	Type:       `*ExampleStruct`,
+														// },
 													},
 												},
 											},
@@ -636,6 +674,13 @@ var (
 							"ExampleFuncWithPointerReceiver": {
 								compareGoFunctionMeta: &compareGoFunctionMeta{
 									FunctionName: "ExampleFuncWithPointerReceiver",
+									Params: []*compareGoVariableMeta{
+										{
+											Expression: `v int`,
+											Name:       "v",
+											Type:       "int",
+										},
+									},
 									CallMeta: map[string][]*compareGoCallMeta{
 										"fmt.Println": {
 											{
@@ -644,11 +689,11 @@ var (
 												Args: []*compareGoArgMeta{
 													{
 														Expression: `"module.ExampleStruct.ExampleFuncWithPointerReceiver Hello go-extractor"`,
-														Head: &compareGoVariableMeta{
-															Expression: `"module.ExampleStruct.ExampleFuncWithPointerReceiver Hello go-extractor"`,
-															Name:       `"module.ExampleStruct.ExampleFuncWithPointerReceiver Hello go-extractor"`,
-															Type:       `"module.ExampleStruct.ExampleFuncWithPointerReceiver Hello go-extractor"`,
-														},
+														// Head: &compareGoVariableMeta{
+														// 	Expression: `"module.ExampleStruct.ExampleFuncWithPointerReceiver Hello go-extractor"`,
+														// 	Name:       `"module.ExampleStruct.ExampleFuncWithPointerReceiver Hello go-extractor"`,
+														// 	Type:       `"module.ExampleStruct.ExampleFuncWithPointerReceiver Hello go-extractor"`,
+														// },
 													},
 												},
 											},
@@ -661,6 +706,16 @@ var (
 							"DoubleReturnFunc": {
 								compareGoFunctionMeta: &compareGoFunctionMeta{
 									FunctionName: "DoubleReturnFunc",
+									ReturnTypes: []*compareGoVariableMeta{
+										{
+											Expression: `int`,
+											Type:       "int",
+										},
+										{
+											Expression: `int`,
+											Type:       "int",
+										},
+									},
 									CallMeta: map[string][]*compareGoCallMeta{
 										"es.P": {
 											{
@@ -682,9 +737,28 @@ var (
 							"V": {
 								compareGoFunctionMeta: &compareGoFunctionMeta{
 									FunctionName: "V",
+									ReturnTypes: []*compareGoVariableMeta{
+										{
+											Expression: `int`,
+											Type:       "int",
+										},
+									},
 								},
 								RecvStruct:      "ExampleStruct",
 								PointerReceiver: false,
+							},
+							"Sub": {
+								compareGoFunctionMeta: &compareGoFunctionMeta{
+									FunctionName: "Sub",
+									ReturnTypes: []*compareGoVariableMeta{
+										{
+											Expression: `*ExampleStruct`,
+											Type:       "*ExampleStruct",
+										},
+									},
+								},
+								RecvStruct:      "ExampleStruct",
+								PointerReceiver: true,
 							},
 						},
 					},
@@ -697,6 +771,19 @@ var (
 							"// @param           value",
 							"// @return          pointer to ExampleStruct",
 						},
+						Params: []*compareGoVariableMeta{
+							{
+								Expression: `v int`,
+								Name:       "v",
+								Type:       "int",
+							},
+						},
+						ReturnTypes: []*compareGoVariableMeta{
+							{
+								Expression: `*ExampleStruct`,
+								Type:       "*ExampleStruct",
+							},
+						},
 						CallMeta: map[string][]*compareGoCallMeta{
 							"random.Intn": {
 								{
@@ -705,11 +792,11 @@ var (
 									Args: []*compareGoArgMeta{
 										{
 											Expression: `v`,
-											Head: &compareGoVariableMeta{
-												Expression: `v int`,
-												Name:       "v",
-												Type:       `int`,
-											},
+											// Head: &compareGoVariableMeta{
+											// 	Expression: `v int`,
+											// 	Name:       "v",
+											// 	Type:       `int`,
+											// },
 										},
 									},
 								},
@@ -718,6 +805,13 @@ var (
 					},
 					"ExampleFunc": {
 						FunctionName: "ExampleFunc",
+						Params: []*compareGoVariableMeta{
+							{
+								Expression: `s *ExampleStruct`,
+								Name:       "s",
+								Type:       "*ExampleStruct",
+							},
+						},
 						CallMeta: map[string][]*compareGoCallMeta{
 							"s.ExampleFunc": {
 								{
@@ -726,16 +820,155 @@ var (
 									Args: []*compareGoArgMeta{
 										{
 											Expression: `s.v`,
-											Head: &compareGoVariableMeta{
-												Expression: `s *ExampleStruct`,
-												Name:       "s",
-												Type:       `*ExampleStruct`,
-											},
+											// Head: &compareGoVariableMeta{
+											// 	Expression: `s *ExampleStruct`,
+											// 	Name:       "s",
+											// 	Type:       `*ExampleStruct`,
+											// },
 										},
 									},
 								},
 							},
 						},
+					},
+				},
+			},
+			standardProjectModuleName + "/pkg/template": {
+				Name:       "template",
+				PkgPath:    standardProjectAbsPath + "\\pkg\\template",
+				ImportPath: standardProjectModuleName + "/pkg/template",
+				pkgFileMap: map[string]*compareGoFileMeta{
+					"template.go": {
+						Name:    "template.go",
+						Path:    standardProjectAbsPath + "\\pkg\\template\\template.go",
+						PkgName: "template",
+					},
+				},
+				pkgFunctionMeta: map[string]*compareGoFunctionMeta{
+					"OneTemplateFunc": {
+						FunctionName: "OneTemplateFunc",
+						TypeParams: []*compareGoVariableMeta{
+							{
+								Expression: `T any`,
+								Name:       "T",
+								Type:       "any",
+							},
+						},
+						Params: []*compareGoVariableMeta{
+							{
+								Expression: `tv T`,
+								Name:       "tv",
+								Type:       "T",
+							},
+						},
+						ReturnTypes: []*compareGoVariableMeta{
+							{
+								Expression: `*T`,
+								Type:       "*T",
+							},
+						},
+					},
+					"DoubleSameTemplateFunc": {
+						FunctionName: "DoubleSameTemplateFunc",
+						TypeParams: []*compareGoVariableMeta{
+							{
+								Expression: `T1, T2 any`,
+								Name:       "T1",
+								Type:       "any",
+							},
+							{
+								Expression: `T1, T2 any`,
+								Name:       "T2",
+								Type:       "any",
+							},
+						},
+						Params: []*compareGoVariableMeta{
+							{
+								Expression: `tv1 T1`,
+								Name:       "tv1",
+								Type:       "T1",
+							},
+							{
+								Expression: `tv2 T2`,
+								Name:       "tv2",
+								Type:       "T2",
+							},
+						},
+						ReturnTypes: []*compareGoVariableMeta{
+							{
+								Expression: `*T1`,
+								Type:       "*T1",
+							},
+							{
+								Expression: `*T2`,
+								Type:       "*T2",
+							},
+						},
+					},
+					"DoubleDifferenceTemplateFunc": {
+						FunctionName: "DoubleDifferenceTemplateFunc",
+						TypeParams: []*compareGoVariableMeta{
+							{
+								Expression: `T1 any`,
+								Name:       "T1",
+								Type:       "any",
+							},
+							{
+								Expression: `T2 comparable`,
+								Name:       "T2",
+								Type:       "comparable",
+							},
+						},
+						Params: []*compareGoVariableMeta{
+							{
+								Expression: `tv1 T1`,
+								Name:       "tv1",
+								Type:       "T1",
+							},
+							{
+								Expression: `tv2 T2`,
+								Name:       "tv2",
+								Type:       "T2",
+							},
+						},
+						ReturnTypes: []*compareGoVariableMeta{
+							{
+								Expression: `*T1`,
+								Type:       "*T1",
+							},
+							{
+								Expression: `*T2`,
+								Type:       "*T2",
+							},
+						},
+					},
+					"TypeConstraintsTemplateFunc": {
+						FunctionName: "TypeConstraintsTemplateFunc",
+						TypeParams: []*compareGoVariableMeta{
+							{
+								Expression: `T TypeConstraints`,
+								Name:       "T",
+								Type:       "TypeConstraints",
+							},
+						},
+						Params: []*compareGoVariableMeta{
+							{
+								Expression: `tv T`,
+								Name:       "tv",
+								Type:       "T",
+							},
+						},
+						ReturnTypes: []*compareGoVariableMeta{
+							{
+								Expression: `*T`,
+								Type:       "*T",
+							},
+						},
+					},
+				},
+				pkgInterfaceMeta: map[string]*compareGoInterfaceMeta{
+					"TypeConstraints": {
+						InterfaceName: "TypeConstraints",
 					},
 				},
 			},
@@ -804,29 +1037,33 @@ func TestExtractGoProjectMeta(t *testing.T) {
 				Panic(gfm, _gfm)
 			}
 			checkFunctionMeta(gfm, _gfm)
+
+			// unit test
+			b := MakeUnitTest(gfm)
+			fmt.Printf("unit test func:\n%v\n", string(b))
 		}
 	}
 
-	// arg type
-	for pkgImportPath, gpm := range goProjectMeta.packageMap {
-		// function
-		for funcName, gfm := range gpm.pkgFunctionDecl {
-			for call, gcms := range gfm.callMeta {
-				for _, gcm := range gcms {
-					for _, arg := range gcm.Args() {
-						if pkgImportPath == "main" && funcName == "main" && call == "pkg.ExampleFunc" {
-							fmt.Printf("in pkg %v, func %v, call %v\n", pkgImportPath, funcName, call)
-							argType := goProjectMeta.SearchArgType(arg)
-							fmt.Printf("arg %v type %v\n", arg.Expression(), argType)
-							fmt.Println()
-						}
-					}
-				}
-			}
-		}
+	// // arg type
+	// for pkgImportPath, gpm := range goProjectMeta.packageMap {
+	// 	// function
+	// 	for funcName, gfm := range gpm.pkgFunctionDecl {
+	// 		for call, gcms := range gfm.callMeta {
+	// 			for _, gcm := range gcms {
+	// 				for _, arg := range gcm.Args() {
+	// 					if pkgImportPath == "main" && funcName == "main" && call == "pkg.ExampleFunc" {
+	// 						fmt.Printf("in pkg %v, func %v, call %v\n", pkgImportPath, funcName, call)
+	// 						argType := goProjectMeta.SearchArgType(arg)
+	// 						fmt.Printf("arg %v type %v\n", arg.Expression(), argType)
+	// 						fmt.Println()
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	}
 
-		// method
-	}
+	// 	// method
+	// }
 }
 
 func Panic(v, c any) {
@@ -945,26 +1182,47 @@ func checkFunctionMeta(gfm *GoFunctionMeta, _gfm *compareGoFunctionMeta) {
 	}
 	stpslice.Compare(gfm.Doc(), _gfm.Doc)
 
-	// call
-	calls := stpmap.Key(gfm.Calls())
-	sort.Strings(calls)
-	_calls := stpmap.Key(_gfm.CallMeta)
-	sort.Strings(_calls)
-	if !stpslice.Compare(calls, _calls) {
-		gfm.Calls()
-		Panic(calls, _calls)
+	if len(gfm.TypeParams()) != len(_gfm.TypeParams) {
+		Panic(len(gfm.TypeParams()), len(_gfm.TypeParams))
+	}
+	for i := range _gfm.TypeParams {
+		checkVariableMeta(gfm.TypeParams()[i], _gfm.TypeParams[i])
 	}
 
-	for _call, _gcmSlice := range _gfm.CallMeta {
-		gcmSlice := gfm.SearchCallMeta(_call)
-		if len(gcmSlice) != len(_gcmSlice) {
-			Panic(gcmSlice, _gcmSlice)
-		}
-		for index, _gcm := range _gcmSlice {
-			gcm := gcmSlice[index]
-			checkCallMeta(gcm, _gcm)
-		}
+	if len(gfm.Params()) != len(_gfm.Params) {
+		Panic(len(gfm.Params()), len(_gfm.Params))
 	}
+	for i := range _gfm.Params {
+		checkVariableMeta(gfm.Params()[i], _gfm.Params[i])
+	}
+
+	if len(gfm.ReturnTypes()) != len(_gfm.ReturnTypes) {
+		Panic(len(gfm.ReturnTypes()), len(_gfm.ReturnTypes))
+	}
+	for i := range _gfm.ReturnTypes {
+		checkVariableMeta(gfm.ReturnTypes()[i], _gfm.ReturnTypes[i])
+	}
+
+	// // call
+	// calls := stpmap.Key(gfm.Calls())
+	// sort.Strings(calls)
+	// _calls := stpmap.Key(_gfm.CallMeta)
+	// sort.Strings(_calls)
+	// if !stpslice.Compare(calls, _calls) {
+	// 	gfm.Calls()
+	// 	Panic(calls, _calls)
+	// }
+
+	// for _call, _gcmSlice := range _gfm.CallMeta {
+	// 	gcmSlice := gfm.SearchCallMeta(_call)
+	// 	if len(gcmSlice) != len(_gcmSlice) {
+	// 		Panic(gcmSlice, _gcmSlice)
+	// 	}
+	// 	for index, _gcm := range _gcmSlice {
+	// 		gcm := gcmSlice[index]
+	// 		checkCallMeta(gcm, _gcm)
+	// 	}
+	// }
 }
 
 func checkMemberMeta(gmm *GoMemberMeta, _gmm *compareGoMemberMeta) {
@@ -993,44 +1251,48 @@ func checkMethodMeta(gmm *GoMethodMeta, _gmm *compareGoMethodMeta) {
 
 	// function
 	checkFunctionMeta(gmm.GoFunctionMeta, _gmm.compareGoFunctionMeta)
+
+	// unit test
+	b := MakeUnitTest(gmm)
+	fmt.Printf("unit test func:\n%v\n", string(b))
 }
 
-func checkCallMeta(gcm *GoCallMeta, _gcm *compareGoCallMeta) {
-	// basic
-	if (gcm != nil) != (_gcm != nil) {
-		Panic(gcm, _gcm)
-	}
-	if gcm == nil {
-		return
-	}
-	if gcm.From() != _gcm.From {
-		Panic(gcm.From(), _gcm.From)
-	}
-	if gcm.Call() != _gcm.Call {
-		Panic(gcm.Call(), _gcm.Call)
-	}
+// func checkCallMeta(gcm *GoCallMeta, _gcm *compareGoCallMeta) {
+// 	// basic
+// 	if (gcm != nil) != (_gcm != nil) {
+// 		Panic(gcm, _gcm)
+// 	}
+// 	if gcm == nil {
+// 		return
+// 	}
+// 	if gcm.From() != _gcm.From {
+// 		Panic(gcm.From(), _gcm.From)
+// 	}
+// 	if gcm.Call() != _gcm.Call {
+// 		Panic(gcm.Call(), _gcm.Call)
+// 	}
 
-	// args
-	if len(gcm.Args()) != len(_gcm.Args) {
-		Panic(gcm.Args(), _gcm.Args)
-	}
-	args := gcm.Args()
-	for index, _arg := range _gcm.Args {
-		arg := args[index]
-		if arg.Expression() != strings.TrimSpace(_arg.Expression) {
-			Panic(arg.Expression(), _arg.Expression)
-		}
-		checkVariableMeta(arg.Head(), _arg.Head)
-		fmt.Printf("Expression %v\n", _arg.Expression)
-		for i, s := range arg.Slice() {
-			fmt.Printf("slice index %v, s %+v, type %v\n", i, s, s.typeMeta.Expression())
-		}
-		fmt.Println()
-		// if _arg.Expression == "module.NewExampleStruct(10)" {
-		// 	arg.Slice()
-		// }
-	}
-}
+// 	// args
+// 	if len(gcm.Args()) != len(_gcm.Args) {
+// 		Panic(gcm.Args(), _gcm.Args)
+// 	}
+// 	args := gcm.Args()
+// 	for index, _arg := range _gcm.Args {
+// 		arg := args[index]
+// 		if arg.Expression() != strings.TrimSpace(_arg.Expression) {
+// 			Panic(arg.Expression(), _arg.Expression)
+// 		}
+// 		checkVariableMeta(arg.Head(), _arg.Head)
+// 		fmt.Printf("Expression %v\n", _arg.Expression)
+// 		for i, s := range arg.Slice() {
+// 			fmt.Printf("slice index %v, s %+v, type %v\n", i, s, s.typeMeta.Expression())
+// 		}
+// 		fmt.Println()
+// 		// if _arg.Expression == "module.NewExampleStruct(10)" {
+// 		// 	arg.Slice()
+// 		// }
+// 	}
+// }
 
 func checkVariableMeta(gvm *GoVariableMeta, _gvm *compareGoVariableMeta) {
 	if _gvm.Expression != "<IGNORE>" && gvm.Expression() != strings.TrimSpace(_gvm.Expression) {
@@ -1039,9 +1301,7 @@ func checkVariableMeta(gvm *GoVariableMeta, _gvm *compareGoVariableMeta) {
 	if gvm.Name() != _gvm.Name {
 		Panic(gvm.Name(), _gvm.Name)
 	}
-	if importMeta, ok := gvm.typeMeta.(*GoImportMeta); ok {
-		checkImportMeta(importMeta, _gvm.Type.(*compareGoImportMeta))
-	} else if gvm.Type() != _gvm.Type.(string) {
+	if gvm.Type() != _gvm.Type {
 		Panic(gvm.Type(), _gvm.Type)
 	}
 }

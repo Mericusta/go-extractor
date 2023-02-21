@@ -54,6 +54,10 @@ func (gmm *GoMethodMeta) RecvStruct() (string, bool) {
 	return extractMethodRecvStruct(gmm.node.(*ast.FuncDecl))
 }
 
+func (gmm *GoMethodMeta) recvField() *ast.Field {
+	return gmm.node.(*ast.FuncDecl).Recv.List[0]
+}
+
 func extractMethodRecvStruct(methodDecl *ast.FuncDecl) (string, bool) {
 	if len(methodDecl.Recv.List) < 1 {
 		return "", false

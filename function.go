@@ -10,15 +10,15 @@ import (
 type GoFunctionMeta struct {
 	// funcDecl            *ast.FuncDecl
 	*meta
-	callMeta map[string][]*GoCallMeta
+	// callMeta map[string][]*GoCallMeta
 	// nonSelectorCallMeta map[string][]*GoCallMeta
 	// selectorCallMeta    map[string]map[string][]*GoCallMeta
 }
 
 func NewGoFunctionMeta(m *meta) *GoFunctionMeta {
 	return &GoFunctionMeta{
-		meta:     m,
-		callMeta: make(map[string][]*GoCallMeta),
+		meta: m,
+		// callMeta: make(map[string][]*GoCallMeta),
 	}
 }
 
@@ -51,8 +51,8 @@ func SearchGoFunctionMeta(m *meta, functionName string) *GoFunctionMeta {
 		return nil
 	}
 	return &GoFunctionMeta{
-		meta:     m.newMeta(funcDecl),
-		callMeta: make(map[string][]*GoCallMeta),
+		meta: m.newMeta(funcDecl),
+		// callMeta: make(map[string][]*GoCallMeta),
 		// nonSelectorCallMeta: make(map[string][]*GoCallMeta),
 		// selectorCallMeta:    make(map[string]map[string][]*GoCallMeta),
 	}
@@ -78,21 +78,60 @@ func (gfm *GoFunctionMeta) Doc() []string {
 	return commentSlice
 }
 
-func (gfm *GoFunctionMeta) ReturnTypes() []string {
+func (gfm *GoFunctionMeta) TypeParams() []*GoVariableMeta {
+	if gfm.node.(*ast.FuncDecl).Type == nil || gfm.node.(*ast.FuncDecl).Type.TypeParams == nil || len(gfm.node.(*ast.FuncDecl).Type.TypeParams.List) == 0 {
+		return nil
+	}
+
+	tParamLen := len(gfm.node.(*ast.FuncDecl).Type.TypeParams.List)
+	tParams := make([]*GoVariableMeta, 0, tParamLen)
+	for _, field := range gfm.node.(*ast.FuncDecl).Type.TypeParams.List {
+		for _, name := range field.Names {
+			tParams = append(tParams, &GoVariableMeta{
+				meta:     gfm.newMeta(field),
+				name:     name.String(),
+				typeMeta: gfm.newMeta(field.Type),
+			})
+		}
+	}
+	return tParams
+}
+
+func (gfm *GoFunctionMeta) Params() []*GoVariableMeta {
+	if gfm.node.(*ast.FuncDecl).Type == nil || gfm.node.(*ast.FuncDecl).Type.Params == nil || len(gfm.node.(*ast.FuncDecl).Type.Params.List) == 0 {
+		return nil
+	}
+
+	pLen := len(gfm.node.(*ast.FuncDecl).Type.Params.List)
+	params := make([]*GoVariableMeta, 0, pLen)
+	for _, field := range gfm.node.(*ast.FuncDecl).Type.Params.List {
+		for _, name := range field.Names {
+			params = append(params, &GoVariableMeta{
+				meta:     gfm.newMeta(field),
+				name:     name.String(),
+				typeMeta: gfm.newMeta(field.Type),
+			})
+		}
+	}
+	return params
+}
+
+func (gfm *GoFunctionMeta) ReturnTypes() []*GoVariableMeta {
 	if gfm.node.(*ast.FuncDecl).Type == nil || gfm.node.(*ast.FuncDecl).Type.Results == nil || len(gfm.node.(*ast.FuncDecl).Type.Results.List) == 0 {
 		return nil
 	}
 
 	rLen := len(gfm.node.(*ast.FuncDecl).Type.Results.List)
-	returnTypes := make([]string, 0, rLen)
+	returns := make([]*GoVariableMeta, 0, rLen)
 	for _, field := range gfm.node.(*ast.FuncDecl).Type.Results.List {
-		ident, ok := field.Type.(*ast.Ident)
-		if ident == nil || !ok {
-			continue
-		}
-		returnTypes = append(returnTypes, ident.String())
+		// TODO: not support named return value
+		returns = append(returns, &GoVariableMeta{
+			meta:     gfm.newMeta(field),
+			name:     "",
+			typeMeta: gfm.newMeta(field.Type),
+		})
 	}
-	return returnTypes
+	return returns
 }
 
 func (gfm *GoFunctionMeta) Expression() string {
@@ -134,22 +173,22 @@ func (gfm *GoFunctionMeta) Expression() string {
 // 	return strings.ReplaceAll(originContent, "\r", ""), strings.ReplaceAll(buffer.String(), "\r", ""), nil
 // }
 
-func (gfm *GoFunctionMeta) SearchCallMeta(call string) []*GoCallMeta {
-	if gcm, has := gfm.callMeta[call]; gcm != nil && has {
-		return gcm
-	}
+// func (gfm *GoFunctionMeta) SearchCallMeta(call string) []*GoCallMeta {
+// 	if gcm, has := gfm.callMeta[call]; gcm != nil && has {
+// 		return gcm
+// 	}
 
-	if gfm.node.(*ast.FuncDecl) == nil {
-		return nil
-	}
+// 	if gfm.node.(*ast.FuncDecl) == nil {
+// 		return nil
+// 	}
 
-	gfm.callMeta[call] = SearchGoCallMeta(gfm.meta, call)
+// 	gfm.callMeta[call] = SearchGoCallMeta(gfm.meta, call)
 
-	return gfm.callMeta[call]
-}
+// 	return gfm.callMeta[call]
+// }
 
-func (gfm *GoFunctionMeta) Calls() map[string][]*GoCallMeta {
-	return ExtractGoCallMeta(gfm.meta)
-}
+// func (gfm *GoFunctionMeta) Calls() map[string][]*GoCallMeta {
+// 	return ExtractGoCallMeta(gfm.meta)
+// }
 
 // func (gfm *GoFunctionMeta) Search

@@ -132,19 +132,19 @@ func (gpm *GoPackageMeta) SearchFileMeta(fileName string) *GoFileMeta {
 	return gpm.pkgFileMap[fileName]
 }
 
-func (gpm *GoPackageMeta) VariableNames() []string {
-	variableNames := make([]string, 0)
-	for _, gfm := range gpm.pkgFileMap {
-		ast.Inspect(gfm.node, func(n ast.Node) bool {
-			if IsVarNode(n) {
-				variableNames = append(variableNames, n.(*ast.ValueSpec).Names[0].String())
-				return false
-			}
-			return true
-		})
-	}
-	return variableNames
-}
+// func (gpm *GoPackageMeta) VariableNames() []string {
+// 	variableNames := make([]string, 0)
+// 	for _, gfm := range gpm.pkgFileMap {
+// 		ast.Inspect(gfm.node, func(n ast.Node) bool {
+// 			if IsVarNode(n) {
+// 				variableNames = append(variableNames, n.(*ast.ValueSpec).Names[0].String())
+// 				return false
+// 			}
+// 			return true
+// 		})
+// 	}
+// 	return variableNames
+// }
 
 func (gpm *GoPackageMeta) StructNames() []string {
 	structNames := make([]string, 0)
