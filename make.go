@@ -669,8 +669,45 @@ func (gmm *GoMethodMeta) UnitTestFuncName() string {
 	return fmt.Sprintf("Test_%v_%v", recvStruct, gmm.FunctionName())
 }
 
-func MakeAssign() {
-
+func MakeUnitTestFile(pkg string, importMetas []*GoImportMeta) []byte {
+	fileDecl := &ast.File{
+		Name: ast.NewIdent(pkg),
+		Decls: []ast.Decl{
+			&ast.GenDecl{
+				Tok: token.IMPORT,
+				Specs: func() []ast.Spec {
+					spec := make([]ast.Spec, 0, 2+len(importMetas))
+					spec = append(spec,
+						&ast.ImportSpec{
+							Path: &ast.BasicLit{
+								Kind:  token.STRING,
+								Value: "\"reflect\"",
+							},
+						},
+						&ast.ImportSpec{
+							Path: &ast.BasicLit{
+								Kind:  token.STRING,
+								Value: "\"testing\"",
+							},
+						},
+					)
+					for _, importMeta := range importMetas {
+						if importMeta.alias == "reflect" || importMeta.name == "reflect" || importMeta.alias == "testing" || importMeta.name == "testing" {
+							continue
+						}
+						spec = append(spec, importMeta.node.(*ast.ImportSpec))
+					}
+					return spec
+				}(),
+			},
+		},
+	}
+	buffer := &bytes.Buffer{}
+	err := format.Node(buffer, token.NewFileSet(), fileDecl)
+	if err != nil {
+		panic(err)
+	}
+	return buffer.Bytes()
 }
 
 // func MakeUpFuncDecl(funcName string, params []*MakeField, returns []*MakeField) {

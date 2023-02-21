@@ -1051,6 +1051,9 @@ func TestExtractGoProjectMeta(t *testing.T) {
 				unittestByte = MakeUnitTestWithTypeArgs(gfm, typeArgs)
 			}
 			fmt.Printf("unit test func:\n%v\n", string(unittestByte))
+
+			unittestFileByte := MakeUnitTestFile(fmt.Sprintf("%v_test.go", strings.Trim(gfm.path, ".go")), nil)
+			fmt.Printf("unit test file:\n%v\n", string(unittestFileByte))
 		}
 	}
 
