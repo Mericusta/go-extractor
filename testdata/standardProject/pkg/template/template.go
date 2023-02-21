@@ -1,6 +1,6 @@
 package template
 
-func OneTemplateFunc[T any](tv T) *T {
+func OneTemplateFunc[T any](tv *T) *T {
 	return nil
 }
 

@@ -856,9 +856,9 @@ var (
 						},
 						Params: []*compareGoVariableMeta{
 							{
-								Expression: `tv T`,
+								Expression: `tv *T`,
 								Name:       "tv",
-								Type:       "T",
+								Type:       "*T",
 							},
 						},
 						ReturnTypes: []*compareGoVariableMeta{
@@ -1039,8 +1039,18 @@ func TestExtractGoProjectMeta(t *testing.T) {
 			checkFunctionMeta(gfm, _gfm)
 
 			// unit test
-			b := MakeUnitTest(gfm)
-			fmt.Printf("unit test func:\n%v\n", string(b))
+			var unittestByte []byte
+			if l := len(gfm.TypeParams()); l == 0 {
+				unittestByte = MakeUnitTest(gfm)
+			} else {
+				testTypeArgs := []string{"string", "[]string", "map[string]string"}
+				typeArgs := make([]string, 0, l)
+				for i := 0; i < l; i++ {
+					typeArgs = append(typeArgs, testTypeArgs[i%len(testTypeArgs)])
+				}
+				unittestByte = MakeUnitTestWithTypeArgs(gfm, typeArgs)
+			}
+			fmt.Printf("unit test func:\n%v\n", string(unittestByte))
 		}
 	}
 
