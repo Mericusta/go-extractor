@@ -20,15 +20,16 @@ type GoUnitTestMaker interface {
 }
 
 // makeUnitTest generate unit test func
-// @param1 *GoFunctionMeta/*GoMethodMeta
-// @param2 type args for type params if needs
-// @return func declaration content
-func makeUnitTest(gutm GoUnitTestMaker, typeArgs []string) []byte {
+// @param1  *GoFunctionMeta/*GoMethodMeta
+// @param2  type args for type params if needs
+// @return1 unit test func name
+// @return2 func declaration content
+func makeUnitTest(gutm GoUnitTestMaker, typeArgs []string) (string, []byte) {
 	unitTestFuncName := gutm.UnitTestFuncName()
 	funcName := gutm.FunctionName()
 	typeParams := gutm.TypeParams()
 	if len(typeParams) > len(typeArgs) {
-		return nil
+		return "", nil
 	}
 	if len(typeArgs) > 0 {
 		suffix := ""
@@ -322,7 +323,7 @@ func makeUnitTest(gutm GoUnitTestMaker, typeArgs []string) []byte {
 	if err != nil {
 		panic(err)
 	}
-	return buffer.Bytes()
+	return unitTestFuncName, buffer.Bytes()
 }
 
 func (gfm *GoFunctionMeta) UnitTestFuncName() string {

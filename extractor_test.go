@@ -1022,18 +1022,19 @@ func TestExtractGoProjectMeta(t *testing.T) {
 				checkMethodMeta(gmm, _gmm)
 
 				// unit test
+				var unittestFuncName string
 				var unittestByte []byte
 				if l := len(gmm.TypeParams()); l == 0 {
-					unittestByte = gmm.MakeUnitTest(nil)
+					unittestFuncName, unittestByte = gmm.MakeUnitTest(nil)
 				} else {
 					testTypeArgs := []string{"string", "[]string", "map[string]string"}
 					typeArgs := make([]string, 0, l)
 					for i := 0; i < l; i++ {
 						typeArgs = append(typeArgs, testTypeArgs[i%len(testTypeArgs)])
 					}
-					unittestByte = gmm.MakeUnitTest(typeArgs)
+					unittestFuncName, unittestByte = gmm.MakeUnitTest(typeArgs)
 				}
-				fmt.Printf("unit test func:\n%v\n", string(unittestByte))
+				fmt.Printf("unit test func %v:\n%v\n", unittestFuncName, string(unittestByte))
 			}
 		}
 
@@ -1053,18 +1054,19 @@ func TestExtractGoProjectMeta(t *testing.T) {
 			checkFunctionMeta(gfm, _gfm)
 
 			// unit test
+			var unittestFuncName string
 			var unittestByte []byte
 			if l := len(gfm.TypeParams()); l == 0 {
-				unittestByte = gfm.MakeUnitTest(nil)
+				unittestFuncName, unittestByte = gfm.MakeUnitTest(nil)
 			} else {
 				testTypeArgs := []string{"string", "[]string", "map[string]string"}
 				typeArgs := make([]string, 0, l)
 				for i := 0; i < l; i++ {
 					typeArgs = append(typeArgs, testTypeArgs[i%len(testTypeArgs)])
 				}
-				unittestByte = gfm.MakeUnitTest(typeArgs)
+				unittestFuncName, unittestByte = gfm.MakeUnitTest(typeArgs)
 			}
-			fmt.Printf("unit test func:\n%v\n", string(unittestByte))
+			fmt.Printf("unit test func %v:\n%v\n", unittestFuncName, string(unittestByte))
 
 			// unittestFileByte := MakeUnitTestFile(fmt.Sprintf("%v_test.go", strings.Trim(gfm.path, ".go")), nil)
 			// fmt.Printf("unit test file:\n%v\n", string(unittestFileByte))
