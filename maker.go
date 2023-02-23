@@ -19,6 +19,10 @@ type GoUnitTestMaker interface {
 	Recv() *GoVariableMeta
 }
 
+// MakeUnitTest generate unit test func
+// @param1 *GoFunctionMeta/*GoMethodMeta
+// @param2 type args for type params if needs
+// @return func declaration content
 func MakeUnitTest(gutm GoUnitTestMaker, typeArgs []string) []byte {
 	unitTestFuncName := gutm.UnitTestFuncName()
 	funcName := gutm.FunctionName()
