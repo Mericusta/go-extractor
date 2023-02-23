@@ -32,7 +32,7 @@ func (m *meta) Expression() string {
 		return ""
 	}
 	fileContentLen := len(fileContent)
-	if m.node.Pos() > m.node.End() || int(m.node.Pos()) >= fileContentLen || int(m.node.End()) >= fileContentLen {
+	if m.node.Pos() > m.node.End() || int(m.node.Pos()) >= fileContentLen || int(m.node.End()) > fileContentLen {
 		return ""
 	}
 	return strings.TrimSpace(string(fileContent[m.node.Pos()-1 : m.node.End()-1]))
