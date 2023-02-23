@@ -1334,14 +1334,14 @@ func checkVariableMeta(gvm *GoVariableMeta, _gvm *compareGoVariableMeta) {
 }
 
 func checkImportMeta(gim *GoImportMeta, _gim *compareGoImportMeta) {
-	if gim.alias != _gim.Alias {
-		Panic(gim.alias, _gim.Alias)
+	if gim.Alias() != _gim.Alias {
+		Panic(gim.Alias(), _gim.Alias)
 	}
-	if gim.alias != _gim.Alias {
-		Panic(gim.alias, _gim.Alias)
+	if gim.Alias() != _gim.Alias {
+		Panic(gim.Alias(), _gim.Alias)
 	}
-	if gim.alias != _gim.Alias {
-		Panic(gim.alias, _gim.Alias)
+	if gim.Alias() != _gim.Alias {
+		Panic(gim.Alias(), _gim.Alias)
 	}
 }
 

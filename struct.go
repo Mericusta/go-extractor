@@ -6,8 +6,7 @@ import (
 )
 
 type GoStructMeta struct {
-	// typeSpec     *ast.TypeSpec
-	*meta
+	*meta        // *ast.TypeSpec
 	commentGroup *ast.CommentGroup
 	memberDecl   map[string]*GoMemberMeta
 	methodDecl   map[string]*GoMethodMeta

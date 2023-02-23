@@ -8,8 +8,7 @@ import (
 )
 
 type GoFunctionMeta struct {
-	// funcDecl            *ast.FuncDecl
-	*meta
+	*meta // *ast.FuncDecl
 	// callMeta map[string][]*GoCallMeta
 	// nonSelectorCallMeta map[string][]*GoCallMeta
 	// selectorCallMeta    map[string]map[string][]*GoCallMeta

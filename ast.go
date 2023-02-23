@@ -1,6 +1,7 @@
 package extractor
 
 import (
+	"fmt"
 	"go/ast"
 	"go/token"
 )
@@ -31,7 +32,6 @@ func makeField(names []string, typeName string, from string, pointer bool) *ast.
 type fieldMaker interface {
 	*field | *GoVariableMeta
 	makeField() *ast.Field
-	makeFieldList() *ast.FieldList
 }
 
 func makeFieldList[T fieldMaker](vs []T) *ast.FieldList {
@@ -53,16 +53,21 @@ type field struct {
 	pointer  bool
 }
 
+func newField(names []string, typeName, from string, pointer bool) *field {
+	return &field{
+		names:    names,
+		typeName: typeName,
+		from:     from,
+		pointer:  pointer,
+	}
+}
+
 func (f *field) makeField() *ast.Field {
 	return makeField(f.names, f.typeName, f.from, f.pointer)
 }
 
 func (f *field) makeFieldList() *ast.FieldList {
-	return &ast.FieldList{
-		List: []*ast.Field{
-			makeField(f.names, f.typeName, f.from, f.pointer),
-		},
-	}
+	return makeFieldList([]*field{f})
 }
 
 func (gvm *GoVariableMeta) makeField() *ast.Field {
@@ -73,15 +78,14 @@ func (gvm *GoVariableMeta) makeField() *ast.Field {
 }
 
 func (gvm *GoVariableMeta) makeFieldList() *ast.FieldList {
-	return &ast.FieldList{
-		List: []*ast.Field{gvm.makeField()},
-	}
+	return makeFieldList([]*GoVariableMeta{gvm})
 }
 
 // ----------------------------------------------------------------
 
 type funcDeclMaker interface {
 	fieldMaker
+	makeFieldList() *ast.FieldList
 }
 
 func makeFuncDecl[T funcDeclMaker](name string, recv T, typeParams, params, returns []T) *ast.FuncDecl {
@@ -119,6 +123,16 @@ type funcDecl struct {
 	returns    []*field
 }
 
+func newFuncDecl(name string, recv *field, typeParams, params, returns []*field) *funcDecl {
+	return &funcDecl{
+		name:       name,
+		recv:       recv,
+		typeParams: typeParams,
+		params:     params,
+		returns:    returns,
+	}
+}
+
 func (fd *funcDecl) make() *ast.FuncDecl {
 	return makeFuncDecl(fd.name, fd.recv, fd.typeParams, fd.params, fd.returns)
 }
@@ -129,26 +143,125 @@ func (gfm *GoFunctionMeta) makeFuncDecl() *ast.FuncDecl {
 
 // ----------------------------------------------------------------
 
-type structDeclMaker interface {
-	fieldMaker
+type genDeclMaker interface {
+	make() ast.Spec
 }
 
-// structDecl GenDecl - TypeSpec - StructType
-func makeStructDecl[T structDeclMaker](name string, typeParams, members []T) *ast.GenDecl {
+func makeDecl[T genDeclMaker](tok token.Token, vs []T) *ast.GenDecl {
+	l := len(vs)
+	if l == 0 {
+		return nil
+	}
+	decl := &ast.GenDecl{Tok: tok, Specs: make([]ast.Spec, l)}
+	for i, v := range vs {
+		decl.Specs[i] = v.make()
+	}
+	return decl
+}
+
+// ----------------------------------------------------------------
+
+func makeTypeSpec[T fieldMaker](name string, typeParams, members []T) *ast.TypeSpec {
 	structMemberFields := makeFieldList(members)
 	if structMemberFields == nil {
 		structMemberFields = &ast.FieldList{}
 	}
-	return &ast.GenDecl{
-		Tok: token.TYPE,
-		Specs: []ast.Spec{
-			&ast.TypeSpec{
-				Name:       ast.NewIdent(name),
-				TypeParams: makeFieldList(typeParams),
-				Type: &ast.StructType{
-					Fields: structMemberFields,
-				},
-			},
+	return &ast.TypeSpec{
+		Name:       ast.NewIdent(name),
+		TypeParams: makeFieldList(typeParams),
+		Type: &ast.StructType{
+			Fields: structMemberFields,
 		},
 	}
+}
+
+type structDeclMaker[T fieldMaker] interface {
+	*typeSpec[T] | *GoStructMeta
+	genDeclMaker
+}
+
+// makeStructDecl 约束传递 token.Type 的类型
+func makeStructDecl[T1 fieldMaker, T2 structDeclMaker[T1]](vs []T2) *ast.GenDecl {
+	return makeDecl(token.TYPE, vs)
+}
+
+type typeSpec[T fieldMaker] struct {
+	name       string
+	typeParams []T
+	members    []T
+}
+
+func newTypeSpec[T fieldMaker](name string, typeParams, members []T) *typeSpec[T] {
+	return &typeSpec[T]{
+		name:       name,
+		typeParams: typeParams,
+		members:    members,
+	}
+}
+
+func (ss *typeSpec[T]) make() ast.Spec {
+	return makeTypeSpec(ss.name, ss.typeParams, ss.members)
+}
+
+func (ss *typeSpec[T]) makeDecl() *ast.GenDecl {
+	return makeStructDecl[T]([]*typeSpec[T]{ss})
+}
+
+func (gsm *GoStructMeta) make() ast.Spec {
+	return gsm.node.(*ast.TypeSpec)
+}
+
+func (gsm *GoStructMeta) makeDecl() *ast.GenDecl {
+	return makeStructDecl[*GoVariableMeta]([]*GoStructMeta{gsm}) // ???
+	// return makeStructDecl[*field]([]*GoStructMeta{gsm}) // ???
+}
+
+// ----------------------------------------------------------------
+
+func makeImportSpec(alias, importPath string) *ast.ImportSpec {
+	importSpec := &ast.ImportSpec{
+		Path: &ast.BasicLit{
+			Kind:  token.STRING,
+			Value: fmt.Sprintf("\"%v\"", importPath),
+		},
+	}
+	if len(alias) > 0 {
+		importSpec.Name = ast.NewIdent(alias)
+	}
+	return importSpec
+}
+
+type importDeclMaker interface {
+	*importSpec | *GoImportMeta
+	genDeclMaker
+}
+
+// makeStructDecl 约束传递 token.IMPORT 的类型
+func makeImportDecl[T importDeclMaker](vs []T) *ast.GenDecl {
+	return makeDecl(token.IMPORT, vs)
+}
+
+type importSpec struct {
+	alias string
+	path  string
+}
+
+func newImportSpec(alias, path string) *importSpec {
+	return &importSpec{alias: alias, path: path}
+}
+
+func (is *importSpec) make() ast.Spec {
+	return makeImportSpec(is.alias, is.path)
+}
+
+func (is *importSpec) makeDecl() *ast.GenDecl {
+	return makeImportDecl([]*importSpec{is})
+}
+
+func (gim *GoImportMeta) make() ast.Spec {
+	return gim.node.(*ast.ImportSpec)
+}
+
+func (gim *GoImportMeta) makeDecl() *ast.GenDecl {
+	return makeImportDecl([]*GoImportMeta{gim})
 }

@@ -32,7 +32,7 @@ import "go/ast"
 // // - name 值
 // // - typeMeta 常量 *meta
 type GoVariableMeta struct {
-	*meta
+	*meta    // *ast.Field
 	name     string
 	typeMeta Meta
 	// typeEnum VariableTypeEnum

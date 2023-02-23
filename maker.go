@@ -42,51 +42,32 @@ func MakeUnitTest(gutm GoUnitTestMaker, typeArgs []string) []byte {
 	funcBodyBlockStmt := &ast.BlockStmt{}
 	// arg struct decl
 	if len(params) > 0 {
-		funcBodyBlockStmt.List = append(funcBodyBlockStmt.List, &ast.DeclStmt{
-			Decl: makeStructDecl("args", nil, params),
-			// Decl: &ast.GenDecl{
-			// 	Tok: token.TYPE,
-			// 	Specs: []ast.Spec{
-			// 		&ast.TypeSpec{
-			// 			Name: ast.NewIdent("args"),
-			// 			Type: &ast.StructType{
-			// 				Fields: func() *ast.FieldList {
-			// 					fieldList := makeFieldList(params)
-			// 					// TODO: tmp, compare and search if field type is in type params, replace by index
-			// 					for paramIndex, param := range params {
-			// 						for typeParamIndex, typeParam := range typeParams {
-			// 							isTypeParam := false
-			// 							ast.Inspect(param.typeNode(), func(n ast.Node) bool {
-			// 								ident, ok := n.(*ast.Ident)
-			// 								if ident != nil && ok && ident.String() == typeParam.Name() {
-			// 									isTypeParam = true
-			// 									return false
-			// 								}
-			// 								return true
-			// 							})
-			// 							if isTypeParam {
-			// 								typeArg := typeArgs[typeParamIndex]
-			// 								ast.Inspect(fieldList.List[paramIndex].Type, func(n ast.Node) bool {
-			// 									ident, ok := n.(*ast.Ident)
-			// 									if ident != nil && ok && ident.String() == typeParam.Name() {
-			// 										ident.Name = typeArg
-			// 										return false
-			// 									}
-			// 									return true
-			// 								})
-			// 							}
-			// 						}
-			// 					}
-			// 					if fieldList == nil {
-			// 						fieldList = &ast.FieldList{}
-			// 					}
-			// 					return fieldList
-			// 				}(),
-			// 			},
-			// 		},
-			// 	},
-			// },
-		})
+		argStructDecl := newTypeSpec("args", nil, params).makeDecl()
+		for paramIndex, param := range params {
+			for typeParamIndex, typeParam := range typeParams {
+				isTypeParam := false
+				ast.Inspect(param.typeNode(), func(n ast.Node) bool {
+					ident, ok := n.(*ast.Ident)
+					if ident != nil && ok && ident.String() == typeParam.Name() {
+						isTypeParam = true
+						return false
+					}
+					return true
+				})
+				if isTypeParam {
+					typeArg := typeArgs[typeParamIndex]
+					ast.Inspect(argStructDecl.Specs[0].(*ast.TypeSpec).Type.(*ast.StructType).Fields.List[paramIndex].Type, func(n ast.Node) bool {
+						ident, ok := n.(*ast.Ident)
+						if ident != nil && ok && ident.String() == typeParam.Name() {
+							ident.Name = typeArg
+							return false
+						}
+						return true
+					})
+				}
+			}
+		}
+		funcBodyBlockStmt.List = append(funcBodyBlockStmt.List, &ast.DeclStmt{Decl: argStructDecl})
 	}
 	funcBodyBlockStmt.List = append(funcBodyBlockStmt.List,
 		// test cases
@@ -324,7 +305,7 @@ func MakeUnitTest(gutm GoUnitTestMaker, typeArgs []string) []byte {
 		}(),
 	)
 
-	funcDecl := makeFuncDecl(unitTestFuncName, nil, nil, []*field{{names: []string{"t"}, from: "testing", typeName: "T", pointer: true}}, nil)
+	funcDecl := makeFuncDecl(unitTestFuncName, nil, nil, []*field{newField([]string{"t"}, "testing", "T", true)}, nil)
 	funcDecl.Body = funcBodyBlockStmt
 
 	buffer := &bytes.Buffer{}
@@ -349,6 +330,11 @@ func (gmm *GoMethodMeta) UnitTestFuncName() string {
 }
 
 func MakeUnitTestFile(pkg string, importMetas []*GoImportMeta) []byte {
+	// importDecl := makeImportDecl([]*importSpec{
+	// 	newImportSpec("", "reflect"),
+	// 	newImportSpec("", "reflect"),
+	// })
+
 	fileDecl := &ast.File{
 		Name: ast.NewIdent(pkg),
 		Decls: []ast.Decl{
@@ -371,7 +357,7 @@ func MakeUnitTestFile(pkg string, importMetas []*GoImportMeta) []byte {
 						},
 					)
 					for _, importMeta := range importMetas {
-						if importMeta.alias == "reflect" || importMeta.name == "reflect" || importMeta.alias == "testing" || importMeta.name == "testing" {
+						if importMeta.Alias() == "reflect" || importMeta.ImportPath() == "reflect" || importMeta.Alias() == "testing" || importMeta.ImportPath() == "testing" {
 							continue
 						}
 						spec = append(spec, importMeta.node.(*ast.ImportSpec))
