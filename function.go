@@ -145,7 +145,7 @@ func (gfm *GoFunctionMeta) Expression() string {
 		return ""
 	}
 	fileContentLen := len(fileContent)
-	if originPos > originEnd || int(originPos) >= fileContentLen || int(originEnd) >= fileContentLen {
+	if originPos > originEnd || int(originPos) >= fileContentLen || int(originEnd) > fileContentLen {
 		return ""
 	}
 	return strings.TrimSpace(string(fileContent[originPos-1 : originEnd-1]))
