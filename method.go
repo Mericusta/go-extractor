@@ -54,8 +54,13 @@ func (gmm *GoMethodMeta) RecvStruct() (string, bool) {
 	return extractMethodRecvStruct(gmm.node.(*ast.FuncDecl))
 }
 
-func (gmm *GoMethodMeta) recvField() *ast.Field {
-	return gmm.node.(*ast.FuncDecl).Recv.List[0]
+func (gmm *GoMethodMeta) Recv() *GoVariableMeta {
+	recv := gmm.node.(*ast.FuncDecl).Recv.List[0]
+	return &GoVariableMeta{
+		meta:     gmm.newMeta(recv),
+		name:     recv.Names[0].String(),
+		typeMeta: gmm.newMeta(recv.Type),
+	}
 }
 
 func extractMethodRecvStruct(methodDecl *ast.FuncDecl) (string, bool) {

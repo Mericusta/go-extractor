@@ -1020,6 +1020,20 @@ func TestExtractGoProjectMeta(t *testing.T) {
 					Panic(gmm, _gmm)
 				}
 				checkMethodMeta(gmm, _gmm)
+
+				// unit test
+				var unittestByte []byte
+				if l := len(gmm.TypeParams()); l == 0 {
+					unittestByte = MakeUnitTest(gmm, nil)
+				} else {
+					testTypeArgs := []string{"string", "[]string", "map[string]string"}
+					typeArgs := make([]string, 0, l)
+					for i := 0; i < l; i++ {
+						typeArgs = append(typeArgs, testTypeArgs[i%len(testTypeArgs)])
+					}
+					unittestByte = MakeUnitTest(gmm, typeArgs)
+				}
+				fmt.Printf("unit test func:\n%v\n", string(unittestByte))
 			}
 		}
 
@@ -1041,19 +1055,19 @@ func TestExtractGoProjectMeta(t *testing.T) {
 			// unit test
 			var unittestByte []byte
 			if l := len(gfm.TypeParams()); l == 0 {
-				unittestByte = MakeUnitTest(gfm)
+				unittestByte = MakeUnitTest(gfm, nil)
 			} else {
 				testTypeArgs := []string{"string", "[]string", "map[string]string"}
 				typeArgs := make([]string, 0, l)
 				for i := 0; i < l; i++ {
 					typeArgs = append(typeArgs, testTypeArgs[i%len(testTypeArgs)])
 				}
-				unittestByte = MakeUnitTestWithTypeArgs(gfm, typeArgs)
+				unittestByte = MakeUnitTest(gfm, typeArgs)
 			}
 			fmt.Printf("unit test func:\n%v\n", string(unittestByte))
 
-			unittestFileByte := MakeUnitTestFile(fmt.Sprintf("%v_test.go", strings.Trim(gfm.path, ".go")), nil)
-			fmt.Printf("unit test file:\n%v\n", string(unittestFileByte))
+			// unittestFileByte := MakeUnitTestFile(fmt.Sprintf("%v_test.go", strings.Trim(gfm.path, ".go")), nil)
+			// fmt.Printf("unit test file:\n%v\n", string(unittestFileByte))
 		}
 	}
 
@@ -1266,8 +1280,8 @@ func checkMethodMeta(gmm *GoMethodMeta, _gmm *compareGoMethodMeta) {
 	checkFunctionMeta(gmm.GoFunctionMeta, _gmm.compareGoFunctionMeta)
 
 	// unit test
-	b := MakeUnitTest(gmm)
-	fmt.Printf("unit test func:\n%v\n", string(b))
+	// b := MakeUnitTest(gmm)
+	// fmt.Printf("unit test func:\n%v\n", string(b))
 }
 
 // func checkCallMeta(gcm *GoCallMeta, _gcm *compareGoCallMeta) {
