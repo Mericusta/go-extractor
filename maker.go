@@ -31,12 +31,16 @@ func makeUnitTest(gutm GoUnitTestMaker, typeArgs []string) []byte {
 		return nil
 	}
 	if len(typeArgs) > 0 {
-		suffix := unitTestFuncName
+		suffix := ""
 		for _, typeArg := range typeArgs {
-			suffix = fmt.Sprintf("%v_%v", suffix, typeArg)
+			if len(typeArg) > 0 {
+				suffix = fmt.Sprintf("%v_%v", suffix, typeArg)
+			}
 		}
-		hashStr := md5.Sum([]byte(suffix))
-		unitTestFuncName = fmt.Sprintf("%v_%v", unitTestFuncName, hex.EncodeToString(hashStr[:]))
+		if len(suffix) > 0 {
+			hashStr := md5.Sum([]byte(suffix))
+			unitTestFuncName = fmt.Sprintf("%v_%v", unitTestFuncName, hex.EncodeToString(hashStr[:]))
+		}
 	}
 	recv := gutm.Recv()
 	params := gutm.Params()
