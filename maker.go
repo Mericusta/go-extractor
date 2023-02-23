@@ -86,12 +86,13 @@ func MakeUnitTest(gutm GoUnitTestMaker, typeArgs []string) []byte {
 								List: func() []*ast.Field {
 									list := make([]*ast.Field, 0, 2+returnTypeLen)
 									nameField := field{names: []string{"name"}, typeName: "string"}
-									list = append(list, nameField.makeField())
+									list = append(list, nameField.make())
 									if recv != nil {
-										list = append(list, recv.makeField())
+										list = append(list, recv.make())
 									}
-									argsField := field{names: []string{"args"}, typeName: "args"}
-									list = append(list, argsField.makeField())
+									if len(params) > 0 {
+										list = append(list, newField([]string{"args"}, "args", "", false).make())
+									}
 									for i, rt := range returnTypes {
 										list = append(list, &ast.Field{
 											Names: []*ast.Ident{ast.NewIdent(fmt.Sprintf("want%v", i))},
@@ -190,7 +191,7 @@ func MakeUnitTest(gutm GoUnitTestMaker, typeArgs []string) []byte {
 															from:     "testing",
 															pointer:  true,
 														}
-														return tField.makeField()
+														return tField.make()
 													}(),
 												},
 											},

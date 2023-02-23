@@ -31,7 +31,7 @@ func makeField(names []string, typeName string, from string, pointer bool) *ast.
 
 type fieldMaker interface {
 	*field | *GoVariableMeta
-	makeField() *ast.Field
+	make() *ast.Field
 }
 
 func makeFieldList[T fieldMaker](vs []T) *ast.FieldList {
@@ -41,7 +41,7 @@ func makeFieldList[T fieldMaker](vs []T) *ast.FieldList {
 	}
 	fieldList := &ast.FieldList{List: make([]*ast.Field, l)}
 	for i, v := range vs {
-		fieldList.List[i] = v.makeField()
+		fieldList.List[i] = v.make()
 	}
 	return fieldList
 }
@@ -62,7 +62,7 @@ func newField(names []string, typeName, from string, pointer bool) *field {
 	}
 }
 
-func (f *field) makeField() *ast.Field {
+func (f *field) make() *ast.Field {
 	return makeField(f.names, f.typeName, f.from, f.pointer)
 }
 
@@ -70,7 +70,7 @@ func (f *field) makeFieldList() *ast.FieldList {
 	return makeFieldList([]*field{f})
 }
 
-func (gvm *GoVariableMeta) makeField() *ast.Field {
+func (gvm *GoVariableMeta) make() *ast.Field {
 	return &ast.Field{
 		Names: []*ast.Ident{ast.NewIdent(gvm.Name())},
 		Type:  gvm.typeMeta.(*meta).node.(ast.Expr),
