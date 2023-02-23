@@ -151,6 +151,10 @@ func (gfm *GoFunctionMeta) Expression() string {
 	return strings.TrimSpace(string(fileContent[originPos-1 : originEnd-1]))
 }
 
+func (gfm *GoFunctionMeta) MakeUnitTest(typeArgs []string) []byte {
+	return makeUnitTest(gfm, typeArgs)
+}
+
 // func (gfm *GoFunctionMeta) ReplaceFunctionDoc(newDoc []string) (string, string, error) {
 // 	originContent := gfm.Expression()
 
