@@ -27,7 +27,7 @@ func ExtractGoFunctionMeta(extractFilepath string, functionName string) (*GoFunc
 		return nil, err
 	}
 
-	gfm := SearchGoFunctionMeta(goFileMeta.meta, functionName)
+	gfm := SearchGoFunctionMeta(goFileMeta, functionName)
 	if gfm == nil {
 		return nil, fmt.Errorf("can not find function node")
 	}
@@ -35,9 +35,9 @@ func ExtractGoFunctionMeta(extractFilepath string, functionName string) (*GoFunc
 	return gfm, nil
 }
 
-func SearchGoFunctionMeta(m *meta, functionName string) *GoFunctionMeta {
+func SearchGoFunctionMeta(gfm *GoFileMeta, functionName string) *GoFunctionMeta {
 	var funcDecl *ast.FuncDecl
-	ast.Inspect(m.node, func(n ast.Node) bool {
+	ast.Inspect(gfm.node, func(n ast.Node) bool {
 		if IsFuncNode(n) {
 			decl := n.(*ast.FuncDecl)
 			if decl.Name.String() == functionName {
@@ -50,7 +50,7 @@ func SearchGoFunctionMeta(m *meta, functionName string) *GoFunctionMeta {
 		return nil
 	}
 	return &GoFunctionMeta{
-		meta: m.newMeta(funcDecl),
+		meta: gfm.newMeta(funcDecl),
 		// callMeta: make(map[string][]*GoCallMeta),
 		// nonSelectorCallMeta: make(map[string][]*GoCallMeta),
 		// selectorCallMeta:    make(map[string]map[string][]*GoCallMeta),

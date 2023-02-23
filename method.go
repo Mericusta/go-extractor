@@ -15,7 +15,7 @@ func ExtractGoMethodMeta(extractFilepath string, structName, methodName string) 
 		return nil, err
 	}
 
-	gmm := SearchGoMethodMeta(gfm.meta, structName, methodName)
+	gmm := SearchGoMethodMeta(gfm, structName, methodName)
 	if gmm == nil {
 		return nil, fmt.Errorf("can not find method node")
 	}
@@ -23,9 +23,9 @@ func ExtractGoMethodMeta(extractFilepath string, structName, methodName string) 
 	return gmm, nil
 }
 
-func SearchGoMethodMeta(m *meta, structName, methodName string) *GoMethodMeta {
+func SearchGoMethodMeta(gfm *GoFileMeta, structName, methodName string) *GoMethodMeta {
 	var methodDecl *ast.FuncDecl
-	ast.Inspect(m.node, func(n ast.Node) bool {
+	ast.Inspect(gfm.node, func(n ast.Node) bool {
 		if IsMethodNode(n) {
 			decl := n.(*ast.FuncDecl)
 			if decl.Name.String() == methodName {
@@ -41,7 +41,7 @@ func SearchGoMethodMeta(m *meta, structName, methodName string) *GoMethodMeta {
 		return nil
 	}
 	return &GoMethodMeta{
-		GoFunctionMeta: NewGoFunctionMeta(m.newMeta(methodDecl)),
+		GoFunctionMeta: NewGoFunctionMeta(gfm.newMeta(methodDecl)),
 	}
 }
 

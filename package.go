@@ -167,7 +167,7 @@ func (gpm *GoPackageMeta) SearchStructMeta(structName string) *GoStructMeta {
 
 	for _, gfm := range gpm.pkgFileMap {
 		if gfm.node != nil {
-			gsm := SearchGoStructMeta(gfm.meta, structName)
+			gsm := SearchGoStructMeta(gfm, structName)
 			if gsm != nil {
 				gpm.pkgStructDecl[gsm.StructName()] = gsm
 				break
@@ -199,7 +199,7 @@ func (gpm *GoPackageMeta) SearchInterfaceMeta(interfaceName string) *GoInterface
 
 	for _, gfm := range gpm.pkgFileMap {
 		if gfm.node != nil {
-			gim := SearchGoInterfaceMeta(gfm.meta, interfaceName)
+			gim := SearchGoInterfaceMeta(gfm, interfaceName)
 			if gim != nil {
 				gpm.pkgInterfaceDecl[gim.InterfaceName()] = gim
 				break
@@ -231,7 +231,7 @@ func (gpm *GoPackageMeta) SearchFunctionMeta(functionName string) *GoFunctionMet
 
 	for _, gfm := range gpm.pkgFileMap {
 		if gfm.node != nil {
-			gfm := SearchGoFunctionMeta(gfm.meta, functionName)
+			gfm := SearchGoFunctionMeta(gfm, functionName)
 			if gfm != nil {
 				gpm.pkgFunctionDecl[gfm.FunctionName()] = gfm
 				break
@@ -269,7 +269,7 @@ func (gpm *GoPackageMeta) SearchMethodMeta(structName, methodName string) *GoMet
 
 	for _, gfm := range gpm.pkgFileMap {
 		if gfm.node != nil {
-			gmm := SearchGoMethodMeta(gfm.meta, structName, methodName)
+			gmm := SearchGoMethodMeta(gfm, structName, methodName)
 			if gmm != nil {
 				gpm.pkgStructDecl[structName].methodDecl[methodName] = gmm
 				break

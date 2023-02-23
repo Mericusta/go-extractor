@@ -18,7 +18,7 @@ func ExtractGoStructMeta(extractFilepath string, structName string) (*GoStructMe
 		return nil, err
 	}
 
-	gsm := SearchGoStructMeta(gfm.meta, structName)
+	gsm := SearchGoStructMeta(gfm, structName)
 	if gsm == nil {
 		return nil, fmt.Errorf("can not find struct node")
 	}
@@ -26,10 +26,10 @@ func ExtractGoStructMeta(extractFilepath string, structName string) (*GoStructMe
 	return gsm, nil
 }
 
-func SearchGoStructMeta(m *meta, structName string) *GoStructMeta {
+func SearchGoStructMeta(gfm *GoFileMeta, structName string) *GoStructMeta {
 	var structDecl *ast.TypeSpec
 	var commentDecl *ast.CommentGroup
-	ast.Inspect(m.node, func(n ast.Node) bool {
+	ast.Inspect(gfm.node, func(n ast.Node) bool {
 		if genDecl, ok := n.(*ast.GenDecl); ok {
 			ast.Inspect(genDecl, func(n ast.Node) bool {
 				if IsStructNode(n) {
@@ -50,7 +50,7 @@ func SearchGoStructMeta(m *meta, structName string) *GoStructMeta {
 		return nil
 	}
 	return &GoStructMeta{
-		meta:         m.newMeta(structDecl),
+		meta:         gfm.newMeta(structDecl),
 		commentGroup: commentDecl,
 		methodDecl:   make(map[string]*GoMethodMeta),
 		memberDecl:   make(map[string]*GoMemberMeta),

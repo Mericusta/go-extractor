@@ -22,7 +22,7 @@ func ExtractGoInterfaceMeta(extractFilepath string, interfaceName string) (*GoIn
 		return nil, err
 	}
 
-	gim := SearchGoInterfaceMeta(gfm.meta, interfaceName)
+	gim := SearchGoInterfaceMeta(gfm, interfaceName)
 	if gim == nil {
 		return nil, fmt.Errorf("can not find interface node")
 	}
@@ -30,10 +30,10 @@ func ExtractGoInterfaceMeta(extractFilepath string, interfaceName string) (*GoIn
 	return gim, nil
 }
 
-func SearchGoInterfaceMeta(m *meta, interfaceName string) *GoInterfaceMeta {
+func SearchGoInterfaceMeta(gfm *GoFileMeta, interfaceName string) *GoInterfaceMeta {
 	var interfaceDecl *ast.TypeSpec
 	var commentDecl *ast.CommentGroup
-	ast.Inspect(m.node, func(n ast.Node) bool {
+	ast.Inspect(gfm.node, func(n ast.Node) bool {
 		if genDecl, ok := n.(*ast.GenDecl); ok {
 			ast.Inspect(genDecl, func(n ast.Node) bool {
 				if IsInterfaceNode(n) {
@@ -54,7 +54,7 @@ func SearchGoInterfaceMeta(m *meta, interfaceName string) *GoInterfaceMeta {
 		return nil
 	}
 	return &GoInterfaceMeta{
-		meta:         m.newMeta(interfaceDecl),
+		meta:         gfm.newMeta(interfaceDecl),
 		commentGroup: commentDecl,
 		methodMeta:   make(map[string]*GoInterfaceMethodMeta),
 	}
