@@ -309,7 +309,7 @@ func MakeUnitTest(gutm GoUnitTestMaker, typeArgs []string) []byte {
 		}(),
 	)
 
-	funcDecl := makeFuncDecl(unitTestFuncName, nil, nil, []*field{newField([]string{"t"}, "testing", "T", true)}, nil)
+	funcDecl := makeFuncDecl(unitTestFuncName, nil, nil, []*field{newField([]string{"t"}, "T", "testing", true)}, nil)
 	funcDecl.Body = funcBodyBlockStmt
 
 	buffer := &bytes.Buffer{}
