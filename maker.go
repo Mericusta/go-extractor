@@ -29,25 +29,28 @@ const (
 type testStmtMaker func(string, GoTestMaker, []string) []ast.Stmt
 
 type testMaker struct {
-	prefix           string
-	funcParam        *field
-	preStmtMaker     testStmtMaker
-	runningStmtMaker testStmtMaker
-	postStmtMaker    testStmtMaker
+	prefix             string
+	funcParam          *field
+	testCasesStmtMaker testStmtMaker
+	preStmtMaker       testStmtMaker
+	runningStmtMaker   testStmtMaker
+	postStmtMaker      testStmtMaker
 }
 
 var (
 	unittestMaker = &testMaker{
-		prefix:           "Test",
-		funcParam:        newField([]string{"t"}, "T", "testing", true),
-		runningStmtMaker: makeUnitTestTestCaseRunningStmt,
+		prefix:             "Test",
+		funcParam:          newField([]string{"t"}, "T", "testing", true),
+		testCasesStmtMaker: makeUnittestTestCasesAssignStmt,
+		runningStmtMaker:   makeUnitTestTestCaseRunningStmt,
 	}
 	benchmarkMaker = &testMaker{
-		prefix:           "Benchmark",
-		funcParam:        newField([]string{"b"}, "B", "testing", true),
-		preStmtMaker:     makeBenchmarkTestCasePreStmt,
-		runningStmtMaker: makeBenchmarkTestCaseRunningStmt,
-		postStmtMaker:    makeBenchmarkTestCasePostStmt,
+		prefix:             "Benchmark",
+		funcParam:          newField([]string{"b"}, "B", "testing", true),
+		testCasesStmtMaker: makeBenchmarkTestCasesAssignStmt,
+		preStmtMaker:       makeBenchmarkTestCasePreStmt,
+		runningStmtMaker:   makeBenchmarkTestCaseRunningStmt,
+		postStmtMaker:      makeBenchmarkTestCasePostStmt,
 	}
 )
 
@@ -79,9 +82,10 @@ func makeTest(tm *testMaker, gutm GoTestMaker, testFuncName string, typeArgs []s
 		testArgsStructStmt := makeTestArgsStructStmt(funcName, gutm, typeArgs)
 		funcDecl.Body.List = append(funcDecl.Body.List, testArgsStructStmt)
 	}
+
 	// test cases stmt
-	testCasesStmt := makeTestCasesAssignStmt(funcName, gutm, typeArgs)
-	funcDecl.Body.List = append(funcDecl.Body.List, testCasesStmt)
+	testCasesStmts := tm.testCasesStmtMaker(funcName, gutm, typeArgs)
+	funcDecl.Body.List = append(funcDecl.Body.List, testCasesStmts...)
 
 	// test cases for-range stmt
 	forRangeStmt := makeTestCasesForRangeStmt(funcName, gutm, typeArgs)
@@ -144,61 +148,95 @@ func makeTestArgsStructStmt(funcName string, gutm GoTestMaker, typeArgs []string
 	return &ast.DeclStmt{Decl: argStructDecl}
 }
 
-// test cases stmt
-func makeTestCasesAssignStmt(funcName string, gutm GoTestMaker, typeArgs []string) ast.Stmt {
-	return &ast.AssignStmt{
-		Lhs: []ast.Expr{ast.NewIdent("tests")},
-		Tok: token.DEFINE,
-		Rhs: []ast.Expr{
-			&ast.CompositeLit{
-				Type: &ast.ArrayType{
-					Elt: &ast.StructType{
-						Fields: &ast.FieldList{
-							List: func() []*ast.Field {
-								list := make([]*ast.Field, 0, 2+len(gutm.ReturnTypes()))
-								nameField := field{names: []string{"name"}, typeName: "string"}
-								list = append(list, nameField.make())
-								if gutm.Recv() != nil {
-									list = append(list, gutm.Recv().make())
-								}
-								if len(gutm.Params()) > 0 {
-									list = append(list, newField([]string{"args"}, "args", "", false).make())
-								}
-								for i, rt := range gutm.ReturnTypes() {
-									list = append(list, &ast.Field{
-										Names: []*ast.Ident{ast.NewIdent(fmt.Sprintf("want%v", i))},
-										Type: func() ast.Expr {
-											// TODO: tmp, compare and search if field type is in type params, replace by index
-											for typeParamIndex, typeParam := range gutm.TypeParams() {
-												isTypeParam := false
-												ast.Inspect(rt.typeNode(), func(n ast.Node) bool {
-													ident, ok := n.(*ast.Ident)
-													if ident != nil && ok && ident.String() == typeParam.Name() {
-														isTypeParam = true
-														return false
-													}
-													return true
-												})
-												if isTypeParam {
-													typeArg := typeArgs[typeParamIndex]
-													rtTypeNode := rt.typeNode()
-													ast.Inspect(rtTypeNode, func(n ast.Node) bool {
+// unittest test cases stmt
+func makeUnittestTestCasesAssignStmt(funcName string, gutm GoTestMaker, typeArgs []string) []ast.Stmt {
+	return []ast.Stmt{
+		&ast.AssignStmt{
+			Lhs: []ast.Expr{ast.NewIdent("tests")},
+			Tok: token.DEFINE,
+			Rhs: []ast.Expr{
+				&ast.CompositeLit{
+					Type: &ast.ArrayType{
+						Elt: &ast.StructType{
+							Fields: &ast.FieldList{
+								List: func() []*ast.Field {
+									list := make([]*ast.Field, 0, 2+len(gutm.ReturnTypes()))
+									nameField := field{names: []string{"name"}, typeName: "string"}
+									list = append(list, nameField.make())
+									if gutm.Recv() != nil {
+										list = append(list, gutm.Recv().make())
+									}
+									if len(gutm.Params()) > 0 {
+										list = append(list, newField([]string{"args"}, "args", "", false).make())
+									}
+									for i, rt := range gutm.ReturnTypes() {
+										list = append(list, &ast.Field{
+											Names: []*ast.Ident{ast.NewIdent(fmt.Sprintf("want%v", i))},
+											Type: func() ast.Expr {
+												// TODO: tmp, compare and search if field type is in type params, replace by index
+												for typeParamIndex, typeParam := range gutm.TypeParams() {
+													isTypeParam := false
+													ast.Inspect(rt.typeNode(), func(n ast.Node) bool {
 														ident, ok := n.(*ast.Ident)
 														if ident != nil && ok && ident.String() == typeParam.Name() {
-															ident.Name = typeArg
+															isTypeParam = true
 															return false
 														}
 														return true
 													})
-													return rtTypeNode
+													if isTypeParam {
+														typeArg := typeArgs[typeParamIndex]
+														rtTypeNode := rt.typeNode()
+														ast.Inspect(rtTypeNode, func(n ast.Node) bool {
+															ident, ok := n.(*ast.Ident)
+															if ident != nil && ok && ident.String() == typeParam.Name() {
+																ident.Name = typeArg
+																return false
+															}
+															return true
+														})
+														return rtTypeNode
+													}
 												}
-											}
-											return rt.typeNode()
-										}(),
-									})
-								}
-								return list
-							}(),
+												return rt.typeNode()
+											}(),
+										})
+									}
+									return list
+								}(),
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+}
+
+// benchmark test cases stmt
+func makeBenchmarkTestCasesAssignStmt(funcName string, gutm GoTestMaker, typeArgs []string) []ast.Stmt {
+	return []ast.Stmt{
+		&ast.AssignStmt{
+			Lhs: []ast.Expr{ast.NewIdent("tests")},
+			Tok: token.DEFINE,
+			Rhs: []ast.Expr{
+				&ast.CompositeLit{
+					Type: &ast.ArrayType{
+						Elt: &ast.StructType{
+							Fields: &ast.FieldList{
+								List: func() []*ast.Field {
+									list := make([]*ast.Field, 0, 2+len(gutm.ReturnTypes()))
+									list = append(list, newField([]string{"name"}, "string", "", false).make())
+									list = append(list, newField([]string{"limit"}, "Duration", "time", false).make())
+									if gutm.Recv() != nil {
+										list = append(list, gutm.Recv().make())
+									}
+									if len(gutm.Params()) > 0 {
+										list = append(list, newField([]string{"args"}, "args", "", false).make())
+									}
+									return list
+								}(),
+							},
 						},
 					},
 				},
