@@ -11,7 +11,7 @@ import (
 )
 
 type GoUnitTestMaker interface {
-	UnitTestFuncName() string
+	UnitTestFuncName([]string) string
 	FunctionName() string
 	TypeParams() []*GoVariableMeta
 	Params() []*GoVariableMeta
@@ -25,24 +25,12 @@ type GoUnitTestMaker interface {
 // @return1 unit test func name
 // @return2 func declaration content
 func makeUnitTest(gutm GoUnitTestMaker, typeArgs []string) (string, []byte) {
-	unitTestFuncName := gutm.UnitTestFuncName()
 	funcName := gutm.FunctionName()
 	typeParams := gutm.TypeParams()
 	if len(typeParams) > len(typeArgs) {
 		return "", nil
 	}
-	if len(typeArgs) > 0 {
-		suffix := ""
-		for _, typeArg := range typeArgs {
-			if len(typeArg) > 0 {
-				suffix = fmt.Sprintf("%v_%v", suffix, typeArg)
-			}
-		}
-		if len(suffix) > 0 {
-			hashStr := md5.Sum([]byte(suffix))
-			unitTestFuncName = fmt.Sprintf("%v_%v", unitTestFuncName, hex.EncodeToString(hashStr[:]))
-		}
-	}
+	unitTestFuncName := gutm.UnitTestFuncName(typeArgs)
 	recv := gutm.Recv()
 	params := gutm.Params()
 	returnTypes := gutm.ReturnTypes()
@@ -326,17 +314,33 @@ func makeUnitTest(gutm GoUnitTestMaker, typeArgs []string) (string, []byte) {
 	return unitTestFuncName, buffer.Bytes()
 }
 
-func (gfm *GoFunctionMeta) UnitTestFuncName() string {
-	return fmt.Sprintf("Test_%v", gfm.FunctionName())
+func (gfm *GoFunctionMeta) wrapTypeArgs(unitTestFuncName string, typeArgs []string) string {
+	if len(typeArgs) > 0 {
+		suffix := ""
+		for _, typeArg := range typeArgs {
+			if len(typeArg) > 0 {
+				suffix = fmt.Sprintf("%v_%v", suffix, typeArg)
+			}
+		}
+		if len(suffix) > 0 {
+			hashStr := md5.Sum([]byte(suffix))
+			unitTestFuncName = fmt.Sprintf("%v_%v", unitTestFuncName, hex.EncodeToString(hashStr[:]))
+		}
+	}
+	return unitTestFuncName
+}
+
+func (gfm *GoFunctionMeta) UnitTestFuncName(typeArgs []string) string {
+	return gfm.wrapTypeArgs(fmt.Sprintf("Test_%v", gfm.FunctionName()), typeArgs)
 }
 
 func (gfm *GoFunctionMeta) Recv() *GoVariableMeta {
 	return nil
 }
 
-func (gmm *GoMethodMeta) UnitTestFuncName() string {
+func (gmm *GoMethodMeta) UnitTestFuncName(typeArgs []string) string {
 	recvStruct, _ := gmm.RecvStruct()
-	return fmt.Sprintf("Test_%v_%v", recvStruct, gmm.FunctionName())
+	return gmm.wrapTypeArgs(fmt.Sprintf("Test_%v_%v", recvStruct, gmm.FunctionName()), typeArgs)
 }
 
 func MakeUnitTestFile(pkg string, importMetas []*GoImportMeta) []byte {
