@@ -1035,6 +1035,21 @@ func TestExtractGoProjectMeta(t *testing.T) {
 					unittestFuncName, unittestByte = gmm.MakeUnitTest(typeArgs)
 				}
 				fmt.Printf("unit test func %v:\n%v\n", unittestFuncName, string(unittestByte))
+
+				// benchmark
+				var benchmarkFuncName string
+				var benchmarkByte []byte
+				if l := len(gmm.TypeParams()); l == 0 {
+					benchmarkFuncName, benchmarkByte = gmm.MakeBenchmark(nil)
+				} else {
+					testTypeArgs := []string{"string", "[]string", "map[string]string"}
+					typeArgs := make([]string, 0, l)
+					for i := 0; i < l; i++ {
+						typeArgs = append(typeArgs, testTypeArgs[i%len(testTypeArgs)])
+					}
+					benchmarkFuncName, benchmarkByte = gmm.MakeBenchmark(typeArgs)
+				}
+				fmt.Printf("benchmark func %v:\n%v\n", benchmarkFuncName, string(benchmarkByte))
 			}
 		}
 
@@ -1068,8 +1083,23 @@ func TestExtractGoProjectMeta(t *testing.T) {
 			}
 			fmt.Printf("unit test func %v:\n%v\n", unittestFuncName, string(unittestByte))
 
-			// unittestFileByte := MakeUnitTestFile(fmt.Sprintf("%v_test.go", strings.Trim(gfm.path, ".go")), nil)
-			// fmt.Printf("unit test file:\n%v\n", string(unittestFileByte))
+			// benchmark
+			var benchmarkFuncName string
+			var benchmarkByte []byte
+			if l := len(gfm.TypeParams()); l == 0 {
+				benchmarkFuncName, benchmarkByte = gfm.MakeBenchmark(nil)
+			} else {
+				testTypeArgs := []string{"string", "[]string", "map[string]string"}
+				typeArgs := make([]string, 0, l)
+				for i := 0; i < l; i++ {
+					typeArgs = append(typeArgs, testTypeArgs[i%len(testTypeArgs)])
+				}
+				benchmarkFuncName, benchmarkByte = gfm.MakeBenchmark(typeArgs)
+			}
+			fmt.Printf("benchmark func %v:\n%v\n", benchmarkFuncName, string(benchmarkByte))
+
+			testFileByte := MakeTestFile(fmt.Sprintf("%v_test.go", strings.Trim(gfm.path, ".go")), nil)
+			fmt.Printf("unit test file:\n%v\n", string(testFileByte))
 		}
 	}
 

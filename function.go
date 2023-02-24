@@ -152,7 +152,7 @@ func (gfm *GoFunctionMeta) Expression() string {
 }
 
 func (gfm *GoFunctionMeta) MakeUnitTest(typeArgs []string) (string, []byte) {
-	return makeTest(UNITTEST, gfm, "", typeArgs)
+	return makeTest(unittestMaker, gfm, "", typeArgs)
 }
 
 func (gfm *GoFunctionMeta) UnittestFuncName(typeArgs []string) string {
@@ -160,7 +160,7 @@ func (gfm *GoFunctionMeta) UnittestFuncName(typeArgs []string) string {
 }
 
 func (gfm *GoFunctionMeta) MakeBenchmark(typeArgs []string) (string, []byte) {
-	return makeTest(BENCHMARK, gfm, "", typeArgs)
+	return makeTest(benchmarkMaker, gfm, "", typeArgs)
 }
 
 func (gfm *GoFunctionMeta) BenchmarkFuncName(typeArgs []string) string {

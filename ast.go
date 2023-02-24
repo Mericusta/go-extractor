@@ -265,3 +265,27 @@ func (gim *GoImportMeta) make() ast.Spec {
 func (gim *GoImportMeta) makeDecl() *ast.GenDecl {
 	return makeImportDecl([]*GoImportMeta{gim})
 }
+
+// ----------------------------------------------------------------
+
+// func makeSelectorExpr(v string, sel *selectorExpr) *ast.SelectorExpr {
+// 	// if sel == nil {
+// 	// 	return ast.NewIdent(v)
+// 	// }
+// 	// return
+
+// 	// selectorExpr := &ast.SelectorExpr{}
+
+// }
+
+// type selectorExpr struct {
+// 	v string
+// 	sel  *selectorExpr
+// }
+
+func makeCallExpr() {
+
+}
+
+type callExpr struct {
+}

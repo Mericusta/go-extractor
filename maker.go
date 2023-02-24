@@ -26,20 +26,48 @@ const (
 	BENCHMARK
 )
 
+type testStmtMaker func(string, *GoVariableMeta, []*GoVariableMeta, []*GoVariableMeta, int, int) ast.Stmt
+
+type testMaker struct {
+	prefix           string
+	funcParam        *field
+	preStmtMaker     testStmtMaker
+	runningStmtMaker testStmtMaker
+	postStmtMaker    testStmtMaker
+}
+
+var (
+	unittestMaker = &testMaker{
+		prefix:           "Test",
+		funcParam:        newField([]string{"t"}, "T", "testing", true),
+		runningStmtMaker: makeUnitTestRunningStmt,
+	}
+	benchmarkMaker = &testMaker{
+		prefix:           "Benchmark",
+		funcParam:        newField([]string{"b"}, "B", "testing", true),
+		preStmtMaker:     makeBenchmarkPreStmt,
+		runningStmtMaker: makeBenchmarkRunningStmt,
+	}
+)
+
 // makeTest generate unit test func
 // @param1  *GoFunctionMeta/*GoMethodMeta
 // @param2  specify unittest func name
 // @param3  specify type args for type params if needs
 // @return1 unit test func name
 // @return2 func declaration content
-func makeTest(t testType, gutm GoUnitTestMaker, testFuncName string, typeArgs []string) (string, []byte) {
+func makeTest(tm *testMaker, gutm GoUnitTestMaker, testFuncName string, typeArgs []string) (string, []byte) {
+	if tm == nil {
+		return "", nil
+	}
+
 	funcName := gutm.FunctionName()
 	typeParams := gutm.TypeParams()
 	if len(typeParams) > len(typeArgs) {
 		return "", nil
 	}
 	if len(testFuncName) == 0 {
-		testFuncName = wrapTestType(t, gutm.testFuncName(typeArgs))
+		testFuncName = fmt.Sprintf("%v_%v", tm.prefix, gutm.testFuncName(typeArgs))
 	}
 	recv := gutm.Recv()
 	params := gutm.Params()
@@ -48,13 +76,7 @@ func makeTest(t testType, gutm GoUnitTestMaker, testFuncName string, typeArgs []
 	returnTypeLen := len(returnTypes)
 
 	// func decl
-	var funcDecl *ast.FuncDecl
-	switch t {
-	case UNITTEST:
-		funcDecl = makeFuncDecl(testFuncName, nil, nil, []*field{newField([]string{"t"}, "T", "testing", true)}, nil)
-	case BENCHMARK:
-		funcDecl = makeFuncDecl(testFuncName, nil, nil, []*field{newField([]string{"b"}, "B", "testing", true)}, nil)
-	}
+	funcDecl := makeFuncDecl(testFuncName, nil, nil, []*field{tm.funcParam}, nil)
 	funcDecl.Body = &ast.BlockStmt{}
 
 	// arg struct stmt
@@ -67,16 +89,32 @@ func makeTest(t testType, gutm GoUnitTestMaker, testFuncName string, typeArgs []
 		funcDecl.Body.List = append(funcDecl.Body.List, testCasesStmt)
 	}
 
-	// for range stmt
-	var forRangeStmt *ast.RangeStmt
-	switch t {
-	case UNITTEST:
-		forRangeStmt = makeUnitTestForRangeStmt(funcName, recv, params, returnTypes, paramsLen, returnTypeLen)
-	case BENCHMARK:
-		forRangeStmt = makeUnitTestForRangeStmt(funcName, recv, params, returnTypes, paramsLen, returnTypeLen)
+	if tm.preStmtMaker != nil {
+		// pre stmt
+		preStmt := tm.preStmtMaker(funcName, recv, params, returnTypes, paramsLen, returnTypeLen)
+		if preStmt != nil {
+			funcDecl.Body.List = append(funcDecl.Body.List, preStmt)
+		}
 	}
+
+	// test cases for-range stmt
+	forRangeStmt := makeTestCasesForRangeStmt(funcName, recv, params, returnTypes, paramsLen, returnTypeLen)
+
+	// test case running stmt
+	if tm.runningStmtMaker != nil {
+		forRangeStmt.Body.List = append(forRangeStmt.Body.List, tm.runningStmtMaker(funcName, recv, params, returnTypes, paramsLen, returnTypeLen))
+	}
+
 	if forRangeStmt != nil {
 		funcDecl.Body.List = append(funcDecl.Body.List, forRangeStmt)
+	}
+
+	if tm.postStmtMaker != nil {
+		// post stmt
+		postStmt := tm.postStmtMaker(funcName, recv, params, returnTypes, paramsLen, returnTypeLen)
+		if postStmt != nil {
+			funcDecl.Body.List = append(funcDecl.Body.List, postStmt)
+		}
 	}
 
 	// output
@@ -88,6 +126,7 @@ func makeTest(t testType, gutm GoUnitTestMaker, testFuncName string, typeArgs []
 	return testFuncName, buffer.Bytes()
 }
 
+// arg struct stmt
 func makeTestArgsStructStmt(params, typeParams []*GoVariableMeta, typeArgs []string) ast.Stmt {
 	argStructDecl := newTypeSpec("args", nil, params).makeDecl()
 	for paramIndex, param := range params {
@@ -117,7 +156,8 @@ func makeTestArgsStructStmt(params, typeParams []*GoVariableMeta, typeArgs []str
 	return &ast.DeclStmt{Decl: argStructDecl}
 }
 
-func makeTestCasesAssignStmt(recv *GoVariableMeta, params, typeParams, returnTypes []*GoVariableMeta, returnTypeLen int, typeArgs []string) *ast.AssignStmt {
+// test cases stmt
+func makeTestCasesAssignStmt(recv *GoVariableMeta, params, typeParams, returnTypes []*GoVariableMeta, returnTypeLen int, typeArgs []string) ast.Stmt {
 	return &ast.AssignStmt{
 		Lhs: []ast.Expr{ast.NewIdent("tests")},
 		Tok: token.DEFINE,
@@ -179,7 +219,20 @@ func makeTestCasesAssignStmt(recv *GoVariableMeta, params, typeParams, returnTyp
 	}
 }
 
-func makeUnitTestForRangeStmt(funcName string, recv *GoVariableMeta, params, returnTypes []*GoVariableMeta, paramsLen, returnTypeLen int) *ast.RangeStmt {
+// benchmark pre stmt
+func makeBenchmarkPreStmt(funcName string, recv *GoVariableMeta, params, returnTypes []*GoVariableMeta, paramsLen, returnTypeLen int) ast.Stmt {
+	return &ast.ExprStmt{
+		X: &ast.CallExpr{
+			Fun: &ast.SelectorExpr{
+				X:   ast.NewIdent("b"),
+				Sel: ast.NewIdent("ResetTimer"),
+			},
+		},
+	}
+}
+
+// test cases for-range stmt
+func makeTestCasesForRangeStmt(funcName string, recv *GoVariableMeta, params, returnTypes []*GoVariableMeta, paramsLen, returnTypeLen int) *ast.RangeStmt {
 	keyIdent := ast.NewIdent("_")
 	valueIdent := ast.NewIdent("tt")
 	rangeIdent := ast.NewIdent("tests")
@@ -211,151 +264,229 @@ func makeUnitTestForRangeStmt(funcName string, recv *GoVariableMeta, params, ret
 		Value: valueIdent,
 		Tok:   token.DEFINE,
 		X:     rangeIdent,
-		Body: &ast.BlockStmt{
-			List: []ast.Stmt{
-				&ast.ExprStmt{
-					X: &ast.CallExpr{
-						Fun: &ast.SelectorExpr{
-							X:   ast.NewIdent("t"),
-							Sel: ast.NewIdent("Run"),
-						},
-						Args: []ast.Expr{
-							&ast.SelectorExpr{
-								X:   ast.NewIdent("tt"),
-								Sel: ast.NewIdent("name"),
+		Body:  &ast.BlockStmt{},
+	}
+	return rangeStmt
+}
+
+// unittest test case running stmt
+func makeUnitTestRunningStmt(funcName string, recv *GoVariableMeta, params, returnTypes []*GoVariableMeta, paramsLen, returnTypeLen int) ast.Stmt {
+	return &ast.ExprStmt{
+		X: &ast.CallExpr{
+			Fun: &ast.SelectorExpr{
+				X:   ast.NewIdent("t"),
+				Sel: ast.NewIdent("Run"),
+			},
+			Args: []ast.Expr{
+				&ast.SelectorExpr{
+					X:   ast.NewIdent("tt"),
+					Sel: ast.NewIdent("name"),
+				},
+				&ast.FuncLit{
+					Type: &ast.FuncType{
+						Params: &ast.FieldList{
+							List: []*ast.Field{
+								func() *ast.Field {
+									tField := field{
+										names:    []string{"t"},
+										typeName: "T",
+										from:     "testing",
+										pointer:  true,
+									}
+									return tField.make()
+								}(),
 							},
-							&ast.FuncLit{
-								Type: &ast.FuncType{
-									Params: &ast.FieldList{
-										List: []*ast.Field{
-											func() *ast.Field {
-												tField := field{
-													names:    []string{"t"},
-													typeName: "T",
-													from:     "testing",
-													pointer:  true,
-												}
-												return tField.make()
-											}(),
-										},
+						},
+					},
+					Body: &ast.BlockStmt{
+						List: func() []ast.Stmt {
+							list := make([]ast.Stmt, 0, 1+returnTypeLen)
+
+							// call
+							callExpr := &ast.CallExpr{
+								Fun: ast.NewIdent(funcName),
+							}
+							if recv != nil {
+								callExpr.Fun = &ast.SelectorExpr{
+									X: &ast.SelectorExpr{
+										X:   ast.NewIdent("tt"),
+										Sel: ast.NewIdent(recv.Name()),
 									},
-								},
-								Body: &ast.BlockStmt{
-									List: func() []ast.Stmt {
-										list := make([]ast.Stmt, 0, 1+returnTypeLen)
+									Sel: ast.NewIdent(funcName),
+								}
+							}
 
-										// call
-										callExpr := &ast.CallExpr{
-											Fun: ast.NewIdent(funcName),
-										}
-										if recv != nil {
-											callExpr.Fun = &ast.SelectorExpr{
-												X: &ast.SelectorExpr{
-													X:   ast.NewIdent("tt"),
-													Sel: ast.NewIdent(recv.Name()),
-												},
-												Sel: ast.NewIdent(funcName),
-											}
-										}
+							// args
+							if paramsLen > 0 {
+								args := make([]ast.Expr, 0, paramsLen)
+								for _, param := range params {
+									args = append(args, &ast.SelectorExpr{
+										X: &ast.SelectorExpr{
+											X:   ast.NewIdent("tt"),
+											Sel: ast.NewIdent("args"),
+										},
+										Sel: ast.NewIdent(param.Name()),
+									})
+								}
+								callExpr.Args = args
+							}
 
-										// args
-										if paramsLen > 0 {
-											args := make([]ast.Expr, 0, paramsLen)
-											for _, param := range params {
-												args = append(args, &ast.SelectorExpr{
-													X: &ast.SelectorExpr{
-														X:   ast.NewIdent("tt"),
-														Sel: ast.NewIdent("args"),
-													},
-													Sel: ast.NewIdent(param.Name()),
-												})
-											}
-											callExpr.Args = args
+							// returns
+							if returnTypeLen > 0 {
+								list = append(list, &ast.AssignStmt{
+									Lhs: func() []ast.Expr {
+										lhs := make([]ast.Expr, 0, returnTypeLen)
+										for i := range returnTypes {
+											lhs = append(lhs, ast.NewIdent(fmt.Sprintf("got%v", i)))
 										}
-
-										// returns
-										if returnTypeLen > 0 {
-											list = append(list, &ast.AssignStmt{
-												Lhs: func() []ast.Expr {
-													lhs := make([]ast.Expr, 0, returnTypeLen)
-													for i := range returnTypes {
-														lhs = append(lhs, ast.NewIdent(fmt.Sprintf("got%v", i)))
-													}
-													return lhs
-												}(),
-												Tok: token.DEFINE,
-												Rhs: []ast.Expr{
-													callExpr,
-												},
-											})
-
-											// compare
-											for i := range returnTypes {
-												got := fmt.Sprintf("got%v", i)
-												want := fmt.Sprintf("want%v", i)
-												list = append(list, &ast.IfStmt{
-													Cond: &ast.UnaryExpr{
-														Op: token.NOT,
-														X: &ast.CallExpr{
-															Fun: &ast.SelectorExpr{
-																X:   ast.NewIdent("reflect"),
-																Sel: ast.NewIdent("DeepEqual"),
-															},
-															Args: []ast.Expr{
-																ast.NewIdent(got),
-																&ast.SelectorExpr{
-																	X:   ast.NewIdent("tt"),
-																	Sel: ast.NewIdent(want),
-																},
-															},
-														},
-													},
-													Body: &ast.BlockStmt{
-														List: []ast.Stmt{
-															&ast.ExprStmt{
-																X: &ast.CallExpr{
-																	Fun: &ast.SelectorExpr{
-																		X:   ast.NewIdent("t"),
-																		Sel: ast.NewIdent("Errorf"),
-																	},
-																	Args: []ast.Expr{
-																		&ast.BasicLit{
-																			Kind:  token.STRING,
-																			Value: fmt.Sprintf("\"%v() %v = %%v, %v %%v\"", funcName, got, want),
-																		},
-																		ast.NewIdent(got),
-																		&ast.SelectorExpr{
-																			X:   ast.NewIdent("tt"),
-																			Sel: ast.NewIdent(want),
-																		},
-																	},
-																},
-															},
-														},
-													},
-												})
-											}
-										} else {
-											list = append(list, &ast.ExprStmt{
-												X: callExpr,
-											})
-										}
-										return list
+										return lhs
 									}(),
-								},
-							},
-						},
+									Tok: token.DEFINE,
+									Rhs: []ast.Expr{
+										callExpr,
+									},
+								})
+
+								// compare
+								for i := range returnTypes {
+									got := fmt.Sprintf("got%v", i)
+									want := fmt.Sprintf("want%v", i)
+									list = append(list, &ast.IfStmt{
+										Cond: &ast.UnaryExpr{
+											Op: token.NOT,
+											X: &ast.CallExpr{
+												Fun: &ast.SelectorExpr{
+													X:   ast.NewIdent("reflect"),
+													Sel: ast.NewIdent("DeepEqual"),
+												},
+												Args: []ast.Expr{
+													ast.NewIdent(got),
+													&ast.SelectorExpr{
+														X:   ast.NewIdent("tt"),
+														Sel: ast.NewIdent(want),
+													},
+												},
+											},
+										},
+										Body: &ast.BlockStmt{
+											List: []ast.Stmt{
+												&ast.ExprStmt{
+													X: &ast.CallExpr{
+														Fun: &ast.SelectorExpr{
+															X:   ast.NewIdent("t"),
+															Sel: ast.NewIdent("Errorf"),
+														},
+														Args: []ast.Expr{
+															&ast.BasicLit{
+																Kind:  token.STRING,
+																Value: fmt.Sprintf("\"%v() %v = %%v, %v %%v\"", funcName, got, want),
+															},
+															ast.NewIdent(got),
+															&ast.SelectorExpr{
+																X:   ast.NewIdent("tt"),
+																Sel: ast.NewIdent(want),
+															},
+														},
+													},
+												},
+											},
+										},
+									})
+								}
+							} else {
+								list = append(list, &ast.ExprStmt{
+									X: callExpr,
+								})
+							}
+							return list
+						}(),
 					},
 				},
 			},
 		},
 	}
-	return rangeStmt
 }
 
-func makeBenchmarkForRangeStmt(funcName string, recv *GoVariableMeta, params, returnTypes []*GoVariableMeta, paramsLen, returnTypeLen int) *ast.RangeStmt {
-	// placeHolder := ast.NewIdent("_")
-	return nil
+// benchmark test case running stmt
+func makeBenchmarkRunningStmt(funcName string, recv *GoVariableMeta, params, returnTypes []*GoVariableMeta, paramsLen, returnTypeLen int) ast.Stmt {
+	iteratorIdent := ast.NewIdent("i")
+	forStmt := &ast.ForStmt{
+		Init: &ast.AssignStmt{
+			Lhs: []ast.Expr{iteratorIdent},
+			Tok: token.DEFINE,
+			Rhs: []ast.Expr{&ast.BasicLit{Kind: token.INT, Value: "0"}},
+		},
+		Cond: &ast.BinaryExpr{
+			X:  iteratorIdent,
+			Op: token.LSS,
+			Y: &ast.SelectorExpr{
+				X:   ast.NewIdent("b"),
+				Sel: ast.NewIdent("N"),
+			},
+		},
+		Post: &ast.IncDecStmt{
+			X:   iteratorIdent,
+			Tok: token.INC,
+		},
+		Body: &ast.BlockStmt{
+			List: func() []ast.Stmt {
+				list := make([]ast.Stmt, 0, 1+returnTypeLen)
+				placeHolderIdent := ast.NewIdent("_")
+
+				// call
+				callExpr := &ast.CallExpr{
+					Fun: ast.NewIdent(funcName),
+				}
+				if recv != nil {
+					callExpr.Fun = &ast.SelectorExpr{
+						X: &ast.SelectorExpr{
+							X:   ast.NewIdent("tt"),
+							Sel: ast.NewIdent(recv.Name()),
+						},
+						Sel: ast.NewIdent(funcName),
+					}
+				}
+
+				// args
+				if paramsLen > 0 {
+					args := make([]ast.Expr, 0, paramsLen)
+					for _, param := range params {
+						args = append(args, &ast.SelectorExpr{
+							X: &ast.SelectorExpr{
+								X:   ast.NewIdent("tt"),
+								Sel: ast.NewIdent("args"),
+							},
+							Sel: ast.NewIdent(param.Name()),
+						})
+					}
+					callExpr.Args = args
+				}
+
+				// returns
+				if returnTypeLen > 0 {
+					list = append(list, &ast.AssignStmt{
+						Lhs: func() []ast.Expr {
+							lhs := make([]ast.Expr, 0, returnTypeLen)
+							for i := 0; i < returnTypeLen; i++ {
+								lhs = append(lhs, placeHolderIdent)
+							}
+							return lhs
+						}(),
+						Tok: token.ASSIGN,
+						Rhs: []ast.Expr{
+							callExpr,
+						},
+					})
+				} else {
+					list = append(list, &ast.ExprStmt{
+						X: callExpr,
+					})
+				}
+				return list
+			}(),
+		},
+	}
+	return forStmt
 }
 
 func wrapTestType(t testType, s string) string {

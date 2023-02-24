@@ -532,11 +532,11 @@
    531  .  FileEnd: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:4
    532  .  Scope: *ast.Scope {
    533  .  .  Objects: map[string]*ast.Object (len = 5) {
-   534  .  .  .  "DoubleDifferenceTemplateFunc": *(obj @ 239)
-   535  .  .  .  "TypeConstraints": *(obj @ 385)
-   536  .  .  .  "TypeConstraintsTemplateFunc": *(obj @ 440)
-   537  .  .  .  "OneTemplateFunc": *(obj @ 11)
-   538  .  .  .  "DoubleSameTemplateFunc": *(obj @ 106)
+   534  .  .  .  "OneTemplateFunc": *(obj @ 11)
+   535  .  .  .  "DoubleSameTemplateFunc": *(obj @ 106)
+   536  .  .  .  "DoubleDifferenceTemplateFunc": *(obj @ 239)
+   537  .  .  .  "TypeConstraints": *(obj @ 385)
+   538  .  .  .  "TypeConstraintsTemplateFunc": *(obj @ 440)
    539  .  .  }
    540  .  }
    541  .  Unresolved: []*ast.Ident (len = 14) {

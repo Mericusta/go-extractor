@@ -85,3 +85,19 @@ func extractMethodRecvStruct(methodDecl *ast.FuncDecl) (string, bool) {
 	}
 	return recvTypeIdent.String(), pointerReceiver
 }
+
+func (gmm *GoMethodMeta) MakeUnitTest(typeArgs []string) (string, []byte) {
+	return makeTest(unittestMaker, gmm, "", typeArgs)
+}
+
+func (gmm *GoMethodMeta) UnittestFuncName(typeArgs []string) string {
+	return wrapTestType(UNITTEST, gmm.testFuncName(typeArgs))
+}
+
+func (gmm *GoMethodMeta) MakeBenchmark(typeArgs []string) (string, []byte) {
+	return makeTest(benchmarkMaker, gmm, "", typeArgs)
+}
+
+func (gmm *GoMethodMeta) BenchmarkFuncName(typeArgs []string) string {
+	return wrapTestType(BENCHMARK, gmm.testFuncName(typeArgs))
+}
