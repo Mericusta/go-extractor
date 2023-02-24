@@ -152,7 +152,19 @@ func (gfm *GoFunctionMeta) Expression() string {
 }
 
 func (gfm *GoFunctionMeta) MakeUnitTest(typeArgs []string) (string, []byte) {
-	return makeUnitTest(gfm, typeArgs)
+	return makeTest(UNITTEST, gfm, "", typeArgs)
+}
+
+func (gfm *GoFunctionMeta) UnittestFuncName(typeArgs []string) string {
+	return wrapTestType(UNITTEST, gfm.testFuncName(typeArgs))
+}
+
+func (gfm *GoFunctionMeta) MakeBenchmark(typeArgs []string) (string, []byte) {
+	return makeTest(BENCHMARK, gfm, "", typeArgs)
+}
+
+func (gfm *GoFunctionMeta) BenchmarkFuncName(typeArgs []string) string {
+	return wrapTestType(BENCHMARK, gfm.testFuncName(typeArgs))
 }
 
 // func (gfm *GoFunctionMeta) ReplaceFunctionDoc(newDoc []string) (string, string, error) {
