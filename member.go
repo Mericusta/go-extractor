@@ -2,11 +2,7 @@ package extractor
 
 import "go/ast"
 
-type GoMemberMeta struct {
-	*meta
-}
-
-func SearchGoMemberMeta(m *meta, structType *ast.StructType, memberName string) *GoMemberMeta {
+func SearchGoMemberMeta(m *meta, structType *ast.StructType, memberName string) *GoVariableMeta {
 	if structType.Fields == nil || len(structType.Fields.List) == 0 {
 		return nil
 	}
@@ -17,13 +13,11 @@ func SearchGoMemberMeta(m *meta, structType *ast.StructType, memberName string) 
 			break
 		}
 	}
-	return &GoMemberMeta{
-		meta: m.newMeta(memberDecl),
+	return &GoVariableMeta{
+		meta:     m.newMeta(memberDecl),
+		name:     memberName,
+		typeMeta: m.newMeta(memberDecl.Type),
 	}
-}
-
-func (gmm *GoMemberMeta) MemberName() string {
-	return searchMemberName(gmm.node.(*ast.Field))
 }
 
 func searchMemberName(field *ast.Field) string {
@@ -38,29 +32,4 @@ func searchMemberName(field *ast.Field) string {
 		return field.Names[0].Name
 	}
 	return ""
-}
-
-func (gmm *GoMemberMeta) Tag() string {
-	if gmm.node.(*ast.Field).Tag == nil {
-		return ""
-	}
-	return gmm.node.(*ast.Field).Tag.Value
-}
-
-func (gmm *GoMemberMeta) Doc() []string {
-	if gmm.node.(*ast.Field).Doc == nil {
-		return nil
-	}
-	commentSlice := make([]string, 0, len(gmm.node.(*ast.Field).Doc.List))
-	for _, comment := range gmm.node.(*ast.Field).Doc.List {
-		commentSlice = append(commentSlice, comment.Text)
-	}
-	return commentSlice
-}
-
-func (gmm *GoMemberMeta) Comment() string {
-	if gmm.node.(*ast.Field).Comment == nil || len(gmm.node.(*ast.Field).Comment.List) == 0 {
-		return ""
-	}
-	return gmm.node.(*ast.Field).Comment.List[0].Text
 }

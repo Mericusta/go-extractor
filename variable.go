@@ -38,6 +38,67 @@ type GoVariableMeta struct {
 	// typeEnum VariableTypeEnum
 }
 
+func (gvm *GoVariableMeta) Tag() string {
+	if gvm.node.(*ast.Field).Tag == nil {
+		return ""
+	}
+	return gvm.node.(*ast.Field).Tag.Value
+}
+
+func (gvm *GoVariableMeta) Doc() []string {
+	if gvm.node.(*ast.Field).Doc == nil {
+		return nil
+	}
+	commentSlice := make([]string, 0, len(gvm.node.(*ast.Field).Doc.List))
+	for _, comment := range gvm.node.(*ast.Field).Doc.List {
+		commentSlice = append(commentSlice, comment.Text)
+	}
+	return commentSlice
+}
+
+func (gvm *GoVariableMeta) Comment() string {
+	if gvm.node.(*ast.Field).Comment == nil || len(gvm.node.(*ast.Field).Comment.List) == 0 {
+		return ""
+	}
+	return gvm.node.(*ast.Field).Comment.List[0].Text
+}
+
+type UnderlyingType int
+
+const (
+	UNDERLYING_TYPE_IDENT     = iota + 1 // any others *ast.Ident
+	UNDERLYING_TYPE_ARRAY                // *ast.ArrayType
+	UNDERLYING_TYPE_STRUCT               // *ast.StructType
+	UNDERLYING_TYPE_POINTER              // *ast.StarExpr
+	UNDERLYING_TYPE_FUNC                 // *ast.FuncType
+	UNDERLYING_TYPE_INTERFACE            // *ast.InterfaceType
+	UNDERLYING_TYPE_MAP                  // *ast.MapType
+	UNDERLYING_TYPE_CHAN                 // *ast.ChanType
+)
+
+func (gvm *GoVariableMeta) Type() (string, string, UnderlyingType) {
+	underlyingString, underlyingEnum := "", UnderlyingType(0)
+	switch gvm.typeMeta.(*meta).node.(type) {
+	case *ast.ArrayType:
+		underlyingString, underlyingEnum = "array", UNDERLYING_TYPE_ARRAY
+	case *ast.StructType:
+		underlyingString, underlyingEnum = "struct", UNDERLYING_TYPE_STRUCT
+	case *ast.StarExpr:
+		underlyingString, underlyingEnum = "pointer", UNDERLYING_TYPE_POINTER
+	case *ast.FuncType:
+		underlyingString, underlyingEnum = "func", UNDERLYING_TYPE_FUNC
+	case *ast.InterfaceType:
+		underlyingString, underlyingEnum = "interface", UNDERLYING_TYPE_INTERFACE
+	case *ast.MapType:
+		underlyingString, underlyingEnum = "map", UNDERLYING_TYPE_MAP
+	case *ast.ChanType:
+		underlyingString, underlyingEnum = "chan", UNDERLYING_TYPE_CHAN
+	default:
+		underlyingString, underlyingEnum = gvm.typeMeta.Expression(), UNDERLYING_TYPE_IDENT
+	}
+	return gvm.typeMeta.Expression(), underlyingString, underlyingEnum
+}
+
 // func ExtractGoVariableMeta(extractFilepath string, variableName string) (*GoVariableMeta, error) {
 // 	goFileMeta, err := ExtractGoFileMeta(extractFilepath)
 // 	if err != nil {
@@ -86,10 +147,6 @@ type GoVariableMeta struct {
 
 func (gvm *GoVariableMeta) Name() string {
 	return gvm.name
-}
-
-func (gvm *GoVariableMeta) Type() string {
-	return gvm.typeMeta.Expression()
 }
 
 func (gvm *GoVariableMeta) typeNode() ast.Expr {

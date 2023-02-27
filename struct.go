@@ -8,7 +8,7 @@ import (
 type GoStructMeta struct {
 	*meta        // *ast.TypeSpec
 	commentGroup *ast.CommentGroup
-	memberDecl   map[string]*GoMemberMeta
+	memberDecl   map[string]*GoVariableMeta
 	methodDecl   map[string]*GoMethodMeta
 }
 
@@ -53,7 +53,7 @@ func SearchGoStructMeta(gfm *GoFileMeta, structName string) *GoStructMeta {
 		meta:         gfm.newMeta(structDecl),
 		commentGroup: commentDecl,
 		methodDecl:   make(map[string]*GoMethodMeta),
-		memberDecl:   make(map[string]*GoMemberMeta),
+		memberDecl:   make(map[string]*GoVariableMeta),
 	}
 }
 
@@ -101,7 +101,7 @@ func (gsm *GoStructMeta) Members() []string {
 	return members
 }
 
-func (gsm *GoStructMeta) SearchMemberMeta(member string) *GoMemberMeta {
+func (gsm *GoStructMeta) SearchMemberMeta(member string) *GoVariableMeta {
 	if gmm, has := gsm.memberDecl[member]; gmm != nil && has {
 		return gmm
 	}

@@ -36,7 +36,7 @@ type compareGoStructMeta struct {
 	Expression       string
 	StructName       string
 	Doc              []string
-	StructMemberMeta map[string]*compareGoMemberMeta
+	StructMemberMeta map[string]*compareGoVariableMeta
 	StructMethodMeta map[string]*compareGoMethodMeta
 }
 
@@ -54,13 +54,13 @@ type compareGoFunctionMeta struct {
 	// VarMeta map[string]
 }
 
-type compareGoMemberMeta struct {
-	Expression string
-	MemberName string
-	Tag        string
-	Comment    string
-	Doc        []string
-}
+// type compareGoMemberMeta struct {
+// 	Expression string
+// 	MemberName string
+// 	Tag        string
+// 	Comment    string
+// 	Doc        []string
+// }
 
 type compareGoMethodMeta struct {
 	*compareGoFunctionMeta
@@ -81,9 +81,14 @@ type compareGoArgMeta struct {
 }
 
 type compareGoVariableMeta struct {
-	Expression string
-	Name       string
-	Type       string
+	Expression           string
+	Name                 string
+	TypeExpression       string
+	TypeUnderlyingString string
+	TypeUnderlyingEnum   UnderlyingType
+	Tag                  string
+	Comment              string
+	Doc                  []string
 }
 
 type compareGoImportMeta struct {
@@ -223,9 +228,11 @@ var (
 						},
 						Params: []*compareGoVariableMeta{
 							{
-								Expression: `s *module.ExampleStruct`,
-								Name:       "s",
-								Type:       "*module.ExampleStruct",
+								Expression:           `s *module.ExampleStruct`,
+								Name:                 "s",
+								TypeExpression:       "*module.ExampleStruct",
+								TypeUnderlyingString: "pointer",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
 							},
 						},
 						CallMeta: map[string][]*compareGoCallMeta{
@@ -265,9 +272,11 @@ var (
 						FunctionName: "NoDocExampleFunc",
 						Params: []*compareGoVariableMeta{
 							{
-								Expression: `s *module.ExampleStruct`,
-								Name:       "s",
-								Type:       "*module.ExampleStruct",
+								Expression:           `s *module.ExampleStruct`,
+								Name:                 "s",
+								TypeExpression:       "*module.ExampleStruct",
+								TypeUnderlyingString: "pointer",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
 							},
 						},
 						CallMeta: map[string][]*compareGoCallMeta{
@@ -307,9 +316,11 @@ var (
 						FunctionName: "OneLineDocExampleFunc",
 						Params: []*compareGoVariableMeta{
 							{
-								Expression: `s *module.ExampleStruct`,
-								Name:       "s",
-								Type:       "*module.ExampleStruct",
+								Expression:           `s *module.ExampleStruct`,
+								Name:                 "s",
+								TypeExpression:       "*module.ExampleStruct",
+								TypeUnderlyingString: "pointer",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
 							},
 						},
 						CallMeta: map[string][]*compareGoCallMeta{
@@ -349,9 +360,11 @@ var (
 						FunctionName: "ImportSelectorFunc",
 						Params: []*compareGoVariableMeta{
 							{
-								Expression: `s *module.ExampleStruct`,
-								Name:       "s",
-								Type:       "*module.ExampleStruct",
+								Expression:           `s *module.ExampleStruct`,
+								Name:                 "s",
+								TypeExpression:       "*module.ExampleStruct",
+								TypeUnderlyingString: "pointer",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
 							},
 						},
 						CallMeta: map[string][]*compareGoCallMeta{
@@ -446,10 +459,14 @@ var (
 				pkgStructMeta: map[string]*compareGoStructMeta{
 					"ParentStruct": {
 						StructName: "ParentStruct",
-						StructMemberMeta: map[string]*compareGoMemberMeta{
+						StructMemberMeta: map[string]*compareGoVariableMeta{
 							"p": {
-								MemberName: "p",
-								Comment:    "// parent value",
+								Expression:           `p int`,
+								Name:                 "p",
+								TypeExpression:       `int`,
+								TypeUnderlyingString: "int",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+								Comment:              "// parent value",
 							},
 						},
 					},
@@ -460,14 +477,22 @@ var (
 							"// this is struct comment",
 							"// this is another struct comment",
 						},
-						StructMemberMeta: map[string]*compareGoMemberMeta{
+						StructMemberMeta: map[string]*compareGoVariableMeta{
 							"ParentStruct": {
-								MemberName: "ParentStruct",
-								Comment:    "// parent struct",
+								Expression:           `*ParentStruct`,
+								Name:                 "ParentStruct",
+								TypeExpression:       `*ParentStruct`,
+								TypeUnderlyingString: "pointer",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+								Comment:              "// parent struct",
 							},
 							"v": {
-								MemberName: "v",
-								Tag:        "`ast:init,default=1`",
+								Expression:           "v   int `ast:init,default=1`",
+								Name:                 "v",
+								TypeExpression:       `int`,
+								TypeUnderlyingString: "int",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+								Tag:                  "`ast:init,default=1`",
 								Doc: []string{
 									"// v this is member doc line1",
 									"// v this is member doc line2",
@@ -475,7 +500,11 @@ var (
 								Comment: "// this is member single comment line",
 							},
 							"sub": {
-								MemberName: "sub",
+								Expression:           `sub *ExampleStruct`,
+								Name:                 "sub",
+								TypeExpression:       `*ExampleStruct`,
+								TypeUnderlyingString: "pointer",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
 							},
 						},
 						StructMethodMeta: map[string]*compareGoMethodMeta{
@@ -484,9 +513,11 @@ var (
 									FunctionName: "ExampleFunc",
 									Params: []*compareGoVariableMeta{
 										{
-											Expression: `v int`,
-											Name:       "v",
-											Type:       "int",
+											Expression:           `v int`,
+											Name:                 "v",
+											TypeExpression:       "int",
+											TypeUnderlyingString: "int",
+											TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
 										},
 									},
 									CallMeta: map[string][]*compareGoCallMeta{
@@ -676,9 +707,11 @@ var (
 									FunctionName: "ExampleFuncWithPointerReceiver",
 									Params: []*compareGoVariableMeta{
 										{
-											Expression: `v int`,
-											Name:       "v",
-											Type:       "int",
+											Expression:           `v int`,
+											Name:                 "v",
+											TypeExpression:       "int",
+											TypeUnderlyingString: "int",
+											TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
 										},
 									},
 									CallMeta: map[string][]*compareGoCallMeta{
@@ -708,12 +741,16 @@ var (
 									FunctionName: "DoubleReturnFunc",
 									ReturnTypes: []*compareGoVariableMeta{
 										{
-											Expression: `int`,
-											Type:       "int",
+											Expression:           `int`,
+											TypeExpression:       "int",
+											TypeUnderlyingString: "int",
+											TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
 										},
 										{
-											Expression: `int`,
-											Type:       "int",
+											Expression:           `int`,
+											TypeExpression:       "int",
+											TypeUnderlyingString: "int",
+											TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
 										},
 									},
 									CallMeta: map[string][]*compareGoCallMeta{
@@ -739,8 +776,10 @@ var (
 									FunctionName: "V",
 									ReturnTypes: []*compareGoVariableMeta{
 										{
-											Expression: `int`,
-											Type:       "int",
+											Expression:           `int`,
+											TypeExpression:       "int",
+											TypeUnderlyingString: "int",
+											TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
 										},
 									},
 								},
@@ -752,8 +791,10 @@ var (
 									FunctionName: "Sub",
 									ReturnTypes: []*compareGoVariableMeta{
 										{
-											Expression: `*ExampleStruct`,
-											Type:       "*ExampleStruct",
+											Expression:           `*ExampleStruct`,
+											TypeExpression:       "*ExampleStruct",
+											TypeUnderlyingString: "pointer",
+											TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
 										},
 									},
 								},
@@ -773,15 +814,19 @@ var (
 						},
 						Params: []*compareGoVariableMeta{
 							{
-								Expression: `v int`,
-								Name:       "v",
-								Type:       "int",
+								Expression:           `v int`,
+								Name:                 "v",
+								TypeExpression:       "int",
+								TypeUnderlyingString: "int",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
 							},
 						},
 						ReturnTypes: []*compareGoVariableMeta{
 							{
-								Expression: `*ExampleStruct`,
-								Type:       "*ExampleStruct",
+								Expression:           `*ExampleStruct`,
+								TypeExpression:       "*ExampleStruct",
+								TypeUnderlyingString: "pointer",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
 							},
 						},
 						CallMeta: map[string][]*compareGoCallMeta{
@@ -807,9 +852,11 @@ var (
 						FunctionName: "ExampleFunc",
 						Params: []*compareGoVariableMeta{
 							{
-								Expression: `s *ExampleStruct`,
-								Name:       "s",
-								Type:       "*ExampleStruct",
+								Expression:           `s *ExampleStruct`,
+								Name:                 "s",
+								TypeExpression:       "*ExampleStruct",
+								TypeUnderlyingString: "pointer",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
 							},
 						},
 						CallMeta: map[string][]*compareGoCallMeta{
@@ -849,22 +896,28 @@ var (
 						FunctionName: "OneTemplateFunc",
 						TypeParams: []*compareGoVariableMeta{
 							{
-								Expression: `T any`,
-								Name:       "T",
-								Type:       "any",
+								Expression:           `T any`,
+								Name:                 "T",
+								TypeExpression:       "any",
+								TypeUnderlyingString: "any",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
 							},
 						},
 						Params: []*compareGoVariableMeta{
 							{
-								Expression: `tv *T`,
-								Name:       "tv",
-								Type:       "*T",
+								Expression:           `tv *T`,
+								Name:                 "tv",
+								TypeExpression:       "*T",
+								TypeUnderlyingString: "pointer",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
 							},
 						},
 						ReturnTypes: []*compareGoVariableMeta{
 							{
-								Expression: `*T`,
-								Type:       "*T",
+								Expression:           `*T`,
+								TypeExpression:       "*T",
+								TypeUnderlyingString: "pointer",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
 							},
 						},
 					},
@@ -872,36 +925,48 @@ var (
 						FunctionName: "DoubleSameTemplateFunc",
 						TypeParams: []*compareGoVariableMeta{
 							{
-								Expression: `T1, T2 any`,
-								Name:       "T1",
-								Type:       "any",
+								Expression:           `T1, T2 any`,
+								Name:                 "T1",
+								TypeExpression:       "any",
+								TypeUnderlyingString: "any",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
 							},
 							{
-								Expression: `T1, T2 any`,
-								Name:       "T2",
-								Type:       "any",
+								Expression:           `T1, T2 any`,
+								Name:                 "T2",
+								TypeExpression:       "any",
+								TypeUnderlyingString: "any",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
 							},
 						},
 						Params: []*compareGoVariableMeta{
 							{
-								Expression: `tv1 T1`,
-								Name:       "tv1",
-								Type:       "T1",
+								Expression:           `tv1 T1`,
+								Name:                 "tv1",
+								TypeExpression:       "T1",
+								TypeUnderlyingString: "T1",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
 							},
 							{
-								Expression: `tv2 T2`,
-								Name:       "tv2",
-								Type:       "T2",
+								Expression:           `tv2 T2`,
+								Name:                 "tv2",
+								TypeExpression:       "T2",
+								TypeUnderlyingString: "T2",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
 							},
 						},
 						ReturnTypes: []*compareGoVariableMeta{
 							{
-								Expression: `*T1`,
-								Type:       "*T1",
+								Expression:           `*T1`,
+								TypeExpression:       "*T1",
+								TypeUnderlyingString: "pointer",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
 							},
 							{
-								Expression: `*T2`,
-								Type:       "*T2",
+								Expression:           `*T2`,
+								TypeExpression:       "*T2",
+								TypeUnderlyingString: "pointer",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
 							},
 						},
 					},
@@ -909,36 +974,48 @@ var (
 						FunctionName: "DoubleDifferenceTemplateFunc",
 						TypeParams: []*compareGoVariableMeta{
 							{
-								Expression: `T1 any`,
-								Name:       "T1",
-								Type:       "any",
+								Expression:           `T1 any`,
+								Name:                 "T1",
+								TypeExpression:       "any",
+								TypeUnderlyingString: "any",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
 							},
 							{
-								Expression: `T2 comparable`,
-								Name:       "T2",
-								Type:       "comparable",
+								Expression:           `T2 comparable`,
+								Name:                 "T2",
+								TypeExpression:       "comparable",
+								TypeUnderlyingString: "comparable",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
 							},
 						},
 						Params: []*compareGoVariableMeta{
 							{
-								Expression: `tv1 T1`,
-								Name:       "tv1",
-								Type:       "T1",
+								Expression:           `tv1 T1`,
+								Name:                 "tv1",
+								TypeExpression:       "T1",
+								TypeUnderlyingString: "T1",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
 							},
 							{
-								Expression: `tv2 T2`,
-								Name:       "tv2",
-								Type:       "T2",
+								Expression:           `tv2 T2`,
+								Name:                 "tv2",
+								TypeExpression:       "T2",
+								TypeUnderlyingString: "T2",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
 							},
 						},
 						ReturnTypes: []*compareGoVariableMeta{
 							{
-								Expression: `*T1`,
-								Type:       "*T1",
+								Expression:           `*T1`,
+								TypeExpression:       "*T1",
+								TypeUnderlyingString: "pointer",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
 							},
 							{
-								Expression: `*T2`,
-								Type:       "*T2",
+								Expression:           `*T2`,
+								TypeExpression:       "*T2",
+								TypeUnderlyingString: "pointer",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
 							},
 						},
 					},
@@ -946,22 +1023,28 @@ var (
 						FunctionName: "TypeConstraintsTemplateFunc",
 						TypeParams: []*compareGoVariableMeta{
 							{
-								Expression: `T TypeConstraints`,
-								Name:       "T",
-								Type:       "TypeConstraints",
+								Expression:           `T TypeConstraints`,
+								Name:                 "T",
+								TypeExpression:       "TypeConstraints",
+								TypeUnderlyingString: "TypeConstraints",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
 							},
 						},
 						Params: []*compareGoVariableMeta{
 							{
-								Expression: `tv T`,
-								Name:       "tv",
-								Type:       "T",
+								Expression:           `tv T`,
+								Name:                 "tv",
+								TypeExpression:       "T",
+								TypeUnderlyingString: "T",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
 							},
 						},
 						ReturnTypes: []*compareGoVariableMeta{
 							{
-								Expression: `*T`,
-								Type:       "*T",
+								Expression:           `*T`,
+								TypeExpression:       "*T",
+								TypeUnderlyingString: "pointer",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
 							},
 						},
 					},
@@ -1006,12 +1089,12 @@ func TestExtractGoProjectMeta(t *testing.T) {
 			}
 			checkStructMeta(gsm, _gsm)
 
-			for memberName, _gmm := range _gsm.StructMemberMeta {
-				gmm := gsm.SearchMemberMeta(memberName)
-				if gmm == nil {
-					Panic(gmm, _gmm)
+			for memberName, _gvm := range _gsm.StructMemberMeta {
+				gvm := gsm.SearchMemberMeta(memberName)
+				if gvm == nil {
+					Panic(gvm, _gvm)
 				}
-				checkMemberMeta(gmm, _gmm)
+				checkVariableMeta(gvm, _gvm)
 			}
 
 			for methodName, _gmm := range _gsm.StructMethodMeta {
@@ -1284,19 +1367,19 @@ func checkFunctionMeta(gfm *GoFunctionMeta, _gfm *compareGoFunctionMeta) {
 	// }
 }
 
-func checkMemberMeta(gmm *GoMemberMeta, _gmm *compareGoMemberMeta) {
-	// basic
-	if gmm.MemberName() != _gmm.MemberName {
-		Panic(gmm.MemberName(), _gmm.MemberName)
-	}
-	if gmm.Tag() != _gmm.Tag {
-		Panic(gmm.Tag(), _gmm.Tag)
-	}
-	if gmm.Comment() != _gmm.Comment {
-		Panic(gmm.Comment(), _gmm.Comment)
-	}
-	stpslice.Compare(gmm.Doc(), _gmm.Doc)
-}
+// func checkMemberMeta(gmm *GoVariableMeta, _gmm *compareGoVariableMeta) {
+// 	// basic
+// 	if gmm.MemberName() != _gmm.MemberName {
+// 		Panic(gmm.MemberName(), _gmm.MemberName)
+// 	}
+// 	if gmm.Tag() != _gmm.Tag {
+// 		Panic(gmm.Tag(), _gmm.Tag)
+// 	}
+// 	if gmm.Comment() != _gmm.Comment {
+// 		Panic(gmm.Comment(), _gmm.Comment)
+// 	}
+// 	stpslice.Compare(gmm.Doc(), _gmm.Doc)
+// }
 
 func checkMethodMeta(gmm *GoMethodMeta, _gmm *compareGoMethodMeta) {
 	// basic
@@ -1360,9 +1443,23 @@ func checkVariableMeta(gvm *GoVariableMeta, _gvm *compareGoVariableMeta) {
 	if gvm.Name() != _gvm.Name {
 		Panic(gvm.Name(), _gvm.Name)
 	}
-	if gvm.Type() != _gvm.Type {
-		Panic(gvm.Type(), _gvm.Type)
+	te, tus, tue := gvm.Type()
+	if te != _gvm.TypeExpression {
+		Panic(te, _gvm.TypeExpression)
 	}
+	if tus != _gvm.TypeUnderlyingString {
+		Panic(tus, _gvm.TypeUnderlyingString)
+	}
+	if tue != _gvm.TypeUnderlyingEnum {
+		Panic(tue, _gvm.TypeUnderlyingEnum)
+	}
+	if gvm.Tag() != _gvm.Tag {
+		Panic(gvm.Tag(), _gvm.Tag)
+	}
+	if gvm.Comment() != _gvm.Comment {
+		Panic(gvm.Comment(), _gvm.Comment)
+	}
+	stpslice.Compare(gvm.Doc(), _gvm.Doc)
 }
 
 func checkImportMeta(gim *GoImportMeta, _gim *compareGoImportMeta) {
