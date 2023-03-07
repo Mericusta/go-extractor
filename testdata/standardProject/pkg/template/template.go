@@ -19,3 +19,11 @@ type TypeConstraints interface {
 func TypeConstraintsTemplateFunc[T TypeConstraints](tv T) *T {
 	return nil
 }
+
+func CannotInferTypeFunc1[T any]() {
+
+}
+
+func CannotInferTypeFunc2[K comparable, V any]() (*K, *V) {
+	return nil, nil
+}

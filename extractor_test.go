@@ -1048,6 +1048,51 @@ var (
 							},
 						},
 					},
+					"CannotInferTypeFunc1": {
+						FunctionName: "CannotInferTypeFunc1",
+						TypeParams: []*compareGoVariableMeta{
+							{
+								Expression:           `T any`,
+								Name:                 "T",
+								TypeExpression:       "any",
+								TypeUnderlyingString: "any",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+							},
+						},
+					},
+					"CannotInferTypeFunc2": {
+						FunctionName: "CannotInferTypeFunc2",
+						TypeParams: []*compareGoVariableMeta{
+							{
+								Expression:           `K comparable`,
+								Name:                 "K",
+								TypeExpression:       "comparable",
+								TypeUnderlyingString: "comparable",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+							},
+							{
+								Expression:           `V any`,
+								Name:                 "V",
+								TypeExpression:       "any",
+								TypeUnderlyingString: "any",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+							},
+						},
+						ReturnTypes: []*compareGoVariableMeta{
+							{
+								Expression:           `*K`,
+								TypeExpression:       "*K",
+								TypeUnderlyingString: "pointer",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+							},
+							{
+								Expression:           `*V`,
+								TypeExpression:       "*V",
+								TypeUnderlyingString: "pointer",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+							},
+						},
+					},
 				},
 				pkgInterfaceMeta: map[string]*compareGoInterfaceMeta{
 					"TypeConstraints": {
