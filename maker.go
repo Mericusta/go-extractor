@@ -11,6 +11,7 @@ import (
 )
 
 type GoTestMaker interface {
+	MakeUnitTest([]string) (string, []byte)
 	testFuncName([]string) string
 	FunctionName() string
 	TypeParams() []*GoVariableMeta
