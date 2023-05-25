@@ -4,710 +4,1264 @@
      3  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:1:9
      4  .  .  Name: "template"
      5  .  }
-     6  .  Decls: []ast.Decl (len = 7) {
-     7  .  .  0: *ast.FuncDecl {
-     8  .  .  .  Name: *ast.Ident {
-     9  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:3:6
-    10  .  .  .  .  Name: "OneTemplateFunc"
-    11  .  .  .  .  Obj: *ast.Object {
-    12  .  .  .  .  .  Kind: func
-    13  .  .  .  .  .  Name: "OneTemplateFunc"
-    14  .  .  .  .  .  Decl: *(obj @ 7)
-    15  .  .  .  .  }
-    16  .  .  .  }
-    17  .  .  .  Type: *ast.FuncType {
-    18  .  .  .  .  Func: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:3:1
-    19  .  .  .  .  TypeParams: *ast.FieldList {
-    20  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:3:21
-    21  .  .  .  .  .  List: []*ast.Field (len = 1) {
-    22  .  .  .  .  .  .  0: *ast.Field {
-    23  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
-    24  .  .  .  .  .  .  .  .  0: *ast.Ident {
-    25  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:3:22
-    26  .  .  .  .  .  .  .  .  .  Name: "T"
-    27  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-    28  .  .  .  .  .  .  .  .  .  .  Kind: type
-    29  .  .  .  .  .  .  .  .  .  .  Name: "T"
-    30  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 22)
-    31  .  .  .  .  .  .  .  .  .  }
-    32  .  .  .  .  .  .  .  .  }
-    33  .  .  .  .  .  .  .  }
-    34  .  .  .  .  .  .  .  Type: *ast.Ident {
-    35  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:3:24
-    36  .  .  .  .  .  .  .  .  Name: "any"
-    37  .  .  .  .  .  .  .  }
-    38  .  .  .  .  .  .  }
-    39  .  .  .  .  .  }
-    40  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:3:27
-    41  .  .  .  .  }
-    42  .  .  .  .  Params: *ast.FieldList {
-    43  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:3:28
-    44  .  .  .  .  .  List: []*ast.Field (len = 1) {
-    45  .  .  .  .  .  .  0: *ast.Field {
-    46  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
-    47  .  .  .  .  .  .  .  .  0: *ast.Ident {
-    48  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:3:29
-    49  .  .  .  .  .  .  .  .  .  Name: "tv"
-    50  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-    51  .  .  .  .  .  .  .  .  .  .  Kind: var
-    52  .  .  .  .  .  .  .  .  .  .  Name: "tv"
-    53  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 45)
-    54  .  .  .  .  .  .  .  .  .  }
-    55  .  .  .  .  .  .  .  .  }
-    56  .  .  .  .  .  .  .  }
-    57  .  .  .  .  .  .  .  Type: *ast.StarExpr {
-    58  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:3:32
-    59  .  .  .  .  .  .  .  .  X: *ast.Ident {
-    60  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:3:33
-    61  .  .  .  .  .  .  .  .  .  Name: "T"
-    62  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 27)
-    63  .  .  .  .  .  .  .  .  }
-    64  .  .  .  .  .  .  .  }
-    65  .  .  .  .  .  .  }
-    66  .  .  .  .  .  }
-    67  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:3:34
-    68  .  .  .  .  }
-    69  .  .  .  .  Results: *ast.FieldList {
-    70  .  .  .  .  .  Opening: -
-    71  .  .  .  .  .  List: []*ast.Field (len = 1) {
-    72  .  .  .  .  .  .  0: *ast.Field {
-    73  .  .  .  .  .  .  .  Type: *ast.StarExpr {
-    74  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:3:36
-    75  .  .  .  .  .  .  .  .  X: *ast.Ident {
-    76  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:3:37
-    77  .  .  .  .  .  .  .  .  .  Name: "T"
-    78  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 27)
-    79  .  .  .  .  .  .  .  .  }
-    80  .  .  .  .  .  .  .  }
-    81  .  .  .  .  .  .  }
-    82  .  .  .  .  .  }
-    83  .  .  .  .  .  Closing: -
-    84  .  .  .  .  }
-    85  .  .  .  }
-    86  .  .  .  Body: *ast.BlockStmt {
-    87  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:3:39
-    88  .  .  .  .  List: []ast.Stmt (len = 1) {
-    89  .  .  .  .  .  0: *ast.ReturnStmt {
-    90  .  .  .  .  .  .  Return: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:4:2
-    91  .  .  .  .  .  .  Results: []ast.Expr (len = 1) {
-    92  .  .  .  .  .  .  .  0: *ast.Ident {
-    93  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:4:9
-    94  .  .  .  .  .  .  .  .  Name: "nil"
-    95  .  .  .  .  .  .  .  }
-    96  .  .  .  .  .  .  }
-    97  .  .  .  .  .  }
-    98  .  .  .  .  }
-    99  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:1
-   100  .  .  .  }
-   101  .  .  }
-   102  .  .  1: *ast.FuncDecl {
-   103  .  .  .  Name: *ast.Ident {
-   104  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:7:6
-   105  .  .  .  .  Name: "DoubleSameTemplateFunc"
-   106  .  .  .  .  Obj: *ast.Object {
-   107  .  .  .  .  .  Kind: func
-   108  .  .  .  .  .  Name: "DoubleSameTemplateFunc"
-   109  .  .  .  .  .  Decl: *(obj @ 102)
-   110  .  .  .  .  }
-   111  .  .  .  }
-   112  .  .  .  Type: *ast.FuncType {
-   113  .  .  .  .  Func: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:7:1
-   114  .  .  .  .  TypeParams: *ast.FieldList {
-   115  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:7:28
-   116  .  .  .  .  .  List: []*ast.Field (len = 1) {
-   117  .  .  .  .  .  .  0: *ast.Field {
-   118  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 2) {
-   119  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   120  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:7:29
-   121  .  .  .  .  .  .  .  .  .  Name: "T1"
-   122  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-   123  .  .  .  .  .  .  .  .  .  .  Kind: type
-   124  .  .  .  .  .  .  .  .  .  .  Name: "T1"
-   125  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 117)
-   126  .  .  .  .  .  .  .  .  .  }
-   127  .  .  .  .  .  .  .  .  }
-   128  .  .  .  .  .  .  .  .  1: *ast.Ident {
-   129  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:7:33
-   130  .  .  .  .  .  .  .  .  .  Name: "T2"
-   131  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-   132  .  .  .  .  .  .  .  .  .  .  Kind: type
-   133  .  .  .  .  .  .  .  .  .  .  Name: "T2"
-   134  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 117)
-   135  .  .  .  .  .  .  .  .  .  }
-   136  .  .  .  .  .  .  .  .  }
-   137  .  .  .  .  .  .  .  }
-   138  .  .  .  .  .  .  .  Type: *ast.Ident {
-   139  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:7:36
-   140  .  .  .  .  .  .  .  .  Name: "any"
-   141  .  .  .  .  .  .  .  }
-   142  .  .  .  .  .  .  }
-   143  .  .  .  .  .  }
-   144  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:7:39
-   145  .  .  .  .  }
-   146  .  .  .  .  Params: *ast.FieldList {
-   147  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:7:40
-   148  .  .  .  .  .  List: []*ast.Field (len = 2) {
-   149  .  .  .  .  .  .  0: *ast.Field {
-   150  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
-   151  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   152  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:7:41
-   153  .  .  .  .  .  .  .  .  .  Name: "tv1"
-   154  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-   155  .  .  .  .  .  .  .  .  .  .  Kind: var
-   156  .  .  .  .  .  .  .  .  .  .  Name: "tv1"
-   157  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 149)
-   158  .  .  .  .  .  .  .  .  .  }
-   159  .  .  .  .  .  .  .  .  }
-   160  .  .  .  .  .  .  .  }
-   161  .  .  .  .  .  .  .  Type: *ast.Ident {
-   162  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:7:45
-   163  .  .  .  .  .  .  .  .  Name: "T1"
-   164  .  .  .  .  .  .  .  .  Obj: *(obj @ 122)
-   165  .  .  .  .  .  .  .  }
-   166  .  .  .  .  .  .  }
-   167  .  .  .  .  .  .  1: *ast.Field {
-   168  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
-   169  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   170  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:7:49
-   171  .  .  .  .  .  .  .  .  .  Name: "tv2"
-   172  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-   173  .  .  .  .  .  .  .  .  .  .  Kind: var
-   174  .  .  .  .  .  .  .  .  .  .  Name: "tv2"
-   175  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 167)
-   176  .  .  .  .  .  .  .  .  .  }
-   177  .  .  .  .  .  .  .  .  }
-   178  .  .  .  .  .  .  .  }
-   179  .  .  .  .  .  .  .  Type: *ast.Ident {
-   180  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:7:53
-   181  .  .  .  .  .  .  .  .  Name: "T2"
-   182  .  .  .  .  .  .  .  .  Obj: *(obj @ 131)
-   183  .  .  .  .  .  .  .  }
-   184  .  .  .  .  .  .  }
-   185  .  .  .  .  .  }
-   186  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:7:55
-   187  .  .  .  .  }
-   188  .  .  .  .  Results: *ast.FieldList {
-   189  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:7:57
-   190  .  .  .  .  .  List: []*ast.Field (len = 2) {
-   191  .  .  .  .  .  .  0: *ast.Field {
-   192  .  .  .  .  .  .  .  Type: *ast.StarExpr {
-   193  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:7:58
-   194  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   195  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:7:59
-   196  .  .  .  .  .  .  .  .  .  Name: "T1"
-   197  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 122)
-   198  .  .  .  .  .  .  .  .  }
-   199  .  .  .  .  .  .  .  }
-   200  .  .  .  .  .  .  }
-   201  .  .  .  .  .  .  1: *ast.Field {
-   202  .  .  .  .  .  .  .  Type: *ast.StarExpr {
-   203  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:7:63
-   204  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   205  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:7:64
-   206  .  .  .  .  .  .  .  .  .  Name: "T2"
-   207  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 131)
-   208  .  .  .  .  .  .  .  .  }
-   209  .  .  .  .  .  .  .  }
-   210  .  .  .  .  .  .  }
-   211  .  .  .  .  .  }
-   212  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:7:66
-   213  .  .  .  .  }
-   214  .  .  .  }
-   215  .  .  .  Body: *ast.BlockStmt {
-   216  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:7:68
-   217  .  .  .  .  List: []ast.Stmt (len = 1) {
-   218  .  .  .  .  .  0: *ast.ReturnStmt {
-   219  .  .  .  .  .  .  Return: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:8:2
-   220  .  .  .  .  .  .  Results: []ast.Expr (len = 2) {
-   221  .  .  .  .  .  .  .  0: *ast.Ident {
-   222  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:8:9
-   223  .  .  .  .  .  .  .  .  Name: "nil"
-   224  .  .  .  .  .  .  .  }
-   225  .  .  .  .  .  .  .  1: *ast.Ident {
-   226  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:8:14
-   227  .  .  .  .  .  .  .  .  Name: "nil"
-   228  .  .  .  .  .  .  .  }
-   229  .  .  .  .  .  .  }
-   230  .  .  .  .  .  }
-   231  .  .  .  .  }
-   232  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:1
-   233  .  .  .  }
-   234  .  .  }
-   235  .  .  2: *ast.FuncDecl {
-   236  .  .  .  Name: *ast.Ident {
-   237  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:11:6
-   238  .  .  .  .  Name: "DoubleDifferenceTemplateFunc"
-   239  .  .  .  .  Obj: *ast.Object {
-   240  .  .  .  .  .  Kind: func
-   241  .  .  .  .  .  Name: "DoubleDifferenceTemplateFunc"
-   242  .  .  .  .  .  Decl: *(obj @ 235)
-   243  .  .  .  .  }
-   244  .  .  .  }
-   245  .  .  .  Type: *ast.FuncType {
-   246  .  .  .  .  Func: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:11:1
-   247  .  .  .  .  TypeParams: *ast.FieldList {
-   248  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:11:34
-   249  .  .  .  .  .  List: []*ast.Field (len = 2) {
-   250  .  .  .  .  .  .  0: *ast.Field {
-   251  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
-   252  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   253  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:11:35
-   254  .  .  .  .  .  .  .  .  .  Name: "T1"
-   255  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-   256  .  .  .  .  .  .  .  .  .  .  Kind: type
-   257  .  .  .  .  .  .  .  .  .  .  Name: "T1"
-   258  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 250)
-   259  .  .  .  .  .  .  .  .  .  }
-   260  .  .  .  .  .  .  .  .  }
-   261  .  .  .  .  .  .  .  }
-   262  .  .  .  .  .  .  .  Type: *ast.Ident {
-   263  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:11:38
-   264  .  .  .  .  .  .  .  .  Name: "any"
-   265  .  .  .  .  .  .  .  }
-   266  .  .  .  .  .  .  }
-   267  .  .  .  .  .  .  1: *ast.Field {
-   268  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
-   269  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   270  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:11:43
-   271  .  .  .  .  .  .  .  .  .  Name: "T2"
-   272  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-   273  .  .  .  .  .  .  .  .  .  .  Kind: type
-   274  .  .  .  .  .  .  .  .  .  .  Name: "T2"
-   275  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 267)
-   276  .  .  .  .  .  .  .  .  .  }
-   277  .  .  .  .  .  .  .  .  }
-   278  .  .  .  .  .  .  .  }
-   279  .  .  .  .  .  .  .  Type: *ast.Ident {
-   280  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:11:46
-   281  .  .  .  .  .  .  .  .  Name: "comparable"
-   282  .  .  .  .  .  .  .  }
-   283  .  .  .  .  .  .  }
-   284  .  .  .  .  .  }
-   285  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:11:56
-   286  .  .  .  .  }
-   287  .  .  .  .  Params: *ast.FieldList {
-   288  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:11:57
-   289  .  .  .  .  .  List: []*ast.Field (len = 2) {
-   290  .  .  .  .  .  .  0: *ast.Field {
-   291  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
-   292  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   293  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:11:58
-   294  .  .  .  .  .  .  .  .  .  Name: "tv1"
-   295  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-   296  .  .  .  .  .  .  .  .  .  .  Kind: var
-   297  .  .  .  .  .  .  .  .  .  .  Name: "tv1"
-   298  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 290)
-   299  .  .  .  .  .  .  .  .  .  }
-   300  .  .  .  .  .  .  .  .  }
-   301  .  .  .  .  .  .  .  }
-   302  .  .  .  .  .  .  .  Type: *ast.Ident {
-   303  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:11:62
-   304  .  .  .  .  .  .  .  .  Name: "T1"
-   305  .  .  .  .  .  .  .  .  Obj: *(obj @ 255)
-   306  .  .  .  .  .  .  .  }
-   307  .  .  .  .  .  .  }
-   308  .  .  .  .  .  .  1: *ast.Field {
-   309  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
-   310  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   311  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:11:66
-   312  .  .  .  .  .  .  .  .  .  Name: "tv2"
-   313  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-   314  .  .  .  .  .  .  .  .  .  .  Kind: var
-   315  .  .  .  .  .  .  .  .  .  .  Name: "tv2"
-   316  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 308)
-   317  .  .  .  .  .  .  .  .  .  }
-   318  .  .  .  .  .  .  .  .  }
-   319  .  .  .  .  .  .  .  }
-   320  .  .  .  .  .  .  .  Type: *ast.Ident {
-   321  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:11:70
-   322  .  .  .  .  .  .  .  .  Name: "T2"
-   323  .  .  .  .  .  .  .  .  Obj: *(obj @ 272)
-   324  .  .  .  .  .  .  .  }
-   325  .  .  .  .  .  .  }
-   326  .  .  .  .  .  }
-   327  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:11:72
-   328  .  .  .  .  }
-   329  .  .  .  .  Results: *ast.FieldList {
-   330  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:11:74
-   331  .  .  .  .  .  List: []*ast.Field (len = 2) {
-   332  .  .  .  .  .  .  0: *ast.Field {
-   333  .  .  .  .  .  .  .  Type: *ast.StarExpr {
-   334  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:11:75
-   335  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   336  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:11:76
-   337  .  .  .  .  .  .  .  .  .  Name: "T1"
-   338  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 255)
-   339  .  .  .  .  .  .  .  .  }
-   340  .  .  .  .  .  .  .  }
-   341  .  .  .  .  .  .  }
-   342  .  .  .  .  .  .  1: *ast.Field {
-   343  .  .  .  .  .  .  .  Type: *ast.StarExpr {
-   344  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:11:80
-   345  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   346  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:11:81
-   347  .  .  .  .  .  .  .  .  .  Name: "T2"
-   348  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 272)
-   349  .  .  .  .  .  .  .  .  }
-   350  .  .  .  .  .  .  .  }
-   351  .  .  .  .  .  .  }
-   352  .  .  .  .  .  }
-   353  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:11:83
-   354  .  .  .  .  }
-   355  .  .  .  }
-   356  .  .  .  Body: *ast.BlockStmt {
-   357  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:11:85
-   358  .  .  .  .  List: []ast.Stmt (len = 1) {
-   359  .  .  .  .  .  0: *ast.ReturnStmt {
-   360  .  .  .  .  .  .  Return: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:12:2
-   361  .  .  .  .  .  .  Results: []ast.Expr (len = 2) {
-   362  .  .  .  .  .  .  .  0: *ast.Ident {
-   363  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:12:9
-   364  .  .  .  .  .  .  .  .  Name: "nil"
-   365  .  .  .  .  .  .  .  }
-   366  .  .  .  .  .  .  .  1: *ast.Ident {
-   367  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:12:14
-   368  .  .  .  .  .  .  .  .  Name: "nil"
-   369  .  .  .  .  .  .  .  }
-   370  .  .  .  .  .  .  }
-   371  .  .  .  .  .  }
-   372  .  .  .  .  }
-   373  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:1
-   374  .  .  .  }
-   375  .  .  }
-   376  .  .  3: *ast.GenDecl {
-   377  .  .  .  TokPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:15:1
-   378  .  .  .  Tok: type
-   379  .  .  .  Lparen: -
-   380  .  .  .  Specs: []ast.Spec (len = 1) {
-   381  .  .  .  .  0: *ast.TypeSpec {
-   382  .  .  .  .  .  Name: *ast.Ident {
-   383  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:15:6
-   384  .  .  .  .  .  .  Name: "TypeConstraints"
-   385  .  .  .  .  .  .  Obj: *ast.Object {
-   386  .  .  .  .  .  .  .  Kind: type
-   387  .  .  .  .  .  .  .  Name: "TypeConstraints"
-   388  .  .  .  .  .  .  .  Decl: *(obj @ 381)
-   389  .  .  .  .  .  .  }
-   390  .  .  .  .  .  }
-   391  .  .  .  .  .  Assign: -
-   392  .  .  .  .  .  Type: *ast.InterfaceType {
-   393  .  .  .  .  .  .  Interface: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:15:22
-   394  .  .  .  .  .  .  Methods: *ast.FieldList {
-   395  .  .  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:15:32
-   396  .  .  .  .  .  .  .  List: []*ast.Field (len = 1) {
-   397  .  .  .  .  .  .  .  .  0: *ast.Field {
-   398  .  .  .  .  .  .  .  .  .  Type: *ast.BinaryExpr {
-   399  .  .  .  .  .  .  .  .  .  .  X: *ast.BinaryExpr {
-   400  .  .  .  .  .  .  .  .  .  .  .  X: *ast.BinaryExpr {
-   401  .  .  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   402  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:16:2
-   403  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "int8"
-   404  .  .  .  .  .  .  .  .  .  .  .  .  }
-   405  .  .  .  .  .  .  .  .  .  .  .  .  OpPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:16:7
-   406  .  .  .  .  .  .  .  .  .  .  .  .  Op: |
-   407  .  .  .  .  .  .  .  .  .  .  .  .  Y: *ast.Ident {
-   408  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:16:9
-   409  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "int16"
-   410  .  .  .  .  .  .  .  .  .  .  .  .  }
-   411  .  .  .  .  .  .  .  .  .  .  .  }
-   412  .  .  .  .  .  .  .  .  .  .  .  OpPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:16:15
-   413  .  .  .  .  .  .  .  .  .  .  .  Op: |
-   414  .  .  .  .  .  .  .  .  .  .  .  Y: *ast.Ident {
-   415  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:16:17
-   416  .  .  .  .  .  .  .  .  .  .  .  .  Name: "uint8"
-   417  .  .  .  .  .  .  .  .  .  .  .  }
-   418  .  .  .  .  .  .  .  .  .  .  }
-   419  .  .  .  .  .  .  .  .  .  .  OpPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:16:23
-   420  .  .  .  .  .  .  .  .  .  .  Op: |
-   421  .  .  .  .  .  .  .  .  .  .  Y: *ast.Ident {
-   422  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:16:25
-   423  .  .  .  .  .  .  .  .  .  .  .  Name: "uint16"
-   424  .  .  .  .  .  .  .  .  .  .  }
-   425  .  .  .  .  .  .  .  .  .  }
-   426  .  .  .  .  .  .  .  .  }
-   427  .  .  .  .  .  .  .  }
-   428  .  .  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:17:1
-   429  .  .  .  .  .  .  }
-   430  .  .  .  .  .  .  Incomplete: false
-   431  .  .  .  .  .  }
-   432  .  .  .  .  }
-   433  .  .  .  }
-   434  .  .  .  Rparen: -
-   435  .  .  }
-   436  .  .  4: *ast.FuncDecl {
-   437  .  .  .  Name: *ast.Ident {
-   438  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:19:6
-   439  .  .  .  .  Name: "TypeConstraintsTemplateFunc"
-   440  .  .  .  .  Obj: *ast.Object {
-   441  .  .  .  .  .  Kind: func
-   442  .  .  .  .  .  Name: "TypeConstraintsTemplateFunc"
-   443  .  .  .  .  .  Decl: *(obj @ 436)
-   444  .  .  .  .  }
-   445  .  .  .  }
-   446  .  .  .  Type: *ast.FuncType {
-   447  .  .  .  .  Func: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:19:1
-   448  .  .  .  .  TypeParams: *ast.FieldList {
-   449  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:19:33
-   450  .  .  .  .  .  List: []*ast.Field (len = 1) {
-   451  .  .  .  .  .  .  0: *ast.Field {
-   452  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
-   453  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   454  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:19:34
-   455  .  .  .  .  .  .  .  .  .  Name: "T"
-   456  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-   457  .  .  .  .  .  .  .  .  .  .  Kind: type
-   458  .  .  .  .  .  .  .  .  .  .  Name: "T"
-   459  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 451)
-   460  .  .  .  .  .  .  .  .  .  }
-   461  .  .  .  .  .  .  .  .  }
-   462  .  .  .  .  .  .  .  }
-   463  .  .  .  .  .  .  .  Type: *ast.Ident {
-   464  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:19:36
-   465  .  .  .  .  .  .  .  .  Name: "TypeConstraints"
-   466  .  .  .  .  .  .  .  .  Obj: *(obj @ 385)
-   467  .  .  .  .  .  .  .  }
-   468  .  .  .  .  .  .  }
-   469  .  .  .  .  .  }
-   470  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:19:51
-   471  .  .  .  .  }
-   472  .  .  .  .  Params: *ast.FieldList {
-   473  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:19:52
-   474  .  .  .  .  .  List: []*ast.Field (len = 1) {
-   475  .  .  .  .  .  .  0: *ast.Field {
-   476  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
-   477  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   478  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:19:53
-   479  .  .  .  .  .  .  .  .  .  Name: "tv"
-   480  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-   481  .  .  .  .  .  .  .  .  .  .  Kind: var
-   482  .  .  .  .  .  .  .  .  .  .  Name: "tv"
-   483  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 475)
-   484  .  .  .  .  .  .  .  .  .  }
-   485  .  .  .  .  .  .  .  .  }
-   486  .  .  .  .  .  .  .  }
-   487  .  .  .  .  .  .  .  Type: *ast.Ident {
-   488  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:19:56
-   489  .  .  .  .  .  .  .  .  Name: "T"
-   490  .  .  .  .  .  .  .  .  Obj: *(obj @ 456)
-   491  .  .  .  .  .  .  .  }
-   492  .  .  .  .  .  .  }
-   493  .  .  .  .  .  }
-   494  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:19:57
-   495  .  .  .  .  }
-   496  .  .  .  .  Results: *ast.FieldList {
-   497  .  .  .  .  .  Opening: -
-   498  .  .  .  .  .  List: []*ast.Field (len = 1) {
-   499  .  .  .  .  .  .  0: *ast.Field {
-   500  .  .  .  .  .  .  .  Type: *ast.StarExpr {
-   501  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:19:59
-   502  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   503  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:19:60
-   504  .  .  .  .  .  .  .  .  .  Name: "T"
-   505  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 456)
-   506  .  .  .  .  .  .  .  .  }
-   507  .  .  .  .  .  .  .  }
-   508  .  .  .  .  .  .  }
-   509  .  .  .  .  .  }
-   510  .  .  .  .  .  Closing: -
-   511  .  .  .  .  }
-   512  .  .  .  }
-   513  .  .  .  Body: *ast.BlockStmt {
-   514  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:19:62
-   515  .  .  .  .  List: []ast.Stmt (len = 1) {
-   516  .  .  .  .  .  0: *ast.ReturnStmt {
-   517  .  .  .  .  .  .  Return: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:20:2
-   518  .  .  .  .  .  .  Results: []ast.Expr (len = 1) {
-   519  .  .  .  .  .  .  .  0: *ast.Ident {
-   520  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:20:9
-   521  .  .  .  .  .  .  .  .  Name: "nil"
-   522  .  .  .  .  .  .  .  }
-   523  .  .  .  .  .  .  }
-   524  .  .  .  .  .  }
-   525  .  .  .  .  }
-   526  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:1
-   527  .  .  .  }
-   528  .  .  }
-   529  .  .  5: *ast.FuncDecl {
-   530  .  .  .  Name: *ast.Ident {
-   531  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:23:6
-   532  .  .  .  .  Name: "CannotInferTypeFunc1"
-   533  .  .  .  .  Obj: *ast.Object {
-   534  .  .  .  .  .  Kind: func
-   535  .  .  .  .  .  Name: "CannotInferTypeFunc1"
-   536  .  .  .  .  .  Decl: *(obj @ 529)
-   537  .  .  .  .  }
-   538  .  .  .  }
-   539  .  .  .  Type: *ast.FuncType {
-   540  .  .  .  .  Func: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:23:1
-   541  .  .  .  .  TypeParams: *ast.FieldList {
-   542  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:23:26
-   543  .  .  .  .  .  List: []*ast.Field (len = 1) {
-   544  .  .  .  .  .  .  0: *ast.Field {
-   545  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
-   546  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   547  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:23:27
-   548  .  .  .  .  .  .  .  .  .  Name: "T"
-   549  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-   550  .  .  .  .  .  .  .  .  .  .  Kind: type
-   551  .  .  .  .  .  .  .  .  .  .  Name: "T"
-   552  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 544)
-   553  .  .  .  .  .  .  .  .  .  }
-   554  .  .  .  .  .  .  .  .  }
-   555  .  .  .  .  .  .  .  }
-   556  .  .  .  .  .  .  .  Type: *ast.Ident {
-   557  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:23:29
-   558  .  .  .  .  .  .  .  .  Name: "any"
-   559  .  .  .  .  .  .  .  }
-   560  .  .  .  .  .  .  }
-   561  .  .  .  .  .  }
-   562  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:23:32
-   563  .  .  .  .  }
-   564  .  .  .  .  Params: *ast.FieldList {
-   565  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:23:33
-   566  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:23:34
-   567  .  .  .  .  }
-   568  .  .  .  }
-   569  .  .  .  Body: *ast.BlockStmt {
-   570  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:23:36
-   571  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:25:1
-   572  .  .  .  }
-   573  .  .  }
-   574  .  .  6: *ast.FuncDecl {
-   575  .  .  .  Name: *ast.Ident {
-   576  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:27:6
-   577  .  .  .  .  Name: "CannotInferTypeFunc2"
-   578  .  .  .  .  Obj: *ast.Object {
-   579  .  .  .  .  .  Kind: func
-   580  .  .  .  .  .  Name: "CannotInferTypeFunc2"
-   581  .  .  .  .  .  Decl: *(obj @ 574)
-   582  .  .  .  .  }
-   583  .  .  .  }
-   584  .  .  .  Type: *ast.FuncType {
-   585  .  .  .  .  Func: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:27:1
-   586  .  .  .  .  TypeParams: *ast.FieldList {
-   587  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:27:26
-   588  .  .  .  .  .  List: []*ast.Field (len = 2) {
-   589  .  .  .  .  .  .  0: *ast.Field {
-   590  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
-   591  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   592  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:27:27
-   593  .  .  .  .  .  .  .  .  .  Name: "K"
-   594  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-   595  .  .  .  .  .  .  .  .  .  .  Kind: type
-   596  .  .  .  .  .  .  .  .  .  .  Name: "K"
-   597  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 589)
-   598  .  .  .  .  .  .  .  .  .  }
-   599  .  .  .  .  .  .  .  .  }
-   600  .  .  .  .  .  .  .  }
-   601  .  .  .  .  .  .  .  Type: *ast.Ident {
-   602  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:27:29
-   603  .  .  .  .  .  .  .  .  Name: "comparable"
-   604  .  .  .  .  .  .  .  }
-   605  .  .  .  .  .  .  }
-   606  .  .  .  .  .  .  1: *ast.Field {
-   607  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
-   608  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   609  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:27:41
-   610  .  .  .  .  .  .  .  .  .  Name: "V"
-   611  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
-   612  .  .  .  .  .  .  .  .  .  .  Kind: type
-   613  .  .  .  .  .  .  .  .  .  .  Name: "V"
-   614  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 606)
-   615  .  .  .  .  .  .  .  .  .  }
-   616  .  .  .  .  .  .  .  .  }
-   617  .  .  .  .  .  .  .  }
-   618  .  .  .  .  .  .  .  Type: *ast.Ident {
-   619  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:27:43
-   620  .  .  .  .  .  .  .  .  Name: "any"
-   621  .  .  .  .  .  .  .  }
-   622  .  .  .  .  .  .  }
-   623  .  .  .  .  .  }
-   624  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:27:46
-   625  .  .  .  .  }
-   626  .  .  .  .  Params: *ast.FieldList {
-   627  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:27:47
-   628  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:27:48
-   629  .  .  .  .  }
-   630  .  .  .  .  Results: *ast.FieldList {
-   631  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:27:50
-   632  .  .  .  .  .  List: []*ast.Field (len = 2) {
-   633  .  .  .  .  .  .  0: *ast.Field {
-   634  .  .  .  .  .  .  .  Type: *ast.StarExpr {
-   635  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:27:51
-   636  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   637  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:27:52
-   638  .  .  .  .  .  .  .  .  .  Name: "K"
-   639  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 594)
-   640  .  .  .  .  .  .  .  .  }
+     6  .  Decls: []ast.Decl (len = 12) {
+     7  .  .  0: *ast.GenDecl {
+     8  .  .  .  TokPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:3:1
+     9  .  .  .  Tok: import
+    10  .  .  .  Lparen: -
+    11  .  .  .  Specs: []ast.Spec (len = 1) {
+    12  .  .  .  .  0: *ast.ImportSpec {
+    13  .  .  .  .  .  Name: *ast.Ident {
+    14  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:3:8
+    15  .  .  .  .  .  .  Name: "stpmap"
+    16  .  .  .  .  .  }
+    17  .  .  .  .  .  Path: *ast.BasicLit {
+    18  .  .  .  .  .  .  ValuePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:3:15
+    19  .  .  .  .  .  .  Kind: STRING
+    20  .  .  .  .  .  .  Value: "\"github.com/Mericusta/go-stp/map\""
+    21  .  .  .  .  .  }
+    22  .  .  .  .  .  EndPos: -
+    23  .  .  .  .  }
+    24  .  .  .  }
+    25  .  .  .  Rparen: -
+    26  .  .  }
+    27  .  .  1: *ast.FuncDecl {
+    28  .  .  .  Name: *ast.Ident {
+    29  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:6
+    30  .  .  .  .  Name: "OneTemplateFunc"
+    31  .  .  .  .  Obj: *ast.Object {
+    32  .  .  .  .  .  Kind: func
+    33  .  .  .  .  .  Name: "OneTemplateFunc"
+    34  .  .  .  .  .  Decl: *(obj @ 27)
+    35  .  .  .  .  }
+    36  .  .  .  }
+    37  .  .  .  Type: *ast.FuncType {
+    38  .  .  .  .  Func: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:1
+    39  .  .  .  .  TypeParams: *ast.FieldList {
+    40  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:21
+    41  .  .  .  .  .  List: []*ast.Field (len = 1) {
+    42  .  .  .  .  .  .  0: *ast.Field {
+    43  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+    44  .  .  .  .  .  .  .  .  0: *ast.Ident {
+    45  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:22
+    46  .  .  .  .  .  .  .  .  .  Name: "T"
+    47  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+    48  .  .  .  .  .  .  .  .  .  .  Kind: type
+    49  .  .  .  .  .  .  .  .  .  .  Name: "T"
+    50  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 42)
+    51  .  .  .  .  .  .  .  .  .  }
+    52  .  .  .  .  .  .  .  .  }
+    53  .  .  .  .  .  .  .  }
+    54  .  .  .  .  .  .  .  Type: *ast.Ident {
+    55  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:24
+    56  .  .  .  .  .  .  .  .  Name: "any"
+    57  .  .  .  .  .  .  .  }
+    58  .  .  .  .  .  .  }
+    59  .  .  .  .  .  }
+    60  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:27
+    61  .  .  .  .  }
+    62  .  .  .  .  Params: *ast.FieldList {
+    63  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:28
+    64  .  .  .  .  .  List: []*ast.Field (len = 1) {
+    65  .  .  .  .  .  .  0: *ast.Field {
+    66  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+    67  .  .  .  .  .  .  .  .  0: *ast.Ident {
+    68  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:29
+    69  .  .  .  .  .  .  .  .  .  Name: "tv"
+    70  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+    71  .  .  .  .  .  .  .  .  .  .  Kind: var
+    72  .  .  .  .  .  .  .  .  .  .  Name: "tv"
+    73  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 65)
+    74  .  .  .  .  .  .  .  .  .  }
+    75  .  .  .  .  .  .  .  .  }
+    76  .  .  .  .  .  .  .  }
+    77  .  .  .  .  .  .  .  Type: *ast.StarExpr {
+    78  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:32
+    79  .  .  .  .  .  .  .  .  X: *ast.Ident {
+    80  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:33
+    81  .  .  .  .  .  .  .  .  .  Name: "T"
+    82  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 47)
+    83  .  .  .  .  .  .  .  .  }
+    84  .  .  .  .  .  .  .  }
+    85  .  .  .  .  .  .  }
+    86  .  .  .  .  .  }
+    87  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:34
+    88  .  .  .  .  }
+    89  .  .  .  .  Results: *ast.FieldList {
+    90  .  .  .  .  .  Opening: -
+    91  .  .  .  .  .  List: []*ast.Field (len = 1) {
+    92  .  .  .  .  .  .  0: *ast.Field {
+    93  .  .  .  .  .  .  .  Type: *ast.StarExpr {
+    94  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:36
+    95  .  .  .  .  .  .  .  .  X: *ast.Ident {
+    96  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:37
+    97  .  .  .  .  .  .  .  .  .  Name: "T"
+    98  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 47)
+    99  .  .  .  .  .  .  .  .  }
+   100  .  .  .  .  .  .  .  }
+   101  .  .  .  .  .  .  }
+   102  .  .  .  .  .  }
+   103  .  .  .  .  .  Closing: -
+   104  .  .  .  .  }
+   105  .  .  .  }
+   106  .  .  .  Body: *ast.BlockStmt {
+   107  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:39
+   108  .  .  .  .  List: []ast.Stmt (len = 1) {
+   109  .  .  .  .  .  0: *ast.ReturnStmt {
+   110  .  .  .  .  .  .  Return: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:6:2
+   111  .  .  .  .  .  .  Results: []ast.Expr (len = 1) {
+   112  .  .  .  .  .  .  .  0: *ast.Ident {
+   113  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:6:9
+   114  .  .  .  .  .  .  .  .  Name: "nil"
+   115  .  .  .  .  .  .  .  }
+   116  .  .  .  .  .  .  }
+   117  .  .  .  .  .  }
+   118  .  .  .  .  }
+   119  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:7:1
+   120  .  .  .  }
+   121  .  .  }
+   122  .  .  2: *ast.FuncDecl {
+   123  .  .  .  Name: *ast.Ident {
+   124  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:6
+   125  .  .  .  .  Name: "DoubleSameTemplateFunc"
+   126  .  .  .  .  Obj: *ast.Object {
+   127  .  .  .  .  .  Kind: func
+   128  .  .  .  .  .  Name: "DoubleSameTemplateFunc"
+   129  .  .  .  .  .  Decl: *(obj @ 122)
+   130  .  .  .  .  }
+   131  .  .  .  }
+   132  .  .  .  Type: *ast.FuncType {
+   133  .  .  .  .  Func: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:1
+   134  .  .  .  .  TypeParams: *ast.FieldList {
+   135  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:28
+   136  .  .  .  .  .  List: []*ast.Field (len = 1) {
+   137  .  .  .  .  .  .  0: *ast.Field {
+   138  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 2) {
+   139  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   140  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:29
+   141  .  .  .  .  .  .  .  .  .  Name: "T1"
+   142  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   143  .  .  .  .  .  .  .  .  .  .  Kind: type
+   144  .  .  .  .  .  .  .  .  .  .  Name: "T1"
+   145  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 137)
+   146  .  .  .  .  .  .  .  .  .  }
+   147  .  .  .  .  .  .  .  .  }
+   148  .  .  .  .  .  .  .  .  1: *ast.Ident {
+   149  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:33
+   150  .  .  .  .  .  .  .  .  .  Name: "T2"
+   151  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   152  .  .  .  .  .  .  .  .  .  .  Kind: type
+   153  .  .  .  .  .  .  .  .  .  .  Name: "T2"
+   154  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 137)
+   155  .  .  .  .  .  .  .  .  .  }
+   156  .  .  .  .  .  .  .  .  }
+   157  .  .  .  .  .  .  .  }
+   158  .  .  .  .  .  .  .  Type: *ast.Ident {
+   159  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:36
+   160  .  .  .  .  .  .  .  .  Name: "any"
+   161  .  .  .  .  .  .  .  }
+   162  .  .  .  .  .  .  }
+   163  .  .  .  .  .  }
+   164  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:39
+   165  .  .  .  .  }
+   166  .  .  .  .  Params: *ast.FieldList {
+   167  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:40
+   168  .  .  .  .  .  List: []*ast.Field (len = 2) {
+   169  .  .  .  .  .  .  0: *ast.Field {
+   170  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   171  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   172  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:41
+   173  .  .  .  .  .  .  .  .  .  Name: "tv1"
+   174  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   175  .  .  .  .  .  .  .  .  .  .  Kind: var
+   176  .  .  .  .  .  .  .  .  .  .  Name: "tv1"
+   177  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 169)
+   178  .  .  .  .  .  .  .  .  .  }
+   179  .  .  .  .  .  .  .  .  }
+   180  .  .  .  .  .  .  .  }
+   181  .  .  .  .  .  .  .  Type: *ast.Ident {
+   182  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:45
+   183  .  .  .  .  .  .  .  .  Name: "T1"
+   184  .  .  .  .  .  .  .  .  Obj: *(obj @ 142)
+   185  .  .  .  .  .  .  .  }
+   186  .  .  .  .  .  .  }
+   187  .  .  .  .  .  .  1: *ast.Field {
+   188  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   189  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   190  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:49
+   191  .  .  .  .  .  .  .  .  .  Name: "tv2"
+   192  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   193  .  .  .  .  .  .  .  .  .  .  Kind: var
+   194  .  .  .  .  .  .  .  .  .  .  Name: "tv2"
+   195  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 187)
+   196  .  .  .  .  .  .  .  .  .  }
+   197  .  .  .  .  .  .  .  .  }
+   198  .  .  .  .  .  .  .  }
+   199  .  .  .  .  .  .  .  Type: *ast.Ident {
+   200  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:53
+   201  .  .  .  .  .  .  .  .  Name: "T2"
+   202  .  .  .  .  .  .  .  .  Obj: *(obj @ 151)
+   203  .  .  .  .  .  .  .  }
+   204  .  .  .  .  .  .  }
+   205  .  .  .  .  .  }
+   206  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:55
+   207  .  .  .  .  }
+   208  .  .  .  .  Results: *ast.FieldList {
+   209  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:57
+   210  .  .  .  .  .  List: []*ast.Field (len = 2) {
+   211  .  .  .  .  .  .  0: *ast.Field {
+   212  .  .  .  .  .  .  .  Type: *ast.StarExpr {
+   213  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:58
+   214  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   215  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:59
+   216  .  .  .  .  .  .  .  .  .  Name: "T1"
+   217  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 142)
+   218  .  .  .  .  .  .  .  .  }
+   219  .  .  .  .  .  .  .  }
+   220  .  .  .  .  .  .  }
+   221  .  .  .  .  .  .  1: *ast.Field {
+   222  .  .  .  .  .  .  .  Type: *ast.StarExpr {
+   223  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:63
+   224  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   225  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:64
+   226  .  .  .  .  .  .  .  .  .  Name: "T2"
+   227  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 151)
+   228  .  .  .  .  .  .  .  .  }
+   229  .  .  .  .  .  .  .  }
+   230  .  .  .  .  .  .  }
+   231  .  .  .  .  .  }
+   232  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:66
+   233  .  .  .  .  }
+   234  .  .  .  }
+   235  .  .  .  Body: *ast.BlockStmt {
+   236  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:68
+   237  .  .  .  .  List: []ast.Stmt (len = 1) {
+   238  .  .  .  .  .  0: *ast.ReturnStmt {
+   239  .  .  .  .  .  .  Return: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:10:2
+   240  .  .  .  .  .  .  Results: []ast.Expr (len = 2) {
+   241  .  .  .  .  .  .  .  0: *ast.Ident {
+   242  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:10:9
+   243  .  .  .  .  .  .  .  .  Name: "nil"
+   244  .  .  .  .  .  .  .  }
+   245  .  .  .  .  .  .  .  1: *ast.Ident {
+   246  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:10:14
+   247  .  .  .  .  .  .  .  .  Name: "nil"
+   248  .  .  .  .  .  .  .  }
+   249  .  .  .  .  .  .  }
+   250  .  .  .  .  .  }
+   251  .  .  .  .  }
+   252  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:11:1
+   253  .  .  .  }
+   254  .  .  }
+   255  .  .  3: *ast.FuncDecl {
+   256  .  .  .  Name: *ast.Ident {
+   257  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:6
+   258  .  .  .  .  Name: "DoubleDifferenceTemplateFunc"
+   259  .  .  .  .  Obj: *ast.Object {
+   260  .  .  .  .  .  Kind: func
+   261  .  .  .  .  .  Name: "DoubleDifferenceTemplateFunc"
+   262  .  .  .  .  .  Decl: *(obj @ 255)
+   263  .  .  .  .  }
+   264  .  .  .  }
+   265  .  .  .  Type: *ast.FuncType {
+   266  .  .  .  .  Func: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:1
+   267  .  .  .  .  TypeParams: *ast.FieldList {
+   268  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:34
+   269  .  .  .  .  .  List: []*ast.Field (len = 2) {
+   270  .  .  .  .  .  .  0: *ast.Field {
+   271  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   272  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   273  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:35
+   274  .  .  .  .  .  .  .  .  .  Name: "T1"
+   275  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   276  .  .  .  .  .  .  .  .  .  .  Kind: type
+   277  .  .  .  .  .  .  .  .  .  .  Name: "T1"
+   278  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 270)
+   279  .  .  .  .  .  .  .  .  .  }
+   280  .  .  .  .  .  .  .  .  }
+   281  .  .  .  .  .  .  .  }
+   282  .  .  .  .  .  .  .  Type: *ast.Ident {
+   283  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:38
+   284  .  .  .  .  .  .  .  .  Name: "any"
+   285  .  .  .  .  .  .  .  }
+   286  .  .  .  .  .  .  }
+   287  .  .  .  .  .  .  1: *ast.Field {
+   288  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   289  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   290  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:43
+   291  .  .  .  .  .  .  .  .  .  Name: "T2"
+   292  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   293  .  .  .  .  .  .  .  .  .  .  Kind: type
+   294  .  .  .  .  .  .  .  .  .  .  Name: "T2"
+   295  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 287)
+   296  .  .  .  .  .  .  .  .  .  }
+   297  .  .  .  .  .  .  .  .  }
+   298  .  .  .  .  .  .  .  }
+   299  .  .  .  .  .  .  .  Type: *ast.Ident {
+   300  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:46
+   301  .  .  .  .  .  .  .  .  Name: "comparable"
+   302  .  .  .  .  .  .  .  }
+   303  .  .  .  .  .  .  }
+   304  .  .  .  .  .  }
+   305  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:56
+   306  .  .  .  .  }
+   307  .  .  .  .  Params: *ast.FieldList {
+   308  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:57
+   309  .  .  .  .  .  List: []*ast.Field (len = 2) {
+   310  .  .  .  .  .  .  0: *ast.Field {
+   311  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   312  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   313  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:58
+   314  .  .  .  .  .  .  .  .  .  Name: "tv1"
+   315  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   316  .  .  .  .  .  .  .  .  .  .  Kind: var
+   317  .  .  .  .  .  .  .  .  .  .  Name: "tv1"
+   318  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 310)
+   319  .  .  .  .  .  .  .  .  .  }
+   320  .  .  .  .  .  .  .  .  }
+   321  .  .  .  .  .  .  .  }
+   322  .  .  .  .  .  .  .  Type: *ast.Ident {
+   323  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:62
+   324  .  .  .  .  .  .  .  .  Name: "T1"
+   325  .  .  .  .  .  .  .  .  Obj: *(obj @ 275)
+   326  .  .  .  .  .  .  .  }
+   327  .  .  .  .  .  .  }
+   328  .  .  .  .  .  .  1: *ast.Field {
+   329  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   330  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   331  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:66
+   332  .  .  .  .  .  .  .  .  .  Name: "tv2"
+   333  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   334  .  .  .  .  .  .  .  .  .  .  Kind: var
+   335  .  .  .  .  .  .  .  .  .  .  Name: "tv2"
+   336  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 328)
+   337  .  .  .  .  .  .  .  .  .  }
+   338  .  .  .  .  .  .  .  .  }
+   339  .  .  .  .  .  .  .  }
+   340  .  .  .  .  .  .  .  Type: *ast.Ident {
+   341  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:70
+   342  .  .  .  .  .  .  .  .  Name: "T2"
+   343  .  .  .  .  .  .  .  .  Obj: *(obj @ 292)
+   344  .  .  .  .  .  .  .  }
+   345  .  .  .  .  .  .  }
+   346  .  .  .  .  .  }
+   347  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:72
+   348  .  .  .  .  }
+   349  .  .  .  .  Results: *ast.FieldList {
+   350  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:74
+   351  .  .  .  .  .  List: []*ast.Field (len = 2) {
+   352  .  .  .  .  .  .  0: *ast.Field {
+   353  .  .  .  .  .  .  .  Type: *ast.StarExpr {
+   354  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:75
+   355  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   356  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:76
+   357  .  .  .  .  .  .  .  .  .  Name: "T1"
+   358  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 275)
+   359  .  .  .  .  .  .  .  .  }
+   360  .  .  .  .  .  .  .  }
+   361  .  .  .  .  .  .  }
+   362  .  .  .  .  .  .  1: *ast.Field {
+   363  .  .  .  .  .  .  .  Type: *ast.StarExpr {
+   364  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:80
+   365  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   366  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:81
+   367  .  .  .  .  .  .  .  .  .  Name: "T2"
+   368  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 292)
+   369  .  .  .  .  .  .  .  .  }
+   370  .  .  .  .  .  .  .  }
+   371  .  .  .  .  .  .  }
+   372  .  .  .  .  .  }
+   373  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:83
+   374  .  .  .  .  }
+   375  .  .  .  }
+   376  .  .  .  Body: *ast.BlockStmt {
+   377  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:85
+   378  .  .  .  .  List: []ast.Stmt (len = 1) {
+   379  .  .  .  .  .  0: *ast.ReturnStmt {
+   380  .  .  .  .  .  .  Return: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:14:2
+   381  .  .  .  .  .  .  Results: []ast.Expr (len = 2) {
+   382  .  .  .  .  .  .  .  0: *ast.Ident {
+   383  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:14:9
+   384  .  .  .  .  .  .  .  .  Name: "nil"
+   385  .  .  .  .  .  .  .  }
+   386  .  .  .  .  .  .  .  1: *ast.Ident {
+   387  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:14:14
+   388  .  .  .  .  .  .  .  .  Name: "nil"
+   389  .  .  .  .  .  .  .  }
+   390  .  .  .  .  .  .  }
+   391  .  .  .  .  .  }
+   392  .  .  .  .  }
+   393  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:15:1
+   394  .  .  .  }
+   395  .  .  }
+   396  .  .  4: *ast.GenDecl {
+   397  .  .  .  TokPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:17:1
+   398  .  .  .  Tok: type
+   399  .  .  .  Lparen: -
+   400  .  .  .  Specs: []ast.Spec (len = 1) {
+   401  .  .  .  .  0: *ast.TypeSpec {
+   402  .  .  .  .  .  Name: *ast.Ident {
+   403  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:17:6
+   404  .  .  .  .  .  .  Name: "TypeConstraints"
+   405  .  .  .  .  .  .  Obj: *ast.Object {
+   406  .  .  .  .  .  .  .  Kind: type
+   407  .  .  .  .  .  .  .  Name: "TypeConstraints"
+   408  .  .  .  .  .  .  .  Decl: *(obj @ 401)
+   409  .  .  .  .  .  .  }
+   410  .  .  .  .  .  }
+   411  .  .  .  .  .  Assign: -
+   412  .  .  .  .  .  Type: *ast.InterfaceType {
+   413  .  .  .  .  .  .  Interface: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:17:22
+   414  .  .  .  .  .  .  Methods: *ast.FieldList {
+   415  .  .  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:17:32
+   416  .  .  .  .  .  .  .  List: []*ast.Field (len = 1) {
+   417  .  .  .  .  .  .  .  .  0: *ast.Field {
+   418  .  .  .  .  .  .  .  .  .  Type: *ast.BinaryExpr {
+   419  .  .  .  .  .  .  .  .  .  .  X: *ast.BinaryExpr {
+   420  .  .  .  .  .  .  .  .  .  .  .  X: *ast.BinaryExpr {
+   421  .  .  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   422  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:18:2
+   423  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "int8"
+   424  .  .  .  .  .  .  .  .  .  .  .  .  }
+   425  .  .  .  .  .  .  .  .  .  .  .  .  OpPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:18:7
+   426  .  .  .  .  .  .  .  .  .  .  .  .  Op: |
+   427  .  .  .  .  .  .  .  .  .  .  .  .  Y: *ast.Ident {
+   428  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:18:9
+   429  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "int16"
+   430  .  .  .  .  .  .  .  .  .  .  .  .  }
+   431  .  .  .  .  .  .  .  .  .  .  .  }
+   432  .  .  .  .  .  .  .  .  .  .  .  OpPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:18:15
+   433  .  .  .  .  .  .  .  .  .  .  .  Op: |
+   434  .  .  .  .  .  .  .  .  .  .  .  Y: *ast.Ident {
+   435  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:18:17
+   436  .  .  .  .  .  .  .  .  .  .  .  .  Name: "uint8"
+   437  .  .  .  .  .  .  .  .  .  .  .  }
+   438  .  .  .  .  .  .  .  .  .  .  }
+   439  .  .  .  .  .  .  .  .  .  .  OpPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:18:23
+   440  .  .  .  .  .  .  .  .  .  .  Op: |
+   441  .  .  .  .  .  .  .  .  .  .  Y: *ast.Ident {
+   442  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:18:25
+   443  .  .  .  .  .  .  .  .  .  .  .  Name: "uint16"
+   444  .  .  .  .  .  .  .  .  .  .  }
+   445  .  .  .  .  .  .  .  .  .  }
+   446  .  .  .  .  .  .  .  .  }
+   447  .  .  .  .  .  .  .  }
+   448  .  .  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:19:1
+   449  .  .  .  .  .  .  }
+   450  .  .  .  .  .  .  Incomplete: false
+   451  .  .  .  .  .  }
+   452  .  .  .  .  }
+   453  .  .  .  }
+   454  .  .  .  Rparen: -
+   455  .  .  }
+   456  .  .  5: *ast.FuncDecl {
+   457  .  .  .  Name: *ast.Ident {
+   458  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:6
+   459  .  .  .  .  Name: "TypeConstraintsTemplateFunc"
+   460  .  .  .  .  Obj: *ast.Object {
+   461  .  .  .  .  .  Kind: func
+   462  .  .  .  .  .  Name: "TypeConstraintsTemplateFunc"
+   463  .  .  .  .  .  Decl: *(obj @ 456)
+   464  .  .  .  .  }
+   465  .  .  .  }
+   466  .  .  .  Type: *ast.FuncType {
+   467  .  .  .  .  Func: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:1
+   468  .  .  .  .  TypeParams: *ast.FieldList {
+   469  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:33
+   470  .  .  .  .  .  List: []*ast.Field (len = 1) {
+   471  .  .  .  .  .  .  0: *ast.Field {
+   472  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   473  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   474  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:34
+   475  .  .  .  .  .  .  .  .  .  Name: "T"
+   476  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   477  .  .  .  .  .  .  .  .  .  .  Kind: type
+   478  .  .  .  .  .  .  .  .  .  .  Name: "T"
+   479  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 471)
+   480  .  .  .  .  .  .  .  .  .  }
+   481  .  .  .  .  .  .  .  .  }
+   482  .  .  .  .  .  .  .  }
+   483  .  .  .  .  .  .  .  Type: *ast.Ident {
+   484  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:36
+   485  .  .  .  .  .  .  .  .  Name: "TypeConstraints"
+   486  .  .  .  .  .  .  .  .  Obj: *(obj @ 405)
+   487  .  .  .  .  .  .  .  }
+   488  .  .  .  .  .  .  }
+   489  .  .  .  .  .  }
+   490  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:51
+   491  .  .  .  .  }
+   492  .  .  .  .  Params: *ast.FieldList {
+   493  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:52
+   494  .  .  .  .  .  List: []*ast.Field (len = 1) {
+   495  .  .  .  .  .  .  0: *ast.Field {
+   496  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   497  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   498  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:53
+   499  .  .  .  .  .  .  .  .  .  Name: "tv"
+   500  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   501  .  .  .  .  .  .  .  .  .  .  Kind: var
+   502  .  .  .  .  .  .  .  .  .  .  Name: "tv"
+   503  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 495)
+   504  .  .  .  .  .  .  .  .  .  }
+   505  .  .  .  .  .  .  .  .  }
+   506  .  .  .  .  .  .  .  }
+   507  .  .  .  .  .  .  .  Type: *ast.Ident {
+   508  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:56
+   509  .  .  .  .  .  .  .  .  Name: "T"
+   510  .  .  .  .  .  .  .  .  Obj: *(obj @ 476)
+   511  .  .  .  .  .  .  .  }
+   512  .  .  .  .  .  .  }
+   513  .  .  .  .  .  }
+   514  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:57
+   515  .  .  .  .  }
+   516  .  .  .  .  Results: *ast.FieldList {
+   517  .  .  .  .  .  Opening: -
+   518  .  .  .  .  .  List: []*ast.Field (len = 1) {
+   519  .  .  .  .  .  .  0: *ast.Field {
+   520  .  .  .  .  .  .  .  Type: *ast.StarExpr {
+   521  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:59
+   522  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   523  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:60
+   524  .  .  .  .  .  .  .  .  .  Name: "T"
+   525  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 476)
+   526  .  .  .  .  .  .  .  .  }
+   527  .  .  .  .  .  .  .  }
+   528  .  .  .  .  .  .  }
+   529  .  .  .  .  .  }
+   530  .  .  .  .  .  Closing: -
+   531  .  .  .  .  }
+   532  .  .  .  }
+   533  .  .  .  Body: *ast.BlockStmt {
+   534  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:62
+   535  .  .  .  .  List: []ast.Stmt (len = 1) {
+   536  .  .  .  .  .  0: *ast.ReturnStmt {
+   537  .  .  .  .  .  .  Return: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:22:2
+   538  .  .  .  .  .  .  Results: []ast.Expr (len = 1) {
+   539  .  .  .  .  .  .  .  0: *ast.Ident {
+   540  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:22:9
+   541  .  .  .  .  .  .  .  .  Name: "nil"
+   542  .  .  .  .  .  .  .  }
+   543  .  .  .  .  .  .  }
+   544  .  .  .  .  .  }
+   545  .  .  .  .  }
+   546  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:23:1
+   547  .  .  .  }
+   548  .  .  }
+   549  .  .  6: *ast.FuncDecl {
+   550  .  .  .  Name: *ast.Ident {
+   551  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:25:6
+   552  .  .  .  .  Name: "CannotInferTypeFunc1"
+   553  .  .  .  .  Obj: *ast.Object {
+   554  .  .  .  .  .  Kind: func
+   555  .  .  .  .  .  Name: "CannotInferTypeFunc1"
+   556  .  .  .  .  .  Decl: *(obj @ 549)
+   557  .  .  .  .  }
+   558  .  .  .  }
+   559  .  .  .  Type: *ast.FuncType {
+   560  .  .  .  .  Func: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:25:1
+   561  .  .  .  .  TypeParams: *ast.FieldList {
+   562  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:25:26
+   563  .  .  .  .  .  List: []*ast.Field (len = 1) {
+   564  .  .  .  .  .  .  0: *ast.Field {
+   565  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   566  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   567  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:25:27
+   568  .  .  .  .  .  .  .  .  .  Name: "T"
+   569  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   570  .  .  .  .  .  .  .  .  .  .  Kind: type
+   571  .  .  .  .  .  .  .  .  .  .  Name: "T"
+   572  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 564)
+   573  .  .  .  .  .  .  .  .  .  }
+   574  .  .  .  .  .  .  .  .  }
+   575  .  .  .  .  .  .  .  }
+   576  .  .  .  .  .  .  .  Type: *ast.Ident {
+   577  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:25:29
+   578  .  .  .  .  .  .  .  .  Name: "any"
+   579  .  .  .  .  .  .  .  }
+   580  .  .  .  .  .  .  }
+   581  .  .  .  .  .  }
+   582  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:25:32
+   583  .  .  .  .  }
+   584  .  .  .  .  Params: *ast.FieldList {
+   585  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:25:33
+   586  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:25:34
+   587  .  .  .  .  }
+   588  .  .  .  }
+   589  .  .  .  Body: *ast.BlockStmt {
+   590  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:25:36
+   591  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:27:1
+   592  .  .  .  }
+   593  .  .  }
+   594  .  .  7: *ast.FuncDecl {
+   595  .  .  .  Name: *ast.Ident {
+   596  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:6
+   597  .  .  .  .  Name: "CannotInferTypeFunc2"
+   598  .  .  .  .  Obj: *ast.Object {
+   599  .  .  .  .  .  Kind: func
+   600  .  .  .  .  .  Name: "CannotInferTypeFunc2"
+   601  .  .  .  .  .  Decl: *(obj @ 594)
+   602  .  .  .  .  }
+   603  .  .  .  }
+   604  .  .  .  Type: *ast.FuncType {
+   605  .  .  .  .  Func: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:1
+   606  .  .  .  .  TypeParams: *ast.FieldList {
+   607  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:26
+   608  .  .  .  .  .  List: []*ast.Field (len = 2) {
+   609  .  .  .  .  .  .  0: *ast.Field {
+   610  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   611  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   612  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:27
+   613  .  .  .  .  .  .  .  .  .  Name: "K"
+   614  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   615  .  .  .  .  .  .  .  .  .  .  Kind: type
+   616  .  .  .  .  .  .  .  .  .  .  Name: "K"
+   617  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 609)
+   618  .  .  .  .  .  .  .  .  .  }
+   619  .  .  .  .  .  .  .  .  }
+   620  .  .  .  .  .  .  .  }
+   621  .  .  .  .  .  .  .  Type: *ast.Ident {
+   622  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:29
+   623  .  .  .  .  .  .  .  .  Name: "comparable"
+   624  .  .  .  .  .  .  .  }
+   625  .  .  .  .  .  .  }
+   626  .  .  .  .  .  .  1: *ast.Field {
+   627  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   628  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   629  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:41
+   630  .  .  .  .  .  .  .  .  .  Name: "V"
+   631  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   632  .  .  .  .  .  .  .  .  .  .  Kind: type
+   633  .  .  .  .  .  .  .  .  .  .  Name: "V"
+   634  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 626)
+   635  .  .  .  .  .  .  .  .  .  }
+   636  .  .  .  .  .  .  .  .  }
+   637  .  .  .  .  .  .  .  }
+   638  .  .  .  .  .  .  .  Type: *ast.Ident {
+   639  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:43
+   640  .  .  .  .  .  .  .  .  Name: "any"
    641  .  .  .  .  .  .  .  }
    642  .  .  .  .  .  .  }
-   643  .  .  .  .  .  .  1: *ast.Field {
-   644  .  .  .  .  .  .  .  Type: *ast.StarExpr {
-   645  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:27:55
-   646  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   647  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:27:56
-   648  .  .  .  .  .  .  .  .  .  Name: "V"
-   649  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 611)
-   650  .  .  .  .  .  .  .  .  }
-   651  .  .  .  .  .  .  .  }
-   652  .  .  .  .  .  .  }
-   653  .  .  .  .  .  }
-   654  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:27:57
-   655  .  .  .  .  }
-   656  .  .  .  }
-   657  .  .  .  Body: *ast.BlockStmt {
-   658  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:27:59
-   659  .  .  .  .  List: []ast.Stmt (len = 1) {
-   660  .  .  .  .  .  0: *ast.ReturnStmt {
-   661  .  .  .  .  .  .  Return: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:28:2
-   662  .  .  .  .  .  .  Results: []ast.Expr (len = 2) {
-   663  .  .  .  .  .  .  .  0: *ast.Ident {
-   664  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:28:9
-   665  .  .  .  .  .  .  .  .  Name: "nil"
-   666  .  .  .  .  .  .  .  }
-   667  .  .  .  .  .  .  .  1: *ast.Ident {
-   668  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:28:14
-   669  .  .  .  .  .  .  .  .  Name: "nil"
-   670  .  .  .  .  .  .  .  }
-   671  .  .  .  .  .  .  }
-   672  .  .  .  .  .  }
-   673  .  .  .  .  }
-   674  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:1
-   675  .  .  .  }
-   676  .  .  }
-   677  .  }
-   678  .  FileStart: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:1:1
-   679  .  FileEnd: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:4
-   680  .  Scope: *ast.Scope {
-   681  .  .  Objects: map[string]*ast.Object (len = 7) {
-   682  .  .  .  "TypeConstraints": *(obj @ 385)
-   683  .  .  .  "TypeConstraintsTemplateFunc": *(obj @ 440)
-   684  .  .  .  "CannotInferTypeFunc1": *(obj @ 533)
-   685  .  .  .  "CannotInferTypeFunc2": *(obj @ 578)
-   686  .  .  .  "OneTemplateFunc": *(obj @ 11)
-   687  .  .  .  "DoubleSameTemplateFunc": *(obj @ 106)
-   688  .  .  .  "DoubleDifferenceTemplateFunc": *(obj @ 239)
-   689  .  .  }
-   690  .  }
-   691  .  Unresolved: []*ast.Ident (len = 19) {
-   692  .  .  0: *(obj @ 34)
-   693  .  .  1: *(obj @ 92)
-   694  .  .  2: *(obj @ 138)
-   695  .  .  3: *(obj @ 221)
-   696  .  .  4: *(obj @ 225)
-   697  .  .  5: *(obj @ 262)
-   698  .  .  6: *(obj @ 279)
-   699  .  .  7: *(obj @ 362)
-   700  .  .  8: *(obj @ 366)
-   701  .  .  9: *(obj @ 401)
-   702  .  .  10: *(obj @ 407)
-   703  .  .  11: *(obj @ 414)
-   704  .  .  12: *(obj @ 421)
-   705  .  .  13: *(obj @ 519)
-   706  .  .  14: *(obj @ 556)
-   707  .  .  15: *(obj @ 601)
-   708  .  .  16: *(obj @ 618)
-   709  .  .  17: *(obj @ 663)
-   710  .  .  18: *(obj @ 667)
-   711  .  }
-   712  }
+   643  .  .  .  .  .  }
+   644  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:46
+   645  .  .  .  .  }
+   646  .  .  .  .  Params: *ast.FieldList {
+   647  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:47
+   648  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:48
+   649  .  .  .  .  }
+   650  .  .  .  .  Results: *ast.FieldList {
+   651  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:50
+   652  .  .  .  .  .  List: []*ast.Field (len = 2) {
+   653  .  .  .  .  .  .  0: *ast.Field {
+   654  .  .  .  .  .  .  .  Type: *ast.StarExpr {
+   655  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:51
+   656  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   657  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:52
+   658  .  .  .  .  .  .  .  .  .  Name: "K"
+   659  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 614)
+   660  .  .  .  .  .  .  .  .  }
+   661  .  .  .  .  .  .  .  }
+   662  .  .  .  .  .  .  }
+   663  .  .  .  .  .  .  1: *ast.Field {
+   664  .  .  .  .  .  .  .  Type: *ast.StarExpr {
+   665  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:55
+   666  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   667  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:56
+   668  .  .  .  .  .  .  .  .  .  Name: "V"
+   669  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 631)
+   670  .  .  .  .  .  .  .  .  }
+   671  .  .  .  .  .  .  .  }
+   672  .  .  .  .  .  .  }
+   673  .  .  .  .  .  }
+   674  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:57
+   675  .  .  .  .  }
+   676  .  .  .  }
+   677  .  .  .  Body: *ast.BlockStmt {
+   678  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:59
+   679  .  .  .  .  List: []ast.Stmt (len = 1) {
+   680  .  .  .  .  .  0: *ast.ReturnStmt {
+   681  .  .  .  .  .  .  Return: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:30:2
+   682  .  .  .  .  .  .  Results: []ast.Expr (len = 2) {
+   683  .  .  .  .  .  .  .  0: *ast.Ident {
+   684  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:30:9
+   685  .  .  .  .  .  .  .  .  Name: "nil"
+   686  .  .  .  .  .  .  .  }
+   687  .  .  .  .  .  .  .  1: *ast.Ident {
+   688  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:30:14
+   689  .  .  .  .  .  .  .  .  Name: "nil"
+   690  .  .  .  .  .  .  .  }
+   691  .  .  .  .  .  .  }
+   692  .  .  .  .  .  }
+   693  .  .  .  .  }
+   694  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:31:1
+   695  .  .  .  }
+   696  .  .  }
+   697  .  .  8: *ast.GenDecl {
+   698  .  .  .  TokPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:33:1
+   699  .  .  .  Tok: type
+   700  .  .  .  Lparen: -
+   701  .  .  .  Specs: []ast.Spec (len = 1) {
+   702  .  .  .  .  0: *ast.TypeSpec {
+   703  .  .  .  .  .  Name: *ast.Ident {
+   704  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:33:6
+   705  .  .  .  .  .  .  Name: "TemplateStruct"
+   706  .  .  .  .  .  .  Obj: *ast.Object {
+   707  .  .  .  .  .  .  .  Kind: type
+   708  .  .  .  .  .  .  .  Name: "TemplateStruct"
+   709  .  .  .  .  .  .  .  Decl: *(obj @ 702)
+   710  .  .  .  .  .  .  }
+   711  .  .  .  .  .  }
+   712  .  .  .  .  .  TypeParams: *ast.FieldList {
+   713  .  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:33:20
+   714  .  .  .  .  .  .  List: []*ast.Field (len = 1) {
+   715  .  .  .  .  .  .  .  0: *ast.Field {
+   716  .  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   717  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   718  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:33:21
+   719  .  .  .  .  .  .  .  .  .  .  Name: "T"
+   720  .  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   721  .  .  .  .  .  .  .  .  .  .  .  Kind: type
+   722  .  .  .  .  .  .  .  .  .  .  .  Name: "T"
+   723  .  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 715)
+   724  .  .  .  .  .  .  .  .  .  .  }
+   725  .  .  .  .  .  .  .  .  .  }
+   726  .  .  .  .  .  .  .  .  }
+   727  .  .  .  .  .  .  .  .  Type: *ast.Ident {
+   728  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:33:23
+   729  .  .  .  .  .  .  .  .  .  Name: "any"
+   730  .  .  .  .  .  .  .  .  }
+   731  .  .  .  .  .  .  .  }
+   732  .  .  .  .  .  .  }
+   733  .  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:33:26
+   734  .  .  .  .  .  }
+   735  .  .  .  .  .  Assign: -
+   736  .  .  .  .  .  Type: *ast.StructType {
+   737  .  .  .  .  .  .  Struct: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:33:28
+   738  .  .  .  .  .  .  Fields: *ast.FieldList {
+   739  .  .  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:33:35
+   740  .  .  .  .  .  .  .  List: []*ast.Field (len = 1) {
+   741  .  .  .  .  .  .  .  .  0: *ast.Field {
+   742  .  .  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   743  .  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   744  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:34:2
+   745  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
+   746  .  .  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   747  .  .  .  .  .  .  .  .  .  .  .  .  Kind: var
+   748  .  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
+   749  .  .  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 741)
+   750  .  .  .  .  .  .  .  .  .  .  .  }
+   751  .  .  .  .  .  .  .  .  .  .  }
+   752  .  .  .  .  .  .  .  .  .  }
+   753  .  .  .  .  .  .  .  .  .  Type: *ast.Ident {
+   754  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:34:4
+   755  .  .  .  .  .  .  .  .  .  .  Name: "T"
+   756  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 720)
+   757  .  .  .  .  .  .  .  .  .  }
+   758  .  .  .  .  .  .  .  .  }
+   759  .  .  .  .  .  .  .  }
+   760  .  .  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:35:1
+   761  .  .  .  .  .  .  }
+   762  .  .  .  .  .  .  Incomplete: false
+   763  .  .  .  .  .  }
+   764  .  .  .  .  }
+   765  .  .  .  }
+   766  .  .  .  Rparen: -
+   767  .  .  }
+   768  .  .  9: *ast.FuncDecl {
+   769  .  .  .  Recv: *ast.FieldList {
+   770  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:6
+   771  .  .  .  .  List: []*ast.Field (len = 1) {
+   772  .  .  .  .  .  0: *ast.Field {
+   773  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   774  .  .  .  .  .  .  .  0: *ast.Ident {
+   775  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:7
+   776  .  .  .  .  .  .  .  .  Name: "t"
+   777  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   778  .  .  .  .  .  .  .  .  .  Kind: var
+   779  .  .  .  .  .  .  .  .  .  Name: "t"
+   780  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 772)
+   781  .  .  .  .  .  .  .  .  }
+   782  .  .  .  .  .  .  .  }
+   783  .  .  .  .  .  .  }
+   784  .  .  .  .  .  .  Type: *ast.StarExpr {
+   785  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:9
+   786  .  .  .  .  .  .  .  X: *ast.IndexExpr {
+   787  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   788  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:10
+   789  .  .  .  .  .  .  .  .  .  Name: "TemplateStruct"
+   790  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 706)
+   791  .  .  .  .  .  .  .  .  }
+   792  .  .  .  .  .  .  .  .  Lbrack: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:24
+   793  .  .  .  .  .  .  .  .  Index: *ast.Ident {
+   794  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:25
+   795  .  .  .  .  .  .  .  .  .  Name: "T"
+   796  .  .  .  .  .  .  .  .  }
+   797  .  .  .  .  .  .  .  .  Rbrack: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:26
+   798  .  .  .  .  .  .  .  }
+   799  .  .  .  .  .  .  }
+   800  .  .  .  .  .  }
+   801  .  .  .  .  }
+   802  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:27
+   803  .  .  .  }
+   804  .  .  .  Name: *ast.Ident {
+   805  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:29
+   806  .  .  .  .  Name: "V"
+   807  .  .  .  }
+   808  .  .  .  Type: *ast.FuncType {
+   809  .  .  .  .  Func: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:1
+   810  .  .  .  .  Params: *ast.FieldList {
+   811  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:30
+   812  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:31
+   813  .  .  .  .  }
+   814  .  .  .  .  Results: *ast.FieldList {
+   815  .  .  .  .  .  Opening: -
+   816  .  .  .  .  .  List: []*ast.Field (len = 1) {
+   817  .  .  .  .  .  .  0: *ast.Field {
+   818  .  .  .  .  .  .  .  Type: *ast.Ident {
+   819  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:33
+   820  .  .  .  .  .  .  .  .  Name: "T"
+   821  .  .  .  .  .  .  .  }
+   822  .  .  .  .  .  .  }
+   823  .  .  .  .  .  }
+   824  .  .  .  .  .  Closing: -
+   825  .  .  .  .  }
+   826  .  .  .  }
+   827  .  .  .  Body: *ast.BlockStmt {
+   828  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:35
+   829  .  .  .  .  List: []ast.Stmt (len = 1) {
+   830  .  .  .  .  .  0: *ast.ReturnStmt {
+   831  .  .  .  .  .  .  Return: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:38:2
+   832  .  .  .  .  .  .  Results: []ast.Expr (len = 1) {
+   833  .  .  .  .  .  .  .  0: *ast.SelectorExpr {
+   834  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   835  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:38:9
+   836  .  .  .  .  .  .  .  .  .  Name: "t"
+   837  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 777)
+   838  .  .  .  .  .  .  .  .  }
+   839  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+   840  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:38:11
+   841  .  .  .  .  .  .  .  .  .  Name: "v"
+   842  .  .  .  .  .  .  .  .  }
+   843  .  .  .  .  .  .  .  }
+   844  .  .  .  .  .  .  }
+   845  .  .  .  .  .  }
+   846  .  .  .  .  }
+   847  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:39:1
+   848  .  .  .  }
+   849  .  .  }
+   850  .  .  10: *ast.GenDecl {
+   851  .  .  .  TokPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:41:1
+   852  .  .  .  Tok: type
+   853  .  .  .  Lparen: -
+   854  .  .  .  Specs: []ast.Spec (len = 1) {
+   855  .  .  .  .  0: *ast.TypeSpec {
+   856  .  .  .  .  .  Name: *ast.Ident {
+   857  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:41:6
+   858  .  .  .  .  .  .  Name: "TwoTypeTemplateStruct"
+   859  .  .  .  .  .  .  Obj: *ast.Object {
+   860  .  .  .  .  .  .  .  Kind: type
+   861  .  .  .  .  .  .  .  Name: "TwoTypeTemplateStruct"
+   862  .  .  .  .  .  .  .  Decl: *(obj @ 855)
+   863  .  .  .  .  .  .  }
+   864  .  .  .  .  .  }
+   865  .  .  .  .  .  TypeParams: *ast.FieldList {
+   866  .  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:41:27
+   867  .  .  .  .  .  .  List: []*ast.Field (len = 2) {
+   868  .  .  .  .  .  .  .  0: *ast.Field {
+   869  .  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   870  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   871  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:41:28
+   872  .  .  .  .  .  .  .  .  .  .  Name: "K"
+   873  .  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   874  .  .  .  .  .  .  .  .  .  .  .  Kind: type
+   875  .  .  .  .  .  .  .  .  .  .  .  Name: "K"
+   876  .  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 868)
+   877  .  .  .  .  .  .  .  .  .  .  }
+   878  .  .  .  .  .  .  .  .  .  }
+   879  .  .  .  .  .  .  .  .  }
+   880  .  .  .  .  .  .  .  .  Type: *ast.Ident {
+   881  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:41:30
+   882  .  .  .  .  .  .  .  .  .  Name: "TypeConstraints"
+   883  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 405)
+   884  .  .  .  .  .  .  .  .  }
+   885  .  .  .  .  .  .  .  }
+   886  .  .  .  .  .  .  .  1: *ast.Field {
+   887  .  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   888  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   889  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:41:47
+   890  .  .  .  .  .  .  .  .  .  .  Name: "V"
+   891  .  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   892  .  .  .  .  .  .  .  .  .  .  .  Kind: type
+   893  .  .  .  .  .  .  .  .  .  .  .  Name: "V"
+   894  .  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 886)
+   895  .  .  .  .  .  .  .  .  .  .  }
+   896  .  .  .  .  .  .  .  .  .  }
+   897  .  .  .  .  .  .  .  .  }
+   898  .  .  .  .  .  .  .  .  Type: *ast.Ident {
+   899  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:41:49
+   900  .  .  .  .  .  .  .  .  .  Name: "any"
+   901  .  .  .  .  .  .  .  .  }
+   902  .  .  .  .  .  .  .  }
+   903  .  .  .  .  .  .  }
+   904  .  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:41:52
+   905  .  .  .  .  .  }
+   906  .  .  .  .  .  Assign: -
+   907  .  .  .  .  .  Type: *ast.StructType {
+   908  .  .  .  .  .  .  Struct: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:41:54
+   909  .  .  .  .  .  .  Fields: *ast.FieldList {
+   910  .  .  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:41:61
+   911  .  .  .  .  .  .  .  List: []*ast.Field (len = 1) {
+   912  .  .  .  .  .  .  .  .  0: *ast.Field {
+   913  .  .  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   914  .  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   915  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:42:2
+   916  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
+   917  .  .  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   918  .  .  .  .  .  .  .  .  .  .  .  .  Kind: var
+   919  .  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
+   920  .  .  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 912)
+   921  .  .  .  .  .  .  .  .  .  .  .  }
+   922  .  .  .  .  .  .  .  .  .  .  }
+   923  .  .  .  .  .  .  .  .  .  }
+   924  .  .  .  .  .  .  .  .  .  Type: *ast.MapType {
+   925  .  .  .  .  .  .  .  .  .  .  Map: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:42:4
+   926  .  .  .  .  .  .  .  .  .  .  Key: *ast.Ident {
+   927  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:42:8
+   928  .  .  .  .  .  .  .  .  .  .  .  Name: "K"
+   929  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 873)
+   930  .  .  .  .  .  .  .  .  .  .  }
+   931  .  .  .  .  .  .  .  .  .  .  Value: *ast.Ident {
+   932  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:42:10
+   933  .  .  .  .  .  .  .  .  .  .  .  Name: "V"
+   934  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 891)
+   935  .  .  .  .  .  .  .  .  .  .  }
+   936  .  .  .  .  .  .  .  .  .  }
+   937  .  .  .  .  .  .  .  .  }
+   938  .  .  .  .  .  .  .  }
+   939  .  .  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:43:1
+   940  .  .  .  .  .  .  }
+   941  .  .  .  .  .  .  Incomplete: false
+   942  .  .  .  .  .  }
+   943  .  .  .  .  }
+   944  .  .  .  }
+   945  .  .  .  Rparen: -
+   946  .  .  }
+   947  .  .  11: *ast.FuncDecl {
+   948  .  .  .  Recv: *ast.FieldList {
+   949  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:6
+   950  .  .  .  .  List: []*ast.Field (len = 1) {
+   951  .  .  .  .  .  0: *ast.Field {
+   952  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   953  .  .  .  .  .  .  .  0: *ast.Ident {
+   954  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:7
+   955  .  .  .  .  .  .  .  .  Name: "t"
+   956  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   957  .  .  .  .  .  .  .  .  .  Kind: var
+   958  .  .  .  .  .  .  .  .  .  Name: "t"
+   959  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 951)
+   960  .  .  .  .  .  .  .  .  }
+   961  .  .  .  .  .  .  .  }
+   962  .  .  .  .  .  .  }
+   963  .  .  .  .  .  .  Type: *ast.StarExpr {
+   964  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:9
+   965  .  .  .  .  .  .  .  X: *ast.IndexListExpr {
+   966  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   967  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:10
+   968  .  .  .  .  .  .  .  .  .  Name: "TwoTypeTemplateStruct"
+   969  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 859)
+   970  .  .  .  .  .  .  .  .  }
+   971  .  .  .  .  .  .  .  .  Lbrack: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:31
+   972  .  .  .  .  .  .  .  .  Indices: []ast.Expr (len = 2) {
+   973  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   974  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:32
+   975  .  .  .  .  .  .  .  .  .  .  Name: "K"
+   976  .  .  .  .  .  .  .  .  .  }
+   977  .  .  .  .  .  .  .  .  .  1: *ast.Ident {
+   978  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:35
+   979  .  .  .  .  .  .  .  .  .  .  Name: "V"
+   980  .  .  .  .  .  .  .  .  .  }
+   981  .  .  .  .  .  .  .  .  }
+   982  .  .  .  .  .  .  .  .  Rbrack: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:36
+   983  .  .  .  .  .  .  .  }
+   984  .  .  .  .  .  .  }
+   985  .  .  .  .  .  }
+   986  .  .  .  .  }
+   987  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:37
+   988  .  .  .  }
+   989  .  .  .  Name: *ast.Ident {
+   990  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:39
+   991  .  .  .  .  Name: "KVSlice"
+   992  .  .  .  }
+   993  .  .  .  Type: *ast.FuncType {
+   994  .  .  .  .  Func: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:1
+   995  .  .  .  .  Params: *ast.FieldList {
+   996  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:46
+   997  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:47
+   998  .  .  .  .  }
+   999  .  .  .  .  Results: *ast.FieldList {
+  1000  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:49
+  1001  .  .  .  .  .  List: []*ast.Field (len = 2) {
+  1002  .  .  .  .  .  .  0: *ast.Field {
+  1003  .  .  .  .  .  .  .  Type: *ast.ArrayType {
+  1004  .  .  .  .  .  .  .  .  Lbrack: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:50
+  1005  .  .  .  .  .  .  .  .  Elt: *ast.Ident {
+  1006  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:52
+  1007  .  .  .  .  .  .  .  .  .  Name: "K"
+  1008  .  .  .  .  .  .  .  .  }
+  1009  .  .  .  .  .  .  .  }
+  1010  .  .  .  .  .  .  }
+  1011  .  .  .  .  .  .  1: *ast.Field {
+  1012  .  .  .  .  .  .  .  Type: *ast.ArrayType {
+  1013  .  .  .  .  .  .  .  .  Lbrack: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:55
+  1014  .  .  .  .  .  .  .  .  Elt: *ast.Ident {
+  1015  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:57
+  1016  .  .  .  .  .  .  .  .  .  Name: "V"
+  1017  .  .  .  .  .  .  .  .  }
+  1018  .  .  .  .  .  .  .  }
+  1019  .  .  .  .  .  .  }
+  1020  .  .  .  .  .  }
+  1021  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:58
+  1022  .  .  .  .  }
+  1023  .  .  .  }
+  1024  .  .  .  Body: *ast.BlockStmt {
+  1025  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:60
+  1026  .  .  .  .  List: []ast.Stmt (len = 3) {
+  1027  .  .  .  .  .  0: *ast.AssignStmt {
+  1028  .  .  .  .  .  .  Lhs: []ast.Expr (len = 1) {
+  1029  .  .  .  .  .  .  .  0: *ast.Ident {
+  1030  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:2
+  1031  .  .  .  .  .  .  .  .  Name: "vs"
+  1032  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+  1033  .  .  .  .  .  .  .  .  .  Kind: var
+  1034  .  .  .  .  .  .  .  .  .  Name: "vs"
+  1035  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 1027)
+  1036  .  .  .  .  .  .  .  .  }
+  1037  .  .  .  .  .  .  .  }
+  1038  .  .  .  .  .  .  }
+  1039  .  .  .  .  .  .  TokPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:5
+  1040  .  .  .  .  .  .  Tok: :=
+  1041  .  .  .  .  .  .  Rhs: []ast.Expr (len = 1) {
+  1042  .  .  .  .  .  .  .  0: *ast.CallExpr {
+  1043  .  .  .  .  .  .  .  .  Fun: *ast.Ident {
+  1044  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:8
+  1045  .  .  .  .  .  .  .  .  .  Name: "make"
+  1046  .  .  .  .  .  .  .  .  }
+  1047  .  .  .  .  .  .  .  .  Lparen: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:12
+  1048  .  .  .  .  .  .  .  .  Args: []ast.Expr (len = 3) {
+  1049  .  .  .  .  .  .  .  .  .  0: *ast.ArrayType {
+  1050  .  .  .  .  .  .  .  .  .  .  Lbrack: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:13
+  1051  .  .  .  .  .  .  .  .  .  .  Elt: *ast.Ident {
+  1052  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:15
+  1053  .  .  .  .  .  .  .  .  .  .  .  Name: "V"
+  1054  .  .  .  .  .  .  .  .  .  .  }
+  1055  .  .  .  .  .  .  .  .  .  }
+  1056  .  .  .  .  .  .  .  .  .  1: *ast.BasicLit {
+  1057  .  .  .  .  .  .  .  .  .  .  ValuePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:18
+  1058  .  .  .  .  .  .  .  .  .  .  Kind: INT
+  1059  .  .  .  .  .  .  .  .  .  .  Value: "0"
+  1060  .  .  .  .  .  .  .  .  .  }
+  1061  .  .  .  .  .  .  .  .  .  2: *ast.CallExpr {
+  1062  .  .  .  .  .  .  .  .  .  .  Fun: *ast.Ident {
+  1063  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:21
+  1064  .  .  .  .  .  .  .  .  .  .  .  Name: "len"
+  1065  .  .  .  .  .  .  .  .  .  .  }
+  1066  .  .  .  .  .  .  .  .  .  .  Lparen: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:24
+  1067  .  .  .  .  .  .  .  .  .  .  Args: []ast.Expr (len = 1) {
+  1068  .  .  .  .  .  .  .  .  .  .  .  0: *ast.SelectorExpr {
+  1069  .  .  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
+  1070  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:25
+  1071  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "t"
+  1072  .  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 956)
+  1073  .  .  .  .  .  .  .  .  .  .  .  .  }
+  1074  .  .  .  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+  1075  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:27
+  1076  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
+  1077  .  .  .  .  .  .  .  .  .  .  .  .  }
+  1078  .  .  .  .  .  .  .  .  .  .  .  }
+  1079  .  .  .  .  .  .  .  .  .  .  }
+  1080  .  .  .  .  .  .  .  .  .  .  Ellipsis: -
+  1081  .  .  .  .  .  .  .  .  .  .  Rparen: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:28
+  1082  .  .  .  .  .  .  .  .  .  }
+  1083  .  .  .  .  .  .  .  .  }
+  1084  .  .  .  .  .  .  .  .  Ellipsis: -
+  1085  .  .  .  .  .  .  .  .  Rparen: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:29
+  1086  .  .  .  .  .  .  .  }
+  1087  .  .  .  .  .  .  }
+  1088  .  .  .  .  .  }
+  1089  .  .  .  .  .  1: *ast.RangeStmt {
+  1090  .  .  .  .  .  .  For: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:47:2
+  1091  .  .  .  .  .  .  Key: *ast.Ident {
+  1092  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:47:6
+  1093  .  .  .  .  .  .  .  Name: "_"
+  1094  .  .  .  .  .  .  .  Obj: *ast.Object {
+  1095  .  .  .  .  .  .  .  .  Kind: var
+  1096  .  .  .  .  .  .  .  .  Name: "_"
+  1097  .  .  .  .  .  .  .  .  Decl: *ast.AssignStmt {
+  1098  .  .  .  .  .  .  .  .  .  Lhs: []ast.Expr (len = 2) {
+  1099  .  .  .  .  .  .  .  .  .  .  0: *(obj @ 1091)
+  1100  .  .  .  .  .  .  .  .  .  .  1: *ast.Ident {
+  1101  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:47:9
+  1102  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
+  1103  .  .  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+  1104  .  .  .  .  .  .  .  .  .  .  .  .  Kind: var
+  1105  .  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
+  1106  .  .  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 1097)
+  1107  .  .  .  .  .  .  .  .  .  .  .  }
+  1108  .  .  .  .  .  .  .  .  .  .  }
+  1109  .  .  .  .  .  .  .  .  .  }
+  1110  .  .  .  .  .  .  .  .  .  TokPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:47:11
+  1111  .  .  .  .  .  .  .  .  .  Tok: :=
+  1112  .  .  .  .  .  .  .  .  .  Rhs: []ast.Expr (len = 1) {
+  1113  .  .  .  .  .  .  .  .  .  .  0: *ast.UnaryExpr {
+  1114  .  .  .  .  .  .  .  .  .  .  .  OpPos: -
+  1115  .  .  .  .  .  .  .  .  .  .  .  Op: range
+  1116  .  .  .  .  .  .  .  .  .  .  .  X: *ast.SelectorExpr {
+  1117  .  .  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
+  1118  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:47:20
+  1119  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "t"
+  1120  .  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 956)
+  1121  .  .  .  .  .  .  .  .  .  .  .  .  }
+  1122  .  .  .  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+  1123  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:47:22
+  1124  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
+  1125  .  .  .  .  .  .  .  .  .  .  .  .  }
+  1126  .  .  .  .  .  .  .  .  .  .  .  }
+  1127  .  .  .  .  .  .  .  .  .  .  }
+  1128  .  .  .  .  .  .  .  .  .  }
+  1129  .  .  .  .  .  .  .  .  }
+  1130  .  .  .  .  .  .  .  }
+  1131  .  .  .  .  .  .  }
+  1132  .  .  .  .  .  .  Value: *(obj @ 1100)
+  1133  .  .  .  .  .  .  TokPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:47:11
+  1134  .  .  .  .  .  .  Tok: :=
+  1135  .  .  .  .  .  .  Range: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:47:14
+  1136  .  .  .  .  .  .  X: *(obj @ 1116)
+  1137  .  .  .  .  .  .  Body: *ast.BlockStmt {
+  1138  .  .  .  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:47:24
+  1139  .  .  .  .  .  .  .  List: []ast.Stmt (len = 1) {
+  1140  .  .  .  .  .  .  .  .  0: *ast.AssignStmt {
+  1141  .  .  .  .  .  .  .  .  .  Lhs: []ast.Expr (len = 1) {
+  1142  .  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
+  1143  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:48:3
+  1144  .  .  .  .  .  .  .  .  .  .  .  Name: "vs"
+  1145  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 1032)
+  1146  .  .  .  .  .  .  .  .  .  .  }
+  1147  .  .  .  .  .  .  .  .  .  }
+  1148  .  .  .  .  .  .  .  .  .  TokPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:48:6
+  1149  .  .  .  .  .  .  .  .  .  Tok: =
+  1150  .  .  .  .  .  .  .  .  .  Rhs: []ast.Expr (len = 1) {
+  1151  .  .  .  .  .  .  .  .  .  .  0: *ast.CallExpr {
+  1152  .  .  .  .  .  .  .  .  .  .  .  Fun: *ast.Ident {
+  1153  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:48:8
+  1154  .  .  .  .  .  .  .  .  .  .  .  .  Name: "append"
+  1155  .  .  .  .  .  .  .  .  .  .  .  }
+  1156  .  .  .  .  .  .  .  .  .  .  .  Lparen: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:48:14
+  1157  .  .  .  .  .  .  .  .  .  .  .  Args: []ast.Expr (len = 2) {
+  1158  .  .  .  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
+  1159  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:48:15
+  1160  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "vs"
+  1161  .  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 1032)
+  1162  .  .  .  .  .  .  .  .  .  .  .  .  }
+  1163  .  .  .  .  .  .  .  .  .  .  .  .  1: *ast.Ident {
+  1164  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:48:19
+  1165  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
+  1166  .  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 1103)
+  1167  .  .  .  .  .  .  .  .  .  .  .  .  }
+  1168  .  .  .  .  .  .  .  .  .  .  .  }
+  1169  .  .  .  .  .  .  .  .  .  .  .  Ellipsis: -
+  1170  .  .  .  .  .  .  .  .  .  .  .  Rparen: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:48:20
+  1171  .  .  .  .  .  .  .  .  .  .  }
+  1172  .  .  .  .  .  .  .  .  .  }
+  1173  .  .  .  .  .  .  .  .  }
+  1174  .  .  .  .  .  .  .  }
+  1175  .  .  .  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:49:2
+  1176  .  .  .  .  .  .  }
+  1177  .  .  .  .  .  }
+  1178  .  .  .  .  .  2: *ast.ReturnStmt {
+  1179  .  .  .  .  .  .  Return: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:50:2
+  1180  .  .  .  .  .  .  Results: []ast.Expr (len = 2) {
+  1181  .  .  .  .  .  .  .  0: *ast.CallExpr {
+  1182  .  .  .  .  .  .  .  .  Fun: *ast.SelectorExpr {
+  1183  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
+  1184  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:50:9
+  1185  .  .  .  .  .  .  .  .  .  .  Name: "stpmap"
+  1186  .  .  .  .  .  .  .  .  .  }
+  1187  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+  1188  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:50:16
+  1189  .  .  .  .  .  .  .  .  .  .  Name: "Key"
+  1190  .  .  .  .  .  .  .  .  .  }
+  1191  .  .  .  .  .  .  .  .  }
+  1192  .  .  .  .  .  .  .  .  Lparen: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:50:19
+  1193  .  .  .  .  .  .  .  .  Args: []ast.Expr (len = 1) {
+  1194  .  .  .  .  .  .  .  .  .  0: *ast.SelectorExpr {
+  1195  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
+  1196  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:50:20
+  1197  .  .  .  .  .  .  .  .  .  .  .  Name: "t"
+  1198  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 956)
+  1199  .  .  .  .  .  .  .  .  .  .  }
+  1200  .  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+  1201  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:50:22
+  1202  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
+  1203  .  .  .  .  .  .  .  .  .  .  }
+  1204  .  .  .  .  .  .  .  .  .  }
+  1205  .  .  .  .  .  .  .  .  }
+  1206  .  .  .  .  .  .  .  .  Ellipsis: -
+  1207  .  .  .  .  .  .  .  .  Rparen: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:50:23
+  1208  .  .  .  .  .  .  .  }
+  1209  .  .  .  .  .  .  .  1: *ast.Ident {
+  1210  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:50:26
+  1211  .  .  .  .  .  .  .  .  Name: "vs"
+  1212  .  .  .  .  .  .  .  .  Obj: *(obj @ 1032)
+  1213  .  .  .  .  .  .  .  }
+  1214  .  .  .  .  .  .  }
+  1215  .  .  .  .  .  }
+  1216  .  .  .  .  }
+  1217  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:51:1
+  1218  .  .  .  }
+  1219  .  .  }
+  1220  .  }
+  1221  .  FileStart: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:1:1
+  1222  .  FileEnd: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:51:4
+  1223  .  Scope: *ast.Scope {
+  1224  .  .  Objects: map[string]*ast.Object (len = 9) {
+  1225  .  .  .  "TypeConstraintsTemplateFunc": *(obj @ 460)
+  1226  .  .  .  "CannotInferTypeFunc2": *(obj @ 598)
+  1227  .  .  .  "TwoTypeTemplateStruct": *(obj @ 859)
+  1228  .  .  .  "CannotInferTypeFunc1": *(obj @ 553)
+  1229  .  .  .  "TemplateStruct": *(obj @ 706)
+  1230  .  .  .  "OneTemplateFunc": *(obj @ 31)
+  1231  .  .  .  "DoubleSameTemplateFunc": *(obj @ 126)
+  1232  .  .  .  "DoubleDifferenceTemplateFunc": *(obj @ 259)
+  1233  .  .  .  "TypeConstraints": *(obj @ 405)
+  1234  .  .  }
+  1235  .  }
+  1236  .  Imports: []*ast.ImportSpec (len = 1) {
+  1237  .  .  0: *(obj @ 12)
+  1238  .  }
+  1239  .  Unresolved: []*ast.Ident (len = 25) {
+  1240  .  .  0: *(obj @ 54)
+  1241  .  .  1: *(obj @ 112)
+  1242  .  .  2: *(obj @ 158)
+  1243  .  .  3: *(obj @ 241)
+  1244  .  .  4: *(obj @ 245)
+  1245  .  .  5: *(obj @ 282)
+  1246  .  .  6: *(obj @ 299)
+  1247  .  .  7: *(obj @ 382)
+  1248  .  .  8: *(obj @ 386)
+  1249  .  .  9: *(obj @ 421)
+  1250  .  .  10: *(obj @ 427)
+  1251  .  .  11: *(obj @ 434)
+  1252  .  .  12: *(obj @ 441)
+  1253  .  .  13: *(obj @ 539)
+  1254  .  .  14: *(obj @ 576)
+  1255  .  .  15: *(obj @ 621)
+  1256  .  .  16: *(obj @ 638)
+  1257  .  .  17: *(obj @ 683)
+  1258  .  .  18: *(obj @ 687)
+  1259  .  .  19: *(obj @ 727)
+  1260  .  .  20: *(obj @ 898)
+  1261  .  .  21: *(obj @ 1043)
+  1262  .  .  22: *(obj @ 1062)
+  1263  .  .  23: *(obj @ 1152)
+  1264  .  .  24: *(obj @ 1183)
+  1265  .  }
+  1266  }

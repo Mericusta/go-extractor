@@ -36,21 +36,34 @@ type compareGoStructMeta struct {
 	Expression       string
 	StructName       string
 	Doc              []string
+	TypeParams       []*compareGoVariableMeta
 	StructMemberMeta map[string]*compareGoVariableMeta
 	StructMethodMeta map[string]*compareGoMethodMeta
 }
 
 type compareGoInterfaceMeta struct {
-	InterfaceName string
+	Expression          string
+	InterfaceName       string
+	Doc                 []string
+	TypeParams          []*compareGoVariableMeta
+	InterfaceMethodMeta map[string]*compareGoInterfaceMethodMeta
 }
 
-type compareGoFunctionMeta struct {
+type compareGoFunctionDeclMeta struct {
 	FunctionName string
 	Doc          []string
 	TypeParams   []*compareGoVariableMeta
 	Params       []*compareGoVariableMeta
 	ReturnTypes  []*compareGoVariableMeta
-	CallMeta     map[string][]*compareGoCallMeta
+}
+
+type compareGoInterfaceMethodMeta struct {
+	compareGoFunctionDeclMeta
+}
+
+type compareGoFunctionMeta struct {
+	compareGoFunctionDeclMeta
+	CallMeta map[string][]*compareGoCallMeta
 	// VarMeta map[string]
 }
 
@@ -126,7 +139,9 @@ var (
 				},
 				pkgFunctionMeta: map[string]*compareGoFunctionMeta{
 					"main": {
-						FunctionName: "main",
+						compareGoFunctionDeclMeta: compareGoFunctionDeclMeta{
+							FunctionName: "main",
+						},
 						CallMeta: map[string][]*compareGoCallMeta{
 							"pkg.ExampleFunc": {
 								{
@@ -205,7 +220,9 @@ var (
 						},
 					},
 					"Init": {
-						FunctionName: "Init",
+						compareGoFunctionDeclMeta: compareGoFunctionDeclMeta{
+							FunctionName: "Init",
+						},
 					},
 				},
 			},
@@ -222,17 +239,19 @@ var (
 				},
 				pkgFunctionMeta: map[string]*compareGoFunctionMeta{
 					"ExampleFunc": {
-						FunctionName: "ExampleFunc",
-						Doc: []string{
-							"// ExampleFunc this is example function",
-						},
-						Params: []*compareGoVariableMeta{
-							{
-								Expression:           `s *module.ExampleStruct`,
-								Name:                 "s",
-								TypeExpression:       "*module.ExampleStruct",
-								TypeUnderlyingString: "pointer",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+						compareGoFunctionDeclMeta: compareGoFunctionDeclMeta{
+							FunctionName: "ExampleFunc",
+							Doc: []string{
+								"// ExampleFunc this is example function",
+							},
+							Params: []*compareGoVariableMeta{
+								{
+									Expression:           `s *module.ExampleStruct`,
+									Name:                 "s",
+									TypeExpression:       "*module.ExampleStruct",
+									TypeUnderlyingString: "pointer",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+								},
 							},
 						},
 						CallMeta: map[string][]*compareGoCallMeta{
@@ -269,14 +288,16 @@ var (
 						},
 					},
 					"NoDocExampleFunc": {
-						FunctionName: "NoDocExampleFunc",
-						Params: []*compareGoVariableMeta{
-							{
-								Expression:           `s *module.ExampleStruct`,
-								Name:                 "s",
-								TypeExpression:       "*module.ExampleStruct",
-								TypeUnderlyingString: "pointer",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+						compareGoFunctionDeclMeta: compareGoFunctionDeclMeta{
+							FunctionName: "NoDocExampleFunc",
+							Params: []*compareGoVariableMeta{
+								{
+									Expression:           `s *module.ExampleStruct`,
+									Name:                 "s",
+									TypeExpression:       "*module.ExampleStruct",
+									TypeUnderlyingString: "pointer",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+								},
 							},
 						},
 						CallMeta: map[string][]*compareGoCallMeta{
@@ -313,14 +334,19 @@ var (
 						},
 					},
 					"OneLineDocExampleFunc": {
-						FunctionName: "OneLineDocExampleFunc",
-						Params: []*compareGoVariableMeta{
-							{
-								Expression:           `s *module.ExampleStruct`,
-								Name:                 "s",
-								TypeExpression:       "*module.ExampleStruct",
-								TypeUnderlyingString: "pointer",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+						compareGoFunctionDeclMeta: compareGoFunctionDeclMeta{
+							FunctionName: "OneLineDocExampleFunc",
+							Doc: []string{
+								"// OneLineDocExampleFunc this is one-line-doc example function",
+							},
+							Params: []*compareGoVariableMeta{
+								{
+									Expression:           `s *module.ExampleStruct`,
+									Name:                 "s",
+									TypeExpression:       "*module.ExampleStruct",
+									TypeUnderlyingString: "pointer",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+								},
 							},
 						},
 						CallMeta: map[string][]*compareGoCallMeta{
@@ -357,14 +383,16 @@ var (
 						},
 					},
 					"ImportSelectorFunc": {
-						FunctionName: "ImportSelectorFunc",
-						Params: []*compareGoVariableMeta{
-							{
-								Expression:           `s *module.ExampleStruct`,
-								Name:                 "s",
-								TypeExpression:       "*module.ExampleStruct",
-								TypeUnderlyingString: "pointer",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+						compareGoFunctionDeclMeta: compareGoFunctionDeclMeta{
+							FunctionName: "ImportSelectorFunc",
+							Params: []*compareGoVariableMeta{
+								{
+									Expression:           `s *module.ExampleStruct`,
+									Name:                 "s",
+									TypeExpression:       "*module.ExampleStruct",
+									TypeUnderlyingString: "pointer",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+								},
 							},
 						},
 						CallMeta: map[string][]*compareGoCallMeta{
@@ -442,6 +470,142 @@ var (
 				pkgInterfaceMeta: map[string]*compareGoInterfaceMeta{
 					"ExampleInterface": {
 						InterfaceName: "ExampleInterface",
+						InterfaceMethodMeta: map[string]*compareGoInterfaceMethodMeta{
+							"ExampleFunc": {
+								compareGoFunctionDeclMeta{
+									FunctionName: "ExampleFunc",
+									Doc:          []string{"// This is ExampleFunc Doc"},
+									Params: []*compareGoVariableMeta{
+										{
+											Expression:           `int`,
+											Name:                 "p0",
+											TypeExpression:       `int`,
+											TypeUnderlyingString: `int`,
+											TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+										},
+									},
+								},
+							},
+							"AnotherExampleFunc": {
+								compareGoFunctionDeclMeta{
+									FunctionName: "AnotherExampleFunc",
+									Doc:          []string{"// This is AnotherExampleFunc Doc"},
+									Params: []*compareGoVariableMeta{
+										{
+											Expression:           `int`,
+											Name:                 "p0",
+											TypeExpression:       `int`,
+											TypeUnderlyingString: `int`,
+											TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+										},
+										{
+											Expression:           `[]int`,
+											Name:                 "p1",
+											TypeExpression:       `[]int`,
+											TypeUnderlyingString: `array`,
+											TypeUnderlyingEnum:   UNDERLYING_TYPE_ARRAY,
+										},
+									},
+									ReturnTypes: []*compareGoVariableMeta{
+										{
+											Expression:           `int`,
+											TypeExpression:       `int`,
+											TypeUnderlyingString: `int`,
+											TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+										},
+										{
+											Expression:           `[]int`,
+											TypeExpression:       `[]int`,
+											TypeUnderlyingString: `array`,
+											TypeUnderlyingEnum:   UNDERLYING_TYPE_ARRAY,
+										},
+									},
+								},
+							},
+						},
+					},
+					"ExampleTemplateInterface": {
+						InterfaceName: "ExampleTemplateInterface",
+						TypeParams: []*compareGoVariableMeta{
+							{
+								Expression:           `T any`,
+								Name:                 "T",
+								TypeExpression:       "any",
+								TypeUnderlyingString: "any",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+							},
+						},
+						InterfaceMethodMeta: map[string]*compareGoInterfaceMethodMeta{
+							"ExampleFunc": {
+								compareGoFunctionDeclMeta{
+									FunctionName: "ExampleFunc",
+									Doc:          []string{"// This is ExampleFunc Doc"},
+									TypeParams: []*compareGoVariableMeta{
+										{
+											Expression:           `T any`,
+											Name:                 "T",
+											TypeExpression:       `any`,
+											TypeUnderlyingString: `any`,
+											TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+										},
+									},
+									Params: []*compareGoVariableMeta{
+										{
+											Expression:           `T`,
+											Name:                 "p0",
+											TypeExpression:       `T`,
+											TypeUnderlyingString: `T`,
+											TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+										},
+									},
+								},
+							},
+							"AnotherExampleFunc": {
+								compareGoFunctionDeclMeta{
+									FunctionName: "AnotherExampleFunc",
+									Doc:          []string{"// This is AnotherExampleFunc Doc"},
+									TypeParams: []*compareGoVariableMeta{
+										{
+											Expression:           `T any`,
+											Name:                 "T",
+											TypeExpression:       `any`,
+											TypeUnderlyingString: `any`,
+											TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+										},
+									},
+									Params: []*compareGoVariableMeta{
+										{
+											Expression:           `T`,
+											Name:                 "p0",
+											TypeExpression:       `T`,
+											TypeUnderlyingString: `T`,
+											TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+										},
+										{
+											Expression:           `[]T`,
+											Name:                 "p1",
+											TypeExpression:       `[]T`,
+											TypeUnderlyingString: `array`,
+											TypeUnderlyingEnum:   UNDERLYING_TYPE_ARRAY,
+										},
+									},
+									ReturnTypes: []*compareGoVariableMeta{
+										{
+											Expression:           `T`,
+											TypeExpression:       `T`,
+											TypeUnderlyingString: `T`,
+											TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+										},
+										{
+											Expression:           `[]T`,
+											TypeExpression:       `[]T`,
+											TypeUnderlyingString: `array`,
+											TypeUnderlyingEnum:   UNDERLYING_TYPE_ARRAY,
+										},
+									},
+								},
+							},
+						},
 					},
 				},
 			},
@@ -510,14 +674,16 @@ var (
 						StructMethodMeta: map[string]*compareGoMethodMeta{
 							"ExampleFunc": {
 								compareGoFunctionMeta: &compareGoFunctionMeta{
-									FunctionName: "ExampleFunc",
-									Params: []*compareGoVariableMeta{
-										{
-											Expression:           `v int`,
-											Name:                 "v",
-											TypeExpression:       "int",
-											TypeUnderlyingString: "int",
-											TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+									compareGoFunctionDeclMeta: compareGoFunctionDeclMeta{
+										FunctionName: "ExampleFunc",
+										Params: []*compareGoVariableMeta{
+											{
+												Expression:           `v int`,
+												Name:                 "v",
+												TypeExpression:       "int",
+												TypeUnderlyingString: "int",
+												TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+											},
 										},
 									},
 									CallMeta: map[string][]*compareGoCallMeta{
@@ -704,14 +870,16 @@ var (
 							},
 							"ExampleFuncWithPointerReceiver": {
 								compareGoFunctionMeta: &compareGoFunctionMeta{
-									FunctionName: "ExampleFuncWithPointerReceiver",
-									Params: []*compareGoVariableMeta{
-										{
-											Expression:           `v int`,
-											Name:                 "v",
-											TypeExpression:       "int",
-											TypeUnderlyingString: "int",
-											TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+									compareGoFunctionDeclMeta: compareGoFunctionDeclMeta{
+										FunctionName: "ExampleFuncWithPointerReceiver",
+										Params: []*compareGoVariableMeta{
+											{
+												Expression:           `v int`,
+												Name:                 "v",
+												TypeExpression:       "int",
+												TypeUnderlyingString: "int",
+												TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+											},
 										},
 									},
 									CallMeta: map[string][]*compareGoCallMeta{
@@ -738,19 +906,21 @@ var (
 							},
 							"DoubleReturnFunc": {
 								compareGoFunctionMeta: &compareGoFunctionMeta{
-									FunctionName: "DoubleReturnFunc",
-									ReturnTypes: []*compareGoVariableMeta{
-										{
-											Expression:           `int`,
-											TypeExpression:       "int",
-											TypeUnderlyingString: "int",
-											TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
-										},
-										{
-											Expression:           `int`,
-											TypeExpression:       "int",
-											TypeUnderlyingString: "int",
-											TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+									compareGoFunctionDeclMeta: compareGoFunctionDeclMeta{
+										FunctionName: "DoubleReturnFunc",
+										ReturnTypes: []*compareGoVariableMeta{
+											{
+												Expression:           `int`,
+												TypeExpression:       "int",
+												TypeUnderlyingString: "int",
+												TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+											},
+											{
+												Expression:           `int`,
+												TypeExpression:       "int",
+												TypeUnderlyingString: "int",
+												TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+											},
 										},
 									},
 									CallMeta: map[string][]*compareGoCallMeta{
@@ -773,13 +943,15 @@ var (
 							},
 							"V": {
 								compareGoFunctionMeta: &compareGoFunctionMeta{
-									FunctionName: "V",
-									ReturnTypes: []*compareGoVariableMeta{
-										{
-											Expression:           `int`,
-											TypeExpression:       "int",
-											TypeUnderlyingString: "int",
-											TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+									compareGoFunctionDeclMeta: compareGoFunctionDeclMeta{
+										FunctionName: "V",
+										ReturnTypes: []*compareGoVariableMeta{
+											{
+												Expression:           `int`,
+												TypeExpression:       "int",
+												TypeUnderlyingString: "int",
+												TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+											},
 										},
 									},
 								},
@@ -788,13 +960,15 @@ var (
 							},
 							"Sub": {
 								compareGoFunctionMeta: &compareGoFunctionMeta{
-									FunctionName: "Sub",
-									ReturnTypes: []*compareGoVariableMeta{
-										{
-											Expression:           `*ExampleStruct`,
-											TypeExpression:       "*ExampleStruct",
-											TypeUnderlyingString: "pointer",
-											TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+									compareGoFunctionDeclMeta: compareGoFunctionDeclMeta{
+										FunctionName: "Sub",
+										ReturnTypes: []*compareGoVariableMeta{
+											{
+												Expression:           `*ExampleStruct`,
+												TypeExpression:       "*ExampleStruct",
+												TypeUnderlyingString: "pointer",
+												TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+											},
 										},
 									},
 								},
@@ -806,27 +980,29 @@ var (
 				},
 				pkgFunctionMeta: map[string]*compareGoFunctionMeta{
 					"NewExampleStruct": {
-						FunctionName: "NewExampleStruct",
-						Doc: []string{
-							"// NewExampleStruct this is new example struct",
-							"// @param           value",
-							"// @return          pointer to ExampleStruct",
-						},
-						Params: []*compareGoVariableMeta{
-							{
-								Expression:           `v int`,
-								Name:                 "v",
-								TypeExpression:       "int",
-								TypeUnderlyingString: "int",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+						compareGoFunctionDeclMeta: compareGoFunctionDeclMeta{
+							FunctionName: "NewExampleStruct",
+							Doc: []string{
+								"// NewExampleStruct this is new example struct",
+								"// @param           value",
+								"// @return          pointer to ExampleStruct",
 							},
-						},
-						ReturnTypes: []*compareGoVariableMeta{
-							{
-								Expression:           `*ExampleStruct`,
-								TypeExpression:       "*ExampleStruct",
-								TypeUnderlyingString: "pointer",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+							Params: []*compareGoVariableMeta{
+								{
+									Expression:           `v int`,
+									Name:                 "v",
+									TypeExpression:       "int",
+									TypeUnderlyingString: "int",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+								},
+							},
+							ReturnTypes: []*compareGoVariableMeta{
+								{
+									Expression:           `*ExampleStruct`,
+									TypeExpression:       "*ExampleStruct",
+									TypeUnderlyingString: "pointer",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+								},
 							},
 						},
 						CallMeta: map[string][]*compareGoCallMeta{
@@ -849,14 +1025,16 @@ var (
 						},
 					},
 					"ExampleFunc": {
-						FunctionName: "ExampleFunc",
-						Params: []*compareGoVariableMeta{
-							{
-								Expression:           `s *ExampleStruct`,
-								Name:                 "s",
-								TypeExpression:       "*ExampleStruct",
-								TypeUnderlyingString: "pointer",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+						compareGoFunctionDeclMeta: compareGoFunctionDeclMeta{
+							FunctionName: "ExampleFunc",
+							Params: []*compareGoVariableMeta{
+								{
+									Expression:           `s *ExampleStruct`,
+									Name:                 "s",
+									TypeExpression:       "*ExampleStruct",
+									TypeUnderlyingString: "pointer",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+								},
 							},
 						},
 						CallMeta: map[string][]*compareGoCallMeta{
@@ -893,163 +1071,227 @@ var (
 				},
 				pkgFunctionMeta: map[string]*compareGoFunctionMeta{
 					"OneTemplateFunc": {
-						FunctionName: "OneTemplateFunc",
-						TypeParams: []*compareGoVariableMeta{
-							{
-								Expression:           `T any`,
-								Name:                 "T",
-								TypeExpression:       "any",
-								TypeUnderlyingString: "any",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+						compareGoFunctionDeclMeta: compareGoFunctionDeclMeta{
+							FunctionName: "OneTemplateFunc",
+							TypeParams: []*compareGoVariableMeta{
+								{
+									Expression:           `T any`,
+									Name:                 "T",
+									TypeExpression:       "any",
+									TypeUnderlyingString: "any",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+								},
 							},
-						},
-						Params: []*compareGoVariableMeta{
-							{
-								Expression:           `tv *T`,
-								Name:                 "tv",
-								TypeExpression:       "*T",
-								TypeUnderlyingString: "pointer",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+							Params: []*compareGoVariableMeta{
+								{
+									Expression:           `tv *T`,
+									Name:                 "tv",
+									TypeExpression:       "*T",
+									TypeUnderlyingString: "pointer",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+								},
 							},
-						},
-						ReturnTypes: []*compareGoVariableMeta{
-							{
-								Expression:           `*T`,
-								TypeExpression:       "*T",
-								TypeUnderlyingString: "pointer",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+							ReturnTypes: []*compareGoVariableMeta{
+								{
+									Expression:           `*T`,
+									TypeExpression:       "*T",
+									TypeUnderlyingString: "pointer",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+								},
 							},
 						},
 					},
 					"DoubleSameTemplateFunc": {
-						FunctionName: "DoubleSameTemplateFunc",
-						TypeParams: []*compareGoVariableMeta{
-							{
-								Expression:           `T1, T2 any`,
-								Name:                 "T1",
-								TypeExpression:       "any",
-								TypeUnderlyingString: "any",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+						compareGoFunctionDeclMeta: compareGoFunctionDeclMeta{
+							FunctionName: "DoubleSameTemplateFunc",
+							TypeParams: []*compareGoVariableMeta{
+								{
+									Expression:           `T1, T2 any`,
+									Name:                 "T1",
+									TypeExpression:       "any",
+									TypeUnderlyingString: "any",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+								},
+								{
+									Expression:           `T1, T2 any`,
+									Name:                 "T2",
+									TypeExpression:       "any",
+									TypeUnderlyingString: "any",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+								},
 							},
-							{
-								Expression:           `T1, T2 any`,
-								Name:                 "T2",
-								TypeExpression:       "any",
-								TypeUnderlyingString: "any",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+							Params: []*compareGoVariableMeta{
+								{
+									Expression:           `tv1 T1`,
+									Name:                 "tv1",
+									TypeExpression:       "T1",
+									TypeUnderlyingString: "T1",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+								},
+								{
+									Expression:           `tv2 T2`,
+									Name:                 "tv2",
+									TypeExpression:       "T2",
+									TypeUnderlyingString: "T2",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+								},
 							},
-						},
-						Params: []*compareGoVariableMeta{
-							{
-								Expression:           `tv1 T1`,
-								Name:                 "tv1",
-								TypeExpression:       "T1",
-								TypeUnderlyingString: "T1",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
-							},
-							{
-								Expression:           `tv2 T2`,
-								Name:                 "tv2",
-								TypeExpression:       "T2",
-								TypeUnderlyingString: "T2",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
-							},
-						},
-						ReturnTypes: []*compareGoVariableMeta{
-							{
-								Expression:           `*T1`,
-								TypeExpression:       "*T1",
-								TypeUnderlyingString: "pointer",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
-							},
-							{
-								Expression:           `*T2`,
-								TypeExpression:       "*T2",
-								TypeUnderlyingString: "pointer",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+							ReturnTypes: []*compareGoVariableMeta{
+								{
+									Expression:           `*T1`,
+									TypeExpression:       "*T1",
+									TypeUnderlyingString: "pointer",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+								},
+								{
+									Expression:           `*T2`,
+									TypeExpression:       "*T2",
+									TypeUnderlyingString: "pointer",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+								},
 							},
 						},
 					},
 					"DoubleDifferenceTemplateFunc": {
-						FunctionName: "DoubleDifferenceTemplateFunc",
-						TypeParams: []*compareGoVariableMeta{
-							{
-								Expression:           `T1 any`,
-								Name:                 "T1",
-								TypeExpression:       "any",
-								TypeUnderlyingString: "any",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+						compareGoFunctionDeclMeta: compareGoFunctionDeclMeta{
+							FunctionName: "DoubleDifferenceTemplateFunc",
+							TypeParams: []*compareGoVariableMeta{
+								{
+									Expression:           `T1 any`,
+									Name:                 "T1",
+									TypeExpression:       "any",
+									TypeUnderlyingString: "any",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+								},
+								{
+									Expression:           `T2 comparable`,
+									Name:                 "T2",
+									TypeExpression:       "comparable",
+									TypeUnderlyingString: "comparable",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+								},
 							},
-							{
-								Expression:           `T2 comparable`,
-								Name:                 "T2",
-								TypeExpression:       "comparable",
-								TypeUnderlyingString: "comparable",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+							Params: []*compareGoVariableMeta{
+								{
+									Expression:           `tv1 T1`,
+									Name:                 "tv1",
+									TypeExpression:       "T1",
+									TypeUnderlyingString: "T1",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+								},
+								{
+									Expression:           `tv2 T2`,
+									Name:                 "tv2",
+									TypeExpression:       "T2",
+									TypeUnderlyingString: "T2",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+								},
 							},
-						},
-						Params: []*compareGoVariableMeta{
-							{
-								Expression:           `tv1 T1`,
-								Name:                 "tv1",
-								TypeExpression:       "T1",
-								TypeUnderlyingString: "T1",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
-							},
-							{
-								Expression:           `tv2 T2`,
-								Name:                 "tv2",
-								TypeExpression:       "T2",
-								TypeUnderlyingString: "T2",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
-							},
-						},
-						ReturnTypes: []*compareGoVariableMeta{
-							{
-								Expression:           `*T1`,
-								TypeExpression:       "*T1",
-								TypeUnderlyingString: "pointer",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
-							},
-							{
-								Expression:           `*T2`,
-								TypeExpression:       "*T2",
-								TypeUnderlyingString: "pointer",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+							ReturnTypes: []*compareGoVariableMeta{
+								{
+									Expression:           `*T1`,
+									TypeExpression:       "*T1",
+									TypeUnderlyingString: "pointer",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+								},
+								{
+									Expression:           `*T2`,
+									TypeExpression:       "*T2",
+									TypeUnderlyingString: "pointer",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+								},
 							},
 						},
 					},
 					"TypeConstraintsTemplateFunc": {
-						FunctionName: "TypeConstraintsTemplateFunc",
-						TypeParams: []*compareGoVariableMeta{
-							{
-								Expression:           `T TypeConstraints`,
-								Name:                 "T",
-								TypeExpression:       "TypeConstraints",
-								TypeUnderlyingString: "TypeConstraints",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+						compareGoFunctionDeclMeta: compareGoFunctionDeclMeta{
+							FunctionName: "TypeConstraintsTemplateFunc",
+							TypeParams: []*compareGoVariableMeta{
+								{
+									Expression:           `T TypeConstraints`,
+									Name:                 "T",
+									TypeExpression:       "TypeConstraints",
+									TypeUnderlyingString: "TypeConstraints",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+								},
 							},
-						},
-						Params: []*compareGoVariableMeta{
-							{
-								Expression:           `tv T`,
-								Name:                 "tv",
-								TypeExpression:       "T",
-								TypeUnderlyingString: "T",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+							Params: []*compareGoVariableMeta{
+								{
+									Expression:           `tv T`,
+									Name:                 "tv",
+									TypeExpression:       "T",
+									TypeUnderlyingString: "T",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+								},
 							},
-						},
-						ReturnTypes: []*compareGoVariableMeta{
-							{
-								Expression:           `*T`,
-								TypeExpression:       "*T",
-								TypeUnderlyingString: "pointer",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+							ReturnTypes: []*compareGoVariableMeta{
+								{
+									Expression:           `*T`,
+									TypeExpression:       "*T",
+									TypeUnderlyingString: "pointer",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+								},
 							},
 						},
 					},
 					"CannotInferTypeFunc1": {
-						FunctionName: "CannotInferTypeFunc1",
+						compareGoFunctionDeclMeta: compareGoFunctionDeclMeta{
+							FunctionName: "CannotInferTypeFunc1",
+							TypeParams: []*compareGoVariableMeta{
+								{
+									Expression:           `T any`,
+									Name:                 "T",
+									TypeExpression:       "any",
+									TypeUnderlyingString: "any",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+								},
+							},
+						},
+					},
+					"CannotInferTypeFunc2": {
+						compareGoFunctionDeclMeta: compareGoFunctionDeclMeta{
+							FunctionName: "CannotInferTypeFunc2",
+							TypeParams: []*compareGoVariableMeta{
+								{
+									Expression:           `K comparable`,
+									Name:                 "K",
+									TypeExpression:       "comparable",
+									TypeUnderlyingString: "comparable",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+								},
+								{
+									Expression:           `V any`,
+									Name:                 "V",
+									TypeExpression:       "any",
+									TypeUnderlyingString: "any",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+								},
+							},
+							ReturnTypes: []*compareGoVariableMeta{
+								{
+									Expression:           `*K`,
+									TypeExpression:       "*K",
+									TypeUnderlyingString: "pointer",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+								},
+								{
+									Expression:           `*V`,
+									TypeExpression:       "*V",
+									TypeUnderlyingString: "pointer",
+									TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+								},
+							},
+						},
+					},
+				},
+				pkgInterfaceMeta: map[string]*compareGoInterfaceMeta{
+					"TypeConstraints": {
+						InterfaceName: "TypeConstraints",
+					},
+				},
+				pkgStructMeta: map[string]*compareGoStructMeta{
+					"TemplateStruct": {
+						StructName: "TemplateStruct",
 						TypeParams: []*compareGoVariableMeta{
 							{
 								Expression:           `T any`,
@@ -1059,15 +1301,43 @@ var (
 								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
 							},
 						},
+						StructMemberMeta: map[string]*compareGoVariableMeta{
+							"v": {
+								Expression:           `v T`,
+								Name:                 "v",
+								TypeExpression:       `T`,
+								TypeUnderlyingString: "T",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+							},
+						},
+						StructMethodMeta: map[string]*compareGoMethodMeta{
+							"V": {
+								compareGoFunctionMeta: &compareGoFunctionMeta{
+									compareGoFunctionDeclMeta: compareGoFunctionDeclMeta{
+										FunctionName: "V",
+										ReturnTypes: []*compareGoVariableMeta{
+											{
+												Expression:           `T`,
+												TypeExpression:       `T`,
+												TypeUnderlyingString: "T",
+												TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+											},
+										},
+									},
+								},
+								RecvStruct:      `TemplateStruct`,
+								PointerReceiver: true,
+							},
+						},
 					},
-					"CannotInferTypeFunc2": {
-						FunctionName: "CannotInferTypeFunc2",
+					"TwoTypeTemplateStruct": {
+						StructName: "TwoTypeTemplateStruct",
 						TypeParams: []*compareGoVariableMeta{
 							{
-								Expression:           `K comparable`,
+								Expression:           `K TypeConstraints`,
 								Name:                 "K",
-								TypeExpression:       "comparable",
-								TypeUnderlyingString: "comparable",
+								TypeExpression:       "TypeConstraints",
+								TypeUnderlyingString: "TypeConstraints",
 								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
 							},
 							{
@@ -1078,25 +1348,40 @@ var (
 								TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
 							},
 						},
-						ReturnTypes: []*compareGoVariableMeta{
-							{
-								Expression:           `*K`,
-								TypeExpression:       "*K",
-								TypeUnderlyingString: "pointer",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
-							},
-							{
-								Expression:           `*V`,
-								TypeExpression:       "*V",
-								TypeUnderlyingString: "pointer",
-								TypeUnderlyingEnum:   UNDERLYING_TYPE_POINTER,
+						StructMemberMeta: map[string]*compareGoVariableMeta{
+							"v": {
+								Expression:           `v map[K]V`,
+								Name:                 "v",
+								TypeExpression:       `map[K]V`,
+								TypeUnderlyingString: "map",
+								TypeUnderlyingEnum:   UNDERLYING_TYPE_MAP,
 							},
 						},
-					},
-				},
-				pkgInterfaceMeta: map[string]*compareGoInterfaceMeta{
-					"TypeConstraints": {
-						InterfaceName: "TypeConstraints",
+						StructMethodMeta: map[string]*compareGoMethodMeta{
+							"KVSlice": {
+								compareGoFunctionMeta: &compareGoFunctionMeta{
+									compareGoFunctionDeclMeta: compareGoFunctionDeclMeta{
+										FunctionName: "KVSlice",
+										ReturnTypes: []*compareGoVariableMeta{
+											{
+												Expression:           `[]K`,
+												TypeExpression:       `[]K`,
+												TypeUnderlyingString: "array",
+												TypeUnderlyingEnum:   UNDERLYING_TYPE_ARRAY,
+											},
+											{
+												Expression:           `[]V`,
+												TypeExpression:       `[]V`,
+												TypeUnderlyingString: "array",
+												TypeUnderlyingEnum:   UNDERLYING_TYPE_ARRAY,
+											},
+										},
+									},
+								},
+								RecvStruct:      `TwoTypeTemplateStruct`,
+								PointerReceiver: true,
+							},
+						},
 					},
 				},
 			},
@@ -1134,6 +1419,7 @@ func TestExtractGoProjectMeta(t *testing.T) {
 			}
 			checkStructMeta(gsm, _gsm)
 
+			// member
 			for memberName, _gvm := range _gsm.StructMemberMeta {
 				gvm := gsm.SearchMemberMeta(memberName)
 				if gvm == nil {
@@ -1142,6 +1428,7 @@ func TestExtractGoProjectMeta(t *testing.T) {
 				checkVariableMeta(gvm, _gvm)
 			}
 
+			// method
 			for methodName, _gmm := range _gsm.StructMethodMeta {
 				gmm := gpm.SearchMethodMeta(_structName, methodName)
 				if gmm == nil {
@@ -1187,6 +1474,44 @@ func TestExtractGoProjectMeta(t *testing.T) {
 				Panic(gim, _gim)
 			}
 			checkInterfaceMeta(gim, _gim)
+
+			for _interfaceMethodName, _gimm := range _gim.InterfaceMethodMeta {
+				gimm := gim.SearchMethodDecl(_interfaceMethodName)
+				if gimm == nil {
+					Panic(gimm, _gimm)
+				}
+				checkInterfaceMethodMeta(gimm, _gimm)
+
+				// unit test
+				var unittestFuncName string
+				var unittestByte []byte
+				if l := len(gimm.TypeParams()); l == 0 {
+					unittestFuncName, unittestByte = gimm.MakeUnitTest(nil)
+				} else {
+					testTypeArgs := []string{"string", "[]string", "map[string]string"}
+					typeArgs := make([]string, 0, l)
+					for i := 0; i < l; i++ {
+						typeArgs = append(typeArgs, testTypeArgs[i%len(testTypeArgs)])
+					}
+					unittestFuncName, unittestByte = gimm.MakeUnitTest(typeArgs)
+				}
+				fmt.Printf("unit test func %v:\n%v\n", unittestFuncName, string(unittestByte))
+
+				// benchmark
+				var benchmarkFuncName string
+				var benchmarkByte []byte
+				if l := len(gimm.TypeParams()); l == 0 {
+					benchmarkFuncName, benchmarkByte = gimm.MakeBenchmark(nil)
+				} else {
+					testTypeArgs := []string{"string", "[]string", "map[string]string"}
+					typeArgs := make([]string, 0, l)
+					for i := 0; i < l; i++ {
+						typeArgs = append(typeArgs, testTypeArgs[i%len(testTypeArgs)])
+					}
+					benchmarkFuncName, benchmarkByte = gimm.MakeBenchmark(typeArgs)
+				}
+				fmt.Printf("benchmark func %v:\n%v\n", benchmarkFuncName, string(benchmarkByte))
+			}
 		}
 
 		for funcName, _gfm := range _gpm.pkgFunctionMeta {
@@ -1343,7 +1668,17 @@ func checkStructMeta(gsm *GoStructMeta, _gsm *compareGoStructMeta) {
 	if gsm.StructName() != _gsm.StructName {
 		Panic(gsm.StructName(), _gsm.StructName)
 	}
-	stpslice.Compare(gsm.Doc(), _gsm.Doc)
+	if !stpslice.Compare(gsm.Doc(), _gsm.Doc) {
+		Panic(gsm.Doc(), _gsm.Doc)
+	}
+
+	// type params
+	if len(gsm.TypeParams()) != len(_gsm.TypeParams) {
+		Panic(len(gsm.TypeParams()), len(_gsm.TypeParams))
+	}
+	for i := range _gsm.TypeParams {
+		checkVariableMeta(gsm.TypeParams()[i], _gsm.TypeParams[i])
+	}
 
 	// member
 	memberNames := gsm.Members()
@@ -1360,6 +1695,17 @@ func checkInterfaceMeta(gim *GoInterfaceMeta, _gim *compareGoInterfaceMeta) {
 	if gim.InterfaceName() != _gim.InterfaceName {
 		Panic(gim.InterfaceName(), _gim.InterfaceName)
 	}
+	if !stpslice.Compare(gim.Doc(), _gim.Doc) {
+		Panic(gim.Doc(), _gim.Doc)
+	}
+
+	// type params
+	if len(gim.TypeParams()) != len(_gim.TypeParams) {
+		Panic(len(gim.TypeParams()), len(_gim.TypeParams))
+	}
+	for i := range _gim.TypeParams {
+		checkVariableMeta(gim.TypeParams()[i], _gim.TypeParams[i])
+	}
 }
 
 func checkFunctionMeta(gfm *GoFunctionMeta, _gfm *compareGoFunctionMeta) {
@@ -1367,7 +1713,9 @@ func checkFunctionMeta(gfm *GoFunctionMeta, _gfm *compareGoFunctionMeta) {
 	if gfm.FunctionName() != _gfm.FunctionName {
 		Panic(gfm.FunctionName(), _gfm.FunctionName)
 	}
-	stpslice.Compare(gfm.Doc(), _gfm.Doc)
+	if !stpslice.Compare(gfm.Doc(), _gfm.Doc) {
+		Panic(gfm.Doc(), _gfm.Doc)
+	}
 
 	if len(gfm.TypeParams()) != len(_gfm.TypeParams) {
 		Panic(len(gfm.TypeParams()), len(_gfm.TypeParams))
@@ -1444,6 +1792,40 @@ func checkMethodMeta(gmm *GoMethodMeta, _gmm *compareGoMethodMeta) {
 	// fmt.Printf("unit test func:\n%v\n", string(b))
 }
 
+func checkInterfaceMethodMeta(gimm *GoInterfaceMethodMeta, _gimm *compareGoInterfaceMethodMeta) {
+	if gimm.FunctionName() != _gimm.FunctionName {
+		Panic(gimm.FunctionName(), _gimm.FunctionName)
+	}
+	if !stpslice.Compare(gimm.Doc(), _gimm.Doc) {
+		Panic(gimm.Doc(), _gimm.Doc)
+	}
+
+	if len(gimm.TypeParams()) != len(_gimm.TypeParams) {
+		Panic(len(gimm.TypeParams()), len(_gimm.TypeParams))
+	}
+	for i := range _gimm.TypeParams {
+		checkVariableMeta(gimm.TypeParams()[i], _gimm.TypeParams[i])
+	}
+
+	if len(gimm.Params()) != len(_gimm.Params) {
+		Panic(len(gimm.Params()), len(_gimm.Params))
+	}
+	for i := range _gimm.Params {
+		checkVariableMeta(gimm.Params()[i], _gimm.Params[i])
+	}
+
+	if len(gimm.ReturnTypes()) != len(_gimm.ReturnTypes) {
+		Panic(len(gimm.ReturnTypes()), len(_gimm.ReturnTypes))
+	}
+	for i := range _gimm.ReturnTypes {
+		checkVariableMeta(gimm.ReturnTypes()[i], _gimm.ReturnTypes[i])
+	}
+
+	// unit test
+	// b := MakeUnitTest(gmm)
+	// fmt.Printf("unit test func:\n%v\n", string(b))
+}
+
 // func checkCallMeta(gcm *GoCallMeta, _gcm *compareGoCallMeta) {
 // 	// basic
 // 	if (gcm != nil) != (_gcm != nil) {
@@ -1504,7 +1886,9 @@ func checkVariableMeta(gvm *GoVariableMeta, _gvm *compareGoVariableMeta) {
 	if gvm.Comment() != _gvm.Comment {
 		Panic(gvm.Comment(), _gvm.Comment)
 	}
-	stpslice.Compare(gvm.Doc(), _gvm.Doc)
+	if !stpslice.Compare(gvm.Doc(), _gvm.Doc) {
+		Panic(gvm.Doc(), _gvm.Doc)
+	}
 }
 
 func checkImportMeta(gim *GoImportMeta, _gim *compareGoImportMeta) {

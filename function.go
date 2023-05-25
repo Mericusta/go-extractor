@@ -15,10 +15,7 @@ type GoFunctionMeta struct {
 }
 
 func NewGoFunctionMeta(m *meta) *GoFunctionMeta {
-	return &GoFunctionMeta{
-		meta: m,
-		// callMeta: make(map[string][]*GoCallMeta),
-	}
+	return &GoFunctionMeta{meta: m}
 }
 
 func ExtractGoFunctionMeta(extractFilepath string, functionName string) (*GoFunctionMeta, error) {

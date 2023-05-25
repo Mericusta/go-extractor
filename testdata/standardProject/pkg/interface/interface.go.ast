@@ -4,7 +4,7 @@
      3  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:1:9
      4  .  .  Name: "pkgInterface"
      5  .  }
-     6  .  Decls: []ast.Decl (len = 1) {
+     6  .  Decls: []ast.Decl (len = 2) {
      7  .  .  0: *ast.GenDecl {
      8  .  .  .  TokPos: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:3:1
      9  .  .  .  Tok: type
@@ -25,7 +25,7 @@
     24  .  .  .  .  .  .  Interface: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:3:23
     25  .  .  .  .  .  .  Methods: *ast.FieldList {
     26  .  .  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:3:33
-    27  .  .  .  .  .  .  .  List: []*ast.Field (len = 1) {
+    27  .  .  .  .  .  .  .  List: []*ast.Field (len = 2) {
     28  .  .  .  .  .  .  .  .  0: *ast.Field {
     29  .  .  .  .  .  .  .  .  .  Doc: *ast.CommentGroup {
     30  .  .  .  .  .  .  .  .  .  .  List: []*ast.Comment (len = 1) {
@@ -62,27 +62,262 @@
     61  .  .  .  .  .  .  .  .  .  .  }
     62  .  .  .  .  .  .  .  .  .  }
     63  .  .  .  .  .  .  .  .  }
-    64  .  .  .  .  .  .  .  }
-    65  .  .  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:6:1
-    66  .  .  .  .  .  .  }
-    67  .  .  .  .  .  .  Incomplete: false
-    68  .  .  .  .  .  }
-    69  .  .  .  .  }
-    70  .  .  .  }
-    71  .  .  .  Rparen: -
-    72  .  .  }
-    73  .  }
-    74  .  FileStart: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:1:1
-    75  .  FileEnd: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:6:4
-    76  .  Scope: *ast.Scope {
-    77  .  .  Objects: map[string]*ast.Object (len = 1) {
-    78  .  .  .  "ExampleInterface": *(obj @ 16)
-    79  .  .  }
-    80  .  }
-    81  .  Unresolved: []*ast.Ident (len = 1) {
-    82  .  .  0: *(obj @ 54)
-    83  .  }
-    84  .  Comments: []*ast.CommentGroup (len = 1) {
-    85  .  .  0: *(obj @ 29)
-    86  .  }
-    87  }
+    64  .  .  .  .  .  .  .  .  1: *ast.Field {
+    65  .  .  .  .  .  .  .  .  .  Doc: *ast.CommentGroup {
+    66  .  .  .  .  .  .  .  .  .  .  List: []*ast.Comment (len = 1) {
+    67  .  .  .  .  .  .  .  .  .  .  .  0: *ast.Comment {
+    68  .  .  .  .  .  .  .  .  .  .  .  .  Slash: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:6:2
+    69  .  .  .  .  .  .  .  .  .  .  .  .  Text: "// This is AnotherExampleFunc Doc"
+    70  .  .  .  .  .  .  .  .  .  .  .  }
+    71  .  .  .  .  .  .  .  .  .  .  }
+    72  .  .  .  .  .  .  .  .  .  }
+    73  .  .  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+    74  .  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
+    75  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:7:2
+    76  .  .  .  .  .  .  .  .  .  .  .  Name: "AnotherExampleFunc"
+    77  .  .  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+    78  .  .  .  .  .  .  .  .  .  .  .  .  Kind: func
+    79  .  .  .  .  .  .  .  .  .  .  .  .  Name: "AnotherExampleFunc"
+    80  .  .  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 64)
+    81  .  .  .  .  .  .  .  .  .  .  .  }
+    82  .  .  .  .  .  .  .  .  .  .  }
+    83  .  .  .  .  .  .  .  .  .  }
+    84  .  .  .  .  .  .  .  .  .  Type: *ast.FuncType {
+    85  .  .  .  .  .  .  .  .  .  .  Func: -
+    86  .  .  .  .  .  .  .  .  .  .  Params: *ast.FieldList {
+    87  .  .  .  .  .  .  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:7:20
+    88  .  .  .  .  .  .  .  .  .  .  .  List: []*ast.Field (len = 2) {
+    89  .  .  .  .  .  .  .  .  .  .  .  .  0: *ast.Field {
+    90  .  .  .  .  .  .  .  .  .  .  .  .  .  Type: *ast.Ident {
+    91  .  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:7:21
+    92  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "int"
+    93  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+    94  .  .  .  .  .  .  .  .  .  .  .  .  }
+    95  .  .  .  .  .  .  .  .  .  .  .  .  1: *ast.Field {
+    96  .  .  .  .  .  .  .  .  .  .  .  .  .  Type: *ast.ArrayType {
+    97  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Lbrack: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:7:26
+    98  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Elt: *ast.Ident {
+    99  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:7:28
+   100  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "int"
+   101  .  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   102  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   103  .  .  .  .  .  .  .  .  .  .  .  .  }
+   104  .  .  .  .  .  .  .  .  .  .  .  }
+   105  .  .  .  .  .  .  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:7:31
+   106  .  .  .  .  .  .  .  .  .  .  }
+   107  .  .  .  .  .  .  .  .  .  .  Results: *ast.FieldList {
+   108  .  .  .  .  .  .  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:7:33
+   109  .  .  .  .  .  .  .  .  .  .  .  List: []*ast.Field (len = 2) {
+   110  .  .  .  .  .  .  .  .  .  .  .  .  0: *ast.Field {
+   111  .  .  .  .  .  .  .  .  .  .  .  .  .  Type: *ast.Ident {
+   112  .  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:7:34
+   113  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "int"
+   114  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   115  .  .  .  .  .  .  .  .  .  .  .  .  }
+   116  .  .  .  .  .  .  .  .  .  .  .  .  1: *ast.Field {
+   117  .  .  .  .  .  .  .  .  .  .  .  .  .  Type: *ast.ArrayType {
+   118  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Lbrack: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:7:39
+   119  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Elt: *ast.Ident {
+   120  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:7:41
+   121  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "int"
+   122  .  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   123  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   124  .  .  .  .  .  .  .  .  .  .  .  .  }
+   125  .  .  .  .  .  .  .  .  .  .  .  }
+   126  .  .  .  .  .  .  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:7:44
+   127  .  .  .  .  .  .  .  .  .  .  }
+   128  .  .  .  .  .  .  .  .  .  }
+   129  .  .  .  .  .  .  .  .  }
+   130  .  .  .  .  .  .  .  }
+   131  .  .  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:8:1
+   132  .  .  .  .  .  .  }
+   133  .  .  .  .  .  .  Incomplete: false
+   134  .  .  .  .  .  }
+   135  .  .  .  .  }
+   136  .  .  .  }
+   137  .  .  .  Rparen: -
+   138  .  .  }
+   139  .  .  1: *ast.GenDecl {
+   140  .  .  .  TokPos: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:10:1
+   141  .  .  .  Tok: type
+   142  .  .  .  Lparen: -
+   143  .  .  .  Specs: []ast.Spec (len = 1) {
+   144  .  .  .  .  0: *ast.TypeSpec {
+   145  .  .  .  .  .  Name: *ast.Ident {
+   146  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:10:6
+   147  .  .  .  .  .  .  Name: "ExampleTemplateInterface"
+   148  .  .  .  .  .  .  Obj: *ast.Object {
+   149  .  .  .  .  .  .  .  Kind: type
+   150  .  .  .  .  .  .  .  Name: "ExampleTemplateInterface"
+   151  .  .  .  .  .  .  .  Decl: *(obj @ 144)
+   152  .  .  .  .  .  .  }
+   153  .  .  .  .  .  }
+   154  .  .  .  .  .  TypeParams: *ast.FieldList {
+   155  .  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:10:30
+   156  .  .  .  .  .  .  List: []*ast.Field (len = 1) {
+   157  .  .  .  .  .  .  .  0: *ast.Field {
+   158  .  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   159  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   160  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:10:31
+   161  .  .  .  .  .  .  .  .  .  .  Name: "T"
+   162  .  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   163  .  .  .  .  .  .  .  .  .  .  .  Kind: type
+   164  .  .  .  .  .  .  .  .  .  .  .  Name: "T"
+   165  .  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 157)
+   166  .  .  .  .  .  .  .  .  .  .  }
+   167  .  .  .  .  .  .  .  .  .  }
+   168  .  .  .  .  .  .  .  .  }
+   169  .  .  .  .  .  .  .  .  Type: *ast.Ident {
+   170  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:10:33
+   171  .  .  .  .  .  .  .  .  .  Name: "any"
+   172  .  .  .  .  .  .  .  .  }
+   173  .  .  .  .  .  .  .  }
+   174  .  .  .  .  .  .  }
+   175  .  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:10:36
+   176  .  .  .  .  .  }
+   177  .  .  .  .  .  Assign: -
+   178  .  .  .  .  .  Type: *ast.InterfaceType {
+   179  .  .  .  .  .  .  Interface: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:10:38
+   180  .  .  .  .  .  .  Methods: *ast.FieldList {
+   181  .  .  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:10:48
+   182  .  .  .  .  .  .  .  List: []*ast.Field (len = 2) {
+   183  .  .  .  .  .  .  .  .  0: *ast.Field {
+   184  .  .  .  .  .  .  .  .  .  Doc: *ast.CommentGroup {
+   185  .  .  .  .  .  .  .  .  .  .  List: []*ast.Comment (len = 1) {
+   186  .  .  .  .  .  .  .  .  .  .  .  0: *ast.Comment {
+   187  .  .  .  .  .  .  .  .  .  .  .  .  Slash: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:11:2
+   188  .  .  .  .  .  .  .  .  .  .  .  .  Text: "// This is ExampleFunc Doc"
+   189  .  .  .  .  .  .  .  .  .  .  .  }
+   190  .  .  .  .  .  .  .  .  .  .  }
+   191  .  .  .  .  .  .  .  .  .  }
+   192  .  .  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   193  .  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   194  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:12:2
+   195  .  .  .  .  .  .  .  .  .  .  .  Name: "ExampleFunc"
+   196  .  .  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   197  .  .  .  .  .  .  .  .  .  .  .  .  Kind: func
+   198  .  .  .  .  .  .  .  .  .  .  .  .  Name: "ExampleFunc"
+   199  .  .  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 183)
+   200  .  .  .  .  .  .  .  .  .  .  .  }
+   201  .  .  .  .  .  .  .  .  .  .  }
+   202  .  .  .  .  .  .  .  .  .  }
+   203  .  .  .  .  .  .  .  .  .  Type: *ast.FuncType {
+   204  .  .  .  .  .  .  .  .  .  .  Func: -
+   205  .  .  .  .  .  .  .  .  .  .  Params: *ast.FieldList {
+   206  .  .  .  .  .  .  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:12:13
+   207  .  .  .  .  .  .  .  .  .  .  .  List: []*ast.Field (len = 1) {
+   208  .  .  .  .  .  .  .  .  .  .  .  .  0: *ast.Field {
+   209  .  .  .  .  .  .  .  .  .  .  .  .  .  Type: *ast.Ident {
+   210  .  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:12:14
+   211  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "T"
+   212  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 162)
+   213  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   214  .  .  .  .  .  .  .  .  .  .  .  .  }
+   215  .  .  .  .  .  .  .  .  .  .  .  }
+   216  .  .  .  .  .  .  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:12:15
+   217  .  .  .  .  .  .  .  .  .  .  }
+   218  .  .  .  .  .  .  .  .  .  }
+   219  .  .  .  .  .  .  .  .  }
+   220  .  .  .  .  .  .  .  .  1: *ast.Field {
+   221  .  .  .  .  .  .  .  .  .  Doc: *ast.CommentGroup {
+   222  .  .  .  .  .  .  .  .  .  .  List: []*ast.Comment (len = 1) {
+   223  .  .  .  .  .  .  .  .  .  .  .  0: *ast.Comment {
+   224  .  .  .  .  .  .  .  .  .  .  .  .  Slash: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:13:2
+   225  .  .  .  .  .  .  .  .  .  .  .  .  Text: "// This is AnotherExampleFunc Doc"
+   226  .  .  .  .  .  .  .  .  .  .  .  }
+   227  .  .  .  .  .  .  .  .  .  .  }
+   228  .  .  .  .  .  .  .  .  .  }
+   229  .  .  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   230  .  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
+   231  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:14:2
+   232  .  .  .  .  .  .  .  .  .  .  .  Name: "AnotherExampleFunc"
+   233  .  .  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
+   234  .  .  .  .  .  .  .  .  .  .  .  .  Kind: func
+   235  .  .  .  .  .  .  .  .  .  .  .  .  Name: "AnotherExampleFunc"
+   236  .  .  .  .  .  .  .  .  .  .  .  .  Decl: *(obj @ 220)
+   237  .  .  .  .  .  .  .  .  .  .  .  }
+   238  .  .  .  .  .  .  .  .  .  .  }
+   239  .  .  .  .  .  .  .  .  .  }
+   240  .  .  .  .  .  .  .  .  .  Type: *ast.FuncType {
+   241  .  .  .  .  .  .  .  .  .  .  Func: -
+   242  .  .  .  .  .  .  .  .  .  .  Params: *ast.FieldList {
+   243  .  .  .  .  .  .  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:14:20
+   244  .  .  .  .  .  .  .  .  .  .  .  List: []*ast.Field (len = 2) {
+   245  .  .  .  .  .  .  .  .  .  .  .  .  0: *ast.Field {
+   246  .  .  .  .  .  .  .  .  .  .  .  .  .  Type: *ast.Ident {
+   247  .  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:14:21
+   248  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "T"
+   249  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 162)
+   250  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   251  .  .  .  .  .  .  .  .  .  .  .  .  }
+   252  .  .  .  .  .  .  .  .  .  .  .  .  1: *ast.Field {
+   253  .  .  .  .  .  .  .  .  .  .  .  .  .  Type: *ast.ArrayType {
+   254  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Lbrack: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:14:24
+   255  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Elt: *ast.Ident {
+   256  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:14:26
+   257  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "T"
+   258  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 162)
+   259  .  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   260  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   261  .  .  .  .  .  .  .  .  .  .  .  .  }
+   262  .  .  .  .  .  .  .  .  .  .  .  }
+   263  .  .  .  .  .  .  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:14:27
+   264  .  .  .  .  .  .  .  .  .  .  }
+   265  .  .  .  .  .  .  .  .  .  .  Results: *ast.FieldList {
+   266  .  .  .  .  .  .  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:14:29
+   267  .  .  .  .  .  .  .  .  .  .  .  List: []*ast.Field (len = 2) {
+   268  .  .  .  .  .  .  .  .  .  .  .  .  0: *ast.Field {
+   269  .  .  .  .  .  .  .  .  .  .  .  .  .  Type: *ast.Ident {
+   270  .  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:14:30
+   271  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "T"
+   272  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 162)
+   273  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   274  .  .  .  .  .  .  .  .  .  .  .  .  }
+   275  .  .  .  .  .  .  .  .  .  .  .  .  1: *ast.Field {
+   276  .  .  .  .  .  .  .  .  .  .  .  .  .  Type: *ast.ArrayType {
+   277  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Lbrack: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:14:33
+   278  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Elt: *ast.Ident {
+   279  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:14:35
+   280  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "T"
+   281  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 162)
+   282  .  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   283  .  .  .  .  .  .  .  .  .  .  .  .  .  }
+   284  .  .  .  .  .  .  .  .  .  .  .  .  }
+   285  .  .  .  .  .  .  .  .  .  .  .  }
+   286  .  .  .  .  .  .  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:14:36
+   287  .  .  .  .  .  .  .  .  .  .  }
+   288  .  .  .  .  .  .  .  .  .  }
+   289  .  .  .  .  .  .  .  .  }
+   290  .  .  .  .  .  .  .  }
+   291  .  .  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:15:1
+   292  .  .  .  .  .  .  }
+   293  .  .  .  .  .  .  Incomplete: false
+   294  .  .  .  .  .  }
+   295  .  .  .  .  }
+   296  .  .  .  }
+   297  .  .  .  Rparen: -
+   298  .  .  }
+   299  .  }
+   300  .  FileStart: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:1:1
+   301  .  FileEnd: d:\Projects\go-extractor\testdata\standardProject\pkg\interface\interface.go:15:4
+   302  .  Scope: *ast.Scope {
+   303  .  .  Objects: map[string]*ast.Object (len = 2) {
+   304  .  .  .  "ExampleInterface": *(obj @ 16)
+   305  .  .  .  "ExampleTemplateInterface": *(obj @ 148)
+   306  .  .  }
+   307  .  }
+   308  .  Unresolved: []*ast.Ident (len = 6) {
+   309  .  .  0: *(obj @ 54)
+   310  .  .  1: *(obj @ 90)
+   311  .  .  2: *(obj @ 98)
+   312  .  .  3: *(obj @ 111)
+   313  .  .  4: *(obj @ 119)
+   314  .  .  5: *(obj @ 169)
+   315  .  }
+   316  .  Comments: []*ast.CommentGroup (len = 4) {
+   317  .  .  0: *(obj @ 29)
+   318  .  .  1: *(obj @ 65)
+   319  .  .  2: *(obj @ 184)
+   320  .  .  3: *(obj @ 221)
+   321  .  }
+   322  }

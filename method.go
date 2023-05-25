@@ -67,23 +67,31 @@ func extractMethodRecvStruct(methodDecl *ast.FuncDecl) (string, bool) {
 	if len(methodDecl.Recv.List) < 1 {
 		return "", false
 	}
-
-	var pointerReceiver bool
-	var recvTypeIdentNode ast.Node
-	switch methodDecl.Recv.List[0].Type.(type) {
-	case *ast.Ident:
-		pointerReceiver = false
-		recvTypeIdentNode = methodDecl.Recv.List[0].Type
-	case *ast.StarExpr:
-		pointerReceiver = true
-		recvTypeIdentNode = methodDecl.Recv.List[0].Type.(*ast.StarExpr).X
-	}
-
-	recvTypeIdent, ok := recvTypeIdentNode.(*ast.Ident)
-	if !ok {
+	recvTypeIdentNode, pointerReceiver := traitReceiverStruct(methodDecl.Recv.List[0].Type)
+	if recvTypeIdentNode == nil {
 		return "", false
 	}
-	return recvTypeIdent.String(), pointerReceiver
+	return recvTypeIdentNode.String(), pointerReceiver
+}
+
+func traitReceiverStruct(node ast.Node) (*ast.Ident, bool) {
+	var pointerReceiver bool
+	var identNode *ast.Ident
+	ast.Inspect(node, func(n ast.Node) bool {
+		switch _n := n.(type) {
+		case *ast.StarExpr:
+			pointerReceiver = true
+			identNode, _ = traitReceiverStruct(_n.X)
+		case *ast.IndexExpr:
+			identNode, _ = traitReceiverStruct(_n.X)
+		case *ast.IndexListExpr:
+			identNode, _ = traitReceiverStruct(_n.X)
+		case *ast.Ident:
+			identNode = _n
+		}
+		return identNode == nil
+	})
+	return identNode, pointerReceiver
 }
 
 func (gmm *GoMethodMeta) MakeUnitTest(typeArgs []string) (string, []byte) {

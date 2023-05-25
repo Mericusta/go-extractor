@@ -84,6 +84,25 @@ func (gsm *GoStructMeta) Doc() []string {
 	return commentSlice
 }
 
+func (gsm *GoStructMeta) TypeParams() []*GoVariableMeta {
+	if gsm.node == nil || gsm.node.(*ast.TypeSpec).TypeParams == nil || len(gsm.node.(*ast.TypeSpec).TypeParams.List) == 0 {
+		return nil
+	}
+
+	tParamLen := len(gsm.node.(*ast.TypeSpec).TypeParams.List)
+	tParams := make([]*GoVariableMeta, 0, tParamLen)
+	for _, field := range gsm.node.(*ast.TypeSpec).TypeParams.List {
+		for _, name := range field.Names {
+			tParams = append(tParams, &GoVariableMeta{
+				meta:     gsm.newMeta(field),
+				name:     name.String(),
+				typeMeta: gsm.newMeta(field.Type),
+			})
+		}
+	}
+	return tParams
+}
+
 func (gsm *GoStructMeta) Members() []string {
 	if gsm.node.(*ast.TypeSpec) == nil || gsm.node.(*ast.TypeSpec).Type == nil {
 		return nil

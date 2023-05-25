@@ -458,10 +458,10 @@
    457  .  FileEnd: d:\Projects\go-extractor\testdata\standardProject\pkg\pkg.go:24:4
    458  .  Scope: *ast.Scope {
    459  .  .  Objects: map[string]*ast.Object (len = 4) {
-   460  .  .  .  "NoDocExampleFunc": *(obj @ 135)
-   461  .  .  .  "OneLineDocExampleFunc": *(obj @ 235)
-   462  .  .  .  "ImportSelectorFunc": *(obj @ 327)
-   463  .  .  .  "ExampleFunc": *(obj @ 43)
+   460  .  .  .  "ExampleFunc": *(obj @ 43)
+   461  .  .  .  "NoDocExampleFunc": *(obj @ 135)
+   462  .  .  .  "OneLineDocExampleFunc": *(obj @ 235)
+   463  .  .  .  "ImportSelectorFunc": *(obj @ 327)
    464  .  .  }
    465  .  }
    466  .  Imports: []*ast.ImportSpec (len = 2) {

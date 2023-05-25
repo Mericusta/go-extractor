@@ -1,5 +1,7 @@
 package template
 
+import stpmap "github.com/Mericusta/go-stp/map"
+
 func OneTemplateFunc[T any](tv *T) *T {
 	return nil
 }
@@ -26,4 +28,24 @@ func CannotInferTypeFunc1[T any]() {
 
 func CannotInferTypeFunc2[K comparable, V any]() (*K, *V) {
 	return nil, nil
+}
+
+type TemplateStruct[T any] struct {
+	v T
+}
+
+func (t *TemplateStruct[T]) V() T {
+	return t.v
+}
+
+type TwoTypeTemplateStruct[K TypeConstraints, V any] struct {
+	v map[K]V
+}
+
+func (t *TwoTypeTemplateStruct[K, V]) KVSlice() ([]K, []V) {
+	vs := make([]V, 0, len(t.v))
+	for _, v := range t.v {
+		vs = append(vs, v)
+	}
+	return stpmap.Key(t.v), vs
 }

@@ -697,6 +697,15 @@ func (gmm *GoMethodMeta) testFuncName(typeArgs []string) string {
 	return wrapTypeArgs(fmt.Sprintf("%v_%v", recvStruct, gmm.FunctionName()), typeArgs)
 }
 
+func (gimm *GoInterfaceMethodMeta) Recv() *GoVariableMeta {
+	return nil
+}
+
+func (gimm *GoInterfaceMethodMeta) testFuncName(typeArgs []string) string {
+	recvInterface, _ := gimm.RecvInterface()
+	return wrapTypeArgs(fmt.Sprintf("%v_%v", recvInterface, gimm.FunctionName()), typeArgs)
+}
+
 func MakeTestFile(pkg string, importMetas []*GoImportMeta) []byte {
 	fileDecl := &ast.File{
 		Name: ast.NewIdent(pkg),
