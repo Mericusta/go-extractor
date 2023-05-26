@@ -86,6 +86,9 @@ func makeTest(tm *testMaker, gtm GoTestMaker, testFuncName string, typeArgs []st
 		})
 	}
 
+	// type deduction
+	typeDeduction(gtm, typeArgs)
+
 	// func decl
 	funcDecl := makeFuncDecl(testFuncName, nil, nil, []*field{tm.funcParam}, nil)
 	funcDecl.Body = &ast.BlockStmt{}
@@ -131,6 +134,15 @@ func makeTest(tm *testMaker, gtm GoTestMaker, testFuncName string, typeArgs []st
 	return testFuncName, buffer.Bytes()
 }
 
+func typeDeduction(gtm GoTestMaker, typeArgs []string) {
+	// receiver type deduction
+	// receiverGVM := gtm.Recv()
+
+	// parameter type deduction
+
+	// return type deduction
+}
+
 // arg struct stmt
 func makeTestArgsStructStmt(funcName string, gtm GoTestMaker, typeArgInfers []*typeArgInfer) ast.Stmt {
 	argStructDecl := newTypeSpec("args", nil, gtm.Params()).makeDecl()
@@ -150,7 +162,9 @@ func makeTestArgsStructStmt(funcName string, gtm GoTestMaker, typeArgInfers []*t
 				ast.Inspect(argStructDecl.Specs[0].(*ast.TypeSpec).Type.(*ast.StructType).Fields.List[paramIndex].Type, func(n ast.Node) bool {
 					ident, ok := n.(*ast.Ident)
 					if ident != nil && ok && ident.String() == typeParam.Name() {
-						ident.Name = typeArgInfer.typeArg // Note: 修改了原 node 的值
+						// Note: 修改了原 node 的值
+						// 此处是 FuncDecl.Params.List[paramIndex].Type.Name 的值
+						ident.Name = typeArgInfer.typeArg
 						typeArgInfer.canInfer = true
 						return false
 					}
@@ -178,7 +192,43 @@ func makeUnittestTestCasesAssignStmt(funcName string, gtm GoTestMaker, typeArgIn
 									nameField := field{names: []string{"name"}, typeName: "string"}
 									list = append(list, nameField.make())
 									if gtm.Recv() != nil {
-										list = append(list, gtm.Recv().make())
+										// TODO: 要么 GoInterfaceMethod 里面把类型实参传递进去构造出结果比如 i ExampleTemplateInterface[string]
+										// TODO: 要么 就在这里判断是否存在类型实参，把 ExampleTemplateInterface 包装成 ExampleTemplateInterface[string]
+										recvField := gtm.Recv().make()
+
+										// if receiver has type param, it should be struct or interface
+										// but struct method receiver field expression already has type param
+										// so it must be interface method here
+
+										fmt.Printf("funcName %v, %+v\n", funcName, recvField)
+
+										// gtm.
+
+										for typeParamIndex, typeParam := range gtm.TypeParams() {
+											isTypeParam := false
+											ast.Inspect(recvField.Type, func(n ast.Node) bool {
+												ident, ok := n.(*ast.Ident)
+												if ident != nil && ok && ident.String() == typeParam.Name() {
+													isTypeParam = true
+													return false
+												}
+												return true
+											})
+											if isTypeParam {
+												typeArgInfer := typeArgInfers[typeParamIndex]
+												ast.Inspect(recvField.Type, func(n ast.Node) bool {
+													ident, ok := n.(*ast.Ident)
+													if ident != nil && ok && ident.String() == typeParam.Name() {
+														ident.Name = typeArgInfer.typeArg // Note: 修改了原 node 的值
+														typeArgInfer.canInfer = true
+														return false
+													}
+													return true
+												})
+											}
+										}
+
+										list = append(list, recvField)
 									}
 									if len(gtm.Params()) > 0 {
 										list = append(list, newField([]string{"args"}, "args", "", false).make())
@@ -695,10 +745,6 @@ func (gfm *GoFunctionMeta) Recv() *GoVariableMeta {
 func (gmm *GoMethodMeta) testFuncName(typeArgs []string) string {
 	recvStruct, _ := gmm.RecvStruct()
 	return wrapTypeArgs(fmt.Sprintf("%v_%v", recvStruct, gmm.FunctionName()), typeArgs)
-}
-
-func (gimm *GoInterfaceMethodMeta) Recv() *GoVariableMeta {
-	return nil
 }
 
 func (gimm *GoInterfaceMethodMeta) testFuncName(typeArgs []string) string {

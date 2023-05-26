@@ -12,7 +12,7 @@ type GoStructMeta struct {
 	methodDecl   map[string]*GoMethodMeta
 }
 
-func ExtractGoStructMeta(extractFilepath string, structName string) (*GoStructMeta, error) {
+func ExtractGoStructMeta(extractFilepath, structName string) (*GoStructMeta, error) {
 	gfm, err := ExtractGoFileMeta(extractFilepath)
 	if err != nil {
 		return nil, err

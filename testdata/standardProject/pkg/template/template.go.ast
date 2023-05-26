@@ -1223,15 +1223,15 @@
   1222  .  FileEnd: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:51:4
   1223  .  Scope: *ast.Scope {
   1224  .  .  Objects: map[string]*ast.Object (len = 9) {
-  1225  .  .  .  "TypeConstraintsTemplateFunc": *(obj @ 460)
-  1226  .  .  .  "CannotInferTypeFunc2": *(obj @ 598)
-  1227  .  .  .  "TwoTypeTemplateStruct": *(obj @ 859)
-  1228  .  .  .  "CannotInferTypeFunc1": *(obj @ 553)
-  1229  .  .  .  "TemplateStruct": *(obj @ 706)
+  1225  .  .  .  "DoubleSameTemplateFunc": *(obj @ 126)
+  1226  .  .  .  "TypeConstraints": *(obj @ 405)
+  1227  .  .  .  "TypeConstraintsTemplateFunc": *(obj @ 460)
+  1228  .  .  .  "CannotInferTypeFunc2": *(obj @ 598)
+  1229  .  .  .  "TwoTypeTemplateStruct": *(obj @ 859)
   1230  .  .  .  "OneTemplateFunc": *(obj @ 31)
-  1231  .  .  .  "DoubleSameTemplateFunc": *(obj @ 126)
-  1232  .  .  .  "DoubleDifferenceTemplateFunc": *(obj @ 259)
-  1233  .  .  .  "TypeConstraints": *(obj @ 405)
+  1231  .  .  .  "CannotInferTypeFunc1": *(obj @ 553)
+  1232  .  .  .  "TemplateStruct": *(obj @ 706)
+  1233  .  .  .  "DoubleDifferenceTemplateFunc": *(obj @ 259)
   1234  .  .  }
   1235  .  }
   1236  .  Imports: []*ast.ImportSpec (len = 1) {

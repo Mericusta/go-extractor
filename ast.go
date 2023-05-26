@@ -70,6 +70,19 @@ func (f *field) makeFieldList() *ast.FieldList {
 	return makeFieldList([]*field{f})
 }
 
+// func (gvm *GoVariableMeta) make() *ast.Field {
+// 	typeExpr, ok := gvm.typeMeta.(*meta).node.(ast.Expr)
+// 	_, typeUnderlyingString, _ := gvm.Type()
+// 	if !ok {
+// 		// interface method
+// 		typeExpr = &ast.Ident{Name: gvm.Name()}
+// 	}
+// 	return &ast.Field{
+// 		Names: []*ast.Ident{ast.NewIdent(strings.ToLower(string(typeUnderlyingString[0])))},
+// 		Type:  typeExpr,
+// 	}
+// }
+
 func (gvm *GoVariableMeta) make() *ast.Field {
 	return &ast.Field{
 		Names: []*ast.Ident{ast.NewIdent(gvm.Name())},

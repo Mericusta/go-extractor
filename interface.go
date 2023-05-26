@@ -12,7 +12,7 @@ type GoInterfaceMeta struct {
 	methodMeta   map[string]*GoInterfaceMethodMeta
 }
 
-func ExtractGoInterfaceMeta(extractFilepath string, interfaceName string) (*GoInterfaceMeta, error) {
+func ExtractGoInterfaceMeta(extractFilepath, interfaceName string) (*GoInterfaceMeta, error) {
 	gfm, err := ExtractGoFileMeta(extractFilepath)
 	if err != nil {
 		return nil, err
@@ -206,6 +206,35 @@ func (gimm *GoInterfaceMethodMeta) ReturnTypes() []*GoVariableMeta {
 
 func (gimm *GoInterfaceMethodMeta) RecvInterface() (string, bool) {
 	return gimm.interfaceMeta.InterfaceName(), true
+}
+
+func (gimm *GoInterfaceMethodMeta) Recv() *GoVariableMeta {
+	var receiverTypeExpr ast.Expr = ast.NewIdent(gimm.interfaceMeta.InterfaceName())
+	typeParams := gimm.TypeParams()
+	if l := len(typeParams); l > 0 {
+		typeParamsExpr := make([]ast.Expr, 0, l)
+		for _, typeParam := range typeParams {
+			typeParamsExpr = append(typeParamsExpr, ast.NewIdent(typeParam.Name()))
+		}
+		if l == 1 {
+			receiverTypeExpr = &ast.IndexExpr{
+				X:     receiverTypeExpr,
+				Index: typeParamsExpr[0],
+			}
+		} else {
+			receiverTypeExpr = &ast.IndexListExpr{
+				X:       receiverTypeExpr,
+				Indices: typeParamsExpr,
+			}
+		}
+	}
+	return &GoVariableMeta{
+		meta: gimm.newMeta(gimm.interfaceMeta.node),
+		name: "i",
+		// typeMeta: gimm.newMeta(gimm.interfaceMeta.node.(*ast.TypeSpec).Type.(*ast.InterfaceType)), // TODO: TypeSpec -> InterfaceType
+		// typeMeta: gimm.newMeta(gimm.interfaceMeta.node),                                           // TODO: TypeSpec -> InterfaceType
+		typeMeta: gimm.newMeta(receiverTypeExpr), // TODO: TypeSpec -> InterfaceType
+	}
 }
 
 func (gimm *GoInterfaceMethodMeta) MakeUnitTest(typeArgs []string) (string, []byte) {

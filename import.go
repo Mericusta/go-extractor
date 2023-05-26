@@ -11,7 +11,7 @@ type GoImportMeta struct {
 	*meta
 }
 
-func ExtractGoImportMeta(extractFilepath string, alias string) (*GoImportMeta, error) {
+func ExtractGoImportMeta(extractFilepath, alias string) (*GoImportMeta, error) {
 	gfm, err := ExtractGoFileMeta(extractFilepath)
 	if err != nil {
 		return nil, err

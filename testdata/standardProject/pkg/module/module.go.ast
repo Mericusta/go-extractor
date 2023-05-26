@@ -1470,11 +1470,11 @@
   1469  .  FileEnd: d:\Projects\go-extractor\testdata\standardProject\pkg\module\module.go:79:4
   1470  .  Scope: *ast.Scope {
   1471  .  .  Objects: map[string]*ast.Object (len = 5) {
-  1472  .  .  .  "ParentStruct": *(obj @ 44)
-  1473  .  .  .  "ExampleStruct": *(obj @ 189)
-  1474  .  .  .  "globalExampleStruct": *(obj @ 301)
-  1475  .  .  .  "NewExampleStruct": *(obj @ 341)
-  1476  .  .  .  "ExampleFunc": *(obj @ 1393)
+  1472  .  .  .  "ExampleFunc": *(obj @ 1393)
+  1473  .  .  .  "ParentStruct": *(obj @ 44)
+  1474  .  .  .  "ExampleStruct": *(obj @ 189)
+  1475  .  .  .  "globalExampleStruct": *(obj @ 301)
+  1476  .  .  .  "NewExampleStruct": *(obj @ 341)
   1477  .  .  }
   1478  .  }
   1479  .  Imports: []*ast.ImportSpec (len = 2) {

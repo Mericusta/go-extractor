@@ -18,7 +18,7 @@ func NewGoFunctionMeta(m *meta) *GoFunctionMeta {
 	return &GoFunctionMeta{meta: m}
 }
 
-func ExtractGoFunctionMeta(extractFilepath string, functionName string) (*GoFunctionMeta, error) {
+func ExtractGoFunctionMeta(extractFilepath, functionName string) (*GoFunctionMeta, error) {
 	goFileMeta, err := ExtractGoFileMeta(extractFilepath)
 	if err != nil {
 		return nil, err

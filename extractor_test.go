@@ -1397,8 +1397,8 @@ func TestExtractGoProjectMeta(t *testing.T) {
 
 	checkProjectMeta(goProjectMeta, standardProjectMeta)
 
-	for pkgName, _gpm := range standardProjectMeta.PackageMap {
-		gpm := goProjectMeta.SearchPackageMeta(pkgName)
+	for _pkgName, _gpm := range standardProjectMeta.PackageMap {
+		gpm := goProjectMeta.SearchPackageMeta(_pkgName)
 		if gpm == nil {
 			Panic(gpm, _gpm)
 		}
@@ -1420,8 +1420,8 @@ func TestExtractGoProjectMeta(t *testing.T) {
 			checkStructMeta(gsm, _gsm)
 
 			// member
-			for memberName, _gvm := range _gsm.StructMemberMeta {
-				gvm := gsm.SearchMemberMeta(memberName)
+			for _memberName, _gvm := range _gsm.StructMemberMeta {
+				gvm := gsm.SearchMemberMeta(_memberName)
 				if gvm == nil {
 					Panic(gvm, _gvm)
 				}
@@ -1429,8 +1429,8 @@ func TestExtractGoProjectMeta(t *testing.T) {
 			}
 
 			// method
-			for methodName, _gmm := range _gsm.StructMethodMeta {
-				gmm := gpm.SearchMethodMeta(_structName, methodName)
+			for _methodName, _gmm := range _gsm.StructMethodMeta {
+				gmm := gpm.SearchMethodMeta(_structName, _methodName)
 				if gmm == nil {
 					Panic(gmm, _gmm)
 				}
@@ -1468,8 +1468,8 @@ func TestExtractGoProjectMeta(t *testing.T) {
 			}
 		}
 
-		for interfaceName, _gim := range _gpm.pkgInterfaceMeta {
-			gim := gpm.SearchInterfaceMeta(interfaceName)
+		for _interfaceName, _gim := range _gpm.pkgInterfaceMeta {
+			gim := gpm.SearchInterfaceMeta(_interfaceName)
 			if gim == nil {
 				Panic(gim, _gim)
 			}
@@ -1514,8 +1514,8 @@ func TestExtractGoProjectMeta(t *testing.T) {
 			}
 		}
 
-		for funcName, _gfm := range _gpm.pkgFunctionMeta {
-			gfm := gpm.SearchFunctionMeta(funcName)
+		for _funcName, _gfm := range _gpm.pkgFunctionMeta {
+			gfm := gpm.SearchFunctionMeta(_funcName)
 			if gfm == nil {
 				Panic(gfm, _gfm)
 			}
