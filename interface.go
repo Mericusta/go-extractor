@@ -64,8 +64,23 @@ func IsInterfaceNode(n ast.Node) bool {
 	if typeSpec.Type == nil {
 		return false
 	}
-	_, ok = typeSpec.Type.(*ast.InterfaceType)
-	return ok
+	interfaceTypeNode, ok := typeSpec.Type.(*ast.InterfaceType)
+	if !ok {
+		return false
+	}
+	if interfaceTypeNode == nil {
+		return false
+	}
+	if interfaceTypeNode.Methods == nil || len(interfaceTypeNode.Methods.List) == 0 {
+		return true
+	}
+	for _, method := range interfaceTypeNode.Methods.List {
+		_, ok = method.Type.(*ast.FuncType)
+		if !ok {
+			return false
+		}
+	}
+	return true
 }
 
 func (gim *GoInterfaceMeta) InterfaceName() string {
