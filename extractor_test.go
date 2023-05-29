@@ -1284,11 +1284,6 @@ var (
 						},
 					},
 				},
-				pkgInterfaceMeta: map[string]*compareGoInterfaceMeta{
-					"TypeConstraints": {
-						InterfaceName: "TypeConstraints",
-					},
-				},
 				pkgStructMeta: map[string]*compareGoStructMeta{
 					"TemplateStruct": {
 						StructName: "TemplateStruct",
