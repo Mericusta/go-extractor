@@ -134,6 +134,7 @@ func (gim *GoInterfaceMeta) TypeParams() []*GoVariableMeta {
 type GoInterfaceMethodMeta struct {
 	*meta
 	interfaceMeta *GoInterfaceMeta
+	receiverMeta  *GoVariableMeta
 }
 
 func IsInterfaceMethodNode(n ast.Node) bool {
@@ -209,6 +210,10 @@ func (gimm *GoInterfaceMethodMeta) RecvInterface() (string, bool) {
 }
 
 func (gimm *GoInterfaceMethodMeta) Recv() *GoVariableMeta {
+	if gimm.receiverMeta != nil {
+		return gimm.receiverMeta
+	}
+
 	var receiverTypeExpr ast.Expr = ast.NewIdent(gimm.interfaceMeta.InterfaceName())
 	typeParams := gimm.TypeParams()
 	if l := len(typeParams); l > 0 {
@@ -228,13 +233,13 @@ func (gimm *GoInterfaceMethodMeta) Recv() *GoVariableMeta {
 			}
 		}
 	}
-	return &GoVariableMeta{
-		meta: gimm.newMeta(gimm.interfaceMeta.node),
-		name: "i",
-		// typeMeta: gimm.newMeta(gimm.interfaceMeta.node.(*ast.TypeSpec).Type.(*ast.InterfaceType)), // TODO: TypeSpec -> InterfaceType
-		// typeMeta: gimm.newMeta(gimm.interfaceMeta.node),                                           // TODO: TypeSpec -> InterfaceType
-		typeMeta: gimm.newMeta(receiverTypeExpr), // TODO: TypeSpec -> InterfaceType
+	gimm.receiverMeta = &GoVariableMeta{
+		meta:     gimm.newMeta(gimm.interfaceMeta.node),
+		name:     "i",
+		typeMeta: gimm.newMeta(receiverTypeExpr),
 	}
+
+	return gimm.receiverMeta
 }
 
 func (gimm *GoInterfaceMethodMeta) MakeUnitTest(typeArgs []string) (string, []byte) {
@@ -242,5 +247,5 @@ func (gimm *GoInterfaceMethodMeta) MakeUnitTest(typeArgs []string) (string, []by
 }
 
 func (gimm *GoInterfaceMethodMeta) MakeBenchmark(typeArgs []string) (string, []byte) {
-	return makeTest(unittestMaker, gimm, "", typeArgs)
+	return makeTest(benchmarkMaker, gimm, "", typeArgs)
 }

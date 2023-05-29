@@ -63,56 +63,48 @@ func (gmm *GoMethodMeta) TypeParams() []*GoVariableMeta {
 	tParams := make([]*GoVariableMeta, 0)
 
 	// method receiver
-	if funcDecl.Recv == nil || len(funcDecl.Recv.List) == 0 || funcDecl.Recv.List[0].Type == nil {
-		return tParams
-	}
-
-	var typeParamExpr ast.Expr
-	ast.Inspect(funcDecl.Recv.List[0].Type, func(n ast.Node) bool {
-		switch _n := n.(type) {
-		case *ast.IndexExpr, *ast.IndexListExpr:
-			typeParamExpr = _n.(ast.Expr)
-		}
-		return typeParamExpr == nil
-	})
-
-	fmt.Printf("gmm = %v\n", gmm.name)
-	fmt.Printf("typeParamExpr = %v\n", typeParamExpr)
-
-	switch _tpe := typeParamExpr.(type) {
-	case *ast.IndexExpr:
-		tParams = append(tParams, &GoVariableMeta{
-			meta:     gmm.newMeta(_tpe.Index),
-			name:     _tpe.Index.(*ast.Ident).String(),
-			typeMeta: gmm.newMeta(_tpe.Index),
+	if funcDecl.Recv != nil && len(funcDecl.Recv.List) != 0 && funcDecl.Recv.List[0].Type != nil {
+		var typeParamExpr ast.Expr
+		ast.Inspect(funcDecl.Recv.List[0].Type, func(n ast.Node) bool {
+			switch _n := n.(type) {
+			case *ast.IndexExpr, *ast.IndexListExpr:
+				typeParamExpr = _n.(ast.Expr)
+			}
+			return typeParamExpr == nil
 		})
-	case *ast.IndexListExpr:
-		for _, _i := range _tpe.Indices {
+
+		switch _tpe := typeParamExpr.(type) {
+		case *ast.IndexExpr: // 因为这里直接使用了 struct 的
 			tParams = append(tParams, &GoVariableMeta{
-				meta:     gmm.newMeta(_i),
-				name:     _i.(*ast.Ident).String(),
-				typeMeta: gmm.newMeta(_i),
+				meta:     gmm.newMeta(_tpe.Index),
+				name:     _tpe.Index.(*ast.Ident).String(),
+				typeMeta: gmm.newMeta(_tpe.Index),
 			})
+		case *ast.IndexListExpr:
+			for _, _i := range _tpe.Indices {
+				tParams = append(tParams, &GoVariableMeta{
+					meta:     gmm.newMeta(_i),
+					name:     _i.(*ast.Ident).String(),
+					typeMeta: gmm.newMeta(_i),
+				})
+			}
 		}
 	}
 
 	// receiverType, ok := funcDecl.Recv.List[0].Type.(ast.Expr)
-
 	// function declaration
-
-	if funcDecl.Type.TypeParams == nil || len(funcDecl.Type.TypeParams.List) == 0 {
-		return tParams
-	}
-
-	for _, field := range gmm.node.(*ast.FuncDecl).Type.TypeParams.List {
-		for _, name := range field.Names {
-			tParams = append(tParams, &GoVariableMeta{
-				meta:     gmm.newMeta(field),
-				name:     name.String(),
-				typeMeta: gmm.newMeta(field.Type),
-			})
+	if funcDecl.Type.TypeParams != nil && len(funcDecl.Type.TypeParams.List) != 0 {
+		for _, field := range gmm.node.(*ast.FuncDecl).Type.TypeParams.List {
+			for _, name := range field.Names {
+				tParams = append(tParams, &GoVariableMeta{
+					meta:     gmm.newMeta(field),
+					name:     name.String(),
+					typeMeta: gmm.newMeta(field.Type),
+				})
+			}
 		}
 	}
+
 	return tParams
 }
 
@@ -125,7 +117,7 @@ func (gmm *GoMethodMeta) Recv() *GoVariableMeta {
 	return &GoVariableMeta{
 		meta:     gmm.newMeta(recv),
 		name:     recv.Names[0].String(),
-		typeMeta: gmm.newMeta(recv.Type), // TODO: check if it is StructType
+		typeMeta: gmm.newMeta(recv.Type),
 	}
 }
 

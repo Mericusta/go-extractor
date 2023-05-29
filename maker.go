@@ -27,7 +27,7 @@ const (
 	BENCHMARK
 )
 
-type testStmtMaker func(string, GoTestMaker, []*typeArgInfer) []ast.Stmt
+type testStmtMaker func(string, GoTestMaker, []*typeInfer) []ast.Stmt
 
 type testMaker struct {
 	prefix             string
@@ -55,9 +55,10 @@ var (
 	}
 )
 
-type typeArgInfer struct {
-	typeArg  string
-	canInfer bool
+type typeInfer struct {
+	paramName string //
+	argName   string //
+	canInfer  bool
 }
 
 // makeTest generate unit test func
@@ -72,22 +73,24 @@ func makeTest(tm *testMaker, gtm GoTestMaker, testFuncName string, typeArgs []st
 	}
 
 	funcName := gtm.FunctionName()
-	if len(gtm.TypeParams()) > len(typeArgs) {
+	typeParams := gtm.TypeParams()
+	if len(typeParams) > len(typeArgs) {
 		return "", nil
 	}
 	if len(testFuncName) == 0 {
 		testFuncName = fmt.Sprintf("%v_%v", tm.prefix, gtm.testFuncName(typeArgs))
 	}
-	typeArgInfers := make([]*typeArgInfer, 0, len(typeArgs))
-	for _, typeArg := range typeArgs {
-		typeArgInfers = append(typeArgInfers, &typeArgInfer{
-			typeArg:  typeArg,
-			canInfer: false,
+	typeArgInfers := make([]*typeInfer, 0, len(typeArgs))
+	for index, typeArg := range typeArgs {
+		typeArgInfers = append(typeArgInfers, &typeInfer{
+			paramName: typeParams[index].Name(), argName: typeArg, canInfer: false,
 		})
 	}
 
 	// type deduction
-	typeDeduction(gtm, typeArgs)
+	if len(typeParams) > 0 {
+		typeDeduction(gtm, typeArgInfers)
+	}
 
 	// func decl
 	funcDecl := makeFuncDecl(testFuncName, nil, nil, []*field{tm.funcParam}, nil)
@@ -134,37 +137,38 @@ func makeTest(tm *testMaker, gtm GoTestMaker, testFuncName string, typeArgs []st
 	return testFuncName, buffer.Bytes()
 }
 
-func typeDeduction(gtm GoTestMaker, typeArgs []string) {
+func typeDeduction(gtm GoTestMaker, typeArgInfers []*typeInfer) {
+	// to deduction GVM
+	toDeductionGVMSlice := make([]*GoVariableMeta, 0, 8)
 	// receiver type deduction
-	// receiverGVM := gtm.Recv()
-
+	toDeductionGVMSlice = append(toDeductionGVMSlice, gtm.Recv())
 	// parameter type deduction
-
+	toDeductionGVMSlice = append(toDeductionGVMSlice, gtm.Params()...)
 	// return type deduction
-}
+	toDeductionGVMSlice = append(toDeductionGVMSlice, gtm.ReturnTypes()...)
 
-// arg struct stmt
-func makeTestArgsStructStmt(funcName string, gtm GoTestMaker, typeArgInfers []*typeArgInfer) ast.Stmt {
-	argStructDecl := newTypeSpec("args", nil, gtm.Params()).makeDecl()
-	for paramIndex, param := range gtm.Params() {
-		for typeParamIndex, typeParam := range gtm.TypeParams() {
+	// deduction
+	for _, gvm := range toDeductionGVMSlice {
+		if gvm == nil {
+			continue
+		}
+		for typeArgIndex, typeArg := range typeArgInfers {
 			isTypeParam := false
-			ast.Inspect(param.typeNode(), func(n ast.Node) bool {
+			ast.Inspect(gvm.typeNode(), func(n ast.Node) bool {
 				ident, ok := n.(*ast.Ident)
-				if ident != nil && ok && ident.String() == typeParam.Name() {
+				if ident != nil && ok && ident.String() == typeArg.paramName {
 					isTypeParam = true
 					return false
 				}
 				return true
 			})
 			if isTypeParam {
-				typeArgInfer := typeArgInfers[typeParamIndex]
-				ast.Inspect(argStructDecl.Specs[0].(*ast.TypeSpec).Type.(*ast.StructType).Fields.List[paramIndex].Type, func(n ast.Node) bool {
+				typeArgInfer := typeArgInfers[typeArgIndex]
+				ast.Inspect(gvm.typeNode(), func(n ast.Node) bool {
 					ident, ok := n.(*ast.Ident)
-					if ident != nil && ok && ident.String() == typeParam.Name() {
+					if ident != nil && ok && ident.String() == typeArg.paramName {
 						// Note: 修改了原 node 的值
-						// 此处是 FuncDecl.Params.List[paramIndex].Type.Name 的值
-						ident.Name = typeArgInfer.typeArg
+						ident.Name = typeArgInfer.argName
 						typeArgInfer.canInfer = true
 						return false
 					}
@@ -173,11 +177,16 @@ func makeTestArgsStructStmt(funcName string, gtm GoTestMaker, typeArgInfers []*t
 			}
 		}
 	}
+}
+
+// arg struct stmt
+func makeTestArgsStructStmt(funcName string, gtm GoTestMaker, typeArgInfers []*typeInfer) ast.Stmt {
+	argStructDecl := newTypeSpec("args", nil, gtm.Params()).makeDecl()
 	return &ast.DeclStmt{Decl: argStructDecl}
 }
 
 // unittest test cases stmt
-func makeUnittestTestCasesAssignStmt(funcName string, gtm GoTestMaker, typeArgInfers []*typeArgInfer) []ast.Stmt {
+func makeUnittestTestCasesAssignStmt(funcName string, gtm GoTestMaker, typeArgInfers []*typeInfer) []ast.Stmt {
 	return []ast.Stmt{
 		&ast.AssignStmt{
 			Lhs: []ast.Expr{ast.NewIdent("tests")},
@@ -192,43 +201,7 @@ func makeUnittestTestCasesAssignStmt(funcName string, gtm GoTestMaker, typeArgIn
 									nameField := field{names: []string{"name"}, typeName: "string"}
 									list = append(list, nameField.make())
 									if gtm.Recv() != nil {
-										// TODO: 要么 GoInterfaceMethod 里面把类型实参传递进去构造出结果比如 i ExampleTemplateInterface[string]
-										// TODO: 要么 就在这里判断是否存在类型实参，把 ExampleTemplateInterface 包装成 ExampleTemplateInterface[string]
-										recvField := gtm.Recv().make()
-
-										// if receiver has type param, it should be struct or interface
-										// but struct method receiver field expression already has type param
-										// so it must be interface method here
-
-										fmt.Printf("funcName %v, %+v\n", funcName, recvField)
-
-										// gtm.
-
-										for typeParamIndex, typeParam := range gtm.TypeParams() {
-											isTypeParam := false
-											ast.Inspect(recvField.Type, func(n ast.Node) bool {
-												ident, ok := n.(*ast.Ident)
-												if ident != nil && ok && ident.String() == typeParam.Name() {
-													isTypeParam = true
-													return false
-												}
-												return true
-											})
-											if isTypeParam {
-												typeArgInfer := typeArgInfers[typeParamIndex]
-												ast.Inspect(recvField.Type, func(n ast.Node) bool {
-													ident, ok := n.(*ast.Ident)
-													if ident != nil && ok && ident.String() == typeParam.Name() {
-														ident.Name = typeArgInfer.typeArg // Note: 修改了原 node 的值
-														typeArgInfer.canInfer = true
-														return false
-													}
-													return true
-												})
-											}
-										}
-
-										list = append(list, recvField)
+										list = append(list, gtm.Recv().make())
 									}
 									if len(gtm.Params()) > 0 {
 										list = append(list, newField([]string{"args"}, "args", "", false).make())
@@ -236,34 +209,7 @@ func makeUnittestTestCasesAssignStmt(funcName string, gtm GoTestMaker, typeArgIn
 									for i, rt := range gtm.ReturnTypes() {
 										list = append(list, &ast.Field{
 											Names: []*ast.Ident{ast.NewIdent(fmt.Sprintf("want%v", i))},
-											Type: func() ast.Expr {
-												// TODO: tmp, compare and search if field type is in type params, replace by index
-												for typeParamIndex, typeParam := range gtm.TypeParams() {
-													isTypeParam := false
-													ast.Inspect(rt.typeNode(), func(n ast.Node) bool {
-														ident, ok := n.(*ast.Ident)
-														if ident != nil && ok && ident.String() == typeParam.Name() {
-															isTypeParam = true
-															return false
-														}
-														return true
-													})
-													if isTypeParam {
-														typeArgInfer := typeArgInfers[typeParamIndex]
-														rtTypeNode := rt.typeNode()
-														ast.Inspect(rtTypeNode, func(n ast.Node) bool {
-															ident, ok := n.(*ast.Ident)
-															if ident != nil && ok && ident.String() == typeParam.Name() {
-																ident.Name = typeArgInfer.typeArg
-																return false
-															}
-															return true
-														})
-														return rtTypeNode
-													}
-												}
-												return rt.typeNode()
-											}(),
+											Type:  rt.typeNode(),
 										})
 									}
 									return list
@@ -278,7 +224,7 @@ func makeUnittestTestCasesAssignStmt(funcName string, gtm GoTestMaker, typeArgIn
 }
 
 // benchmark test cases stmt
-func makeBenchmarkTestCasesAssignStmt(funcName string, gtm GoTestMaker, typeArgInfers []*typeArgInfer) []ast.Stmt {
+func makeBenchmarkTestCasesAssignStmt(funcName string, gtm GoTestMaker, typeArgInfers []*typeInfer) []ast.Stmt {
 	return []ast.Stmt{
 		&ast.AssignStmt{
 			Lhs: []ast.Expr{ast.NewIdent("tests")},
@@ -348,7 +294,7 @@ func makeTestCasesForRangeStmt(funcName string, gtm GoTestMaker, typeArgs []stri
 }
 
 // benchmark test case pre stmt
-func makeBenchmarkTestCasePreStmt(funcName string, gtm GoTestMaker, typeArgInfers []*typeArgInfer) []ast.Stmt {
+func makeBenchmarkTestCasePreStmt(funcName string, gtm GoTestMaker, typeArgInfers []*typeInfer) []ast.Stmt {
 	return []ast.Stmt{
 		&ast.ExprStmt{
 			X: &ast.CallExpr{
@@ -362,7 +308,7 @@ func makeBenchmarkTestCasePreStmt(funcName string, gtm GoTestMaker, typeArgInfer
 }
 
 // unittest test case running stmt
-func makeUnitTestTestCaseRunningStmt(funcName string, gtm GoTestMaker, typeArgInfers []*typeArgInfer) []ast.Stmt {
+func makeUnitTestTestCaseRunningStmt(funcName string, gtm GoTestMaker, typeArgInfers []*typeInfer) []ast.Stmt {
 	return []ast.Stmt{
 		&ast.ExprStmt{
 			X: &ast.CallExpr{
@@ -408,7 +354,6 @@ func makeUnitTestTestCaseRunningStmt(funcName string, gtm GoTestMaker, typeArgIn
 										Sel: ast.NewIdent(funcName),
 									}
 								} else {
-									// TODO: support method
 									for _, typeArgInfer := range typeArgInfers {
 										if !typeArgInfer.canInfer {
 											inferTypeArgsExplicitly(callExpr, typeArgInfers)
@@ -510,7 +455,7 @@ func makeUnitTestTestCaseRunningStmt(funcName string, gtm GoTestMaker, typeArgIn
 }
 
 // benchmark test case running stmt
-func makeBenchmarkTestCaseRunningStmt(funcName string, gtm GoTestMaker, typeArgInfers []*typeArgInfer) []ast.Stmt {
+func makeBenchmarkTestCaseRunningStmt(funcName string, gtm GoTestMaker, typeArgInfers []*typeInfer) []ast.Stmt {
 	iteratorIdent := ast.NewIdent("i")
 	return []ast.Stmt{
 		&ast.ForStmt{
@@ -549,7 +494,6 @@ func makeBenchmarkTestCaseRunningStmt(funcName string, gtm GoTestMaker, typeArgI
 							Sel: ast.NewIdent(funcName),
 						}
 					} else {
-						// TODO: support method
 						for _, typeArgInfer := range typeArgInfers {
 							if !typeArgInfer.canInfer {
 								inferTypeArgsExplicitly(callExpr, typeArgInfers)
@@ -601,7 +545,7 @@ func makeBenchmarkTestCaseRunningStmt(funcName string, gtm GoTestMaker, typeArgI
 }
 
 // benchmark test case post stmt
-func makeBenchmarkTestCasePostStmt(funcName string, gtm GoTestMaker, typeArgInfers []*typeArgInfer) []ast.Stmt {
+func makeBenchmarkTestCasePostStmt(funcName string, gtm GoTestMaker, typeArgInfers []*typeInfer) []ast.Stmt {
 	return []ast.Stmt{
 		&ast.ExprStmt{
 			X: &ast.CallExpr{
@@ -715,12 +659,12 @@ func wrapTypeArgs(unitTestFuncName string, typeArgs []string) string {
 	return unitTestFuncName
 }
 
-func inferTypeArgsExplicitly(callExpr *ast.CallExpr, typeArgInfers []*typeArgInfer) {
+func inferTypeArgsExplicitly(callExpr *ast.CallExpr, typeArgInfers []*typeInfer) {
 	l := len(typeArgInfers)
 	if l == 1 {
 		callExpr.Fun = &ast.IndexExpr{
 			X:     callExpr.Fun,
-			Index: ast.NewIdent(typeArgInfers[0].typeArg),
+			Index: ast.NewIdent(typeArgInfers[0].argName),
 		}
 	} else {
 		indexListExpr := &ast.IndexListExpr{
@@ -728,7 +672,7 @@ func inferTypeArgsExplicitly(callExpr *ast.CallExpr, typeArgInfers []*typeArgInf
 			Indices: make([]ast.Expr, 0, l),
 		}
 		for _, typeArgInfer := range typeArgInfers {
-			indexListExpr.Indices = append(indexListExpr.Indices, ast.NewIdent(typeArgInfer.typeArg))
+			indexListExpr.Indices = append(indexListExpr.Indices, ast.NewIdent(typeArgInfer.argName))
 		}
 		callExpr.Fun = indexListExpr
 	}

@@ -1362,6 +1362,22 @@ var (
 								compareGoFunctionMeta: &compareGoFunctionMeta{
 									compareGoFunctionDeclMeta: compareGoFunctionDeclMeta{
 										FunctionName: "KVSlice",
+										Params: []*compareGoVariableMeta{
+											{
+												Expression:           `k K`,
+												Name:                 "k",
+												TypeExpression:       `K`,
+												TypeUnderlyingString: "K",
+												TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+											},
+											{
+												Expression:           `v V`,
+												Name:                 "v",
+												TypeExpression:       `V`,
+												TypeUnderlyingString: "V",
+												TypeUnderlyingEnum:   UNDERLYING_TYPE_IDENT,
+											},
+										},
 										ReturnTypes: []*compareGoVariableMeta{
 											{
 												Expression:           `[]K`,
