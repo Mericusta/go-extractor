@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	stpmap "github.com/Mericusta/go-stp/map"
+	stp "github.com/Mericusta/go-stp"
 )
 
 // 以文件为单位提取
@@ -125,7 +125,7 @@ func (gpm *GoPackageMeta) ImportPath() string {
 }
 
 func (gpm *GoPackageMeta) FileNames() []string {
-	return stpmap.Key(gpm.pkgFileMap)
+	return stp.Key(gpm.pkgFileMap)
 }
 
 func (gpm *GoPackageMeta) SearchFileMeta(fileName string) *GoFileMeta {

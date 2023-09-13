@@ -1,2 +1,6 @@
 github.com/Mericusta/go-stp v0.3.0 h1:ARuzP4bXS1/r/a9FVSmrXVuYpC5VpOpjmBZ7Wov4hNQ=
 github.com/Mericusta/go-stp v0.3.0/go.mod h1:QWvceWQxbtUdM5ImfE2W4Bdp1USSssPOM4j0AGsSSe4=
+github.com/Mericusta/go-stp v0.8.3 h1:XNInz0gbeaKlOWhe4i9wPZhQFMc1+k/8+hp/uJZw+zY=
+github.com/Mericusta/go-stp v0.8.3/go.mod h1:kUHIusWUdUZTicZc5NJLBvr2DUUUoLHT/LEjq+Zsack=
+golang.org/x/text v0.13.0 h1:ablQoSUd0tRdKxZewP80B+BaqeKJuVhuRxj/dkrun3k=
+golang.org/x/text v0.13.0/go.mod h1:TvPlkZtksWOMsz7fbANvkp4WM8x/WCo/om8BMLbz+aE=

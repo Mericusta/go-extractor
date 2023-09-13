@@ -9,7 +9,7 @@ import (
 	"os"
 	"path/filepath"
 
-	stpmap "github.com/Mericusta/go-stp/map"
+	stp "github.com/Mericusta/go-stp"
 )
 
 // GoProjectMeta
@@ -221,7 +221,7 @@ func (gpm *GoProjectMeta) ModuleName() string {
 }
 
 func (gpm *GoProjectMeta) Packages() []string {
-	return stpmap.Key(gpm.packageMap)
+	return stp.Key(gpm.packageMap)
 }
 
 func (gpm *GoProjectMeta) SearchPackageMeta(pkgImportPath string) *GoPackageMeta {

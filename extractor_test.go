@@ -6,8 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	stpmap "github.com/Mericusta/go-stp/map"
-	stpslice "github.com/Mericusta/go-stp/slice"
+	stp "github.com/Mericusta/go-stp"
 )
 
 type compareGoProjectMeta struct {
@@ -1605,9 +1604,9 @@ func checkProjectMeta(gpm *GoProjectMeta, _gpm *compareGoProjectMeta) {
 	// packages
 	packages := gpm.Packages()
 	sort.Strings(packages)
-	_packages := stpmap.Key(_gpm.PackageMap)
+	_packages := stp.Key(_gpm.PackageMap)
 	sort.Strings(_packages)
-	if !stpslice.Compare(packages, _packages) {
+	if !stp.Compare(packages, _packages) {
 		Panic(packages, _packages)
 	}
 }
@@ -1627,36 +1626,36 @@ func checkPackageMeta(gpm *GoPackageMeta, _gpm *compareGoPackageMeta) {
 	// file
 	fileNames := gpm.FileNames()
 	sort.Strings(fileNames)
-	_fileNames := stpmap.Key(_gpm.pkgFileMap)
+	_fileNames := stp.Key(_gpm.pkgFileMap)
 	sort.Strings(_fileNames)
-	if !stpslice.Compare(fileNames, _fileNames) {
+	if !stp.Compare(fileNames, _fileNames) {
 		Panic(fileNames, _fileNames)
 	}
 
 	// struct
 	structNames := gpm.StructNames()
 	sort.Strings(structNames)
-	_structNames := stpmap.Key(_gpm.pkgStructMeta)
+	_structNames := stp.Key(_gpm.pkgStructMeta)
 	sort.Strings(_structNames)
-	if !stpslice.Compare(structNames, _structNames) {
+	if !stp.Compare(structNames, _structNames) {
 		Panic(structNames, _structNames)
 	}
 
 	// interface
 	interfaceNames := gpm.InterfaceNames()
 	sort.Strings(interfaceNames)
-	_interfaceNames := stpmap.Key(_gpm.pkgInterfaceMeta)
+	_interfaceNames := stp.Key(_gpm.pkgInterfaceMeta)
 	sort.Strings(_interfaceNames)
-	if !stpslice.Compare(interfaceNames, _interfaceNames) {
+	if !stp.Compare(interfaceNames, _interfaceNames) {
 		Panic(interfaceNames, _interfaceNames)
 	}
 
 	// function
 	functionNames := gpm.FunctionNames()
 	sort.Strings(functionNames)
-	_functionNames := stpmap.Key(_gpm.pkgFunctionMeta)
+	_functionNames := stp.Key(_gpm.pkgFunctionMeta)
 	sort.Strings(_functionNames)
-	if !stpslice.Compare(functionNames, _functionNames) {
+	if !stp.Compare(functionNames, _functionNames) {
 		Panic(functionNames, _functionNames)
 	}
 }
@@ -1679,7 +1678,7 @@ func checkStructMeta(gsm *GoStructMeta, _gsm *compareGoStructMeta) {
 	if gsm.StructName() != _gsm.StructName {
 		Panic(gsm.StructName(), _gsm.StructName)
 	}
-	if !stpslice.Compare(gsm.Doc(), _gsm.Doc) {
+	if !stp.Compare(gsm.Doc(), _gsm.Doc) {
 		Panic(gsm.Doc(), _gsm.Doc)
 	}
 
@@ -1694,9 +1693,9 @@ func checkStructMeta(gsm *GoStructMeta, _gsm *compareGoStructMeta) {
 	// member
 	memberNames := gsm.Members()
 	sort.Strings(memberNames)
-	_memberNames := stpmap.Key(_gsm.StructMemberMeta)
+	_memberNames := stp.Key(_gsm.StructMemberMeta)
 	sort.Strings(_memberNames)
-	if !stpslice.Compare(memberNames, _memberNames) {
+	if !stp.Compare(memberNames, _memberNames) {
 		Panic(memberNames, _memberNames)
 	}
 }
@@ -1706,7 +1705,7 @@ func checkInterfaceMeta(gim *GoInterfaceMeta, _gim *compareGoInterfaceMeta) {
 	if gim.InterfaceName() != _gim.InterfaceName {
 		Panic(gim.InterfaceName(), _gim.InterfaceName)
 	}
-	if !stpslice.Compare(gim.Doc(), _gim.Doc) {
+	if !stp.Compare(gim.Doc(), _gim.Doc) {
 		Panic(gim.Doc(), _gim.Doc)
 	}
 
@@ -1724,7 +1723,7 @@ func checkFunctionMeta(gfm *GoFunctionMeta, _gfm *compareGoFunctionMeta) {
 	if gfm.FunctionName() != _gfm.FunctionName {
 		Panic(gfm.FunctionName(), _gfm.FunctionName)
 	}
-	if !stpslice.Compare(gfm.Doc(), _gfm.Doc) {
+	if !stp.Compare(gfm.Doc(), _gfm.Doc) {
 		Panic(gfm.Doc(), _gfm.Doc)
 	}
 
@@ -1750,11 +1749,11 @@ func checkFunctionMeta(gfm *GoFunctionMeta, _gfm *compareGoFunctionMeta) {
 	}
 
 	// // call
-	// calls := stpmap.Key(gfm.Calls())
+	// calls := stp.Key(gfm.Calls())
 	// sort.Strings(calls)
-	// _calls := stpmap.Key(_gfm.CallMeta)
+	// _calls := stp.Key(_gfm.CallMeta)
 	// sort.Strings(_calls)
-	// if !stpslice.Compare(calls, _calls) {
+	// if !stp.Compare(calls, _calls) {
 	// 	gfm.Calls()
 	// 	Panic(calls, _calls)
 	// }
@@ -1782,7 +1781,7 @@ func checkFunctionMeta(gfm *GoFunctionMeta, _gfm *compareGoFunctionMeta) {
 // 	if gmm.Comment() != _gmm.Comment {
 // 		Panic(gmm.Comment(), _gmm.Comment)
 // 	}
-// 	stpslice.Compare(gmm.Doc(), _gmm.Doc)
+// 	stp.Compare(gmm.Doc(), _gmm.Doc)
 // }
 
 func checkMethodMeta(gmm *GoMethodMeta, _gmm *compareGoMethodMeta) {
@@ -1807,7 +1806,7 @@ func checkInterfaceMethodMeta(gimm *GoInterfaceMethodMeta, _gimm *compareGoInter
 	if gimm.FunctionName() != _gimm.FunctionName {
 		Panic(gimm.FunctionName(), _gimm.FunctionName)
 	}
-	if !stpslice.Compare(gimm.Doc(), _gimm.Doc) {
+	if !stp.Compare(gimm.Doc(), _gimm.Doc) {
 		Panic(gimm.Doc(), _gimm.Doc)
 	}
 
@@ -1897,7 +1896,7 @@ func checkVariableMeta(gvm *GoVariableMeta, _gvm *compareGoVariableMeta) {
 	if gvm.Comment() != _gvm.Comment {
 		Panic(gvm.Comment(), _gvm.Comment)
 	}
-	if !stpslice.Compare(gvm.Doc(), _gvm.Doc) {
+	if !stp.Compare(gvm.Doc(), _gvm.Doc) {
 		Panic(gvm.Doc(), _gvm.Doc)
 	}
 }
