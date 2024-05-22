@@ -8,7 +8,6 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
-	"syscall"
 	"unicode/utf8"
 )
 
@@ -479,9 +478,7 @@ func CreateDir(directoryPath string) error {
 	if err != nil {
 		if pathError, ok := err.(*fs.PathError); ok {
 			if pathError.Err != nil {
-				if syscallError := pathError.Err.(syscall.Errno); syscallError == syscall.ERROR_ALREADY_EXISTS {
-					return nil
-				}
+				return nil
 			}
 		}
 		return err
