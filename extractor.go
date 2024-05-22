@@ -1,6 +1,7 @@
 package extractor
 
 import (
+	"encoding/json"
 	"go/ast"
 	"go/token"
 	"os"
@@ -8,6 +9,7 @@ import (
 )
 
 type Meta interface {
+	AST() []byte
 	PrintAST()
 	Expression() string
 }
@@ -42,6 +44,14 @@ func (m *meta) Copy() *meta {
 
 	// 	}
 	// })
+}
+
+func (m *meta) AST() []byte {
+	jsonAst, err := json.MarshalIndent(m.node, "", "  ")
+	if err != nil {
+		return nil
+	}
+	return jsonAst
 }
 
 func (m *meta) PrintAST() {
