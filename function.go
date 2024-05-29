@@ -130,6 +130,21 @@ func (gfm *GoFunctionMeta) ReturnTypes() []*GoVariableMeta {
 	return returns
 }
 
+func (gfm *GoFunctionMeta) ReplaceDecl(new *GoFunctionMeta) {
+	if new.node.(*ast.FuncDecl).Doc != nil {
+		gfm.node.(*ast.FuncDecl).Doc = new.node.(*ast.FuncDecl).Doc
+	}
+	if new.node.(*ast.FuncDecl).Name != nil {
+		gfm.node.(*ast.FuncDecl).Name = new.node.(*ast.FuncDecl).Name
+	}
+	if new.node.(*ast.FuncDecl).Recv != nil {
+		gfm.node.(*ast.FuncDecl).Recv = new.node.(*ast.FuncDecl).Recv
+	}
+	if new.node.(*ast.FuncDecl).Type != nil {
+		gfm.node.(*ast.FuncDecl).Type = new.node.(*ast.FuncDecl).Type
+	}
+}
+
 type BlockMeta struct {
 	*meta
 }
