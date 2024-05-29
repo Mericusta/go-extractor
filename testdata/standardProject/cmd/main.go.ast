@@ -1,18 +1,18 @@
      0  *ast.File {
-     1  .  Package: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:1:1
+     1  .  Package: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:1:1
      2  .  Name: *ast.Ident {
-     3  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:1:9
+     3  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:1:9
      4  .  .  Name: "main"
      5  .  }
      6  .  Decls: []ast.Decl (len = 2) {
      7  .  .  0: *ast.GenDecl {
-     8  .  .  .  TokPos: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:3:1
+     8  .  .  .  TokPos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:3:1
      9  .  .  .  Tok: import
-    10  .  .  .  Lparen: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:3:8
+    10  .  .  .  Lparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:3:8
     11  .  .  .  Specs: []ast.Spec (len = 2) {
     12  .  .  .  .  0: *ast.ImportSpec {
     13  .  .  .  .  .  Path: *ast.BasicLit {
-    14  .  .  .  .  .  .  ValuePos: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:4:2
+    14  .  .  .  .  .  .  ValuePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:4:2
     15  .  .  .  .  .  .  Kind: STRING
     16  .  .  .  .  .  .  Value: "\"standardProject/pkg\""
     17  .  .  .  .  .  }
@@ -20,18 +20,18 @@
     19  .  .  .  .  }
     20  .  .  .  .  1: *ast.ImportSpec {
     21  .  .  .  .  .  Path: *ast.BasicLit {
-    22  .  .  .  .  .  .  ValuePos: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:5:2
+    22  .  .  .  .  .  .  ValuePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:5:2
     23  .  .  .  .  .  .  Kind: STRING
     24  .  .  .  .  .  .  Value: "\"standardProject/pkg/module\""
     25  .  .  .  .  .  }
     26  .  .  .  .  .  EndPos: -
     27  .  .  .  .  }
     28  .  .  .  }
-    29  .  .  .  Rparen: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:6:1
+    29  .  .  .  Rparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:6:1
     30  .  .  }
     31  .  .  1: *ast.FuncDecl {
     32  .  .  .  Name: *ast.Ident {
-    33  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:8:6
+    33  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:8:6
     34  .  .  .  .  Name: "main"
     35  .  .  .  .  Obj: *ast.Object {
     36  .  .  .  .  .  Kind: func
@@ -40,115 +40,115 @@
     39  .  .  .  .  }
     40  .  .  .  }
     41  .  .  .  Type: *ast.FuncType {
-    42  .  .  .  .  Func: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:8:1
+    42  .  .  .  .  Func: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:8:1
     43  .  .  .  .  Params: *ast.FieldList {
-    44  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:8:10
-    45  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:8:11
+    44  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:8:10
+    45  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:8:11
     46  .  .  .  .  }
     47  .  .  .  }
     48  .  .  .  Body: *ast.BlockStmt {
-    49  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:8:13
+    49  .  .  .  .  Lbrace: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:8:13
     50  .  .  .  .  List: []ast.Stmt (len = 3) {
     51  .  .  .  .  .  0: *ast.ExprStmt {
     52  .  .  .  .  .  .  X: *ast.CallExpr {
     53  .  .  .  .  .  .  .  Fun: *ast.SelectorExpr {
     54  .  .  .  .  .  .  .  .  X: *ast.Ident {
-    55  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:9:2
+    55  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:9:2
     56  .  .  .  .  .  .  .  .  .  Name: "pkg"
     57  .  .  .  .  .  .  .  .  }
     58  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
-    59  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:9:6
+    59  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:9:6
     60  .  .  .  .  .  .  .  .  .  Name: "ExampleFunc"
     61  .  .  .  .  .  .  .  .  }
     62  .  .  .  .  .  .  .  }
-    63  .  .  .  .  .  .  .  Lparen: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:9:17
+    63  .  .  .  .  .  .  .  Lparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:9:17
     64  .  .  .  .  .  .  .  Args: []ast.Expr (len = 1) {
     65  .  .  .  .  .  .  .  .  0: *ast.CallExpr {
     66  .  .  .  .  .  .  .  .  .  Fun: *ast.SelectorExpr {
     67  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
-    68  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:9:18
+    68  .  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:9:18
     69  .  .  .  .  .  .  .  .  .  .  .  Name: "module"
     70  .  .  .  .  .  .  .  .  .  .  }
     71  .  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
-    72  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:9:25
+    72  .  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:9:25
     73  .  .  .  .  .  .  .  .  .  .  .  Name: "NewExampleStruct"
     74  .  .  .  .  .  .  .  .  .  .  }
     75  .  .  .  .  .  .  .  .  .  }
-    76  .  .  .  .  .  .  .  .  .  Lparen: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:9:41
+    76  .  .  .  .  .  .  .  .  .  Lparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:9:41
     77  .  .  .  .  .  .  .  .  .  Args: []ast.Expr (len = 1) {
     78  .  .  .  .  .  .  .  .  .  .  0: *ast.BasicLit {
-    79  .  .  .  .  .  .  .  .  .  .  .  ValuePos: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:9:42
+    79  .  .  .  .  .  .  .  .  .  .  .  ValuePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:9:42
     80  .  .  .  .  .  .  .  .  .  .  .  Kind: INT
     81  .  .  .  .  .  .  .  .  .  .  .  Value: "10"
     82  .  .  .  .  .  .  .  .  .  .  }
     83  .  .  .  .  .  .  .  .  .  }
     84  .  .  .  .  .  .  .  .  .  Ellipsis: -
-    85  .  .  .  .  .  .  .  .  .  Rparen: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:9:44
+    85  .  .  .  .  .  .  .  .  .  Rparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:9:44
     86  .  .  .  .  .  .  .  .  }
     87  .  .  .  .  .  .  .  }
     88  .  .  .  .  .  .  .  Ellipsis: -
-    89  .  .  .  .  .  .  .  Rparen: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:9:45
+    89  .  .  .  .  .  .  .  Rparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:9:45
     90  .  .  .  .  .  .  }
     91  .  .  .  .  .  }
     92  .  .  .  .  .  1: *ast.ExprStmt {
     93  .  .  .  .  .  .  X: *ast.CallExpr {
     94  .  .  .  .  .  .  .  Fun: *ast.SelectorExpr {
     95  .  .  .  .  .  .  .  .  X: *ast.Ident {
-    96  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:10:2
+    96  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:10:2
     97  .  .  .  .  .  .  .  .  .  Name: "module"
     98  .  .  .  .  .  .  .  .  }
     99  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
-   100  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:10:9
+   100  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:10:9
    101  .  .  .  .  .  .  .  .  .  Name: "ExampleFunc"
    102  .  .  .  .  .  .  .  .  }
    103  .  .  .  .  .  .  .  }
-   104  .  .  .  .  .  .  .  Lparen: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:10:20
+   104  .  .  .  .  .  .  .  Lparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:10:20
    105  .  .  .  .  .  .  .  Args: []ast.Expr (len = 1) {
    106  .  .  .  .  .  .  .  .  0: *ast.CallExpr {
    107  .  .  .  .  .  .  .  .  .  Fun: *ast.SelectorExpr {
    108  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   109  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:10:21
+   109  .  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:10:21
    110  .  .  .  .  .  .  .  .  .  .  .  Name: "module"
    111  .  .  .  .  .  .  .  .  .  .  }
    112  .  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
-   113  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:10:28
+   113  .  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:10:28
    114  .  .  .  .  .  .  .  .  .  .  .  Name: "NewExampleStruct"
    115  .  .  .  .  .  .  .  .  .  .  }
    116  .  .  .  .  .  .  .  .  .  }
-   117  .  .  .  .  .  .  .  .  .  Lparen: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:10:44
+   117  .  .  .  .  .  .  .  .  .  Lparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:10:44
    118  .  .  .  .  .  .  .  .  .  Args: []ast.Expr (len = 1) {
    119  .  .  .  .  .  .  .  .  .  .  0: *ast.BasicLit {
-   120  .  .  .  .  .  .  .  .  .  .  .  ValuePos: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:10:45
+   120  .  .  .  .  .  .  .  .  .  .  .  ValuePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:10:45
    121  .  .  .  .  .  .  .  .  .  .  .  Kind: INT
    122  .  .  .  .  .  .  .  .  .  .  .  Value: "11"
    123  .  .  .  .  .  .  .  .  .  .  }
    124  .  .  .  .  .  .  .  .  .  }
    125  .  .  .  .  .  .  .  .  .  Ellipsis: -
-   126  .  .  .  .  .  .  .  .  .  Rparen: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:10:47
+   126  .  .  .  .  .  .  .  .  .  Rparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:10:47
    127  .  .  .  .  .  .  .  .  }
    128  .  .  .  .  .  .  .  }
    129  .  .  .  .  .  .  .  Ellipsis: -
-   130  .  .  .  .  .  .  .  Rparen: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:10:48
+   130  .  .  .  .  .  .  .  Rparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:10:48
    131  .  .  .  .  .  .  }
    132  .  .  .  .  .  }
    133  .  .  .  .  .  2: *ast.ExprStmt {
    134  .  .  .  .  .  .  X: *ast.CallExpr {
    135  .  .  .  .  .  .  .  Fun: *ast.Ident {
-   136  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:11:2
+   136  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:11:2
    137  .  .  .  .  .  .  .  .  Name: "Init"
    138  .  .  .  .  .  .  .  }
-   139  .  .  .  .  .  .  .  Lparen: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:11:6
+   139  .  .  .  .  .  .  .  Lparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:11:6
    140  .  .  .  .  .  .  .  Ellipsis: -
-   141  .  .  .  .  .  .  .  Rparen: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:11:7
+   141  .  .  .  .  .  .  .  Rparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:11:7
    142  .  .  .  .  .  .  }
    143  .  .  .  .  .  }
    144  .  .  .  .  }
-   145  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:12:1
+   145  .  .  .  .  Rbrace: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:12:1
    146  .  .  .  }
    147  .  .  }
    148  .  }
-   149  .  FileStart: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:1:1
-   150  .  FileEnd: d:\Projects\go-extractor\testdata\standardProject\cmd\main.go:12:4
+   149  .  FileStart: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:1:1
+   150  .  FileEnd: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/main.go:12:3
    151  .  Scope: *ast.Scope {
    152  .  .  Objects: map[string]*ast.Object (len = 1) {
    153  .  .  .  "main": *(obj @ 35)
@@ -165,4 +165,5 @@
    164  .  .  3: *(obj @ 108)
    165  .  .  4: *(obj @ 135)
    166  .  }
-   167  }
+   167  .  GoVersion: ""
+   168  }

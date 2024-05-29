@@ -114,7 +114,8 @@ var (
 	standardProjectIgnorePathMap = map[string]struct{}{
 		standardProjectRelPath + "/vendor": {},
 	}
-	standardProjectAbsPath = "d:\\Projects\\go-extractor\\testdata\\standardProject"
+	// standardProjectAbsPath = "d:\\Projects\\go-extractor\\testdata\\standardProject"
+	standardProjectAbsPath = "/Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject"
 	// standardProjectAbsPath    = "d:\\Projects\\SGAME\\server-dev\\gameServer\\game_server\\pkg\\github.com\\Mericusta\\go-extractor\\testdata\\standardProject"
 	standardProjectModuleName = "standardProject"
 	standardProjectMeta       = &compareGoProjectMeta{
@@ -123,16 +124,16 @@ var (
 		PackageMap: map[string]*compareGoPackageMeta{
 			"main": {
 				Name:    "main",
-				PkgPath: standardProjectAbsPath + "\\cmd",
+				PkgPath: stp.FormatFilePathWithOS(standardProjectAbsPath + "\\cmd"),
 				pkgFileMap: map[string]*compareGoFileMeta{
 					"main.go": {
 						Name:    "main.go",
-						Path:    standardProjectAbsPath + "\\cmd\\main.go",
+						Path:    stp.FormatFilePathWithOS(standardProjectAbsPath + "\\cmd\\main.go"),
 						PkgName: "main",
 					},
 					"init.go": {
 						Name:    "init.go",
-						Path:    standardProjectAbsPath + "\\cmd\\init.go",
+						Path:    stp.FormatFilePathWithOS(standardProjectAbsPath + "\\cmd\\init.go"),
 						PkgName: "main",
 					},
 				},
@@ -227,12 +228,12 @@ var (
 			},
 			standardProjectModuleName + "/pkg": {
 				Name:       "pkg",
-				PkgPath:    standardProjectAbsPath + "\\pkg",
+				PkgPath:    stp.FormatFilePathWithOS(standardProjectAbsPath + "\\pkg"),
 				ImportPath: standardProjectModuleName + "/pkg",
 				pkgFileMap: map[string]*compareGoFileMeta{
 					"pkg.go": {
 						Name:    "pkg.go",
-						Path:    standardProjectAbsPath + "\\pkg\\pkg.go",
+						Path:    stp.FormatFilePathWithOS(standardProjectAbsPath + "\\pkg\\pkg.go"),
 						PkgName: "pkg",
 					},
 				},
@@ -457,12 +458,12 @@ var (
 			},
 			standardProjectModuleName + "/pkg/pkgInterface": {
 				Name:       "pkgInterface",
-				PkgPath:    standardProjectAbsPath + "\\pkg\\interface",
+				PkgPath:    stp.FormatFilePathWithOS(standardProjectAbsPath + "\\pkg\\interface"),
 				ImportPath: standardProjectModuleName + "/pkg/pkgInterface",
 				pkgFileMap: map[string]*compareGoFileMeta{
 					"interface.go": {
 						Name:    "interface.go",
-						Path:    standardProjectAbsPath + "\\pkg\\interface\\interface.go",
+						Path:    stp.FormatFilePathWithOS(standardProjectAbsPath + "\\pkg\\interface\\interface.go"),
 						PkgName: "pkgInterface",
 					},
 				},
@@ -610,12 +611,12 @@ var (
 			},
 			standardProjectModuleName + "/pkg/module": {
 				Name:       "module",
-				PkgPath:    standardProjectAbsPath + "\\pkg\\module",
+				PkgPath:    stp.FormatFilePathWithOS(standardProjectAbsPath + "\\pkg\\module"),
 				ImportPath: standardProjectModuleName + "/pkg/module",
 				pkgFileMap: map[string]*compareGoFileMeta{
 					"module.go": {
 						Name:    "module.go",
-						Path:    standardProjectAbsPath + "\\pkg\\module\\module.go",
+						Path:    stp.FormatFilePathWithOS(standardProjectAbsPath + "\\pkg\\module\\module.go"),
 						PkgName: "module",
 					},
 				},
@@ -1059,12 +1060,12 @@ var (
 			},
 			standardProjectModuleName + "/pkg/template": {
 				Name:       "template",
-				PkgPath:    standardProjectAbsPath + "\\pkg\\template",
+				PkgPath:    stp.FormatFilePathWithOS(standardProjectAbsPath + "\\pkg\\template"),
 				ImportPath: standardProjectModuleName + "/pkg/template",
 				pkgFileMap: map[string]*compareGoFileMeta{
 					"template.go": {
 						Name:    "template.go",
-						Path:    standardProjectAbsPath + "\\pkg\\template\\template.go",
+						Path:    stp.FormatFilePathWithOS(standardProjectAbsPath + "\\pkg\\template\\template.go"),
 						PkgName: "template",
 					},
 				},
@@ -1521,6 +1522,25 @@ func TestExtractGoProjectMeta(t *testing.T) {
 					benchmarkFuncName, benchmarkByte = gimm.MakeBenchmark(typeArgs)
 				}
 				fmt.Printf("benchmark func %v:\n%v\n", benchmarkFuncName, string(benchmarkByte))
+
+				// implement
+				var implementFuncName string
+				var implementFuncMeta *GoFunctionMeta
+				receiverIdent, receiverType := strings.ToLower(string(gimm.interfaceMeta.InterfaceName()[0])), gimm.interfaceMeta.InterfaceName()+"Implement"
+				if l := len(gimm.TypeParams()); l == 0 {
+					implementFuncName, implementFuncMeta = gimm.MakeImplementMethodMeta(receiverIdent, receiverType)
+				} else {
+					// TODO: support
+					// testTypeArgs := []string{"string", "[]string", "map[string]string"}
+					// typeArgs := make([]string, 0, l)
+					// for i := 0; i < l; i++ {
+					// 	typeArgs = append(typeArgs, testTypeArgs[i%len(testTypeArgs)])
+					// }
+					// benchmarkFuncName, benchmarkByte = gimm.MakeBenchmark(typeArgs)
+				}
+				if implementFuncMeta != nil {
+					fmt.Printf("implement func %v:\n%v\n", implementFuncName, implementFuncMeta.Format())
+				}
 			}
 		}
 

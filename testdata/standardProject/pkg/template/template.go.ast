@@ -1,22 +1,22 @@
      0  *ast.File {
-     1  .  Package: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:1:1
+     1  .  Package: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:1:1
      2  .  Name: *ast.Ident {
-     3  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:1:9
+     3  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:1:9
      4  .  .  Name: "template"
      5  .  }
      6  .  Decls: []ast.Decl (len = 12) {
      7  .  .  0: *ast.GenDecl {
-     8  .  .  .  TokPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:3:1
+     8  .  .  .  TokPos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:3:1
      9  .  .  .  Tok: import
     10  .  .  .  Lparen: -
     11  .  .  .  Specs: []ast.Spec (len = 1) {
     12  .  .  .  .  0: *ast.ImportSpec {
     13  .  .  .  .  .  Name: *ast.Ident {
-    14  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:3:8
+    14  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:3:8
     15  .  .  .  .  .  .  Name: "stpmap"
     16  .  .  .  .  .  }
     17  .  .  .  .  .  Path: *ast.BasicLit {
-    18  .  .  .  .  .  .  ValuePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:3:15
+    18  .  .  .  .  .  .  ValuePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:3:15
     19  .  .  .  .  .  .  Kind: STRING
     20  .  .  .  .  .  .  Value: "\"github.com/Mericusta/go-stp/map\""
     21  .  .  .  .  .  }
@@ -27,7 +27,7 @@
     26  .  .  }
     27  .  .  1: *ast.FuncDecl {
     28  .  .  .  Name: *ast.Ident {
-    29  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:6
+    29  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:5:6
     30  .  .  .  .  Name: "OneTemplateFunc"
     31  .  .  .  .  Obj: *ast.Object {
     32  .  .  .  .  .  Kind: func
@@ -36,14 +36,14 @@
     35  .  .  .  .  }
     36  .  .  .  }
     37  .  .  .  Type: *ast.FuncType {
-    38  .  .  .  .  Func: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:1
+    38  .  .  .  .  Func: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:5:1
     39  .  .  .  .  TypeParams: *ast.FieldList {
-    40  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:21
+    40  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:5:21
     41  .  .  .  .  .  List: []*ast.Field (len = 1) {
     42  .  .  .  .  .  .  0: *ast.Field {
     43  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
     44  .  .  .  .  .  .  .  .  0: *ast.Ident {
-    45  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:22
+    45  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:5:22
     46  .  .  .  .  .  .  .  .  .  Name: "T"
     47  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
     48  .  .  .  .  .  .  .  .  .  .  Kind: type
@@ -53,20 +53,20 @@
     52  .  .  .  .  .  .  .  .  }
     53  .  .  .  .  .  .  .  }
     54  .  .  .  .  .  .  .  Type: *ast.Ident {
-    55  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:24
+    55  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:5:24
     56  .  .  .  .  .  .  .  .  Name: "any"
     57  .  .  .  .  .  .  .  }
     58  .  .  .  .  .  .  }
     59  .  .  .  .  .  }
-    60  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:27
+    60  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:5:27
     61  .  .  .  .  }
     62  .  .  .  .  Params: *ast.FieldList {
-    63  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:28
+    63  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:5:28
     64  .  .  .  .  .  List: []*ast.Field (len = 1) {
     65  .  .  .  .  .  .  0: *ast.Field {
     66  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
     67  .  .  .  .  .  .  .  .  0: *ast.Ident {
-    68  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:29
+    68  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:5:29
     69  .  .  .  .  .  .  .  .  .  Name: "tv"
     70  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
     71  .  .  .  .  .  .  .  .  .  .  Kind: var
@@ -76,25 +76,25 @@
     75  .  .  .  .  .  .  .  .  }
     76  .  .  .  .  .  .  .  }
     77  .  .  .  .  .  .  .  Type: *ast.StarExpr {
-    78  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:32
+    78  .  .  .  .  .  .  .  .  Star: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:5:32
     79  .  .  .  .  .  .  .  .  X: *ast.Ident {
-    80  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:33
+    80  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:5:33
     81  .  .  .  .  .  .  .  .  .  Name: "T"
     82  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 47)
     83  .  .  .  .  .  .  .  .  }
     84  .  .  .  .  .  .  .  }
     85  .  .  .  .  .  .  }
     86  .  .  .  .  .  }
-    87  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:34
+    87  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:5:34
     88  .  .  .  .  }
     89  .  .  .  .  Results: *ast.FieldList {
     90  .  .  .  .  .  Opening: -
     91  .  .  .  .  .  List: []*ast.Field (len = 1) {
     92  .  .  .  .  .  .  0: *ast.Field {
     93  .  .  .  .  .  .  .  Type: *ast.StarExpr {
-    94  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:36
+    94  .  .  .  .  .  .  .  .  Star: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:5:36
     95  .  .  .  .  .  .  .  .  X: *ast.Ident {
-    96  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:37
+    96  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:5:37
     97  .  .  .  .  .  .  .  .  .  Name: "T"
     98  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 47)
     99  .  .  .  .  .  .  .  .  }
@@ -105,24 +105,24 @@
    104  .  .  .  .  }
    105  .  .  .  }
    106  .  .  .  Body: *ast.BlockStmt {
-   107  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:5:39
+   107  .  .  .  .  Lbrace: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:5:39
    108  .  .  .  .  List: []ast.Stmt (len = 1) {
    109  .  .  .  .  .  0: *ast.ReturnStmt {
-   110  .  .  .  .  .  .  Return: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:6:2
+   110  .  .  .  .  .  .  Return: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:6:2
    111  .  .  .  .  .  .  Results: []ast.Expr (len = 1) {
    112  .  .  .  .  .  .  .  0: *ast.Ident {
-   113  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:6:9
+   113  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:6:9
    114  .  .  .  .  .  .  .  .  Name: "nil"
    115  .  .  .  .  .  .  .  }
    116  .  .  .  .  .  .  }
    117  .  .  .  .  .  }
    118  .  .  .  .  }
-   119  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:7:1
+   119  .  .  .  .  Rbrace: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:7:1
    120  .  .  .  }
    121  .  .  }
    122  .  .  2: *ast.FuncDecl {
    123  .  .  .  Name: *ast.Ident {
-   124  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:6
+   124  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:9:6
    125  .  .  .  .  Name: "DoubleSameTemplateFunc"
    126  .  .  .  .  Obj: *ast.Object {
    127  .  .  .  .  .  Kind: func
@@ -131,14 +131,14 @@
    130  .  .  .  .  }
    131  .  .  .  }
    132  .  .  .  Type: *ast.FuncType {
-   133  .  .  .  .  Func: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:1
+   133  .  .  .  .  Func: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:9:1
    134  .  .  .  .  TypeParams: *ast.FieldList {
-   135  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:28
+   135  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:9:28
    136  .  .  .  .  .  List: []*ast.Field (len = 1) {
    137  .  .  .  .  .  .  0: *ast.Field {
    138  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 2) {
    139  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   140  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:29
+   140  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:9:29
    141  .  .  .  .  .  .  .  .  .  Name: "T1"
    142  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
    143  .  .  .  .  .  .  .  .  .  .  Kind: type
@@ -147,7 +147,7 @@
    146  .  .  .  .  .  .  .  .  .  }
    147  .  .  .  .  .  .  .  .  }
    148  .  .  .  .  .  .  .  .  1: *ast.Ident {
-   149  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:33
+   149  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:9:33
    150  .  .  .  .  .  .  .  .  .  Name: "T2"
    151  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
    152  .  .  .  .  .  .  .  .  .  .  Kind: type
@@ -157,20 +157,20 @@
    156  .  .  .  .  .  .  .  .  }
    157  .  .  .  .  .  .  .  }
    158  .  .  .  .  .  .  .  Type: *ast.Ident {
-   159  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:36
+   159  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:9:36
    160  .  .  .  .  .  .  .  .  Name: "any"
    161  .  .  .  .  .  .  .  }
    162  .  .  .  .  .  .  }
    163  .  .  .  .  .  }
-   164  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:39
+   164  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:9:39
    165  .  .  .  .  }
    166  .  .  .  .  Params: *ast.FieldList {
-   167  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:40
+   167  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:9:40
    168  .  .  .  .  .  List: []*ast.Field (len = 2) {
    169  .  .  .  .  .  .  0: *ast.Field {
    170  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
    171  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   172  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:41
+   172  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:9:41
    173  .  .  .  .  .  .  .  .  .  Name: "tv1"
    174  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
    175  .  .  .  .  .  .  .  .  .  .  Kind: var
@@ -180,7 +180,7 @@
    179  .  .  .  .  .  .  .  .  }
    180  .  .  .  .  .  .  .  }
    181  .  .  .  .  .  .  .  Type: *ast.Ident {
-   182  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:45
+   182  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:9:45
    183  .  .  .  .  .  .  .  .  Name: "T1"
    184  .  .  .  .  .  .  .  .  Obj: *(obj @ 142)
    185  .  .  .  .  .  .  .  }
@@ -188,7 +188,7 @@
    187  .  .  .  .  .  .  1: *ast.Field {
    188  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
    189  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   190  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:49
+   190  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:9:49
    191  .  .  .  .  .  .  .  .  .  Name: "tv2"
    192  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
    193  .  .  .  .  .  .  .  .  .  .  Kind: var
@@ -198,22 +198,22 @@
    197  .  .  .  .  .  .  .  .  }
    198  .  .  .  .  .  .  .  }
    199  .  .  .  .  .  .  .  Type: *ast.Ident {
-   200  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:53
+   200  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:9:53
    201  .  .  .  .  .  .  .  .  Name: "T2"
    202  .  .  .  .  .  .  .  .  Obj: *(obj @ 151)
    203  .  .  .  .  .  .  .  }
    204  .  .  .  .  .  .  }
    205  .  .  .  .  .  }
-   206  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:55
+   206  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:9:55
    207  .  .  .  .  }
    208  .  .  .  .  Results: *ast.FieldList {
-   209  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:57
+   209  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:9:57
    210  .  .  .  .  .  List: []*ast.Field (len = 2) {
    211  .  .  .  .  .  .  0: *ast.Field {
    212  .  .  .  .  .  .  .  Type: *ast.StarExpr {
-   213  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:58
+   213  .  .  .  .  .  .  .  .  Star: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:9:58
    214  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   215  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:59
+   215  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:9:59
    216  .  .  .  .  .  .  .  .  .  Name: "T1"
    217  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 142)
    218  .  .  .  .  .  .  .  .  }
@@ -221,41 +221,41 @@
    220  .  .  .  .  .  .  }
    221  .  .  .  .  .  .  1: *ast.Field {
    222  .  .  .  .  .  .  .  Type: *ast.StarExpr {
-   223  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:63
+   223  .  .  .  .  .  .  .  .  Star: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:9:63
    224  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   225  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:64
+   225  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:9:64
    226  .  .  .  .  .  .  .  .  .  Name: "T2"
    227  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 151)
    228  .  .  .  .  .  .  .  .  }
    229  .  .  .  .  .  .  .  }
    230  .  .  .  .  .  .  }
    231  .  .  .  .  .  }
-   232  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:66
+   232  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:9:66
    233  .  .  .  .  }
    234  .  .  .  }
    235  .  .  .  Body: *ast.BlockStmt {
-   236  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:9:68
+   236  .  .  .  .  Lbrace: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:9:68
    237  .  .  .  .  List: []ast.Stmt (len = 1) {
    238  .  .  .  .  .  0: *ast.ReturnStmt {
-   239  .  .  .  .  .  .  Return: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:10:2
+   239  .  .  .  .  .  .  Return: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:10:2
    240  .  .  .  .  .  .  Results: []ast.Expr (len = 2) {
    241  .  .  .  .  .  .  .  0: *ast.Ident {
-   242  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:10:9
+   242  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:10:9
    243  .  .  .  .  .  .  .  .  Name: "nil"
    244  .  .  .  .  .  .  .  }
    245  .  .  .  .  .  .  .  1: *ast.Ident {
-   246  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:10:14
+   246  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:10:14
    247  .  .  .  .  .  .  .  .  Name: "nil"
    248  .  .  .  .  .  .  .  }
    249  .  .  .  .  .  .  }
    250  .  .  .  .  .  }
    251  .  .  .  .  }
-   252  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:11:1
+   252  .  .  .  .  Rbrace: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:11:1
    253  .  .  .  }
    254  .  .  }
    255  .  .  3: *ast.FuncDecl {
    256  .  .  .  Name: *ast.Ident {
-   257  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:6
+   257  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:13:6
    258  .  .  .  .  Name: "DoubleDifferenceTemplateFunc"
    259  .  .  .  .  Obj: *ast.Object {
    260  .  .  .  .  .  Kind: func
@@ -264,14 +264,14 @@
    263  .  .  .  .  }
    264  .  .  .  }
    265  .  .  .  Type: *ast.FuncType {
-   266  .  .  .  .  Func: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:1
+   266  .  .  .  .  Func: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:13:1
    267  .  .  .  .  TypeParams: *ast.FieldList {
-   268  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:34
+   268  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:13:34
    269  .  .  .  .  .  List: []*ast.Field (len = 2) {
    270  .  .  .  .  .  .  0: *ast.Field {
    271  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
    272  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   273  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:35
+   273  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:13:35
    274  .  .  .  .  .  .  .  .  .  Name: "T1"
    275  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
    276  .  .  .  .  .  .  .  .  .  .  Kind: type
@@ -281,14 +281,14 @@
    280  .  .  .  .  .  .  .  .  }
    281  .  .  .  .  .  .  .  }
    282  .  .  .  .  .  .  .  Type: *ast.Ident {
-   283  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:38
+   283  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:13:38
    284  .  .  .  .  .  .  .  .  Name: "any"
    285  .  .  .  .  .  .  .  }
    286  .  .  .  .  .  .  }
    287  .  .  .  .  .  .  1: *ast.Field {
    288  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
    289  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   290  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:43
+   290  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:13:43
    291  .  .  .  .  .  .  .  .  .  Name: "T2"
    292  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
    293  .  .  .  .  .  .  .  .  .  .  Kind: type
@@ -298,20 +298,20 @@
    297  .  .  .  .  .  .  .  .  }
    298  .  .  .  .  .  .  .  }
    299  .  .  .  .  .  .  .  Type: *ast.Ident {
-   300  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:46
+   300  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:13:46
    301  .  .  .  .  .  .  .  .  Name: "comparable"
    302  .  .  .  .  .  .  .  }
    303  .  .  .  .  .  .  }
    304  .  .  .  .  .  }
-   305  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:56
+   305  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:13:56
    306  .  .  .  .  }
    307  .  .  .  .  Params: *ast.FieldList {
-   308  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:57
+   308  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:13:57
    309  .  .  .  .  .  List: []*ast.Field (len = 2) {
    310  .  .  .  .  .  .  0: *ast.Field {
    311  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
    312  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   313  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:58
+   313  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:13:58
    314  .  .  .  .  .  .  .  .  .  Name: "tv1"
    315  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
    316  .  .  .  .  .  .  .  .  .  .  Kind: var
@@ -321,7 +321,7 @@
    320  .  .  .  .  .  .  .  .  }
    321  .  .  .  .  .  .  .  }
    322  .  .  .  .  .  .  .  Type: *ast.Ident {
-   323  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:62
+   323  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:13:62
    324  .  .  .  .  .  .  .  .  Name: "T1"
    325  .  .  .  .  .  .  .  .  Obj: *(obj @ 275)
    326  .  .  .  .  .  .  .  }
@@ -329,7 +329,7 @@
    328  .  .  .  .  .  .  1: *ast.Field {
    329  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
    330  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   331  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:66
+   331  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:13:66
    332  .  .  .  .  .  .  .  .  .  Name: "tv2"
    333  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
    334  .  .  .  .  .  .  .  .  .  .  Kind: var
@@ -339,22 +339,22 @@
    338  .  .  .  .  .  .  .  .  }
    339  .  .  .  .  .  .  .  }
    340  .  .  .  .  .  .  .  Type: *ast.Ident {
-   341  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:70
+   341  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:13:70
    342  .  .  .  .  .  .  .  .  Name: "T2"
    343  .  .  .  .  .  .  .  .  Obj: *(obj @ 292)
    344  .  .  .  .  .  .  .  }
    345  .  .  .  .  .  .  }
    346  .  .  .  .  .  }
-   347  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:72
+   347  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:13:72
    348  .  .  .  .  }
    349  .  .  .  .  Results: *ast.FieldList {
-   350  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:74
+   350  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:13:74
    351  .  .  .  .  .  List: []*ast.Field (len = 2) {
    352  .  .  .  .  .  .  0: *ast.Field {
    353  .  .  .  .  .  .  .  Type: *ast.StarExpr {
-   354  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:75
+   354  .  .  .  .  .  .  .  .  Star: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:13:75
    355  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   356  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:76
+   356  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:13:76
    357  .  .  .  .  .  .  .  .  .  Name: "T1"
    358  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 275)
    359  .  .  .  .  .  .  .  .  }
@@ -362,46 +362,46 @@
    361  .  .  .  .  .  .  }
    362  .  .  .  .  .  .  1: *ast.Field {
    363  .  .  .  .  .  .  .  Type: *ast.StarExpr {
-   364  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:80
+   364  .  .  .  .  .  .  .  .  Star: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:13:80
    365  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   366  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:81
+   366  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:13:81
    367  .  .  .  .  .  .  .  .  .  Name: "T2"
    368  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 292)
    369  .  .  .  .  .  .  .  .  }
    370  .  .  .  .  .  .  .  }
    371  .  .  .  .  .  .  }
    372  .  .  .  .  .  }
-   373  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:83
+   373  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:13:83
    374  .  .  .  .  }
    375  .  .  .  }
    376  .  .  .  Body: *ast.BlockStmt {
-   377  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:13:85
+   377  .  .  .  .  Lbrace: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:13:85
    378  .  .  .  .  List: []ast.Stmt (len = 1) {
    379  .  .  .  .  .  0: *ast.ReturnStmt {
-   380  .  .  .  .  .  .  Return: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:14:2
+   380  .  .  .  .  .  .  Return: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:14:2
    381  .  .  .  .  .  .  Results: []ast.Expr (len = 2) {
    382  .  .  .  .  .  .  .  0: *ast.Ident {
-   383  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:14:9
+   383  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:14:9
    384  .  .  .  .  .  .  .  .  Name: "nil"
    385  .  .  .  .  .  .  .  }
    386  .  .  .  .  .  .  .  1: *ast.Ident {
-   387  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:14:14
+   387  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:14:14
    388  .  .  .  .  .  .  .  .  Name: "nil"
    389  .  .  .  .  .  .  .  }
    390  .  .  .  .  .  .  }
    391  .  .  .  .  .  }
    392  .  .  .  .  }
-   393  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:15:1
+   393  .  .  .  .  Rbrace: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:15:1
    394  .  .  .  }
    395  .  .  }
    396  .  .  4: *ast.GenDecl {
-   397  .  .  .  TokPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:17:1
+   397  .  .  .  TokPos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:17:1
    398  .  .  .  Tok: type
    399  .  .  .  Lparen: -
    400  .  .  .  Specs: []ast.Spec (len = 1) {
    401  .  .  .  .  0: *ast.TypeSpec {
    402  .  .  .  .  .  Name: *ast.Ident {
-   403  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:17:6
+   403  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:17:6
    404  .  .  .  .  .  .  Name: "TypeConstraints"
    405  .  .  .  .  .  .  Obj: *ast.Object {
    406  .  .  .  .  .  .  .  Kind: type
@@ -411,42 +411,42 @@
    410  .  .  .  .  .  }
    411  .  .  .  .  .  Assign: -
    412  .  .  .  .  .  Type: *ast.InterfaceType {
-   413  .  .  .  .  .  .  Interface: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:17:22
+   413  .  .  .  .  .  .  Interface: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:17:22
    414  .  .  .  .  .  .  Methods: *ast.FieldList {
-   415  .  .  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:17:32
+   415  .  .  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:17:32
    416  .  .  .  .  .  .  .  List: []*ast.Field (len = 1) {
    417  .  .  .  .  .  .  .  .  0: *ast.Field {
    418  .  .  .  .  .  .  .  .  .  Type: *ast.BinaryExpr {
    419  .  .  .  .  .  .  .  .  .  .  X: *ast.BinaryExpr {
    420  .  .  .  .  .  .  .  .  .  .  .  X: *ast.BinaryExpr {
    421  .  .  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   422  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:18:2
+   422  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:18:2
    423  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "int8"
    424  .  .  .  .  .  .  .  .  .  .  .  .  }
-   425  .  .  .  .  .  .  .  .  .  .  .  .  OpPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:18:7
+   425  .  .  .  .  .  .  .  .  .  .  .  .  OpPos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:18:7
    426  .  .  .  .  .  .  .  .  .  .  .  .  Op: |
    427  .  .  .  .  .  .  .  .  .  .  .  .  Y: *ast.Ident {
-   428  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:18:9
+   428  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:18:9
    429  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "int16"
    430  .  .  .  .  .  .  .  .  .  .  .  .  }
    431  .  .  .  .  .  .  .  .  .  .  .  }
-   432  .  .  .  .  .  .  .  .  .  .  .  OpPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:18:15
+   432  .  .  .  .  .  .  .  .  .  .  .  OpPos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:18:15
    433  .  .  .  .  .  .  .  .  .  .  .  Op: |
    434  .  .  .  .  .  .  .  .  .  .  .  Y: *ast.Ident {
-   435  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:18:17
+   435  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:18:17
    436  .  .  .  .  .  .  .  .  .  .  .  .  Name: "uint8"
    437  .  .  .  .  .  .  .  .  .  .  .  }
    438  .  .  .  .  .  .  .  .  .  .  }
-   439  .  .  .  .  .  .  .  .  .  .  OpPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:18:23
+   439  .  .  .  .  .  .  .  .  .  .  OpPos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:18:23
    440  .  .  .  .  .  .  .  .  .  .  Op: |
    441  .  .  .  .  .  .  .  .  .  .  Y: *ast.Ident {
-   442  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:18:25
+   442  .  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:18:25
    443  .  .  .  .  .  .  .  .  .  .  .  Name: "uint16"
    444  .  .  .  .  .  .  .  .  .  .  }
    445  .  .  .  .  .  .  .  .  .  }
    446  .  .  .  .  .  .  .  .  }
    447  .  .  .  .  .  .  .  }
-   448  .  .  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:19:1
+   448  .  .  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:19:1
    449  .  .  .  .  .  .  }
    450  .  .  .  .  .  .  Incomplete: false
    451  .  .  .  .  .  }
@@ -456,7 +456,7 @@
    455  .  .  }
    456  .  .  5: *ast.FuncDecl {
    457  .  .  .  Name: *ast.Ident {
-   458  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:6
+   458  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:21:6
    459  .  .  .  .  Name: "TypeConstraintsTemplateFunc"
    460  .  .  .  .  Obj: *ast.Object {
    461  .  .  .  .  .  Kind: func
@@ -465,14 +465,14 @@
    464  .  .  .  .  }
    465  .  .  .  }
    466  .  .  .  Type: *ast.FuncType {
-   467  .  .  .  .  Func: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:1
+   467  .  .  .  .  Func: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:21:1
    468  .  .  .  .  TypeParams: *ast.FieldList {
-   469  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:33
+   469  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:21:33
    470  .  .  .  .  .  List: []*ast.Field (len = 1) {
    471  .  .  .  .  .  .  0: *ast.Field {
    472  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
    473  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   474  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:34
+   474  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:21:34
    475  .  .  .  .  .  .  .  .  .  Name: "T"
    476  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
    477  .  .  .  .  .  .  .  .  .  .  Kind: type
@@ -482,21 +482,21 @@
    481  .  .  .  .  .  .  .  .  }
    482  .  .  .  .  .  .  .  }
    483  .  .  .  .  .  .  .  Type: *ast.Ident {
-   484  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:36
+   484  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:21:36
    485  .  .  .  .  .  .  .  .  Name: "TypeConstraints"
    486  .  .  .  .  .  .  .  .  Obj: *(obj @ 405)
    487  .  .  .  .  .  .  .  }
    488  .  .  .  .  .  .  }
    489  .  .  .  .  .  }
-   490  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:51
+   490  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:21:51
    491  .  .  .  .  }
    492  .  .  .  .  Params: *ast.FieldList {
-   493  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:52
+   493  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:21:52
    494  .  .  .  .  .  List: []*ast.Field (len = 1) {
    495  .  .  .  .  .  .  0: *ast.Field {
    496  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
    497  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   498  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:53
+   498  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:21:53
    499  .  .  .  .  .  .  .  .  .  Name: "tv"
    500  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
    501  .  .  .  .  .  .  .  .  .  .  Kind: var
@@ -506,22 +506,22 @@
    505  .  .  .  .  .  .  .  .  }
    506  .  .  .  .  .  .  .  }
    507  .  .  .  .  .  .  .  Type: *ast.Ident {
-   508  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:56
+   508  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:21:56
    509  .  .  .  .  .  .  .  .  Name: "T"
    510  .  .  .  .  .  .  .  .  Obj: *(obj @ 476)
    511  .  .  .  .  .  .  .  }
    512  .  .  .  .  .  .  }
    513  .  .  .  .  .  }
-   514  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:57
+   514  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:21:57
    515  .  .  .  .  }
    516  .  .  .  .  Results: *ast.FieldList {
    517  .  .  .  .  .  Opening: -
    518  .  .  .  .  .  List: []*ast.Field (len = 1) {
    519  .  .  .  .  .  .  0: *ast.Field {
    520  .  .  .  .  .  .  .  Type: *ast.StarExpr {
-   521  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:59
+   521  .  .  .  .  .  .  .  .  Star: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:21:59
    522  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   523  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:60
+   523  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:21:60
    524  .  .  .  .  .  .  .  .  .  Name: "T"
    525  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 476)
    526  .  .  .  .  .  .  .  .  }
@@ -532,24 +532,24 @@
    531  .  .  .  .  }
    532  .  .  .  }
    533  .  .  .  Body: *ast.BlockStmt {
-   534  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:21:62
+   534  .  .  .  .  Lbrace: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:21:62
    535  .  .  .  .  List: []ast.Stmt (len = 1) {
    536  .  .  .  .  .  0: *ast.ReturnStmt {
-   537  .  .  .  .  .  .  Return: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:22:2
+   537  .  .  .  .  .  .  Return: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:22:2
    538  .  .  .  .  .  .  Results: []ast.Expr (len = 1) {
    539  .  .  .  .  .  .  .  0: *ast.Ident {
-   540  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:22:9
+   540  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:22:9
    541  .  .  .  .  .  .  .  .  Name: "nil"
    542  .  .  .  .  .  .  .  }
    543  .  .  .  .  .  .  }
    544  .  .  .  .  .  }
    545  .  .  .  .  }
-   546  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:23:1
+   546  .  .  .  .  Rbrace: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:23:1
    547  .  .  .  }
    548  .  .  }
    549  .  .  6: *ast.FuncDecl {
    550  .  .  .  Name: *ast.Ident {
-   551  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:25:6
+   551  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:25:6
    552  .  .  .  .  Name: "CannotInferTypeFunc1"
    553  .  .  .  .  Obj: *ast.Object {
    554  .  .  .  .  .  Kind: func
@@ -558,14 +558,14 @@
    557  .  .  .  .  }
    558  .  .  .  }
    559  .  .  .  Type: *ast.FuncType {
-   560  .  .  .  .  Func: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:25:1
+   560  .  .  .  .  Func: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:25:1
    561  .  .  .  .  TypeParams: *ast.FieldList {
-   562  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:25:26
+   562  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:25:26
    563  .  .  .  .  .  List: []*ast.Field (len = 1) {
    564  .  .  .  .  .  .  0: *ast.Field {
    565  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
    566  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   567  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:25:27
+   567  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:25:27
    568  .  .  .  .  .  .  .  .  .  Name: "T"
    569  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
    570  .  .  .  .  .  .  .  .  .  .  Kind: type
@@ -575,26 +575,26 @@
    574  .  .  .  .  .  .  .  .  }
    575  .  .  .  .  .  .  .  }
    576  .  .  .  .  .  .  .  Type: *ast.Ident {
-   577  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:25:29
+   577  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:25:29
    578  .  .  .  .  .  .  .  .  Name: "any"
    579  .  .  .  .  .  .  .  }
    580  .  .  .  .  .  .  }
    581  .  .  .  .  .  }
-   582  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:25:32
+   582  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:25:32
    583  .  .  .  .  }
    584  .  .  .  .  Params: *ast.FieldList {
-   585  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:25:33
-   586  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:25:34
+   585  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:25:33
+   586  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:25:34
    587  .  .  .  .  }
    588  .  .  .  }
    589  .  .  .  Body: *ast.BlockStmt {
-   590  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:25:36
-   591  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:27:1
+   590  .  .  .  .  Lbrace: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:25:36
+   591  .  .  .  .  Rbrace: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:27:1
    592  .  .  .  }
    593  .  .  }
    594  .  .  7: *ast.FuncDecl {
    595  .  .  .  Name: *ast.Ident {
-   596  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:6
+   596  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:29:6
    597  .  .  .  .  Name: "CannotInferTypeFunc2"
    598  .  .  .  .  Obj: *ast.Object {
    599  .  .  .  .  .  Kind: func
@@ -603,14 +603,14 @@
    602  .  .  .  .  }
    603  .  .  .  }
    604  .  .  .  Type: *ast.FuncType {
-   605  .  .  .  .  Func: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:1
+   605  .  .  .  .  Func: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:29:1
    606  .  .  .  .  TypeParams: *ast.FieldList {
-   607  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:26
+   607  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:29:26
    608  .  .  .  .  .  List: []*ast.Field (len = 2) {
    609  .  .  .  .  .  .  0: *ast.Field {
    610  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
    611  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   612  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:27
+   612  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:29:27
    613  .  .  .  .  .  .  .  .  .  Name: "K"
    614  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
    615  .  .  .  .  .  .  .  .  .  .  Kind: type
@@ -620,14 +620,14 @@
    619  .  .  .  .  .  .  .  .  }
    620  .  .  .  .  .  .  .  }
    621  .  .  .  .  .  .  .  Type: *ast.Ident {
-   622  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:29
+   622  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:29:29
    623  .  .  .  .  .  .  .  .  Name: "comparable"
    624  .  .  .  .  .  .  .  }
    625  .  .  .  .  .  .  }
    626  .  .  .  .  .  .  1: *ast.Field {
    627  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
    628  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   629  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:41
+   629  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:29:41
    630  .  .  .  .  .  .  .  .  .  Name: "V"
    631  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
    632  .  .  .  .  .  .  .  .  .  .  Kind: type
@@ -637,25 +637,25 @@
    636  .  .  .  .  .  .  .  .  }
    637  .  .  .  .  .  .  .  }
    638  .  .  .  .  .  .  .  Type: *ast.Ident {
-   639  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:43
+   639  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:29:43
    640  .  .  .  .  .  .  .  .  Name: "any"
    641  .  .  .  .  .  .  .  }
    642  .  .  .  .  .  .  }
    643  .  .  .  .  .  }
-   644  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:46
+   644  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:29:46
    645  .  .  .  .  }
    646  .  .  .  .  Params: *ast.FieldList {
-   647  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:47
-   648  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:48
+   647  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:29:47
+   648  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:29:48
    649  .  .  .  .  }
    650  .  .  .  .  Results: *ast.FieldList {
-   651  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:50
+   651  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:29:50
    652  .  .  .  .  .  List: []*ast.Field (len = 2) {
    653  .  .  .  .  .  .  0: *ast.Field {
    654  .  .  .  .  .  .  .  Type: *ast.StarExpr {
-   655  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:51
+   655  .  .  .  .  .  .  .  .  Star: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:29:51
    656  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   657  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:52
+   657  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:29:52
    658  .  .  .  .  .  .  .  .  .  Name: "K"
    659  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 614)
    660  .  .  .  .  .  .  .  .  }
@@ -663,46 +663,46 @@
    662  .  .  .  .  .  .  }
    663  .  .  .  .  .  .  1: *ast.Field {
    664  .  .  .  .  .  .  .  Type: *ast.StarExpr {
-   665  .  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:55
+   665  .  .  .  .  .  .  .  .  Star: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:29:55
    666  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   667  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:56
+   667  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:29:56
    668  .  .  .  .  .  .  .  .  .  Name: "V"
    669  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 631)
    670  .  .  .  .  .  .  .  .  }
    671  .  .  .  .  .  .  .  }
    672  .  .  .  .  .  .  }
    673  .  .  .  .  .  }
-   674  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:57
+   674  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:29:57
    675  .  .  .  .  }
    676  .  .  .  }
    677  .  .  .  Body: *ast.BlockStmt {
-   678  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:29:59
+   678  .  .  .  .  Lbrace: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:29:59
    679  .  .  .  .  List: []ast.Stmt (len = 1) {
    680  .  .  .  .  .  0: *ast.ReturnStmt {
-   681  .  .  .  .  .  .  Return: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:30:2
+   681  .  .  .  .  .  .  Return: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:30:2
    682  .  .  .  .  .  .  Results: []ast.Expr (len = 2) {
    683  .  .  .  .  .  .  .  0: *ast.Ident {
-   684  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:30:9
+   684  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:30:9
    685  .  .  .  .  .  .  .  .  Name: "nil"
    686  .  .  .  .  .  .  .  }
    687  .  .  .  .  .  .  .  1: *ast.Ident {
-   688  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:30:14
+   688  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:30:14
    689  .  .  .  .  .  .  .  .  Name: "nil"
    690  .  .  .  .  .  .  .  }
    691  .  .  .  .  .  .  }
    692  .  .  .  .  .  }
    693  .  .  .  .  }
-   694  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:31:1
+   694  .  .  .  .  Rbrace: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:31:1
    695  .  .  .  }
    696  .  .  }
    697  .  .  8: *ast.GenDecl {
-   698  .  .  .  TokPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:33:1
+   698  .  .  .  TokPos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:33:1
    699  .  .  .  Tok: type
    700  .  .  .  Lparen: -
    701  .  .  .  Specs: []ast.Spec (len = 1) {
    702  .  .  .  .  0: *ast.TypeSpec {
    703  .  .  .  .  .  Name: *ast.Ident {
-   704  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:33:6
+   704  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:33:6
    705  .  .  .  .  .  .  Name: "TemplateStruct"
    706  .  .  .  .  .  .  Obj: *ast.Object {
    707  .  .  .  .  .  .  .  Kind: type
@@ -711,12 +711,12 @@
    710  .  .  .  .  .  .  }
    711  .  .  .  .  .  }
    712  .  .  .  .  .  TypeParams: *ast.FieldList {
-   713  .  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:33:20
+   713  .  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:33:20
    714  .  .  .  .  .  .  List: []*ast.Field (len = 1) {
    715  .  .  .  .  .  .  .  0: *ast.Field {
    716  .  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
    717  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   718  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:33:21
+   718  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:33:21
    719  .  .  .  .  .  .  .  .  .  .  Name: "T"
    720  .  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
    721  .  .  .  .  .  .  .  .  .  .  .  Kind: type
@@ -726,23 +726,23 @@
    725  .  .  .  .  .  .  .  .  .  }
    726  .  .  .  .  .  .  .  .  }
    727  .  .  .  .  .  .  .  .  Type: *ast.Ident {
-   728  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:33:23
+   728  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:33:23
    729  .  .  .  .  .  .  .  .  .  Name: "any"
    730  .  .  .  .  .  .  .  .  }
    731  .  .  .  .  .  .  .  }
    732  .  .  .  .  .  .  }
-   733  .  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:33:26
+   733  .  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:33:26
    734  .  .  .  .  .  }
    735  .  .  .  .  .  Assign: -
    736  .  .  .  .  .  Type: *ast.StructType {
-   737  .  .  .  .  .  .  Struct: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:33:28
+   737  .  .  .  .  .  .  Struct: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:33:28
    738  .  .  .  .  .  .  Fields: *ast.FieldList {
-   739  .  .  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:33:35
+   739  .  .  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:33:35
    740  .  .  .  .  .  .  .  List: []*ast.Field (len = 1) {
    741  .  .  .  .  .  .  .  .  0: *ast.Field {
    742  .  .  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
    743  .  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   744  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:34:2
+   744  .  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:34:2
    745  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
    746  .  .  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
    747  .  .  .  .  .  .  .  .  .  .  .  .  Kind: var
@@ -752,13 +752,13 @@
    751  .  .  .  .  .  .  .  .  .  .  }
    752  .  .  .  .  .  .  .  .  .  }
    753  .  .  .  .  .  .  .  .  .  Type: *ast.Ident {
-   754  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:34:4
+   754  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:34:4
    755  .  .  .  .  .  .  .  .  .  .  Name: "T"
    756  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 720)
    757  .  .  .  .  .  .  .  .  .  }
    758  .  .  .  .  .  .  .  .  }
    759  .  .  .  .  .  .  .  }
-   760  .  .  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:35:1
+   760  .  .  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:35:1
    761  .  .  .  .  .  .  }
    762  .  .  .  .  .  .  Incomplete: false
    763  .  .  .  .  .  }
@@ -768,12 +768,12 @@
    767  .  .  }
    768  .  .  9: *ast.FuncDecl {
    769  .  .  .  Recv: *ast.FieldList {
-   770  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:6
+   770  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:37:6
    771  .  .  .  .  List: []*ast.Field (len = 1) {
    772  .  .  .  .  .  0: *ast.Field {
    773  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
    774  .  .  .  .  .  .  .  0: *ast.Ident {
-   775  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:7
+   775  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:37:7
    776  .  .  .  .  .  .  .  .  Name: "t"
    777  .  .  .  .  .  .  .  .  Obj: *ast.Object {
    778  .  .  .  .  .  .  .  .  .  Kind: var
@@ -783,41 +783,41 @@
    782  .  .  .  .  .  .  .  }
    783  .  .  .  .  .  .  }
    784  .  .  .  .  .  .  Type: *ast.StarExpr {
-   785  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:9
+   785  .  .  .  .  .  .  .  Star: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:37:9
    786  .  .  .  .  .  .  .  X: *ast.IndexExpr {
    787  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   788  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:10
+   788  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:37:10
    789  .  .  .  .  .  .  .  .  .  Name: "TemplateStruct"
    790  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 706)
    791  .  .  .  .  .  .  .  .  }
-   792  .  .  .  .  .  .  .  .  Lbrack: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:24
+   792  .  .  .  .  .  .  .  .  Lbrack: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:37:24
    793  .  .  .  .  .  .  .  .  Index: *ast.Ident {
-   794  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:25
+   794  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:37:25
    795  .  .  .  .  .  .  .  .  .  Name: "T"
    796  .  .  .  .  .  .  .  .  }
-   797  .  .  .  .  .  .  .  .  Rbrack: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:26
+   797  .  .  .  .  .  .  .  .  Rbrack: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:37:26
    798  .  .  .  .  .  .  .  }
    799  .  .  .  .  .  .  }
    800  .  .  .  .  .  }
    801  .  .  .  .  }
-   802  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:27
+   802  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:37:27
    803  .  .  .  }
    804  .  .  .  Name: *ast.Ident {
-   805  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:29
+   805  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:37:29
    806  .  .  .  .  Name: "V"
    807  .  .  .  }
    808  .  .  .  Type: *ast.FuncType {
-   809  .  .  .  .  Func: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:1
+   809  .  .  .  .  Func: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:37:1
    810  .  .  .  .  Params: *ast.FieldList {
-   811  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:30
-   812  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:31
+   811  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:37:30
+   812  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:37:31
    813  .  .  .  .  }
    814  .  .  .  .  Results: *ast.FieldList {
    815  .  .  .  .  .  Opening: -
    816  .  .  .  .  .  List: []*ast.Field (len = 1) {
    817  .  .  .  .  .  .  0: *ast.Field {
    818  .  .  .  .  .  .  .  Type: *ast.Ident {
-   819  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:33
+   819  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:37:33
    820  .  .  .  .  .  .  .  .  Name: "T"
    821  .  .  .  .  .  .  .  }
    822  .  .  .  .  .  .  }
@@ -826,36 +826,36 @@
    825  .  .  .  .  }
    826  .  .  .  }
    827  .  .  .  Body: *ast.BlockStmt {
-   828  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:37:35
+   828  .  .  .  .  Lbrace: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:37:35
    829  .  .  .  .  List: []ast.Stmt (len = 1) {
    830  .  .  .  .  .  0: *ast.ReturnStmt {
-   831  .  .  .  .  .  .  Return: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:38:2
+   831  .  .  .  .  .  .  Return: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:38:2
    832  .  .  .  .  .  .  Results: []ast.Expr (len = 1) {
    833  .  .  .  .  .  .  .  0: *ast.SelectorExpr {
    834  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   835  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:38:9
+   835  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:38:9
    836  .  .  .  .  .  .  .  .  .  Name: "t"
    837  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 777)
    838  .  .  .  .  .  .  .  .  }
    839  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
-   840  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:38:11
+   840  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:38:11
    841  .  .  .  .  .  .  .  .  .  Name: "v"
    842  .  .  .  .  .  .  .  .  }
    843  .  .  .  .  .  .  .  }
    844  .  .  .  .  .  .  }
    845  .  .  .  .  .  }
    846  .  .  .  .  }
-   847  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:39:1
+   847  .  .  .  .  Rbrace: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:39:1
    848  .  .  .  }
    849  .  .  }
    850  .  .  10: *ast.GenDecl {
-   851  .  .  .  TokPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:41:1
+   851  .  .  .  TokPos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:41:1
    852  .  .  .  Tok: type
    853  .  .  .  Lparen: -
    854  .  .  .  Specs: []ast.Spec (len = 1) {
    855  .  .  .  .  0: *ast.TypeSpec {
    856  .  .  .  .  .  Name: *ast.Ident {
-   857  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:41:6
+   857  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:41:6
    858  .  .  .  .  .  .  Name: "TwoTypeTemplateStruct"
    859  .  .  .  .  .  .  Obj: *ast.Object {
    860  .  .  .  .  .  .  .  Kind: type
@@ -864,12 +864,12 @@
    863  .  .  .  .  .  .  }
    864  .  .  .  .  .  }
    865  .  .  .  .  .  TypeParams: *ast.FieldList {
-   866  .  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:41:27
+   866  .  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:41:27
    867  .  .  .  .  .  .  List: []*ast.Field (len = 2) {
    868  .  .  .  .  .  .  .  0: *ast.Field {
    869  .  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
    870  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   871  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:41:28
+   871  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:41:28
    872  .  .  .  .  .  .  .  .  .  .  Name: "K"
    873  .  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
    874  .  .  .  .  .  .  .  .  .  .  .  Kind: type
@@ -879,7 +879,7 @@
    878  .  .  .  .  .  .  .  .  .  }
    879  .  .  .  .  .  .  .  .  }
    880  .  .  .  .  .  .  .  .  Type: *ast.Ident {
-   881  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:41:30
+   881  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:41:30
    882  .  .  .  .  .  .  .  .  .  Name: "TypeConstraints"
    883  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 405)
    884  .  .  .  .  .  .  .  .  }
@@ -887,7 +887,7 @@
    886  .  .  .  .  .  .  .  1: *ast.Field {
    887  .  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
    888  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   889  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:41:47
+   889  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:41:47
    890  .  .  .  .  .  .  .  .  .  .  Name: "V"
    891  .  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
    892  .  .  .  .  .  .  .  .  .  .  .  Kind: type
@@ -897,23 +897,23 @@
    896  .  .  .  .  .  .  .  .  .  }
    897  .  .  .  .  .  .  .  .  }
    898  .  .  .  .  .  .  .  .  Type: *ast.Ident {
-   899  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:41:49
+   899  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:41:49
    900  .  .  .  .  .  .  .  .  .  Name: "any"
    901  .  .  .  .  .  .  .  .  }
    902  .  .  .  .  .  .  .  }
    903  .  .  .  .  .  .  }
-   904  .  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:41:52
+   904  .  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:41:52
    905  .  .  .  .  .  }
    906  .  .  .  .  .  Assign: -
    907  .  .  .  .  .  Type: *ast.StructType {
-   908  .  .  .  .  .  .  Struct: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:41:54
+   908  .  .  .  .  .  .  Struct: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:41:54
    909  .  .  .  .  .  .  Fields: *ast.FieldList {
-   910  .  .  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:41:61
+   910  .  .  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:41:61
    911  .  .  .  .  .  .  .  List: []*ast.Field (len = 1) {
    912  .  .  .  .  .  .  .  .  0: *ast.Field {
    913  .  .  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
    914  .  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   915  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:42:2
+   915  .  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:42:2
    916  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
    917  .  .  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
    918  .  .  .  .  .  .  .  .  .  .  .  .  Kind: var
@@ -923,21 +923,21 @@
    922  .  .  .  .  .  .  .  .  .  .  }
    923  .  .  .  .  .  .  .  .  .  }
    924  .  .  .  .  .  .  .  .  .  Type: *ast.MapType {
-   925  .  .  .  .  .  .  .  .  .  .  Map: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:42:4
+   925  .  .  .  .  .  .  .  .  .  .  Map: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:42:4
    926  .  .  .  .  .  .  .  .  .  .  Key: *ast.Ident {
-   927  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:42:8
+   927  .  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:42:8
    928  .  .  .  .  .  .  .  .  .  .  .  Name: "K"
    929  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 873)
    930  .  .  .  .  .  .  .  .  .  .  }
    931  .  .  .  .  .  .  .  .  .  .  Value: *ast.Ident {
-   932  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:42:10
+   932  .  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:42:10
    933  .  .  .  .  .  .  .  .  .  .  .  Name: "V"
    934  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 891)
    935  .  .  .  .  .  .  .  .  .  .  }
    936  .  .  .  .  .  .  .  .  .  }
    937  .  .  .  .  .  .  .  .  }
    938  .  .  .  .  .  .  .  }
-   939  .  .  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:43:1
+   939  .  .  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:43:1
    940  .  .  .  .  .  .  }
    941  .  .  .  .  .  .  Incomplete: false
    942  .  .  .  .  .  }
@@ -947,12 +947,12 @@
    946  .  .  }
    947  .  .  11: *ast.FuncDecl {
    948  .  .  .  Recv: *ast.FieldList {
-   949  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:6
+   949  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:45:6
    950  .  .  .  .  List: []*ast.Field (len = 1) {
    951  .  .  .  .  .  0: *ast.Field {
    952  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
    953  .  .  .  .  .  .  .  0: *ast.Ident {
-   954  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:7
+   954  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:45:7
    955  .  .  .  .  .  .  .  .  Name: "t"
    956  .  .  .  .  .  .  .  .  Obj: *ast.Object {
    957  .  .  .  .  .  .  .  .  .  Kind: var
@@ -962,44 +962,44 @@
    961  .  .  .  .  .  .  .  }
    962  .  .  .  .  .  .  }
    963  .  .  .  .  .  .  Type: *ast.StarExpr {
-   964  .  .  .  .  .  .  .  Star: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:9
+   964  .  .  .  .  .  .  .  Star: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:45:9
    965  .  .  .  .  .  .  .  X: *ast.IndexListExpr {
    966  .  .  .  .  .  .  .  .  X: *ast.Ident {
-   967  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:10
+   967  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:45:10
    968  .  .  .  .  .  .  .  .  .  Name: "TwoTypeTemplateStruct"
    969  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 859)
    970  .  .  .  .  .  .  .  .  }
-   971  .  .  .  .  .  .  .  .  Lbrack: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:31
+   971  .  .  .  .  .  .  .  .  Lbrack: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:45:31
    972  .  .  .  .  .  .  .  .  Indices: []ast.Expr (len = 2) {
    973  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
-   974  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:32
+   974  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:45:32
    975  .  .  .  .  .  .  .  .  .  .  Name: "K"
    976  .  .  .  .  .  .  .  .  .  }
    977  .  .  .  .  .  .  .  .  .  1: *ast.Ident {
-   978  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:35
+   978  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:45:35
    979  .  .  .  .  .  .  .  .  .  .  Name: "V"
    980  .  .  .  .  .  .  .  .  .  }
    981  .  .  .  .  .  .  .  .  }
-   982  .  .  .  .  .  .  .  .  Rbrack: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:36
+   982  .  .  .  .  .  .  .  .  Rbrack: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:45:36
    983  .  .  .  .  .  .  .  }
    984  .  .  .  .  .  .  }
    985  .  .  .  .  .  }
    986  .  .  .  .  }
-   987  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:37
+   987  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:45:37
    988  .  .  .  }
    989  .  .  .  Name: *ast.Ident {
-   990  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:39
+   990  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:45:39
    991  .  .  .  .  Name: "KVSlice"
    992  .  .  .  }
    993  .  .  .  Type: *ast.FuncType {
-   994  .  .  .  .  Func: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:1
+   994  .  .  .  .  Func: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:45:1
    995  .  .  .  .  Params: *ast.FieldList {
-   996  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:46
+   996  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:45:46
    997  .  .  .  .  .  List: []*ast.Field (len = 2) {
    998  .  .  .  .  .  .  0: *ast.Field {
    999  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
   1000  .  .  .  .  .  .  .  .  0: *ast.Ident {
-  1001  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:47
+  1001  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:45:47
   1002  .  .  .  .  .  .  .  .  .  Name: "k"
   1003  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
   1004  .  .  .  .  .  .  .  .  .  .  Kind: var
@@ -1009,14 +1009,14 @@
   1008  .  .  .  .  .  .  .  .  }
   1009  .  .  .  .  .  .  .  }
   1010  .  .  .  .  .  .  .  Type: *ast.Ident {
-  1011  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:49
+  1011  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:45:49
   1012  .  .  .  .  .  .  .  .  Name: "K"
   1013  .  .  .  .  .  .  .  }
   1014  .  .  .  .  .  .  }
   1015  .  .  .  .  .  .  1: *ast.Field {
   1016  .  .  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
   1017  .  .  .  .  .  .  .  .  0: *ast.Ident {
-  1018  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:52
+  1018  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:45:52
   1019  .  .  .  .  .  .  .  .  .  Name: "v"
   1020  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
   1021  .  .  .  .  .  .  .  .  .  .  Kind: var
@@ -1026,45 +1026,45 @@
   1025  .  .  .  .  .  .  .  .  }
   1026  .  .  .  .  .  .  .  }
   1027  .  .  .  .  .  .  .  Type: *ast.Ident {
-  1028  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:54
+  1028  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:45:54
   1029  .  .  .  .  .  .  .  .  Name: "V"
   1030  .  .  .  .  .  .  .  }
   1031  .  .  .  .  .  .  }
   1032  .  .  .  .  .  }
-  1033  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:55
+  1033  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:45:55
   1034  .  .  .  .  }
   1035  .  .  .  .  Results: *ast.FieldList {
-  1036  .  .  .  .  .  Opening: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:57
+  1036  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:45:57
   1037  .  .  .  .  .  List: []*ast.Field (len = 2) {
   1038  .  .  .  .  .  .  0: *ast.Field {
   1039  .  .  .  .  .  .  .  Type: *ast.ArrayType {
-  1040  .  .  .  .  .  .  .  .  Lbrack: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:58
+  1040  .  .  .  .  .  .  .  .  Lbrack: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:45:58
   1041  .  .  .  .  .  .  .  .  Elt: *ast.Ident {
-  1042  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:60
+  1042  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:45:60
   1043  .  .  .  .  .  .  .  .  .  Name: "K"
   1044  .  .  .  .  .  .  .  .  }
   1045  .  .  .  .  .  .  .  }
   1046  .  .  .  .  .  .  }
   1047  .  .  .  .  .  .  1: *ast.Field {
   1048  .  .  .  .  .  .  .  Type: *ast.ArrayType {
-  1049  .  .  .  .  .  .  .  .  Lbrack: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:63
+  1049  .  .  .  .  .  .  .  .  Lbrack: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:45:63
   1050  .  .  .  .  .  .  .  .  Elt: *ast.Ident {
-  1051  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:65
+  1051  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:45:65
   1052  .  .  .  .  .  .  .  .  .  Name: "V"
   1053  .  .  .  .  .  .  .  .  }
   1054  .  .  .  .  .  .  .  }
   1055  .  .  .  .  .  .  }
   1056  .  .  .  .  .  }
-  1057  .  .  .  .  .  Closing: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:66
+  1057  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:45:66
   1058  .  .  .  .  }
   1059  .  .  .  }
   1060  .  .  .  Body: *ast.BlockStmt {
-  1061  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:45:68
+  1061  .  .  .  .  Lbrace: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:45:68
   1062  .  .  .  .  List: []ast.Stmt (len = 3) {
   1063  .  .  .  .  .  0: *ast.AssignStmt {
   1064  .  .  .  .  .  .  Lhs: []ast.Expr (len = 1) {
   1065  .  .  .  .  .  .  .  0: *ast.Ident {
-  1066  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:2
+  1066  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:46:2
   1067  .  .  .  .  .  .  .  .  Name: "vs"
   1068  .  .  .  .  .  .  .  .  Obj: *ast.Object {
   1069  .  .  .  .  .  .  .  .  .  Kind: var
@@ -1073,60 +1073,60 @@
   1072  .  .  .  .  .  .  .  .  }
   1073  .  .  .  .  .  .  .  }
   1074  .  .  .  .  .  .  }
-  1075  .  .  .  .  .  .  TokPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:5
+  1075  .  .  .  .  .  .  TokPos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:46:5
   1076  .  .  .  .  .  .  Tok: :=
   1077  .  .  .  .  .  .  Rhs: []ast.Expr (len = 1) {
   1078  .  .  .  .  .  .  .  0: *ast.CallExpr {
   1079  .  .  .  .  .  .  .  .  Fun: *ast.Ident {
-  1080  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:8
+  1080  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:46:8
   1081  .  .  .  .  .  .  .  .  .  Name: "make"
   1082  .  .  .  .  .  .  .  .  }
-  1083  .  .  .  .  .  .  .  .  Lparen: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:12
+  1083  .  .  .  .  .  .  .  .  Lparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:46:12
   1084  .  .  .  .  .  .  .  .  Args: []ast.Expr (len = 3) {
   1085  .  .  .  .  .  .  .  .  .  0: *ast.ArrayType {
-  1086  .  .  .  .  .  .  .  .  .  .  Lbrack: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:13
+  1086  .  .  .  .  .  .  .  .  .  .  Lbrack: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:46:13
   1087  .  .  .  .  .  .  .  .  .  .  Elt: *ast.Ident {
-  1088  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:15
+  1088  .  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:46:15
   1089  .  .  .  .  .  .  .  .  .  .  .  Name: "V"
   1090  .  .  .  .  .  .  .  .  .  .  }
   1091  .  .  .  .  .  .  .  .  .  }
   1092  .  .  .  .  .  .  .  .  .  1: *ast.BasicLit {
-  1093  .  .  .  .  .  .  .  .  .  .  ValuePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:18
+  1093  .  .  .  .  .  .  .  .  .  .  ValuePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:46:18
   1094  .  .  .  .  .  .  .  .  .  .  Kind: INT
   1095  .  .  .  .  .  .  .  .  .  .  Value: "0"
   1096  .  .  .  .  .  .  .  .  .  }
   1097  .  .  .  .  .  .  .  .  .  2: *ast.CallExpr {
   1098  .  .  .  .  .  .  .  .  .  .  Fun: *ast.Ident {
-  1099  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:21
+  1099  .  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:46:21
   1100  .  .  .  .  .  .  .  .  .  .  .  Name: "len"
   1101  .  .  .  .  .  .  .  .  .  .  }
-  1102  .  .  .  .  .  .  .  .  .  .  Lparen: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:24
+  1102  .  .  .  .  .  .  .  .  .  .  Lparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:46:24
   1103  .  .  .  .  .  .  .  .  .  .  Args: []ast.Expr (len = 1) {
   1104  .  .  .  .  .  .  .  .  .  .  .  0: *ast.SelectorExpr {
   1105  .  .  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
-  1106  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:25
+  1106  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:46:25
   1107  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "t"
   1108  .  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 956)
   1109  .  .  .  .  .  .  .  .  .  .  .  .  }
   1110  .  .  .  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
-  1111  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:27
+  1111  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:46:27
   1112  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
   1113  .  .  .  .  .  .  .  .  .  .  .  .  }
   1114  .  .  .  .  .  .  .  .  .  .  .  }
   1115  .  .  .  .  .  .  .  .  .  .  }
   1116  .  .  .  .  .  .  .  .  .  .  Ellipsis: -
-  1117  .  .  .  .  .  .  .  .  .  .  Rparen: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:28
+  1117  .  .  .  .  .  .  .  .  .  .  Rparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:46:28
   1118  .  .  .  .  .  .  .  .  .  }
   1119  .  .  .  .  .  .  .  .  }
   1120  .  .  .  .  .  .  .  .  Ellipsis: -
-  1121  .  .  .  .  .  .  .  .  Rparen: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:46:29
+  1121  .  .  .  .  .  .  .  .  Rparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:46:29
   1122  .  .  .  .  .  .  .  }
   1123  .  .  .  .  .  .  }
   1124  .  .  .  .  .  }
   1125  .  .  .  .  .  1: *ast.RangeStmt {
-  1126  .  .  .  .  .  .  For: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:47:2
+  1126  .  .  .  .  .  .  For: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:47:2
   1127  .  .  .  .  .  .  Key: *ast.Ident {
-  1128  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:47:6
+  1128  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:47:6
   1129  .  .  .  .  .  .  .  Name: "_"
   1130  .  .  .  .  .  .  .  Obj: *ast.Object {
   1131  .  .  .  .  .  .  .  .  Kind: var
@@ -1135,7 +1135,7 @@
   1134  .  .  .  .  .  .  .  .  .  Lhs: []ast.Expr (len = 2) {
   1135  .  .  .  .  .  .  .  .  .  .  0: *(obj @ 1127)
   1136  .  .  .  .  .  .  .  .  .  .  1: *ast.Ident {
-  1137  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:47:9
+  1137  .  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:47:9
   1138  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
   1139  .  .  .  .  .  .  .  .  .  .  .  Obj: *ast.Object {
   1140  .  .  .  .  .  .  .  .  .  .  .  .  Kind: var
@@ -1144,7 +1144,7 @@
   1143  .  .  .  .  .  .  .  .  .  .  .  }
   1144  .  .  .  .  .  .  .  .  .  .  }
   1145  .  .  .  .  .  .  .  .  .  }
-  1146  .  .  .  .  .  .  .  .  .  TokPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:47:11
+  1146  .  .  .  .  .  .  .  .  .  TokPos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:47:11
   1147  .  .  .  .  .  .  .  .  .  Tok: :=
   1148  .  .  .  .  .  .  .  .  .  Rhs: []ast.Expr (len = 1) {
   1149  .  .  .  .  .  .  .  .  .  .  0: *ast.UnaryExpr {
@@ -1152,12 +1152,12 @@
   1151  .  .  .  .  .  .  .  .  .  .  .  Op: range
   1152  .  .  .  .  .  .  .  .  .  .  .  X: *ast.SelectorExpr {
   1153  .  .  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
-  1154  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:47:20
+  1154  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:47:20
   1155  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "t"
   1156  .  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 956)
   1157  .  .  .  .  .  .  .  .  .  .  .  .  }
   1158  .  .  .  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
-  1159  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:47:22
+  1159  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:47:22
   1160  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
   1161  .  .  .  .  .  .  .  .  .  .  .  .  }
   1162  .  .  .  .  .  .  .  .  .  .  .  }
@@ -1167,107 +1167,107 @@
   1166  .  .  .  .  .  .  .  }
   1167  .  .  .  .  .  .  }
   1168  .  .  .  .  .  .  Value: *(obj @ 1136)
-  1169  .  .  .  .  .  .  TokPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:47:11
+  1169  .  .  .  .  .  .  TokPos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:47:11
   1170  .  .  .  .  .  .  Tok: :=
-  1171  .  .  .  .  .  .  Range: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:47:14
+  1171  .  .  .  .  .  .  Range: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:47:14
   1172  .  .  .  .  .  .  X: *(obj @ 1152)
   1173  .  .  .  .  .  .  Body: *ast.BlockStmt {
-  1174  .  .  .  .  .  .  .  Lbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:47:24
+  1174  .  .  .  .  .  .  .  Lbrace: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:47:24
   1175  .  .  .  .  .  .  .  List: []ast.Stmt (len = 1) {
   1176  .  .  .  .  .  .  .  .  0: *ast.AssignStmt {
   1177  .  .  .  .  .  .  .  .  .  Lhs: []ast.Expr (len = 1) {
   1178  .  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
-  1179  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:48:3
+  1179  .  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:48:3
   1180  .  .  .  .  .  .  .  .  .  .  .  Name: "vs"
   1181  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 1068)
   1182  .  .  .  .  .  .  .  .  .  .  }
   1183  .  .  .  .  .  .  .  .  .  }
-  1184  .  .  .  .  .  .  .  .  .  TokPos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:48:6
+  1184  .  .  .  .  .  .  .  .  .  TokPos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:48:6
   1185  .  .  .  .  .  .  .  .  .  Tok: =
   1186  .  .  .  .  .  .  .  .  .  Rhs: []ast.Expr (len = 1) {
   1187  .  .  .  .  .  .  .  .  .  .  0: *ast.CallExpr {
   1188  .  .  .  .  .  .  .  .  .  .  .  Fun: *ast.Ident {
-  1189  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:48:8
+  1189  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:48:8
   1190  .  .  .  .  .  .  .  .  .  .  .  .  Name: "append"
   1191  .  .  .  .  .  .  .  .  .  .  .  }
-  1192  .  .  .  .  .  .  .  .  .  .  .  Lparen: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:48:14
+  1192  .  .  .  .  .  .  .  .  .  .  .  Lparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:48:14
   1193  .  .  .  .  .  .  .  .  .  .  .  Args: []ast.Expr (len = 2) {
   1194  .  .  .  .  .  .  .  .  .  .  .  .  0: *ast.Ident {
-  1195  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:48:15
+  1195  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:48:15
   1196  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "vs"
   1197  .  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 1068)
   1198  .  .  .  .  .  .  .  .  .  .  .  .  }
   1199  .  .  .  .  .  .  .  .  .  .  .  .  1: *ast.Ident {
-  1200  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:48:19
+  1200  .  .  .  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:48:19
   1201  .  .  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
   1202  .  .  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 1139)
   1203  .  .  .  .  .  .  .  .  .  .  .  .  }
   1204  .  .  .  .  .  .  .  .  .  .  .  }
   1205  .  .  .  .  .  .  .  .  .  .  .  Ellipsis: -
-  1206  .  .  .  .  .  .  .  .  .  .  .  Rparen: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:48:20
+  1206  .  .  .  .  .  .  .  .  .  .  .  Rparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:48:20
   1207  .  .  .  .  .  .  .  .  .  .  }
   1208  .  .  .  .  .  .  .  .  .  }
   1209  .  .  .  .  .  .  .  .  }
   1210  .  .  .  .  .  .  .  }
-  1211  .  .  .  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:49:2
+  1211  .  .  .  .  .  .  .  Rbrace: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:49:2
   1212  .  .  .  .  .  .  }
   1213  .  .  .  .  .  }
   1214  .  .  .  .  .  2: *ast.ReturnStmt {
-  1215  .  .  .  .  .  .  Return: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:50:2
+  1215  .  .  .  .  .  .  Return: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:50:2
   1216  .  .  .  .  .  .  Results: []ast.Expr (len = 2) {
   1217  .  .  .  .  .  .  .  0: *ast.CallExpr {
   1218  .  .  .  .  .  .  .  .  Fun: *ast.SelectorExpr {
   1219  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
-  1220  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:50:9
+  1220  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:50:9
   1221  .  .  .  .  .  .  .  .  .  .  Name: "stpmap"
   1222  .  .  .  .  .  .  .  .  .  }
   1223  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
-  1224  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:50:16
+  1224  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:50:16
   1225  .  .  .  .  .  .  .  .  .  .  Name: "Key"
   1226  .  .  .  .  .  .  .  .  .  }
   1227  .  .  .  .  .  .  .  .  }
-  1228  .  .  .  .  .  .  .  .  Lparen: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:50:19
+  1228  .  .  .  .  .  .  .  .  Lparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:50:19
   1229  .  .  .  .  .  .  .  .  Args: []ast.Expr (len = 1) {
   1230  .  .  .  .  .  .  .  .  .  0: *ast.SelectorExpr {
   1231  .  .  .  .  .  .  .  .  .  .  X: *ast.Ident {
-  1232  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:50:20
+  1232  .  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:50:20
   1233  .  .  .  .  .  .  .  .  .  .  .  Name: "t"
   1234  .  .  .  .  .  .  .  .  .  .  .  Obj: *(obj @ 956)
   1235  .  .  .  .  .  .  .  .  .  .  }
   1236  .  .  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
-  1237  .  .  .  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:50:22
+  1237  .  .  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:50:22
   1238  .  .  .  .  .  .  .  .  .  .  .  Name: "v"
   1239  .  .  .  .  .  .  .  .  .  .  }
   1240  .  .  .  .  .  .  .  .  .  }
   1241  .  .  .  .  .  .  .  .  }
   1242  .  .  .  .  .  .  .  .  Ellipsis: -
-  1243  .  .  .  .  .  .  .  .  Rparen: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:50:23
+  1243  .  .  .  .  .  .  .  .  Rparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:50:23
   1244  .  .  .  .  .  .  .  }
   1245  .  .  .  .  .  .  .  1: *ast.Ident {
-  1246  .  .  .  .  .  .  .  .  NamePos: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:50:26
+  1246  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:50:26
   1247  .  .  .  .  .  .  .  .  Name: "vs"
   1248  .  .  .  .  .  .  .  .  Obj: *(obj @ 1068)
   1249  .  .  .  .  .  .  .  }
   1250  .  .  .  .  .  .  }
   1251  .  .  .  .  .  }
   1252  .  .  .  .  }
-  1253  .  .  .  .  Rbrace: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:51:1
+  1253  .  .  .  .  Rbrace: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:51:1
   1254  .  .  .  }
   1255  .  .  }
   1256  .  }
-  1257  .  FileStart: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:1:1
-  1258  .  FileEnd: d:\Projects\go-extractor\testdata\standardProject\pkg\template\template.go:51:4
+  1257  .  FileStart: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:1:1
+  1258  .  FileEnd: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:51:3
   1259  .  Scope: *ast.Scope {
   1260  .  .  Objects: map[string]*ast.Object (len = 9) {
-  1261  .  .  .  "OneTemplateFunc": *(obj @ 31)
-  1262  .  .  .  "DoubleSameTemplateFunc": *(obj @ 126)
-  1263  .  .  .  "TypeConstraints": *(obj @ 405)
-  1264  .  .  .  "CannotInferTypeFunc1": *(obj @ 553)
-  1265  .  .  .  "CannotInferTypeFunc2": *(obj @ 598)
-  1266  .  .  .  "TwoTypeTemplateStruct": *(obj @ 859)
-  1267  .  .  .  "DoubleDifferenceTemplateFunc": *(obj @ 259)
-  1268  .  .  .  "TypeConstraintsTemplateFunc": *(obj @ 460)
-  1269  .  .  .  "TemplateStruct": *(obj @ 706)
+  1261  .  .  .  "DoubleSameTemplateFunc": *(obj @ 126)
+  1262  .  .  .  "TypeConstraints": *(obj @ 405)
+  1263  .  .  .  "CannotInferTypeFunc1": *(obj @ 553)
+  1264  .  .  .  "CannotInferTypeFunc2": *(obj @ 598)
+  1265  .  .  .  "OneTemplateFunc": *(obj @ 31)
+  1266  .  .  .  "DoubleDifferenceTemplateFunc": *(obj @ 259)
+  1267  .  .  .  "TypeConstraintsTemplateFunc": *(obj @ 460)
+  1268  .  .  .  "TemplateStruct": *(obj @ 706)
+  1269  .  .  .  "TwoTypeTemplateStruct": *(obj @ 859)
   1270  .  .  }
   1271  .  }
   1272  .  Imports: []*ast.ImportSpec (len = 1) {
@@ -1300,4 +1300,5 @@
   1299  .  .  23: *(obj @ 1188)
   1300  .  .  24: *(obj @ 1219)
   1301  .  }
-  1302  }
+  1302  .  GoVersion: ""
+  1303  }

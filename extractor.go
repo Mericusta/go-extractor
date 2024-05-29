@@ -1,8 +1,10 @@
 package extractor
 
 import (
+	"bytes"
 	"encoding/json"
 	"go/ast"
+	"go/format"
 	"go/token"
 	"os"
 	"strings"
@@ -68,4 +70,13 @@ func (m *meta) Expression() string {
 		return ""
 	}
 	return strings.TrimSpace(string(fileContent[m.node.Pos()-1 : m.node.End()-1]))
+}
+
+func (m *meta) Format() string {
+	buffer := &bytes.Buffer{}
+	err := format.Node(buffer, token.NewFileSet(), m.node)
+	if err != nil {
+		panic(err)
+	}
+	return buffer.String()
 }

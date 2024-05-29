@@ -264,3 +264,54 @@ func (gimm *GoInterfaceMethodMeta) MakeUnitTest(typeArgs []string) (string, []by
 func (gimm *GoInterfaceMethodMeta) MakeBenchmark(typeArgs []string) (string, []byte) {
 	return makeTest(benchmarkMaker, gimm, "", typeArgs)
 }
+
+func (gimm *GoInterfaceMethodMeta) MakeImplementMethodMeta(receiverIdent, receiverType string) (string, *GoFunctionMeta) {
+	if len(receiverIdent) == 0 || len(receiverType) == 0 {
+		return "", nil
+	}
+
+	funcName := gimm.FunctionName()
+
+	// func params
+	params := gimm.Params()
+	paramsFieldList := make([]*field, 0, len(params))
+	for _, gvm := range params {
+		paramsFieldList = append(paramsFieldList, newField(
+			[]string{gvm.Name()}, gvm.typeMeta.Expression(), "", gvm.IsPointer(),
+		))
+	}
+
+	// func returns
+	returnTypes := gimm.ReturnTypes()
+	returnFieldSlice := make([]*field, 0, len(returnTypes))
+	for _, rts := range returnTypes {
+		returnFieldSlice = append(returnFieldSlice, newField(
+			nil, rts.typeMeta.Expression(), "", rts.IsPointer(),
+		))
+	}
+
+	// func decl
+	funcDecl := makeFuncDecl(
+		funcName,
+		newField([]string{receiverIdent}, receiverType, "", true),
+		nil,
+		paramsFieldList,
+		returnFieldSlice,
+	)
+	funcDecl.Body = &ast.BlockStmt{}
+
+	funcMeta := gimm.newMeta(funcDecl)
+	// funcMeta.PrintAST()
+
+	// // output
+	// buffer := &bytes.Buffer{}
+	// err := format.Node(buffer, token.NewFileSet(), funcDecl)
+	// if err != nil {
+	// 	panic(err)
+	// }
+
+	// ex, e := parser.Parse(buffer.String())
+	// fmt.Printf("ex = %v, e = %v\n", ex, e)
+	// return funcName, buffer.Bytes()
+	return funcName, NewGoFunctionMeta(funcMeta)
+}
