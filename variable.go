@@ -1,6 +1,9 @@
 package extractor
 
-import "go/ast"
+import (
+	"go/ast"
+	"strings"
+)
 
 // type VariableTypeEnum int
 
@@ -97,6 +100,18 @@ func (gvm *GoVariableMeta) Type() (string, string, UnderlyingType) {
 		underlyingString, underlyingEnum = gvm.typeMeta.Expression(), UNDERLYING_TYPE_IDENT
 	}
 	return gvm.typeMeta.Expression(), underlyingString, underlyingEnum
+}
+
+func traitFrom(expression string, isPointer bool) string {
+	if isPointer {
+		expression = expression[1:]
+	}
+	expressionSlice := strings.Split(expression, ".")
+	l := len(expressionSlice)
+	if l > 1 {
+		return strings.Join(expressionSlice[:l-1], ".")
+	}
+	return ""
 }
 
 // func ExtractGoVariableMeta(extractFilepath string, variableName string) (*GoVariableMeta, error) {
