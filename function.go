@@ -130,6 +130,18 @@ func (gfm *GoFunctionMeta) ReturnTypes() []*GoVariableMeta {
 	return returns
 }
 
+type BlockMeta struct {
+	*meta
+}
+
+func (gfm *GoFunctionMeta) Body() *BlockMeta {
+	return &BlockMeta{meta: gfm.newMeta(gfm.node.(*ast.FuncDecl).Body)}
+}
+
+func (gfm *GoFunctionMeta) ReplaceBody(new *BlockMeta) {
+	gfm.node.(*ast.FuncDecl).Body = new.node.(*ast.BlockStmt)
+}
+
 func (gfm *GoFunctionMeta) Expression() string {
 	originPos := gfm.node.(*ast.FuncDecl).Pos()
 	originEnd := gfm.node.(*ast.FuncDecl).End()
