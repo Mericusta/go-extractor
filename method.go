@@ -152,6 +152,8 @@ func traitReceiverStruct(node ast.Node) (*ast.Ident, bool) {
 	return identNode, pointerReceiver
 }
 
+// func trait
+
 func (gmm *GoMethodMeta) MakeUnitTest(typeArgs []string) (string, []byte) {
 	return makeTest(unittestMaker, gmm, "", typeArgs)
 }

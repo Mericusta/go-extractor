@@ -276,8 +276,9 @@ func (gimm *GoInterfaceMethodMeta) MakeImplementMethodMeta(receiverIdent, receiv
 	params := gimm.Params()
 	paramsFieldList := make([]*field, 0, len(params))
 	for _, gvm := range params {
+		typeNodeIdent, isPointer := traitReceiverStruct(gvm.typeMeta.(*meta).node)
 		paramsFieldList = append(paramsFieldList, newField(
-			[]string{gvm.Name()}, gvm.typeMeta.Expression(), "", gvm.IsPointer(),
+			[]string{gvm.Name()}, typeNodeIdent.String(), "", isPointer,
 		))
 	}
 
@@ -285,8 +286,9 @@ func (gimm *GoInterfaceMethodMeta) MakeImplementMethodMeta(receiverIdent, receiv
 	returnTypes := gimm.ReturnTypes()
 	returnFieldSlice := make([]*field, 0, len(returnTypes))
 	for _, rts := range returnTypes {
+		typeNodeIdent, isPointer := traitReceiverStruct(rts.typeMeta.(*meta).node)
 		returnFieldSlice = append(returnFieldSlice, newField(
-			nil, rts.typeMeta.Expression(), "", rts.IsPointer(),
+			nil, typeNodeIdent.String(), "", isPointer,
 		))
 	}
 
