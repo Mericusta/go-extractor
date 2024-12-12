@@ -1,5 +1,5 @@
 package extractor
 
-type GoAssignmentMeta struct {
-	*meta
-}
+// type GoAssignmentMeta struct {
+// 	*meta
+// }

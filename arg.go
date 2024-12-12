@@ -240,13 +240,3 @@ package extractor
 // 		typeEnum: nextTypeEnum,
 // 	}
 // }
-
-// func IsSelectorNode(n ast.Node) bool {
-// 	_, ok := n.(*ast.SelectorExpr)
-// 	return ok
-// }
-
-// func IsCallNode(n ast.Node) bool {
-// 	_, ok := n.(*ast.CallExpr)
-// 	return ok
-// }

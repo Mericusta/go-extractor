@@ -78,30 +78,6 @@ package extractor
 // 	return callMetaMap
 // }
 
-// func IsNonSelectorCallNode(node ast.Node) bool {
-// 	callExpr, ok := node.(*ast.CallExpr)
-// 	if !ok {
-// 		return false
-// 	}
-// 	if callExpr.Fun == nil {
-// 		return false
-// 	}
-// 	_, ok = callExpr.Fun.(*ast.Ident)
-// 	return ok
-// }
-
-// func IsSelectorCallNode(node ast.Node) bool {
-// 	callExpr, ok := node.(*ast.CallExpr)
-// 	if !ok {
-// 		return false
-// 	}
-// 	if callExpr.Fun == nil {
-// 		return false
-// 	}
-// 	_, ok = callExpr.Fun.(*ast.SelectorExpr)
-// 	return ok
-// }
-
 // func (gcm *GoCallMeta) From() string {
 // 	if gcm.from == nil {
 // 		return ""

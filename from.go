@@ -1,7 +1,7 @@
 package extractor
 
-type GoFromMeta struct {
-	*meta
-}
+// type GoFromMeta struct {
+// 	*meta
+// }
 
 // func

@@ -4,36 +4,454 @@
      3  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:1:9
      4  .  .  Name: "main"
      5  .  }
-     6  .  Decls: []ast.Decl (len = 1) {
-     7  .  .  0: *ast.FuncDecl {
-     8  .  .  .  Name: *ast.Ident {
-     9  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:3:6
-    10  .  .  .  .  Name: "Init"
-    11  .  .  .  .  Obj: *ast.Object {
-    12  .  .  .  .  .  Kind: func
-    13  .  .  .  .  .  Name: "Init"
-    14  .  .  .  .  .  Decl: *(obj @ 7)
-    15  .  .  .  .  }
-    16  .  .  .  }
-    17  .  .  .  Type: *ast.FuncType {
-    18  .  .  .  .  Func: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:3:1
-    19  .  .  .  .  Params: *ast.FieldList {
-    20  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:3:10
-    21  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:3:11
-    22  .  .  .  .  }
-    23  .  .  .  }
-    24  .  .  .  Body: *ast.BlockStmt {
-    25  .  .  .  .  Lbrace: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:3:13
-    26  .  .  .  .  Rbrace: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:5:1
-    27  .  .  .  }
-    28  .  .  }
-    29  .  }
-    30  .  FileStart: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:1:1
-    31  .  FileEnd: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:5:3
-    32  .  Scope: *ast.Scope {
-    33  .  .  Objects: map[string]*ast.Object (len = 1) {
-    34  .  .  .  "Init": *(obj @ 11)
-    35  .  .  }
-    36  .  }
-    37  .  GoVersion: ""
-    38  }
+     6  .  Decls: []ast.Decl (len = 4) {
+     7  .  .  0: *ast.GenDecl {
+     8  .  .  .  TokPos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:3:1
+     9  .  .  .  Tok: import
+    10  .  .  .  Lparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:3:8
+    11  .  .  .  Specs: []ast.Spec (len = 4) {
+    12  .  .  .  .  0: *ast.ImportSpec {
+    13  .  .  .  .  .  Path: *ast.BasicLit {
+    14  .  .  .  .  .  .  ValuePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:4:2
+    15  .  .  .  .  .  .  Kind: STRING
+    16  .  .  .  .  .  .  Value: "\"os\""
+    17  .  .  .  .  .  }
+    18  .  .  .  .  .  EndPos: -
+    19  .  .  .  .  }
+    20  .  .  .  .  1: *ast.ImportSpec {
+    21  .  .  .  .  .  Name: *ast.Ident {
+    22  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:6:2
+    23  .  .  .  .  .  .  Name: "pkgInterface"
+    24  .  .  .  .  .  }
+    25  .  .  .  .  .  Path: *ast.BasicLit {
+    26  .  .  .  .  .  .  ValuePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:6:15
+    27  .  .  .  .  .  .  Kind: STRING
+    28  .  .  .  .  .  .  Value: "\"standardProject/pkg/interface\""
+    29  .  .  .  .  .  }
+    30  .  .  .  .  .  EndPos: -
+    31  .  .  .  .  }
+    32  .  .  .  .  2: *ast.ImportSpec {
+    33  .  .  .  .  .  Path: *ast.BasicLit {
+    34  .  .  .  .  .  .  ValuePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:7:2
+    35  .  .  .  .  .  .  Kind: STRING
+    36  .  .  .  .  .  .  Value: "\"standardProject/pkg/module\""
+    37  .  .  .  .  .  }
+    38  .  .  .  .  .  EndPos: -
+    39  .  .  .  .  }
+    40  .  .  .  .  3: *ast.ImportSpec {
+    41  .  .  .  .  .  Path: *ast.BasicLit {
+    42  .  .  .  .  .  .  ValuePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:8:2
+    43  .  .  .  .  .  .  Kind: STRING
+    44  .  .  .  .  .  .  Value: "\"standardProject/pkg/template\""
+    45  .  .  .  .  .  }
+    46  .  .  .  .  .  EndPos: -
+    47  .  .  .  .  }
+    48  .  .  .  }
+    49  .  .  .  Rparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:9:1
+    50  .  .  }
+    51  .  .  1: *ast.GenDecl {
+    52  .  .  .  TokPos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:11:1
+    53  .  .  .  Tok: var
+    54  .  .  .  Lparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:11:5
+    55  .  .  .  Specs: []ast.Spec (len = 6) {
+    56  .  .  .  .  0: *ast.ValueSpec {
+    57  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+    58  .  .  .  .  .  .  0: *ast.Ident {
+    59  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:12:2
+    60  .  .  .  .  .  .  .  Name: "globalVariableInt"
+    61  .  .  .  .  .  .  .  Obj: *ast.Object {
+    62  .  .  .  .  .  .  .  .  Kind: var
+    63  .  .  .  .  .  .  .  .  Name: "globalVariableInt"
+    64  .  .  .  .  .  .  .  .  Decl: *(obj @ 56)
+    65  .  .  .  .  .  .  .  .  Data: 0
+    66  .  .  .  .  .  .  .  }
+    67  .  .  .  .  .  .  }
+    68  .  .  .  .  .  }
+    69  .  .  .  .  .  Type: *ast.Ident {
+    70  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:12:27
+    71  .  .  .  .  .  .  Name: "int"
+    72  .  .  .  .  .  }
+    73  .  .  .  .  .  Values: []ast.Expr (len = 1) {
+    74  .  .  .  .  .  .  0: *ast.BasicLit {
+    75  .  .  .  .  .  .  .  ValuePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:12:36
+    76  .  .  .  .  .  .  .  Kind: INT
+    77  .  .  .  .  .  .  .  Value: "1"
+    78  .  .  .  .  .  .  }
+    79  .  .  .  .  .  }
+    80  .  .  .  .  }
+    81  .  .  .  .  1: *ast.ValueSpec {
+    82  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+    83  .  .  .  .  .  .  0: *ast.Ident {
+    84  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:13:2
+    85  .  .  .  .  .  .  .  Name: "globalVariableString"
+    86  .  .  .  .  .  .  .  Obj: *ast.Object {
+    87  .  .  .  .  .  .  .  .  Kind: var
+    88  .  .  .  .  .  .  .  .  Name: "globalVariableString"
+    89  .  .  .  .  .  .  .  .  Decl: *(obj @ 81)
+    90  .  .  .  .  .  .  .  .  Data: 1
+    91  .  .  .  .  .  .  .  }
+    92  .  .  .  .  .  .  }
+    93  .  .  .  .  .  }
+    94  .  .  .  .  .  Type: *ast.Ident {
+    95  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:13:27
+    96  .  .  .  .  .  .  Name: "string"
+    97  .  .  .  .  .  }
+    98  .  .  .  .  .  Values: []ast.Expr (len = 1) {
+    99  .  .  .  .  .  .  0: *ast.CallExpr {
+   100  .  .  .  .  .  .  .  Fun: *ast.SelectorExpr {
+   101  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   102  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:13:36
+   103  .  .  .  .  .  .  .  .  .  Name: "os"
+   104  .  .  .  .  .  .  .  .  }
+   105  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+   106  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:13:39
+   107  .  .  .  .  .  .  .  .  .  Name: "Getenv"
+   108  .  .  .  .  .  .  .  .  }
+   109  .  .  .  .  .  .  .  }
+   110  .  .  .  .  .  .  .  Lparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:13:45
+   111  .  .  .  .  .  .  .  Args: []ast.Expr (len = 1) {
+   112  .  .  .  .  .  .  .  .  0: *ast.BasicLit {
+   113  .  .  .  .  .  .  .  .  .  ValuePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:13:46
+   114  .  .  .  .  .  .  .  .  .  Kind: STRING
+   115  .  .  .  .  .  .  .  .  .  Value: "\"ENV\""
+   116  .  .  .  .  .  .  .  .  }
+   117  .  .  .  .  .  .  .  }
+   118  .  .  .  .  .  .  .  Ellipsis: -
+   119  .  .  .  .  .  .  .  Rparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:13:51
+   120  .  .  .  .  .  .  }
+   121  .  .  .  .  .  }
+   122  .  .  .  .  }
+   123  .  .  .  .  2: *ast.ValueSpec {
+   124  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   125  .  .  .  .  .  .  0: *ast.Ident {
+   126  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:14:2
+   127  .  .  .  .  .  .  .  Name: "globalVariableStruct"
+   128  .  .  .  .  .  .  .  Obj: *ast.Object {
+   129  .  .  .  .  .  .  .  .  Kind: var
+   130  .  .  .  .  .  .  .  .  Name: "globalVariableStruct"
+   131  .  .  .  .  .  .  .  .  Decl: *(obj @ 123)
+   132  .  .  .  .  .  .  .  .  Data: 2
+   133  .  .  .  .  .  .  .  }
+   134  .  .  .  .  .  .  }
+   135  .  .  .  .  .  }
+   136  .  .  .  .  .  Type: *ast.StarExpr {
+   137  .  .  .  .  .  .  Star: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:14:27
+   138  .  .  .  .  .  .  X: *ast.SelectorExpr {
+   139  .  .  .  .  .  .  .  X: *ast.Ident {
+   140  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:14:28
+   141  .  .  .  .  .  .  .  .  Name: "module"
+   142  .  .  .  .  .  .  .  }
+   143  .  .  .  .  .  .  .  Sel: *ast.Ident {
+   144  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:14:35
+   145  .  .  .  .  .  .  .  .  Name: "ExampleStruct"
+   146  .  .  .  .  .  .  .  }
+   147  .  .  .  .  .  .  }
+   148  .  .  .  .  .  }
+   149  .  .  .  .  }
+   150  .  .  .  .  3: *ast.ValueSpec {
+   151  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   152  .  .  .  .  .  .  0: *ast.Ident {
+   153  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:15:2
+   154  .  .  .  .  .  .  .  Name: "globalVariableTStruct"
+   155  .  .  .  .  .  .  .  Obj: *ast.Object {
+   156  .  .  .  .  .  .  .  .  Kind: var
+   157  .  .  .  .  .  .  .  .  Name: "globalVariableTStruct"
+   158  .  .  .  .  .  .  .  .  Decl: *(obj @ 150)
+   159  .  .  .  .  .  .  .  .  Data: 3
+   160  .  .  .  .  .  .  .  }
+   161  .  .  .  .  .  .  }
+   162  .  .  .  .  .  }
+   163  .  .  .  .  .  Type: *ast.StarExpr {
+   164  .  .  .  .  .  .  Star: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:15:27
+   165  .  .  .  .  .  .  X: *ast.IndexExpr {
+   166  .  .  .  .  .  .  .  X: *ast.SelectorExpr {
+   167  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   168  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:15:28
+   169  .  .  .  .  .  .  .  .  .  Name: "template"
+   170  .  .  .  .  .  .  .  .  }
+   171  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+   172  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:15:37
+   173  .  .  .  .  .  .  .  .  .  Name: "TemplateStruct"
+   174  .  .  .  .  .  .  .  .  }
+   175  .  .  .  .  .  .  .  }
+   176  .  .  .  .  .  .  .  Lbrack: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:15:51
+   177  .  .  .  .  .  .  .  Index: *ast.Ident {
+   178  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:15:52
+   179  .  .  .  .  .  .  .  .  Name: "int"
+   180  .  .  .  .  .  .  .  }
+   181  .  .  .  .  .  .  .  Rbrack: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:15:55
+   182  .  .  .  .  .  .  }
+   183  .  .  .  .  .  }
+   184  .  .  .  .  }
+   185  .  .  .  .  4: *ast.ValueSpec {
+   186  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   187  .  .  .  .  .  .  0: *ast.Ident {
+   188  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:16:2
+   189  .  .  .  .  .  .  .  Name: "globalVariableInterface"
+   190  .  .  .  .  .  .  .  Obj: *ast.Object {
+   191  .  .  .  .  .  .  .  .  Kind: var
+   192  .  .  .  .  .  .  .  .  Name: "globalVariableInterface"
+   193  .  .  .  .  .  .  .  .  Decl: *(obj @ 185)
+   194  .  .  .  .  .  .  .  .  Data: 4
+   195  .  .  .  .  .  .  .  }
+   196  .  .  .  .  .  .  }
+   197  .  .  .  .  .  }
+   198  .  .  .  .  .  Type: *ast.StarExpr {
+   199  .  .  .  .  .  .  Star: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:16:27
+   200  .  .  .  .  .  .  X: *ast.SelectorExpr {
+   201  .  .  .  .  .  .  .  X: *ast.Ident {
+   202  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:16:28
+   203  .  .  .  .  .  .  .  .  Name: "pkgInterface"
+   204  .  .  .  .  .  .  .  }
+   205  .  .  .  .  .  .  .  Sel: *ast.Ident {
+   206  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:16:41
+   207  .  .  .  .  .  .  .  .  Name: "ExampleInterface"
+   208  .  .  .  .  .  .  .  }
+   209  .  .  .  .  .  .  }
+   210  .  .  .  .  .  }
+   211  .  .  .  .  }
+   212  .  .  .  .  5: *ast.ValueSpec {
+   213  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   214  .  .  .  .  .  .  0: *ast.Ident {
+   215  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:17:2
+   216  .  .  .  .  .  .  .  Name: "globalVariableTInterface"
+   217  .  .  .  .  .  .  .  Obj: *ast.Object {
+   218  .  .  .  .  .  .  .  .  Kind: var
+   219  .  .  .  .  .  .  .  .  Name: "globalVariableTInterface"
+   220  .  .  .  .  .  .  .  .  Decl: *(obj @ 212)
+   221  .  .  .  .  .  .  .  .  Data: 5
+   222  .  .  .  .  .  .  .  }
+   223  .  .  .  .  .  .  }
+   224  .  .  .  .  .  }
+   225  .  .  .  .  .  Type: *ast.StarExpr {
+   226  .  .  .  .  .  .  Star: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:17:27
+   227  .  .  .  .  .  .  X: *ast.IndexExpr {
+   228  .  .  .  .  .  .  .  X: *ast.SelectorExpr {
+   229  .  .  .  .  .  .  .  .  X: *ast.Ident {
+   230  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:17:28
+   231  .  .  .  .  .  .  .  .  .  Name: "pkgInterface"
+   232  .  .  .  .  .  .  .  .  }
+   233  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+   234  .  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:17:41
+   235  .  .  .  .  .  .  .  .  .  Name: "ExampleTemplateInterface"
+   236  .  .  .  .  .  .  .  .  }
+   237  .  .  .  .  .  .  .  }
+   238  .  .  .  .  .  .  .  Lbrack: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:17:65
+   239  .  .  .  .  .  .  .  Index: *ast.Ident {
+   240  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:17:66
+   241  .  .  .  .  .  .  .  .  Name: "int"
+   242  .  .  .  .  .  .  .  }
+   243  .  .  .  .  .  .  .  Rbrack: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:17:69
+   244  .  .  .  .  .  .  }
+   245  .  .  .  .  .  }
+   246  .  .  .  .  }
+   247  .  .  .  }
+   248  .  .  .  Rparen: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:18:1
+   249  .  .  }
+   250  .  .  2: *ast.GenDecl {
+   251  .  .  .  TokPos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:20:1
+   252  .  .  .  Tok: var
+   253  .  .  .  Lparen: -
+   254  .  .  .  Specs: []ast.Spec (len = 1) {
+   255  .  .  .  .  0: *ast.ValueSpec {
+   256  .  .  .  .  .  Names: []*ast.Ident (len = 1) {
+   257  .  .  .  .  .  .  0: *ast.Ident {
+   258  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:20:5
+   259  .  .  .  .  .  .  .  Name: "anotherGlobalVariableAny"
+   260  .  .  .  .  .  .  .  Obj: *ast.Object {
+   261  .  .  .  .  .  .  .  .  Kind: var
+   262  .  .  .  .  .  .  .  .  Name: "anotherGlobalVariableAny"
+   263  .  .  .  .  .  .  .  .  Decl: *(obj @ 255)
+   264  .  .  .  .  .  .  .  .  Data: 0
+   265  .  .  .  .  .  .  .  }
+   266  .  .  .  .  .  .  }
+   267  .  .  .  .  .  }
+   268  .  .  .  .  .  Type: *ast.InterfaceType {
+   269  .  .  .  .  .  .  Interface: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:20:30
+   270  .  .  .  .  .  .  Methods: *ast.FieldList {
+   271  .  .  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:20:39
+   272  .  .  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:20:40
+   273  .  .  .  .  .  .  }
+   274  .  .  .  .  .  .  Incomplete: false
+   275  .  .  .  .  .  }
+   276  .  .  .  .  }
+   277  .  .  .  }
+   278  .  .  .  Rparen: -
+   279  .  .  }
+   280  .  .  3: *ast.FuncDecl {
+   281  .  .  .  Name: *ast.Ident {
+   282  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:22:6
+   283  .  .  .  .  Name: "Init"
+   284  .  .  .  .  Obj: *ast.Object {
+   285  .  .  .  .  .  Kind: func
+   286  .  .  .  .  .  Name: "Init"
+   287  .  .  .  .  .  Decl: *(obj @ 280)
+   288  .  .  .  .  }
+   289  .  .  .  }
+   290  .  .  .  Type: *ast.FuncType {
+   291  .  .  .  .  Func: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:22:1
+   292  .  .  .  .  Params: *ast.FieldList {
+   293  .  .  .  .  .  Opening: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:22:10
+   294  .  .  .  .  .  Closing: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:22:11
+   295  .  .  .  .  }
+   296  .  .  .  }
+   297  .  .  .  Body: *ast.BlockStmt {
+   298  .  .  .  .  Lbrace: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:22:13
+   299  .  .  .  .  List: []ast.Stmt (len = 7) {
+   300  .  .  .  .  .  0: *ast.AssignStmt {
+   301  .  .  .  .  .  .  Lhs: []ast.Expr (len = 1) {
+   302  .  .  .  .  .  .  .  0: *ast.Ident {
+   303  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:23:2
+   304  .  .  .  .  .  .  .  .  Name: "_"
+   305  .  .  .  .  .  .  .  }
+   306  .  .  .  .  .  .  }
+   307  .  .  .  .  .  .  TokPos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:23:4
+   308  .  .  .  .  .  .  Tok: =
+   309  .  .  .  .  .  .  Rhs: []ast.Expr (len = 1) {
+   310  .  .  .  .  .  .  .  0: *ast.Ident {
+   311  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:23:6
+   312  .  .  .  .  .  .  .  .  Name: "globalVariableInt"
+   313  .  .  .  .  .  .  .  .  Obj: *(obj @ 61)
+   314  .  .  .  .  .  .  .  }
+   315  .  .  .  .  .  .  }
+   316  .  .  .  .  .  }
+   317  .  .  .  .  .  1: *ast.AssignStmt {
+   318  .  .  .  .  .  .  Lhs: []ast.Expr (len = 1) {
+   319  .  .  .  .  .  .  .  0: *ast.Ident {
+   320  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:24:2
+   321  .  .  .  .  .  .  .  .  Name: "_"
+   322  .  .  .  .  .  .  .  }
+   323  .  .  .  .  .  .  }
+   324  .  .  .  .  .  .  TokPos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:24:4
+   325  .  .  .  .  .  .  Tok: =
+   326  .  .  .  .  .  .  Rhs: []ast.Expr (len = 1) {
+   327  .  .  .  .  .  .  .  0: *ast.Ident {
+   328  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:24:6
+   329  .  .  .  .  .  .  .  .  Name: "globalVariableString"
+   330  .  .  .  .  .  .  .  .  Obj: *(obj @ 86)
+   331  .  .  .  .  .  .  .  }
+   332  .  .  .  .  .  .  }
+   333  .  .  .  .  .  }
+   334  .  .  .  .  .  2: *ast.AssignStmt {
+   335  .  .  .  .  .  .  Lhs: []ast.Expr (len = 1) {
+   336  .  .  .  .  .  .  .  0: *ast.Ident {
+   337  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:25:2
+   338  .  .  .  .  .  .  .  .  Name: "_"
+   339  .  .  .  .  .  .  .  }
+   340  .  .  .  .  .  .  }
+   341  .  .  .  .  .  .  TokPos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:25:4
+   342  .  .  .  .  .  .  Tok: =
+   343  .  .  .  .  .  .  Rhs: []ast.Expr (len = 1) {
+   344  .  .  .  .  .  .  .  0: *ast.Ident {
+   345  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:25:6
+   346  .  .  .  .  .  .  .  .  Name: "globalVariableStruct"
+   347  .  .  .  .  .  .  .  .  Obj: *(obj @ 128)
+   348  .  .  .  .  .  .  .  }
+   349  .  .  .  .  .  .  }
+   350  .  .  .  .  .  }
+   351  .  .  .  .  .  3: *ast.AssignStmt {
+   352  .  .  .  .  .  .  Lhs: []ast.Expr (len = 1) {
+   353  .  .  .  .  .  .  .  0: *ast.Ident {
+   354  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:26:2
+   355  .  .  .  .  .  .  .  .  Name: "_"
+   356  .  .  .  .  .  .  .  }
+   357  .  .  .  .  .  .  }
+   358  .  .  .  .  .  .  TokPos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:26:4
+   359  .  .  .  .  .  .  Tok: =
+   360  .  .  .  .  .  .  Rhs: []ast.Expr (len = 1) {
+   361  .  .  .  .  .  .  .  0: *ast.Ident {
+   362  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:26:6
+   363  .  .  .  .  .  .  .  .  Name: "globalVariableTStruct"
+   364  .  .  .  .  .  .  .  .  Obj: *(obj @ 155)
+   365  .  .  .  .  .  .  .  }
+   366  .  .  .  .  .  .  }
+   367  .  .  .  .  .  }
+   368  .  .  .  .  .  4: *ast.AssignStmt {
+   369  .  .  .  .  .  .  Lhs: []ast.Expr (len = 1) {
+   370  .  .  .  .  .  .  .  0: *ast.Ident {
+   371  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:27:2
+   372  .  .  .  .  .  .  .  .  Name: "_"
+   373  .  .  .  .  .  .  .  }
+   374  .  .  .  .  .  .  }
+   375  .  .  .  .  .  .  TokPos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:27:4
+   376  .  .  .  .  .  .  Tok: =
+   377  .  .  .  .  .  .  Rhs: []ast.Expr (len = 1) {
+   378  .  .  .  .  .  .  .  0: *ast.Ident {
+   379  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:27:6
+   380  .  .  .  .  .  .  .  .  Name: "globalVariableInterface"
+   381  .  .  .  .  .  .  .  .  Obj: *(obj @ 190)
+   382  .  .  .  .  .  .  .  }
+   383  .  .  .  .  .  .  }
+   384  .  .  .  .  .  }
+   385  .  .  .  .  .  5: *ast.AssignStmt {
+   386  .  .  .  .  .  .  Lhs: []ast.Expr (len = 1) {
+   387  .  .  .  .  .  .  .  0: *ast.Ident {
+   388  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:28:2
+   389  .  .  .  .  .  .  .  .  Name: "_"
+   390  .  .  .  .  .  .  .  }
+   391  .  .  .  .  .  .  }
+   392  .  .  .  .  .  .  TokPos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:28:4
+   393  .  .  .  .  .  .  Tok: =
+   394  .  .  .  .  .  .  Rhs: []ast.Expr (len = 1) {
+   395  .  .  .  .  .  .  .  0: *ast.Ident {
+   396  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:28:6
+   397  .  .  .  .  .  .  .  .  Name: "globalVariableTInterface"
+   398  .  .  .  .  .  .  .  .  Obj: *(obj @ 217)
+   399  .  .  .  .  .  .  .  }
+   400  .  .  .  .  .  .  }
+   401  .  .  .  .  .  }
+   402  .  .  .  .  .  6: *ast.AssignStmt {
+   403  .  .  .  .  .  .  Lhs: []ast.Expr (len = 1) {
+   404  .  .  .  .  .  .  .  0: *ast.Ident {
+   405  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:29:2
+   406  .  .  .  .  .  .  .  .  Name: "_"
+   407  .  .  .  .  .  .  .  }
+   408  .  .  .  .  .  .  }
+   409  .  .  .  .  .  .  TokPos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:29:4
+   410  .  .  .  .  .  .  Tok: =
+   411  .  .  .  .  .  .  Rhs: []ast.Expr (len = 1) {
+   412  .  .  .  .  .  .  .  0: *ast.Ident {
+   413  .  .  .  .  .  .  .  .  NamePos: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:29:6
+   414  .  .  .  .  .  .  .  .  Name: "anotherGlobalVariableAny"
+   415  .  .  .  .  .  .  .  .  Obj: *(obj @ 260)
+   416  .  .  .  .  .  .  .  }
+   417  .  .  .  .  .  .  }
+   418  .  .  .  .  .  }
+   419  .  .  .  .  }
+   420  .  .  .  .  Rbrace: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:30:1
+   421  .  .  .  }
+   422  .  .  }
+   423  .  }
+   424  .  FileStart: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:1:1
+   425  .  FileEnd: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:30:3
+   426  .  Scope: *ast.Scope {
+   427  .  .  Objects: map[string]*ast.Object (len = 8) {
+   428  .  .  .  "anotherGlobalVariableAny": *(obj @ 260)
+   429  .  .  .  "Init": *(obj @ 284)
+   430  .  .  .  "globalVariableInt": *(obj @ 61)
+   431  .  .  .  "globalVariableString": *(obj @ 86)
+   432  .  .  .  "globalVariableStruct": *(obj @ 128)
+   433  .  .  .  "globalVariableTStruct": *(obj @ 155)
+   434  .  .  .  "globalVariableInterface": *(obj @ 190)
+   435  .  .  .  "globalVariableTInterface": *(obj @ 217)
+   436  .  .  }
+   437  .  }
+   438  .  Imports: []*ast.ImportSpec (len = 4) {
+   439  .  .  0: *(obj @ 12)
+   440  .  .  1: *(obj @ 20)
+   441  .  .  2: *(obj @ 32)
+   442  .  .  3: *(obj @ 40)
+   443  .  }
+   444  .  Unresolved: []*ast.Ident (len = 9) {
+   445  .  .  0: *(obj @ 69)
+   446  .  .  1: *(obj @ 101)
+   447  .  .  2: *(obj @ 94)
+   448  .  .  3: *(obj @ 139)
+   449  .  .  4: *(obj @ 167)
+   450  .  .  5: *(obj @ 177)
+   451  .  .  6: *(obj @ 201)
+   452  .  .  7: *(obj @ 229)
+   453  .  .  8: *(obj @ 239)
+   454  .  }
+   455  .  GoVersion: ""
+   456  }

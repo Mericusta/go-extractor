@@ -302,8 +302,8 @@
    301  .  FileEnd: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/interface/interface.go:15:3
    302  .  Scope: *ast.Scope {
    303  .  .  Objects: map[string]*ast.Object (len = 2) {
-   304  .  .  .  "ExampleTemplateInterface": *(obj @ 148)
-   305  .  .  .  "ExampleInterface": *(obj @ 16)
+   304  .  .  .  "ExampleInterface": *(obj @ 16)
+   305  .  .  .  "ExampleTemplateInterface": *(obj @ 148)
    306  .  .  }
    307  .  }
    308  .  Unresolved: []*ast.Ident (len = 6) {

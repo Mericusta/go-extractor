@@ -1,6 +1,8 @@
 package template
 
-import stpmap "github.com/Mericusta/go-stp/map"
+import (
+	stpmap "github.com/Mericusta/go-stp/map"
+)
 
 func OneTemplateFunc[T any](tv *T) *T {
 	return nil
@@ -48,4 +50,8 @@ func (t *TwoTypeTemplateStruct[K, V]) KVSlice(k K, v V) ([]K, []V) {
 		vs = append(vs, v)
 	}
 	return stpmap.Key(t.v), vs
+}
+
+type TemplateStructWithParent[T any] struct {
+	*TemplateStruct[T]
 }

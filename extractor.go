@@ -10,45 +10,33 @@ import (
 	"strings"
 )
 
+// Meta 所有 meta 的接口
 type Meta interface {
 	AST() []byte
 	PrintAST()
 	Expression() string
 }
 
-type meta struct {
-	node ast.Node // ast node
-	name string   // node from file name
-	path string   // node from file path
+// meta 基本 meta 数据
+type meta[T ast.Node] struct {
+	// 当前 meta 的 ast 节点
+	node T
+
+	// 当前 meta 的 ast 节点所属的文件的绝对路径
+	path string
 }
 
-func (m *meta) newMeta(node ast.Node) *meta {
-	return &meta{node: node, name: m.name, path: m.path}
+func newMeta[T ast.Node](node T, path string) *meta[T] {
+	return &meta[T]{node: node, path: path}
 }
 
-func (m *meta) Copy() *meta {
-	// var buf bytes.Buffer
-	// if err := gob.NewEncoder(&buf).Encode(m); err != nil {
-	// 	fmt.Printf("gob.NewEncoder.Encode meta occurs error: %v\n", err)
-	// 	return nil
-	// }
-	dst := &meta{}
-	// if err := gob.NewDecoder(bytes.NewBuffer(buf.Bytes())).Decode(dst); err != nil {
-	// 	fmt.Printf("gob.NewDecoder.Decode meta occurs error: %v\n", err)
-	// 	return nil
-	// }
-	return dst
-
-	// var root ast.Node
-
-	// ast.Inspect(m.node, func(n ast.Node) bool {
-	// 	switch n.(type) {
-
-	// 	}
-	// })
+// copyMeta 保持 path 不变的情况下构造新 ast 节点的 meta 数据
+func (m *meta[T]) copyMeta(node T) *meta[T] {
+	return &meta[T]{node: node, path: m.path}
 }
 
-func (m *meta) AST() []byte {
+// AST 获取当前 meta 的 ast 节点树
+func (m *meta[T]) AST() []byte {
 	jsonAst, err := json.MarshalIndent(m.node, "", "  ")
 	if err != nil {
 		return nil
@@ -56,11 +44,13 @@ func (m *meta) AST() []byte {
 	return jsonAst
 }
 
-func (m *meta) PrintAST() {
+// PrintAST 打印当前 meta 的 ast 节点树
+func (m *meta[T]) PrintAST() {
 	ast.Print(token.NewFileSet(), m.node)
 }
 
-func (m *meta) Expression() string {
+// Expression 按照当前 meta 的 ast 节点输出其所在文件中的对应的 代码
+func (m *meta[T]) Expression() string {
 	fileContent, err := os.ReadFile(m.path)
 	if err != nil {
 		return ""
@@ -72,7 +62,8 @@ func (m *meta) Expression() string {
 	return strings.TrimSpace(string(fileContent[m.node.Pos()-1 : m.node.End()-1]))
 }
 
-func (m *meta) Format() string {
+// Format 按照当前 meta 的 ast 节点格式化输出其对应的 代码
+func (m *meta[T]) Format() string {
 	buffer := &bytes.Buffer{}
 	err := format.Node(buffer, token.NewFileSet(), m.node)
 	if err != nil {

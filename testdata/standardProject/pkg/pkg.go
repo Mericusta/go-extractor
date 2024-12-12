@@ -3,6 +3,7 @@ package pkg
 import (
 	"fmt"
 	"standardProject/pkg/module"
+	"standardProject/pkg/template"
 )
 
 // ExampleFunc this is example function
@@ -21,4 +22,15 @@ func OneLineDocExampleFunc(s *module.ExampleStruct) {
 
 func ImportSelectorFunc(s *module.ExampleStruct) {
 	fmt.Println("pkg.ImportSelectorFunc, Hello go-extractor", module.NewExampleStruct(s.V()).Sub().ParentStruct.P)
+}
+
+type ExampleTemplateStructWithTemplateParent[T any] struct {
+	*template.TemplateStruct[map[string]*template.TemplateStruct[*T]]
+}
+
+type ExampleTemplateInterfaceWithTypeConstraints[T any] interface {
+	[]int | []int8 | []int16 | []int32 | []int64
+
+	Parse(T)
+	Format() T
 }

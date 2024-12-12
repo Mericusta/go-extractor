@@ -1,6 +1,7 @@
 package extractor
 
 import (
+	"fmt"
 	"go/ast"
 	"strings"
 )
@@ -34,37 +35,197 @@ import (
 // // 常量
 // // - name 值
 // // - typeMeta 常量 *meta
-type GoVariableMeta struct {
-	*meta    // *ast.Field
-	name     string
-	typeMeta Meta
-	// typeEnum VariableTypeEnum
+
+type GoVarMetaTypeConstraints interface {
+	*ast.ValueSpec | *ast.Field | *ast.InterfaceType
+
+	ast.Node
 }
 
-func (gvm *GoVariableMeta) Tag() string {
-	if gvm.node.(*ast.Field).Tag == nil {
-		return ""
-	}
-	return gvm.node.(*ast.Field).Tag.Value
+// GoVarMeta go var 的 meta 数据
+type GoVarMeta[T GoVarMetaTypeConstraints] struct {
+	// 组合基本 meta 数据
+	// ast 节点，要求为 *ast.ValueSpec 或 *ast.Field
+	// 以 ast 节点 为单位执行 AST/PrintAST/Expression/Format
+	*meta[T]
+
+	// var 标识
+	ident string
+
+	// 基类型: *ExampleStruct[T] -> ExampleStruct
+	typeIdent string
+
+	// 类型表达式: *ExampleStruct[T]
+	typeExpression string
+
+	// 是否是接口
+	isInterface bool
+
+	// 是否是指针
+	isPointer bool
 }
 
-func (gvm *GoVariableMeta) Doc() []string {
-	if gvm.node.(*ast.Field).Doc == nil {
-		return nil
+// NewGoVarMeta 构造 var 的 meta 数据
+func NewGoVarMeta[T GoVarMetaTypeConstraints](m *meta[T], ident string, stopExtract ...bool) *GoVarMeta[T] {
+	gvm := &GoVarMeta[T]{meta: m, ident: ident}
+	if len(stopExtract) == 0 {
+		gvm.ExtractAll()
 	}
-	commentSlice := make([]string, 0, len(gvm.node.(*ast.Field).Doc.List))
-	for _, comment := range gvm.node.(*ast.Field).Doc.List {
-		commentSlice = append(commentSlice, comment.Text)
-	}
-	return commentSlice
+	return gvm
 }
 
-func (gvm *GoVariableMeta) Comment() string {
-	if gvm.node.(*ast.Field).Comment == nil || len(gvm.node.(*ast.Field).Comment.List) == 0 {
-		return ""
+// -------------------------------- extractor --------------------------------
+
+// ExtractGoVarMeta 通过文件的绝对路径和 var 的 标识 提取文件中 var 的 meta 数据
+func ExtractGoVarMeta[T GoVarMetaTypeConstraints](extractFilepath, varIdent string) (*GoVarMeta[*ast.ValueSpec], error) {
+	// 提取 package
+	gpm, err := ExtractGoPackageMeta[T](extractFilepath, nil)
+	if err != nil {
+		return nil, err
 	}
-	return gvm.node.(*ast.Field).Comment.List[0].Text
+
+	// 提取 var
+	gpm.extractVar()
+
+	// 搜索 var
+	gvm := gpm.SearchVarMeta(varIdent)
+	if gvm == nil {
+		return nil, fmt.Errorf("can not find var node")
+	}
+
+	return gvm, nil
 }
+
+func (gvm *GoVarMeta[T]) ExtractAll() {
+	// 提取 类型
+	gvm.extractType()
+}
+
+func (gvm *GoVarMeta[T]) extractType() {
+	var (
+		n        ast.Node = gvm.node
+		typeExpr ast.Expr
+	)
+	switch node := n.(type) {
+	case *ast.ValueSpec:
+		typeExpr = node.Type
+	case *ast.Field:
+		typeExpr = node.Type
+	}
+	var (
+		nodeHandler          func(n ast.Node, post ...func(ast.Node) bool) bool
+		starExprHandler      func(n ast.Node) bool
+		selectorExprHandler  func(n ast.Node) bool
+		indexExprHandler     func(n ast.Node) bool
+		indexListExprHandler func(n ast.Node) bool
+		interfaceTypeHandler func(n ast.Node) bool
+		arrayTypeHandler     func(n ast.Node) bool
+		mapTypeHandler       func(n ast.Node) bool
+	)
+	nodeHandler = func(n ast.Node, posts ...func(ast.Node) bool) bool {
+		ident, ok := n.(*ast.Ident)
+		if ident != nil && ok {
+			gvm.typeIdent = ident.String()
+			return false
+		} else {
+			for _, post := range posts {
+				if post != nil && !post(n) {
+					return false
+				}
+			}
+		}
+		return true
+	}
+	starExprHandler = func(n ast.Node) bool {
+		// 遇到 StarExpr 取 X
+		starExpr, ok := n.(*ast.StarExpr)
+		if starExpr == nil || !ok {
+			return true
+		}
+		return nodeHandler(starExpr.X, starExprHandler, selectorExprHandler, indexExprHandler, indexListExprHandler, interfaceTypeHandler, arrayTypeHandler, mapTypeHandler)
+	}
+	selectorExprHandler = func(n ast.Node) bool {
+		// 遇到 SelectorExpr 取 Sel
+		selectorExpr, ok := n.(*ast.SelectorExpr)
+		if selectorExpr == nil || !ok {
+			return true
+		}
+		return nodeHandler(selectorExpr.Sel, starExprHandler, selectorExprHandler, indexExprHandler, indexListExprHandler, interfaceTypeHandler, arrayTypeHandler, mapTypeHandler)
+	}
+	indexExprHandler = func(n ast.Node) bool {
+		// 遇到 IndexExp 取 X
+		indexExpr, ok := n.(*ast.IndexExpr)
+		if indexExpr == nil || !ok {
+			return true
+		}
+		return nodeHandler(indexExpr.X, starExprHandler, selectorExprHandler, indexExprHandler, indexListExprHandler, interfaceTypeHandler, arrayTypeHandler, mapTypeHandler)
+	}
+	indexListExprHandler = func(n ast.Node) bool {
+		// 遇到 IndexExp 取 X
+		indexExpr, ok := n.(*ast.IndexListExpr)
+		if indexExpr == nil || !ok {
+			return true
+		}
+		return nodeHandler(indexExpr.X, starExprHandler, selectorExprHandler, indexExprHandler, indexListExprHandler, interfaceTypeHandler, arrayTypeHandler, mapTypeHandler)
+	}
+	interfaceTypeHandler = func(n ast.Node) bool {
+		// 遇到 InterfaceType 判断 Methods
+		interfaceType, ok := n.(*ast.InterfaceType)
+		if interfaceType == nil || !ok {
+			return true
+		}
+		gvm.typeIdent = "interface{}"
+		return false
+	}
+	arrayTypeHandler = func(n ast.Node) bool {
+		// 遇到 ArrayType 直接取整个 expression
+		arrayType, ok := n.(*ast.ArrayType)
+		if arrayType == nil || !ok {
+			return true
+		}
+		gvm.typeIdent = newMeta(typeExpr, gvm.path).Expression()
+		return false
+	}
+	mapTypeHandler = func(n ast.Node) bool {
+		// 遇到 MapType 直接取整个 expression
+		mapType, ok := n.(*ast.MapType)
+		if mapType == nil || !ok {
+			return true
+		}
+		gvm.typeIdent = newMeta(typeExpr, gvm.path).Expression()
+		return false
+	}
+	ast.Inspect(typeExpr, func(n ast.Node) bool {
+		return n != nil && nodeHandler(n, starExprHandler, selectorExprHandler, indexExprHandler, indexListExprHandler, interfaceTypeHandler, arrayTypeHandler, mapTypeHandler)
+	})
+}
+
+// -------------------------------- extractor --------------------------------
+
+// func (gvm *GoVarMeta[T]) Tag() string {
+// 	if gvm.node.(*ast.Field).Tag == nil {
+// 		return ""
+// 	}
+// 	return gvm.node.(*ast.Field).Tag.Value
+// }
+
+// func (gvm *GoVarMeta[T]) Doc() []string {
+// 	if gvm.node.(*ast.Field).Doc == nil {
+// 		return nil
+// 	}
+// 	commentSlice := make([]string, 0, len(gvm.node.(*ast.Field).Doc.List))
+// 	for _, comment := range gvm.node.(*ast.Field).Doc.List {
+// 		commentSlice = append(commentSlice, comment.Text)
+// 	}
+// 	return commentSlice
+// }
+
+// func (gvm *GoVarMeta[T]) Comment() string {
+// 	if gvm.node.(*ast.Field).Comment == nil || len(gvm.node.(*ast.Field).Comment.List) == 0 {
+// 		return ""
+// 	}
+// 	return gvm.node.(*ast.Field).Comment.List[0].Text
+// }
 
 type UnderlyingType int
 
@@ -79,28 +240,28 @@ const (
 	UNDERLYING_TYPE_CHAN                 // *ast.ChanType
 )
 
-func (gvm *GoVariableMeta) Type() (string, string, UnderlyingType) {
-	underlyingString, underlyingEnum := "", UnderlyingType(0)
-	switch gvm.typeMeta.(*meta).node.(type) {
-	case *ast.ArrayType:
-		underlyingString, underlyingEnum = "array", UNDERLYING_TYPE_ARRAY
-	case *ast.StructType:
-		underlyingString, underlyingEnum = "struct", UNDERLYING_TYPE_STRUCT
-	case *ast.StarExpr:
-		underlyingString, underlyingEnum = "pointer", UNDERLYING_TYPE_POINTER
-	case *ast.FuncType:
-		underlyingString, underlyingEnum = "func", UNDERLYING_TYPE_FUNC
-	case *ast.InterfaceType:
-		underlyingString, underlyingEnum = "interface", UNDERLYING_TYPE_INTERFACE
-	case *ast.MapType:
-		underlyingString, underlyingEnum = "map", UNDERLYING_TYPE_MAP
-	case *ast.ChanType:
-		underlyingString, underlyingEnum = "chan", UNDERLYING_TYPE_CHAN
-	default:
-		underlyingString, underlyingEnum = gvm.typeMeta.Expression(), UNDERLYING_TYPE_IDENT
-	}
-	return gvm.typeMeta.Expression(), underlyingString, underlyingEnum
-}
+// func (gvm *GoVarMeta[T]) Type() (string, string, UnderlyingType) {
+// 	underlyingString, underlyingEnum := "", UnderlyingType(0)
+// 	switch gvm.typeMeta.(*meta).node.(type) {
+// 	case *ast.ArrayType:
+// 		underlyingString, underlyingEnum = "array", UNDERLYING_TYPE_ARRAY
+// 	case *ast.StructType:
+// 		underlyingString, underlyingEnum = "struct", UNDERLYING_TYPE_STRUCT
+// 	case *ast.StarExpr:
+// 		underlyingString, underlyingEnum = "pointer", UNDERLYING_TYPE_POINTER
+// 	case *ast.FuncType:
+// 		underlyingString, underlyingEnum = "func", UNDERLYING_TYPE_FUNC
+// 	case *ast.InterfaceType:
+// 		underlyingString, underlyingEnum = "interface", UNDERLYING_TYPE_INTERFACE
+// 	case *ast.MapType:
+// 		underlyingString, underlyingEnum = "map", UNDERLYING_TYPE_MAP
+// 	case *ast.ChanType:
+// 		underlyingString, underlyingEnum = "chan", UNDERLYING_TYPE_CHAN
+// 	default:
+// 		underlyingString, underlyingEnum = gvm.typeMeta.Expression(), UNDERLYING_TYPE_IDENT
+// 	}
+// 	return gvm.typeMeta.Expression(), underlyingString, underlyingEnum
+// }
 
 func traitFrom(expression string, isPointer bool) string {
 	if isPointer {
@@ -160,15 +321,18 @@ func traitFrom(expression string, isPointer bool) string {
 // 	return valueSpec.Names[0].Obj.Kind == ast.Var
 // }
 
-func (gvm *GoVariableMeta) Name() string {
-	return gvm.name
-}
+// -------------------------------- unit test --------------------------------
 
-func (gvm *GoVariableMeta) typeNode() ast.Expr {
-	return gvm.typeMeta.(*meta).node.(ast.Expr)
-}
+func (gvm *GoVarMeta[T]) Ident() string     { return gvm.ident }
+func (gvm *GoVarMeta[T]) TypeIdent() string { return gvm.typeIdent }
 
-func (gvm *GoVariableMeta) IsPointer() bool {
-	_, ok := gvm.meta.node.(*ast.Field).Type.(*ast.StarExpr)
-	return ok
-}
+// -------------------------------- unit test --------------------------------
+
+// func (gvm *GoVarMeta[T]) typeNode() ast.Expr {
+// 	return gvm.typeMeta.(*meta).node.(ast.Expr)
+// }
+
+// func (gvm *GoVarMeta[T]) IsPointer() bool {
+// 	_, ok := gvm.meta.node.(*ast.Field).Type.(*ast.StarExpr)
+// 	return ok
+// }

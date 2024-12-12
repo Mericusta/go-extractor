@@ -7,19 +7,44 @@ import (
 	"go/parser"
 	"go/token"
 	"io"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
 )
 
-type GoFileMeta struct {
-	*meta
-	fileSet *token.FileSet
+type GoFileMetaTypeConstraints interface {
+	*ast.File
+
+	ast.Node
 }
 
-func ExtractGoFileMeta(extractFilepath string) (*GoFileMeta, error) {
+// GoFileMeta go 文件 的 meta 数据
+type GoFileMeta[T GoFileMetaTypeConstraints] struct {
+	// 组合基本 meta 数据
+	// ast 节点，要求为 *ast.File
+	// 以 ast 节点 为单位执行 AST/PrintAST/Expression/Format
+	*meta[T]
+
+	// 文件 token set 集合
+	fileSet *token.FileSet
+
+	// 文件名称
+	ident string
+
+	// 文件包名称
+	packageName string
+}
+
+// NewGoFileMeta 构造 go 文件 的 meta 数据
+func NewGoFileMeta[T GoFileMetaTypeConstraints](m *meta[T], fs *token.FileSet, fn string) *GoFileMeta[T] {
+	return &GoFileMeta[T]{meta: m, fileSet: fs, ident: fn}
+}
+
+// -------------------------------- extractor --------------------------------
+
+// ExtractGoFileMeta 通过文件的绝对路径提取文件的 meta 数据
+func ExtractGoFileMeta[T GoFileMetaTypeConstraints](extractFilepath string) (*GoFileMeta[T], error) {
 	fileAbsPath, err := filepath.Abs(extractFilepath)
 	if err != nil {
 		return nil, err
@@ -31,27 +56,21 @@ func ExtractGoFileMeta(extractFilepath string) (*GoFileMeta, error) {
 		return nil, err
 	}
 
-	meta := &GoFileMeta{
-		meta: &meta{
-			node: fileAST,
-			name: filepath.Base(fileAbsPath),
-			path: fileAbsPath,
-		},
-		fileSet: fileSet,
+	meta := &GoFileMeta[T]{
+		// meta:        &meta{node: fileAST, path: fileAbsPath},
+		meta:        newMeta[T](fileAST, fileAbsPath),
+		fileSet:     fileSet,
+		ident:       filepath.Base(fileAbsPath),
+		packageName: fileAST.Name.String(),
 	}
 
 	return meta, nil
 }
 
-func extractGoFilePkgName(fileAbsPath string) (string, error) {
-	fileAST, err := parser.ParseFile(token.NewFileSet(), fileAbsPath, nil, parser.PackageClauseOnly)
-	if err != nil {
-		return "", err
-	}
-	return fileAST.Name.String(), nil
-}
+// -------------------------------- extractor --------------------------------
 
-func (gfm *GoFileMeta) OutputAST() {
+// OutputAST 在文件所属的目录下创建一个 同名+.ast 后缀的文件，输出该文件的 ast 树
+func (gfm *GoFileMeta[T]) OutputAST() {
 	outputFile, err := os.OpenFile(fmt.Sprintf("%v.ast", gfm.path), os.O_CREATE|os.O_TRUNC|os.O_RDWR, 0644)
 	if err != nil {
 		panic(err)
@@ -60,17 +79,12 @@ func (gfm *GoFileMeta) OutputAST() {
 	ast.Fprint(outputFile, gfm.fileSet, gfm.node, ast.NotNilFilter)
 }
 
-func (gfm *GoFileMeta) Name() string {
-	return gfm.name
-}
+// -------------------------------- unit test --------------------------------
 
-func (gfm *GoFileMeta) Path() string {
-	return gfm.path
-}
+func (gfm *GoFileMeta[T]) Ident() string       { return gfm.ident }
+func (gfm *GoFileMeta[T]) PackageName() string { return gfm.packageName }
 
-func (gfm *GoFileMeta) PkgName() string {
-	return gfm.node.(*ast.File).Name.String()
-}
+// -------------------------------- unit test --------------------------------
 
 // GoFmtFile go fmt 格式化文件
 func GoFmtFile(p string) {
@@ -88,7 +102,7 @@ func GoFmtFile(p string) {
 
 // CleanFileComment 置空文件中所有注释
 func CleanFileComment(r io.Reader) string {
-	fileContent, err := ioutil.ReadAll(r)
+	fileContent, err := io.ReadAll(r)
 	if err != nil {
 		panic(err)
 	}
