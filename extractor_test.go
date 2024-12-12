@@ -101,11 +101,11 @@ type compareGoVarMetaTypeConstraints interface {
 }
 
 type compareGoVarMeta[T compareGoVarMetaTypeConstraints] struct {
-	expression string
-	ident      string
-	typeIdent  string
+	expression     string
+	ident          string
+	typeIdent      string
+	typeExpression string
 	// TODO:
-	typeExpression       string
 	TypeUnderlyingString string
 	TypeUnderlyingEnum   UnderlyingType
 	Tag                  string
@@ -1662,13 +1662,13 @@ func TestExtractGoProjectMeta(t *testing.T) {
 			params := make([]*GoVarMeta[*ast.Field], 0, 8)
 			returns := make([]*GoVarMeta[*ast.Field], 0, 8)
 			for _, p := range gfm.Params() {
-				ngvm := MakeUpVar(p.ident, p.TypeExpression())
+				ngvm := MakeUpVarMeta(p.ident, p.TypeExpression())
 				if ngvm != nil {
 					params = append(params, ngvm)
 				}
 			}
 			for _, r := range gfm.Returns() {
-				ngvm := MakeUpVar(r.ident, r.TypeExpression())
+				ngvm := MakeUpVarMeta(r.ident, r.TypeExpression())
 				if ngvm != nil {
 					returns = append(returns, ngvm)
 				}

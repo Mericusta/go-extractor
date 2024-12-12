@@ -121,6 +121,9 @@ func (gvm *GoVarMeta[T]) extractType() {
 	case *ast.Field:
 		typeExpr = node.Type
 	}
+	if typeExpr == nil {
+		return
+	}
 	// 取 type expression
 	gvm.typeExpression = newMeta(typeExpr, gvm.path).Expression()
 	// 取 type ident
@@ -217,7 +220,8 @@ func (gvm *GoVarMeta[T]) extractType() {
 
 // -------------------------------- maker --------------------------------
 
-func MakeUpVar(ident, typeExpression string) *GoVarMeta[*ast.Field] {
+// MakeUpVarMeta 通过参数生成 var 的 meta 数据
+func MakeUpVarMeta(ident, typeExpression string) *GoVarMeta[*ast.Field] {
 	typeExpr, err := parser.ParseExpr(typeExpression)
 	if typeExpr == nil || err != nil {
 		return nil
