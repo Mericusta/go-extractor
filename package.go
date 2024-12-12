@@ -50,8 +50,8 @@ type GoPackageMeta struct {
 	typeConstraintsMetaMap map[string]*GoInterfaceMeta[*ast.TypeSpec]
 }
 
-// NewGoPackageMeta 构造 package 的 meta
-func NewGoPackageMeta(ident, absolutePath, importPath string) *GoPackageMeta {
+// newGoPackageMeta 通过 ast 构造 package 的 meta
+func newGoPackageMeta(ident, absolutePath, importPath string) *GoPackageMeta {
 	return &GoPackageMeta{
 		ident:                  ident,
 		absolutePath:           absolutePath,
@@ -186,7 +186,7 @@ func (gpm *GoPackageMeta) extractVar() {
 						valueSpec, ok := specNode.(*ast.ValueSpec)
 						if valueSpec != nil && ok {
 							for _, ident := range valueSpec.Names {
-								gpm.varMetaMap[ident.Name] = NewGoVarMeta(newMeta(valueSpec, gfm.path), ident.Name)
+								gpm.varMetaMap[ident.Name] = newGoVarMeta(newMeta(valueSpec, gfm.path), ident.Name)
 							}
 						}
 					}
@@ -209,7 +209,7 @@ func (gpm *GoPackageMeta) extractFunc() {
 				case IsFuncNode(n):
 					funcDecl := n.(*ast.FuncDecl)
 					funcIdent := funcDecl.Name.String()
-					gpm.funcMetaMap[funcIdent] = NewGoFunctionMeta(newMeta(funcDecl, gfm.path), funcIdent)
+					gpm.funcMetaMap[funcIdent] = newGoFuncMeta(newMeta(funcDecl, gfm.path), funcIdent)
 					return false // 只查找顶层为 func 的节点
 				case IsImportNode(n) || IsVarNode(n) || IsTypeNode(n) || IsMethodNode(n):
 					return false // 顶层为其他节点直接跳过
@@ -230,7 +230,7 @@ func (gpm *GoPackageMeta) extractStruct() {
 						if IsStructNode(specNode) {
 							typeSpec := specNode.(*ast.TypeSpec)
 							structIdent := typeSpec.Name.String()
-							gpm.structMetaMap[structIdent] = NewGoStructMeta(newMeta(typeSpec, gfm.path), structIdent)
+							gpm.structMetaMap[structIdent] = newGoStructMeta(newMeta(typeSpec, gfm.path), structIdent)
 						}
 					}
 					return false // 只查找顶层为 struct 的节点
@@ -250,7 +250,7 @@ func (gpm *GoPackageMeta) extractMethod() {
 				case IsMethodNode(n):
 					funcDecl := n.(*ast.FuncDecl)
 					funcIdent := funcDecl.Name.String()
-					gmm := NewGoMethodMeta(newMeta(funcDecl, gfm.path), funcIdent)
+					gmm := newGoMethodMeta(newMeta(funcDecl, gfm.path), funcIdent)
 					gsm, has := gpm.structMetaMap[gmm.Receiver().TypeIdent()]
 					if gsm != nil && has {
 						gsm.methodMetaMap[funcIdent] = gmm
@@ -275,7 +275,7 @@ func (gpm *GoPackageMeta) extractInterface() {
 						if IsInterfaceNode(specNode) && !IsTypeConstraintsNode(specNode) {
 							typeSpec := specNode.(*ast.TypeSpec)
 							interfaceIdent := typeSpec.Name.String()
-							gpm.interfaceMetaMap[interfaceIdent] = NewGoInterfaceMeta(newMeta(typeSpec, gfm.path), interfaceIdent)
+							gpm.interfaceMetaMap[interfaceIdent] = newGoInterfaceMeta(newMeta(typeSpec, gfm.path), interfaceIdent)
 						}
 					}
 					return false // 只查找顶层为 interface 的节点

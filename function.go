@@ -35,8 +35,8 @@ type GoFuncMeta[T GoFuncMetaTypeConstraints] struct {
 	// selectorCallMeta    map[string]map[string][]*GoCallMeta
 }
 
-// NewGoFunctionMeta 构造 func 的 meta 数据
-func NewGoFunctionMeta[T GoFuncMetaTypeConstraints](m *meta[T], ident string, stopExtract ...bool) *GoFuncMeta[T] {
+// newGoFuncMeta 通过 ast 构造 func 的 meta 数据
+func newGoFuncMeta[T GoFuncMetaTypeConstraints](m *meta[T], ident string, stopExtract ...bool) *GoFuncMeta[T] {
 	gfm := &GoFuncMeta[T]{meta: m, ident: ident}
 	if len(stopExtract) == 0 {
 		gfm.ExtractAll()
@@ -47,6 +47,14 @@ func NewGoFunctionMeta[T GoFuncMetaTypeConstraints](m *meta[T], ident string, st
 func (gfm *GoFuncMeta[T]) funcDecl() *ast.FuncDecl {
 	return gfm.node
 }
+
+// -------------------------------- unit test --------------------------------
+
+func (gfm *GoFuncMeta[T]) Ident() string                     { return gfm.ident }
+func (gfm *GoFuncMeta[T]) Params() []*GoVarMeta[*ast.Field]  { return gfm.params }
+func (gfm *GoFuncMeta[T]) Returns() []*GoVarMeta[*ast.Field] { return gfm.returns }
+
+// -------------------------------- unit test --------------------------------
 
 // -------------------------------- extractor --------------------------------
 
@@ -92,7 +100,7 @@ func (gfm *GoFuncMeta[T]) extractParams() {
 	gfm.params = make([]*GoVarMeta[*ast.Field], 0, pLen)
 	for _, field := range funcDecl.Type.Params.List {
 		for _, name := range field.Names {
-			gfm.params = append(gfm.params, NewGoVarMeta(newMeta(field, gfm.path), name.String()))
+			gfm.params = append(gfm.params, newGoVarMeta(newMeta(field, gfm.path), name.String()))
 		}
 	}
 }
@@ -108,10 +116,10 @@ func (gfm *GoFuncMeta[T]) extractReturns() {
 	for _, field := range funcDecl.Type.Results.List {
 		if len(field.Names) > 0 {
 			for _, name := range field.Names {
-				gfm.returns = append(gfm.returns, NewGoVarMeta(newMeta(field, gfm.path), name.String()))
+				gfm.returns = append(gfm.returns, newGoVarMeta(newMeta(field, gfm.path), name.String()))
 			}
 		} else {
-			gfm.returns = append(gfm.returns, NewGoVarMeta(newMeta(field, gfm.path), ""))
+			gfm.returns = append(gfm.returns, newGoVarMeta(newMeta(field, gfm.path), ""))
 		}
 	}
 }
@@ -121,40 +129,25 @@ func (gfm *GoFuncMeta[T]) extractTypeParams() {
 
 // -------------------------------- extractor --------------------------------
 
-// func SearchGoFunctionMeta(gfm *GoFileMeta, functionName string) *GoFuncMeta {
-// 	var funcDecl *ast.FuncDecl
-// 	ast.Inspect(gfm.node, func(n ast.Node) bool {
-// 		if IsFuncNode(n) {
-// 			decl := n.(*ast.FuncDecl)
-// 			if decl.Name.String() == functionName {
-// 				funcDecl = decl
-// 			}
-// 		}
-// 		return funcDecl == nil
-// 	})
-// 	if funcDecl == nil {
-// 		return nil
-// 	}
-// 	return &GoFuncMeta{
-// 		meta: gfm.copyMeta(funcDecl),
+// -------------------------------- maker --------------------------------
 
-// 		// callMeta: make(map[string][]*GoCallMeta),
-// 		// nonSelectorCallMeta: make(map[string][]*GoCallMeta),
-// 		// selectorCallMeta:    make(map[string]map[string][]*GoCallMeta),
-// 	}
-// }
+// MakeUpFuncMeta 通过参数生成 func 的 meta 数据
+func MakeUpFuncMeta(ident string, params []*GoVarMeta[*ast.Field], returns []*GoVarMeta[*ast.Field]) *GoFuncMeta[*ast.FuncDecl] {
+	astFuncDecl := &ast.FuncDecl{
+		Name: ast.NewIdent(ident),
+		Type: &ast.FuncType{
+			// TypeParams: makeFieldList(typeParams),
+			Params:  makeFieldList(params),
+			Results: makeFieldList(returns),
+		},
+	}
 
-// -------------------------------- unit test --------------------------------
+	gfm := newGoFuncMeta(newMeta(astFuncDecl, ""), ident, true)
 
-func (gfm *GoFuncMeta[T]) Ident() string                     { return gfm.ident }
-func (gfm *GoFuncMeta[T]) Params() []*GoVarMeta[*ast.Field]  { return gfm.params }
-func (gfm *GoFuncMeta[T]) Returns() []*GoVarMeta[*ast.Field] { return gfm.returns }
+	return gfm
+}
 
-// -------------------------------- unit test --------------------------------
-
-// func (gfm *GoFuncMeta[T]) FunctionName() string {
-// 	return gfm.node.(*ast.FuncDecl).Name.String()
-// }
+// -------------------------------- maker --------------------------------
 
 // func (gfm *GoFuncMeta[T]) Doc() []string {
 // 	if gfm.node.(*ast.FuncDecl) == nil || gfm.node.(*ast.FuncDecl).Doc == nil || len(gfm.node.(*ast.FuncDecl).Doc.List) == 0 {
@@ -184,24 +177,6 @@ func (gfm *GoFuncMeta[T]) Returns() []*GoVarMeta[*ast.Field] { return gfm.return
 // 		}
 // 	}
 // 	return tParams
-// }
-
-// func (gfm *GoFuncMeta[T]) ReturnTypes() []*GoVarMeta {
-// 	if gfm.node.(*ast.FuncDecl).Type == nil || gfm.node.(*ast.FuncDecl).Type.Results == nil || len(gfm.node.(*ast.FuncDecl).Type.Results.List) == 0 {
-// 		return nil
-// 	}
-
-// 	rLen := len(gfm.node.(*ast.FuncDecl).Type.Results.List)
-// 	returns := make([]*GoVarMeta, 0, rLen)
-// 	for _, field := range gfm.node.(*ast.FuncDecl).Type.Results.List {
-// 		// TODO: not support named return value
-// 		returns = append(returns, &GoVarMeta{
-// 			meta:     gfm.copyMeta(field),
-// 			ident:    "",
-// 			typeMeta: gfm.copyMeta(field.Type),
-// 		})
-// 	}
-// 	return returns
 // }
 
 // func (gfm *GoFuncMeta[T]) ReplaceDecl(new *GoFuncMeta) {

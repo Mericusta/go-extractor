@@ -17,8 +17,9 @@ type GoMethodMeta[T GoMethodMetaTypeConstraints] struct {
 	receiver *GoVarMeta[*ast.Field]
 }
 
-func NewGoMethodMeta[T GoMethodMetaTypeConstraints](m *meta[T], ident string, stopExtract ...bool) *GoMethodMeta[T] {
-	gmm := &GoMethodMeta[T]{GoFuncMeta: NewGoFunctionMeta(m, ident)}
+// newGoMethodMeta 通过 ast 构造 struct 的 method 的 meta 数据
+func newGoMethodMeta[T GoMethodMetaTypeConstraints](m *meta[T], ident string, stopExtract ...bool) *GoMethodMeta[T] {
+	gmm := &GoMethodMeta[T]{GoFuncMeta: newGoFuncMeta(m, ident)}
 	if len(stopExtract) == 0 {
 		gmm.ExtractAll()
 	}
@@ -44,7 +45,7 @@ func (gmm *GoMethodMeta[T]) extractReceiver() {
 	if len(receiverNode.Names) == 1 {
 		receiverName = receiverNode.Names[0].String()
 	}
-	gmm.receiver = NewGoVarMeta(newMeta(receiverNode, gmm.path), receiverName)
+	gmm.receiver = newGoVarMeta(newMeta(receiverNode, gmm.path), receiverName)
 }
 
 func extractMethodRecvStruct(methodDecl *ast.FuncDecl) (string, bool) {

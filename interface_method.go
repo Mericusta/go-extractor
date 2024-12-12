@@ -34,8 +34,8 @@ type GoInterfaceMethodMeta[T GoInterfaceMethodMetaTypeConstraints, IT GoInterfac
 	typeParams []*GoVarMeta[*ast.Field]
 }
 
-// NewGoInterfaceMethodMeta 构造 interface 的 method 的 meta 数据
-func NewGoInterfaceMethodMeta[T GoInterfaceMethodMetaTypeConstraints, IT GoInterfaceMetaTypeConstraints](m *meta[T], ident string, gim *GoInterfaceMeta[IT], stopExtract ...bool) *GoInterfaceMethodMeta[T, IT] {
+// newGoInterfaceMethodMeta 通过 ast 构造 interface 的 method 的 meta 数据
+func newGoInterfaceMethodMeta[T GoInterfaceMethodMetaTypeConstraints, IT GoInterfaceMetaTypeConstraints](m *meta[T], ident string, gim *GoInterfaceMeta[IT], stopExtract ...bool) *GoInterfaceMethodMeta[T, IT] {
 	gimm := &GoInterfaceMethodMeta[T, IT]{meta: m, ident: ident, interfaceMeta: gim}
 	if len(stopExtract) == 0 {
 		gimm.ExtractAll()
@@ -100,11 +100,11 @@ func (gimm *GoInterfaceMethodMeta[T, IT]) extractParams() {
 		if len(field.Names) > 0 {
 			// 定义参数名称的方法
 			for _, name := range field.Names {
-				gimm.params = append(gimm.params, NewGoVarMeta(newMeta(field, gimm.path), name.String()))
+				gimm.params = append(gimm.params, newGoVarMeta(newMeta(field, gimm.path), name.String()))
 			}
 		} else {
 			// 未定义参数名称的方法
-			gimm.params = append(gimm.params, NewGoVarMeta(newMeta(field, gimm.path), ""))
+			gimm.params = append(gimm.params, newGoVarMeta(newMeta(field, gimm.path), ""))
 		}
 	}
 }
@@ -121,11 +121,11 @@ func (gimm *GoInterfaceMethodMeta[T, IT]) extractReturns() {
 		if len(field.Names) > 0 {
 			// 定义返回值名称的方法
 			for _, name := range field.Names {
-				gimm.returns = append(gimm.returns, NewGoVarMeta(newMeta(field, gimm.path), name.String()))
+				gimm.returns = append(gimm.returns, newGoVarMeta(newMeta(field, gimm.path), name.String()))
 			}
 		} else {
 			// 未定义返回值名称的方法
-			gimm.returns = append(gimm.returns, NewGoVarMeta(newMeta(field, gimm.path), ""))
+			gimm.returns = append(gimm.returns, newGoVarMeta(newMeta(field, gimm.path), ""))
 		}
 	}
 }

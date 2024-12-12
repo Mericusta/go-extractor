@@ -31,8 +31,8 @@ type GoProjectMeta struct {
 	packageMap map[string]*GoPackageMeta
 }
 
-// NewGoProjectMeta 构造 项目 的 meta
-func NewGoProjectMeta(absolutePath, moduleName string) *GoProjectMeta {
+// newGoProjectMeta 通过 ast 构造 项目 的 meta
+func newGoProjectMeta(absolutePath, moduleName string) *GoProjectMeta {
 	return &GoProjectMeta{
 		absolutePath: absolutePath,
 		moduleName:   moduleName,
@@ -191,7 +191,7 @@ func extractGoProjectMeta(projectPath string, toHandlePaths map[string]struct{},
 					filePkg := fileMeta.PackageName()
 					if filePkg == "main" {
 						if _, has := projectMeta.packageMap[filePkg]; !has {
-							projectMeta.packageMap[filePkg] = NewGoPackageMeta(filePkg, filepath.Dir(walkPath), "")
+							projectMeta.packageMap[filePkg] = newGoPackageMeta(filePkg, filepath.Dir(walkPath), "")
 						}
 						projectMeta.packageMap[filePkg].fileMetaMap[fileMeta.ident] = fileMeta
 					} else {
@@ -205,7 +205,7 @@ func extractGoProjectMeta(projectPath string, toHandlePaths map[string]struct{},
 						}
 						pkgImportPath := FormatFilePathWithOS(filepath.Clean(fmt.Sprintf("%v/%v/%v", projectMeta.moduleName, relPath, filePkg)), "linux")
 						if _, has := projectMeta.packageMap[pkgImportPath]; !has {
-							projectMeta.packageMap[pkgImportPath] = NewGoPackageMeta(filePkg, filepath.Dir(walkPath), pkgImportPath)
+							projectMeta.packageMap[pkgImportPath] = newGoPackageMeta(filePkg, filepath.Dir(walkPath), pkgImportPath)
 						}
 						projectMeta.packageMap[pkgImportPath].fileMetaMap[fileMeta.ident] = fileMeta
 					}
@@ -231,7 +231,7 @@ func extractGoProjectMeta(projectPath string, toHandlePaths map[string]struct{},
 		if err != nil {
 			return nil, err
 		}
-		projectMeta.packageMap[gfm.PackageName()] = NewGoPackageMeta(gfm.PackageName(), filepath.Dir(projectAbsPath), "")
+		projectMeta.packageMap[gfm.PackageName()] = newGoPackageMeta(gfm.PackageName(), filepath.Dir(projectAbsPath), "")
 		projectMeta.packageMap[gfm.PackageName()].fileMetaMap[filepath.Base(projectAbsPath)] = gfm
 	}
 

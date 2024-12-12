@@ -1331,16 +1331,16 @@
   1330  .  FileEnd: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/template/template.go:57:3
   1331  .  Scope: *ast.Scope {
   1332  .  .  Objects: map[string]*ast.Object (len = 10) {
-  1333  .  .  .  "DoubleDifferenceTemplateFunc": *(obj @ 259)
-  1334  .  .  .  "TypeConstraints": *(obj @ 405)
-  1335  .  .  .  "TemplateStructWithParent": *(obj @ 1265)
-  1336  .  .  .  "TemplateStruct": *(obj @ 706)
-  1337  .  .  .  "TwoTypeTemplateStruct": *(obj @ 859)
-  1338  .  .  .  "OneTemplateFunc": *(obj @ 31)
-  1339  .  .  .  "DoubleSameTemplateFunc": *(obj @ 126)
-  1340  .  .  .  "TypeConstraintsTemplateFunc": *(obj @ 460)
-  1341  .  .  .  "CannotInferTypeFunc1": *(obj @ 553)
-  1342  .  .  .  "CannotInferTypeFunc2": *(obj @ 598)
+  1333  .  .  .  "OneTemplateFunc": *(obj @ 31)
+  1334  .  .  .  "TypeConstraintsTemplateFunc": *(obj @ 460)
+  1335  .  .  .  "CannotInferTypeFunc1": *(obj @ 553)
+  1336  .  .  .  "CannotInferTypeFunc2": *(obj @ 598)
+  1337  .  .  .  "TemplateStruct": *(obj @ 706)
+  1338  .  .  .  "DoubleSameTemplateFunc": *(obj @ 126)
+  1339  .  .  .  "DoubleDifferenceTemplateFunc": *(obj @ 259)
+  1340  .  .  .  "TypeConstraints": *(obj @ 405)
+  1341  .  .  .  "TwoTypeTemplateStruct": *(obj @ 859)
+  1342  .  .  .  "TemplateStructWithParent": *(obj @ 1265)
   1343  .  .  }
   1344  .  }
   1345  .  Imports: []*ast.ImportSpec (len = 1) {

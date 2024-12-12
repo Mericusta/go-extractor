@@ -36,8 +36,8 @@ type GoFileMeta[T GoFileMetaTypeConstraints] struct {
 	packageName string
 }
 
-// NewGoFileMeta 构造 go 文件 的 meta 数据
-func NewGoFileMeta[T GoFileMetaTypeConstraints](m *meta[T], fs *token.FileSet, fn string) *GoFileMeta[T] {
+// newGoFileMeta 通过 ast 构造 go 文件 的 meta 数据
+func newGoFileMeta[T GoFileMetaTypeConstraints](m *meta[T], fs *token.FileSet, fn string) *GoFileMeta[T] {
 	return &GoFileMeta[T]{meta: m, fileSet: fs, ident: fn}
 }
 

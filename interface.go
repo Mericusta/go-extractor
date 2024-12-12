@@ -28,8 +28,8 @@ type GoInterfaceMeta[T GoInterfaceMetaTypeConstraints] struct {
 	commentGroup *ast.CommentGroup
 }
 
-// NewGoInterfaceMeta 构造 interface 的 meta
-func NewGoInterfaceMeta[T GoInterfaceMetaTypeConstraints](m *meta[T], ident string, stopExtract ...bool) *GoInterfaceMeta[T] {
+// newGoInterfaceMeta 通过 ast 构造 interface 的 meta
+func newGoInterfaceMeta[T GoInterfaceMetaTypeConstraints](m *meta[T], ident string, stopExtract ...bool) *GoInterfaceMeta[T] {
 	gim := &GoInterfaceMeta[T]{
 		meta:          m,
 		ident:         ident,
@@ -75,7 +75,7 @@ func (gim *GoInterfaceMeta[T]) ExtractAll() {
 		if IsInterfaceMethodNode(method) {
 			for _, name := range method.Names {
 				methodIdent := name.String()
-				gim.methodMetaMap[methodIdent] = NewGoInterfaceMethodMeta[*ast.Field, T](newMeta(method, gim.path), methodIdent, gim)
+				gim.methodMetaMap[methodIdent] = newGoInterfaceMethodMeta[*ast.Field, T](newMeta(method, gim.path), methodIdent, gim)
 			}
 		}
 	}

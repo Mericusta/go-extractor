@@ -32,8 +32,8 @@ type GoStructMeta[T GoStructMetaTypeConstraints] struct {
 	commentGroup *ast.CommentGroup
 }
 
-// NewGoStructMeta 构造 struct 的 meta 数据
-func NewGoStructMeta[T GoStructMetaTypeConstraints](m *meta[T], ident string, stopExtract ...bool) *GoStructMeta[T] {
+// newGoStructMeta 通过 ast 构造 struct 的 meta 数据
+func newGoStructMeta[T GoStructMetaTypeConstraints](m *meta[T], ident string, stopExtract ...bool) *GoStructMeta[T] {
 	gsm := &GoStructMeta[T]{
 		meta:          m,
 		ident:         ident,
@@ -81,12 +81,12 @@ func (gsm *GoStructMeta[T]) ExtractAll() {
 			// 非匿名成员
 			for _, name := range member.Names {
 				memberIdent := name.String()
-				gsm.memberMetaMap[memberIdent] = NewGoVarMeta(newMeta(member, gsm.path), memberIdent)
+				gsm.memberMetaMap[memberIdent] = newGoVarMeta(newMeta(member, gsm.path), memberIdent)
 			}
 		} else {
 			// 匿名成员
 			// TODO: 使用 GoVariableMeta
-			gvm := NewGoVarMeta(newMeta(member, gsm.path), "")
+			gvm := newGoVarMeta(newMeta(member, gsm.path), "")
 			gvm.ident = gvm.typeIdent
 			gsm.memberMetaMap[gvm.ident] = gvm
 			// var (

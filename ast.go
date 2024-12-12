@@ -1,5 +1,7 @@
 package extractor
 
+import "go/ast"
+
 // import (
 // 	"fmt"
 // 	"go/ast"
@@ -29,29 +31,29 @@ package extractor
 // 	}
 // }
 
-// type fieldMaker interface {
-// 	*field | *GoVarMeta
-// 	make() *ast.Field
-// }
+type fieldMaker[T GoVarMetaTypeConstraints] interface {
+	*field | *GoVarMeta[T]
+	make() *ast.Field
+}
 
-// func makeFieldList[T fieldMaker](vs []T) *ast.FieldList {
-// 	l := len(vs)
-// 	if l == 0 {
-// 		return nil
-// 	}
-// 	fieldList := &ast.FieldList{List: make([]*ast.Field, l)}
-// 	for i, v := range vs {
-// 		fieldList.List[i] = v.make()
-// 	}
-// 	return fieldList
-// }
+func makeFieldList[T fieldMaker[*ast.Field]](vs []T) *ast.FieldList {
+	l := len(vs)
+	if l == 0 {
+		return nil
+	}
+	fieldList := &ast.FieldList{List: make([]*ast.Field, l)}
+	for i, v := range vs {
+		fieldList.List[i] = v.make()
+	}
+	return fieldList
+}
 
-// type field struct {
-// 	names    []string
-// 	typeName string
-// 	from     string
-// 	pointer  bool
-// }
+type field struct {
+	names    []string
+	typeName string
+	from     string
+	pointer  bool
+}
 
 // func newField(names []string, typeName, from string, pointer bool) *field {
 // 	return &field{

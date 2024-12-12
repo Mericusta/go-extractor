@@ -3,6 +3,7 @@ package extractor
 import (
 	"fmt"
 	"go/ast"
+	"go/parser"
 	"strings"
 )
 
@@ -45,7 +46,7 @@ type GoVarMetaTypeConstraints interface {
 // GoVarMeta go var 的 meta 数据
 type GoVarMeta[T GoVarMetaTypeConstraints] struct {
 	// 组合基本 meta 数据
-	// ast 节点，要求为 *ast.ValueSpec 或 *ast.Field
+	// ast 节点，要求为 *ast.ValueSpec 或 *ast.Field 或 *ast.InterfaceType
 	// 以 ast 节点 为单位执行 AST/PrintAST/Expression/Format
 	*meta[T]
 
@@ -65,14 +66,22 @@ type GoVarMeta[T GoVarMetaTypeConstraints] struct {
 	isPointer bool
 }
 
-// NewGoVarMeta 构造 var 的 meta 数据
-func NewGoVarMeta[T GoVarMetaTypeConstraints](m *meta[T], ident string, stopExtract ...bool) *GoVarMeta[T] {
+// newGoVarMeta 通过 ast 构造 var 的 meta 数据
+func newGoVarMeta[T GoVarMetaTypeConstraints](m *meta[T], ident string, stopExtract ...bool) *GoVarMeta[T] {
 	gvm := &GoVarMeta[T]{meta: m, ident: ident}
 	if len(stopExtract) == 0 {
 		gvm.ExtractAll()
 	}
 	return gvm
 }
+
+// -------------------------------- unit test --------------------------------
+
+func (gvm *GoVarMeta[T]) Ident() string          { return gvm.ident }
+func (gvm *GoVarMeta[T]) TypeIdent() string      { return gvm.typeIdent }
+func (gvm *GoVarMeta[T]) TypeExpression() string { return gvm.typeExpression }
+
+// -------------------------------- unit test --------------------------------
 
 // -------------------------------- extractor --------------------------------
 
@@ -112,6 +121,9 @@ func (gvm *GoVarMeta[T]) extractType() {
 	case *ast.Field:
 		typeExpr = node.Type
 	}
+	// 取 type expression
+	gvm.typeExpression = newMeta(typeExpr, gvm.path).Expression()
+	// 取 type ident
 	var (
 		nodeHandler          func(n ast.Node, post ...func(ast.Node) bool) bool
 		starExprHandler      func(n ast.Node) bool
@@ -169,12 +181,13 @@ func (gvm *GoVarMeta[T]) extractType() {
 		return nodeHandler(indexExpr.X, starExprHandler, selectorExprHandler, indexExprHandler, indexListExprHandler, interfaceTypeHandler, arrayTypeHandler, mapTypeHandler)
 	}
 	interfaceTypeHandler = func(n ast.Node) bool {
-		// 遇到 InterfaceType 判断 Methods
+		// 遇到 InterfaceType 直接取整个 expression -> 最好是 any
+		// TODO: 可能需要处理特殊语法，带有 method 的 interface
 		interfaceType, ok := n.(*ast.InterfaceType)
 		if interfaceType == nil || !ok {
 			return true
 		}
-		gvm.typeIdent = "interface{}"
+		gvm.typeIdent = gvm.typeExpression
 		return false
 	}
 	arrayTypeHandler = func(n ast.Node) bool {
@@ -183,7 +196,7 @@ func (gvm *GoVarMeta[T]) extractType() {
 		if arrayType == nil || !ok {
 			return true
 		}
-		gvm.typeIdent = newMeta(typeExpr, gvm.path).Expression()
+		gvm.typeIdent = gvm.typeExpression
 		return false
 	}
 	mapTypeHandler = func(n ast.Node) bool {
@@ -192,7 +205,7 @@ func (gvm *GoVarMeta[T]) extractType() {
 		if mapType == nil || !ok {
 			return true
 		}
-		gvm.typeIdent = newMeta(typeExpr, gvm.path).Expression()
+		gvm.typeIdent = gvm.typeExpression
 		return false
 	}
 	ast.Inspect(typeExpr, func(n ast.Node) bool {
@@ -201,6 +214,42 @@ func (gvm *GoVarMeta[T]) extractType() {
 }
 
 // -------------------------------- extractor --------------------------------
+
+// -------------------------------- maker --------------------------------
+
+func MakeUpVar(ident, typeExpression string) *GoVarMeta[*ast.Field] {
+	typeExpr, err := parser.ParseExpr(typeExpression)
+	if typeExpr == nil || err != nil {
+		return nil
+	}
+	astField := &ast.Field{
+		Names: []*ast.Ident{ast.NewIdent(ident)},
+		Type:  typeExpr,
+	}
+
+	gvm := newGoVarMeta(newMeta(astField, ""), ident, true)
+
+	return gvm
+}
+
+func (gvm *GoVarMeta[T]) make() *ast.Field {
+	var (
+		n        ast.Node = gvm.node
+		typeExpr ast.Expr
+	)
+	switch node := n.(type) {
+	case *ast.ValueSpec:
+		typeExpr = node.Type
+	case *ast.Field:
+		typeExpr = node.Type
+	}
+	return &ast.Field{
+		Names: []*ast.Ident{ast.NewIdent(gvm.ident)},
+		Type:  typeExpr,
+	}
+}
+
+// -------------------------------- maker --------------------------------
 
 // func (gvm *GoVarMeta[T]) Tag() string {
 // 	if gvm.node.(*ast.Field).Tag == nil {
@@ -320,13 +369,6 @@ func traitFrom(expression string, isPointer bool) string {
 // 	}
 // 	return valueSpec.Names[0].Obj.Kind == ast.Var
 // }
-
-// -------------------------------- unit test --------------------------------
-
-func (gvm *GoVarMeta[T]) Ident() string     { return gvm.ident }
-func (gvm *GoVarMeta[T]) TypeIdent() string { return gvm.typeIdent }
-
-// -------------------------------- unit test --------------------------------
 
 // func (gvm *GoVarMeta[T]) typeNode() ast.Expr {
 // 	return gvm.typeMeta.(*meta).node.(ast.Expr)
