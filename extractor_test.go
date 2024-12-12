@@ -1674,7 +1674,8 @@ func TestExtractGoProjectMeta(t *testing.T) {
 				}
 			}
 			ngfm := MakeUpFuncMeta(compareFuncName, params, returns)
-			fmt.Printf("\n%v\n", ngfm.Format())
+			ngfm.SetBlockStmt("{}")
+			fmt.Printf("\n%v\n", ngfm.Make())
 
 			// 	// unit test
 			// 	var unittestFuncName string

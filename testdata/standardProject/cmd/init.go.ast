@@ -426,14 +426,14 @@
    425  .  FileEnd: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/cmd/init.go:30:3
    426  .  Scope: *ast.Scope {
    427  .  .  Objects: map[string]*ast.Object (len = 8) {
-   428  .  .  .  "globalVariableStruct": *(obj @ 128)
-   429  .  .  .  "globalVariableTStruct": *(obj @ 155)
-   430  .  .  .  "globalVariableInterface": *(obj @ 190)
-   431  .  .  .  "globalVariableTInterface": *(obj @ 217)
-   432  .  .  .  "anotherGlobalVariableAny": *(obj @ 260)
-   433  .  .  .  "Init": *(obj @ 284)
-   434  .  .  .  "globalVariableInt": *(obj @ 61)
-   435  .  .  .  "globalVariableString": *(obj @ 86)
+   428  .  .  .  "globalVariableTInterface": *(obj @ 217)
+   429  .  .  .  "anotherGlobalVariableAny": *(obj @ 260)
+   430  .  .  .  "Init": *(obj @ 284)
+   431  .  .  .  "globalVariableInt": *(obj @ 61)
+   432  .  .  .  "globalVariableString": *(obj @ 86)
+   433  .  .  .  "globalVariableStruct": *(obj @ 128)
+   434  .  .  .  "globalVariableTStruct": *(obj @ 155)
+   435  .  .  .  "globalVariableInterface": *(obj @ 190)
    436  .  .  }
    437  .  }
    438  .  Imports: []*ast.ImportSpec (len = 4) {

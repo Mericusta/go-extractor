@@ -30,6 +30,9 @@ type GoFuncMeta[T GoFuncMetaTypeConstraints] struct {
 	// func 模板参数
 	typeParams []*GoVarMeta[*ast.Field]
 
+	// func 生成时的 block stmt
+	makeUpBlockStmt string
+
 	// callMeta map[string][]*GoCallMeta
 	// nonSelectorCallMeta map[string][]*GoCallMeta
 	// selectorCallMeta    map[string]map[string][]*GoCallMeta
@@ -145,6 +148,21 @@ func MakeUpFuncMeta(ident string, params []*GoVarMeta[*ast.Field], returns []*Go
 	gfm := newGoFuncMeta(newMeta(astFuncDecl, ""), ident, true)
 
 	return gfm
+}
+
+// SetBlockStmt 设置生成时的 stmt
+func (gfm *GoFuncMeta[T]) SetBlockStmt(bs string) {
+	gfm.makeUpBlockStmt = bs
+}
+
+// Make 生成 func
+func (gfm *GoFuncMeta[T]) Make() string {
+	gfmFormat := gfm.Format()
+	var funcDecl *ast.FuncDecl = gfm.node
+	if funcDecl.Body == nil {
+		return gfmFormat + " " + gfm.makeUpBlockStmt
+	}
+	return gfmFormat
 }
 
 // -------------------------------- maker --------------------------------
