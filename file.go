@@ -13,18 +13,12 @@ import (
 	"strings"
 )
 
-type GoFileMetaTypeConstraints interface {
-	*ast.File
-
-	ast.Node
-}
-
 // GoFileMeta go 文件 的 meta 数据
-type GoFileMeta[T GoFileMetaTypeConstraints] struct {
+type GoFileMeta struct {
 	// 组合基本 meta 数据
 	// ast 节点，要求为 *ast.File
 	// 以 ast 节点 为单位执行 AST/PrintAST/Expression/Format
-	*meta[T]
+	*meta
 
 	// 文件 token set 集合
 	fileSet *token.FileSet
@@ -37,14 +31,14 @@ type GoFileMeta[T GoFileMetaTypeConstraints] struct {
 }
 
 // newGoFileMeta 通过 ast 构造 go 文件 的 meta 数据
-func newGoFileMeta[T GoFileMetaTypeConstraints](m *meta[T], fs *token.FileSet, fn string) *GoFileMeta[T] {
-	return &GoFileMeta[T]{meta: m, fileSet: fs, ident: fn}
+func newGoFileMeta(m *meta, fs *token.FileSet, fn string) *GoFileMeta {
+	return &GoFileMeta{meta: m, fileSet: fs, ident: fn}
 }
 
 // -------------------------------- extractor --------------------------------
 
 // ExtractGoFileMeta 通过文件的绝对路径提取文件的 meta 数据
-func ExtractGoFileMeta[T GoFileMetaTypeConstraints](extractFilepath string) (*GoFileMeta[T], error) {
+func ExtractGoFileMeta(extractFilepath string) (*GoFileMeta, error) {
 	fileAbsPath, err := filepath.Abs(extractFilepath)
 	if err != nil {
 		return nil, err
@@ -56,9 +50,8 @@ func ExtractGoFileMeta[T GoFileMetaTypeConstraints](extractFilepath string) (*Go
 		return nil, err
 	}
 
-	meta := &GoFileMeta[T]{
-		// meta:        &meta{node: fileAST, path: fileAbsPath},
-		meta:        newMeta[T](fileAST, fileAbsPath),
+	meta := &GoFileMeta{
+		meta:        newMeta(fileAST, fileAbsPath),
 		fileSet:     fileSet,
 		ident:       filepath.Base(fileAbsPath),
 		packageName: fileAST.Name.String(),
@@ -70,7 +63,7 @@ func ExtractGoFileMeta[T GoFileMetaTypeConstraints](extractFilepath string) (*Go
 // -------------------------------- extractor --------------------------------
 
 // OutputAST 在文件所属的目录下创建一个 同名+.ast 后缀的文件，输出该文件的 ast 树
-func (gfm *GoFileMeta[T]) OutputAST() {
+func (gfm *GoFileMeta) OutputAST() {
 	outputFile, err := os.OpenFile(fmt.Sprintf("%v.ast", gfm.path), os.O_CREATE|os.O_TRUNC|os.O_RDWR, 0644)
 	if err != nil {
 		panic(err)
@@ -81,8 +74,8 @@ func (gfm *GoFileMeta[T]) OutputAST() {
 
 // -------------------------------- unit test --------------------------------
 
-func (gfm *GoFileMeta[T]) Ident() string       { return gfm.ident }
-func (gfm *GoFileMeta[T]) PackageName() string { return gfm.packageName }
+func (gfm *GoFileMeta) Ident() string       { return gfm.ident }
+func (gfm *GoFileMeta) PackageName() string { return gfm.packageName }
 
 // -------------------------------- unit test --------------------------------
 

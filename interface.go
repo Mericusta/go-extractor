@@ -5,35 +5,29 @@ import (
 	"go/ast"
 )
 
-type GoInterfaceMetaTypeConstraints interface {
-	*ast.TypeSpec
-
-	ast.Node
-}
-
 // GoInterfaceMeta go interface 的 meta 数据
-type GoInterfaceMeta[T GoInterfaceMetaTypeConstraints] struct {
+type GoInterfaceMeta struct {
 	// 组合基本 meta 数据
 	// ast 节点，要求为 满足 IsInterfaceNode 的 *ast.TypeSpec
 	// 以 ast 节点 为单位执行 AST/PrintAST/Expression/Format
-	*meta[T]
+	*meta
 
 	// interface 标识
 	ident string
 
 	// interface 内所有 method 的 meta 数据
 	// - key: method 标识
-	methodMetaMap map[string]*GoInterfaceMethodMeta[*ast.Field, T]
+	methodMetaMap map[string]*GoInterfaceMethodMeta
 
 	commentGroup *ast.CommentGroup
 }
 
 // newGoInterfaceMeta 通过 ast 构造 interface 的 meta
-func newGoInterfaceMeta[T GoInterfaceMetaTypeConstraints](m *meta[T], ident string, stopExtract ...bool) *GoInterfaceMeta[T] {
-	gim := &GoInterfaceMeta[T]{
+func newGoInterfaceMeta(m *meta, ident string, stopExtract ...bool) *GoInterfaceMeta {
+	gim := &GoInterfaceMeta{
 		meta:          m,
 		ident:         ident,
-		methodMetaMap: make(map[string]*GoInterfaceMethodMeta[*ast.Field, T]),
+		methodMetaMap: make(map[string]*GoInterfaceMethodMeta),
 	}
 	if len(stopExtract) == 0 {
 		gim.ExtractAll()
@@ -44,9 +38,9 @@ func newGoInterfaceMeta[T GoInterfaceMetaTypeConstraints](m *meta[T], ident stri
 // -------------------------------- extractor --------------------------------
 
 // ExtractGoInterfaceMeta 通过文件的绝对路径和 interface 的 标识 提取文件中的 interface 的 meta 数据
-func ExtractGoInterfaceMeta[T GoInterfaceMetaTypeConstraints](extractFilepath, interfaceIdent string) (*GoInterfaceMeta[*ast.TypeSpec], error) {
+func ExtractGoInterfaceMeta(extractFilepath, interfaceIdent string) (*GoInterfaceMeta, error) {
 	// 提取 package
-	gpm, err := ExtractGoPackageMeta[T](extractFilepath, nil)
+	gpm, err := ExtractGoPackageMeta(extractFilepath, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -64,8 +58,8 @@ func ExtractGoInterfaceMeta[T GoInterfaceMetaTypeConstraints](extractFilepath, i
 }
 
 // ExtractAll 提取 interface 内所有 method 的 meta 数据
-func (gim *GoInterfaceMeta[T]) ExtractAll() {
-	var typeSpec *ast.TypeSpec = gim.node
+func (gim *GoInterfaceMeta) ExtractAll() {
+	var typeSpec *ast.TypeSpec = gim.node.(*ast.TypeSpec)
 	interfaceType := typeSpec.Type.(*ast.InterfaceType)
 	if interfaceType == nil || interfaceType.Methods == nil {
 		return
@@ -75,7 +69,7 @@ func (gim *GoInterfaceMeta[T]) ExtractAll() {
 		if IsInterfaceMethodNode(method) {
 			for _, name := range method.Names {
 				methodIdent := name.String()
-				gim.methodMetaMap[methodIdent] = newGoInterfaceMethodMeta[*ast.Field, T](newMeta(method, gim.path), methodIdent, gim)
+				gim.methodMetaMap[methodIdent] = newGoInterfaceMethodMeta(newMeta(method, gim.path), methodIdent, gim)
 			}
 		}
 	}
@@ -103,7 +97,7 @@ func (gim *GoInterfaceMeta[T]) ExtractAll() {
 
 // -------------------------------- extractor --------------------------------
 
-func (gim *GoInterfaceMeta[T]) SearchMethodMeta(methodIdent string) *GoInterfaceMethodMeta[*ast.Field, T] {
+func (gim *GoInterfaceMeta) SearchMethodMeta(methodIdent string) *GoInterfaceMethodMeta {
 	return gim.methodMetaMap[methodIdent]
 }
 
@@ -139,14 +133,14 @@ func (gim *GoInterfaceMeta[T]) SearchMethodMeta(methodIdent string) *GoInterface
 
 // -------------------------------- unit test --------------------------------
 
-func (gim *GoInterfaceMeta[T]) Ident() string { return gim.ident }
-func (gim *GoInterfaceMeta[T]) MethodMetaMap() map[string]*GoInterfaceMethodMeta[*ast.Field, T] {
+func (gim *GoInterfaceMeta) Ident() string { return gim.ident }
+func (gim *GoInterfaceMeta) MethodMetaMap() map[string]*GoInterfaceMethodMeta {
 	return gim.methodMetaMap
 }
 
 // -------------------------------- unit test --------------------------------
 
-func (gim *GoInterfaceMeta[T]) Doc() []string {
+func (gim *GoInterfaceMeta) Doc() []string {
 	if gim.node == nil || gim.commentGroup == nil || len(gim.commentGroup.List) == 0 {
 		return nil
 	}
@@ -158,7 +152,7 @@ func (gim *GoInterfaceMeta[T]) Doc() []string {
 }
 
 // // SearchMethodDecl search method decl from node.(*ast.InterfaceType)
-// func (gim *GoInterfaceMeta[T]) SearchMethodDecl(methodName string) *GoInterfaceMethodMeta {
+// func (gim *GoInterfaceMeta) SearchMethodDecl(methodName string) *GoInterfaceMethodMeta {
 // 	gim.ForeachMethodDecl(func(f *ast.Field) bool {
 // 		if f.Names[0].String() == methodName && IsInterfaceMethodNode(f) {
 // 			gim.methodMeta[methodName] = NewGoInterfaceMethodMeta(
@@ -171,7 +165,7 @@ func (gim *GoInterfaceMeta[T]) Doc() []string {
 // 	return gim.methodMeta[methodName]
 // }
 
-// func (gim *GoInterfaceMeta[T]) ForeachMethodDecl(f func(*ast.Field) bool) {
+// func (gim *GoInterfaceMeta) ForeachMethodDecl(f func(*ast.Field) bool) {
 // 	interfaceType := gim.node.(*ast.TypeSpec).Type.(*ast.InterfaceType)
 // 	if interfaceType.Methods == nil {
 // 		return
@@ -186,7 +180,7 @@ func (gim *GoInterfaceMeta[T]) Doc() []string {
 // 	}
 // }
 
-// func (gim *GoInterfaceMeta[T]) TypeParams() []*GoVarMeta {
+// func (gim *GoInterfaceMeta) TypeParams() []*GoVarMeta {
 // 	if gim.node == nil || gim.node.(*ast.TypeSpec).TypeParams == nil || len(gim.node.(*ast.TypeSpec).TypeParams.List) == 0 {
 // 		return nil
 // 	}
@@ -205,7 +199,7 @@ func (gim *GoInterfaceMeta[T]) Doc() []string {
 // 	return tParams
 // }
 
-// func (gim *GoInterfaceMeta[T]) AllMethodIdentSlice() []string {
+// func (gim *GoInterfaceMeta) AllMethodIdentSlice() []string {
 // 	methodIdentSlice := make([]string, 0, 8)
 // 	gim.ForeachMethodDecl(func(f *ast.Field) bool {
 // 		methodIdentSlice = append(methodIdentSlice, f.Names[0].String())

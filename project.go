@@ -2,10 +2,7 @@ package extractor
 
 import (
 	"fmt"
-	"go/parser"
-	"go/token"
 	"io/fs"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 )
@@ -31,104 +28,104 @@ type GoProjectMeta struct {
 	packageMap map[string]*GoPackageMeta
 }
 
-// newGoProjectMeta 通过 ast 构造 项目 的 meta
-func newGoProjectMeta(absolutePath, moduleName string) *GoProjectMeta {
-	return &GoProjectMeta{
-		absolutePath: absolutePath,
-		moduleName:   moduleName,
-		packageMap:   make(map[string]*GoPackageMeta),
-	}
-}
+// // newGoProjectMeta 通过 ast 构造 项目 的 meta
+// func newGoProjectMeta(absolutePath, moduleName string) *GoProjectMeta {
+// 	return &GoProjectMeta{
+// 		absolutePath: absolutePath,
+// 		moduleName:   moduleName,
+// 		packageMap:   make(map[string]*GoPackageMeta),
+// 	}
+// }
 
 // -------------------------------- extractor --------------------------------
 
-// extractGoProjectMetaByDir 通过指定目录提取项目 meta 数据，针对特定目录执行特定操作
-func extractGoProjectMetaByDir(projectPath string, toHandlePaths map[string]struct{}, spec bool) (*GoProjectMeta, error) {
-	projectAbsPath, err := filepath.Abs(projectPath)
-	if err != nil {
-		return nil, err
-	}
-	projectDirStat, err := os.Stat(projectPath)
-	if err != nil {
-		return nil, err.(*os.PathError)
-	}
+// // extractGoProjectMetaByDir 通过指定目录提取项目 meta 数据，针对特定目录执行特定操作
+// func extractGoProjectMetaByDir(projectPath string, toHandlePaths map[string]struct{}, spec bool) (*GoProjectMeta, error) {
+// 	projectAbsPath, err := filepath.Abs(projectPath)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	projectDirStat, err := os.Stat(projectPath)
+// 	if err != nil {
+// 		return nil, err.(*os.PathError)
+// 	}
 
-	toHandleAbsPaths := make(map[string]struct{})
-	for toHandleRelPath := range toHandlePaths {
-		pathAbs, err := filepath.Abs(toHandleRelPath)
-		if err != nil {
-			return nil, err
-		}
-		toHandleAbsPaths[pathAbs] = struct{}{}
-	}
-	if spec {
-		toHandleAbsPaths[filepath.Join(projectAbsPath, "go.mod")] = struct{}{}
-	}
+// 	toHandleAbsPaths := make(map[string]struct{})
+// 	for toHandleRelPath := range toHandlePaths {
+// 		pathAbs, err := filepath.Abs(toHandleRelPath)
+// 		if err != nil {
+// 			return nil, err
+// 		}
+// 		toHandleAbsPaths[pathAbs] = struct{}{}
+// 	}
+// 	if spec {
+// 		toHandleAbsPaths[filepath.Join(projectAbsPath, "go.mod")] = struct{}{}
+// 	}
 
-	projectMeta := &GoProjectMeta{
-		absolutePath: projectAbsPath,
-		packageMap:   make(map[string]*GoPackageMeta),
-	}
+// 	projectMeta := &GoProjectMeta{
+// 		absolutePath: projectAbsPath,
+// 		packageMap:   make(map[string]*GoPackageMeta),
+// 	}
 
-	tmpParseDir := filepath.Join(projectAbsPath, "tmp")
-	if projectDirStat.IsDir() {
-		err := CreateDir(tmpParseDir)
+// 	tmpParseDir := filepath.Join(projectAbsPath, "tmp")
+// 	if projectDirStat.IsDir() {
+// 		err := CreateDir(tmpParseDir)
 
-		if err != nil {
-			panic(err)
-		}
-		// filepath.WalkDir()
-		TraverseDirectorySpecificFileWithFunction(
-			projectAbsPath, "go",
-			func(s string, de fs.DirEntry) error {
-				fmt.Printf("s = %v\n", s)
-				fmt.Printf("de.Name = %v\n", de.Name())
-				f1, err := ioutil.ReadFile(s)
-				if err != nil {
-					panic(err)
-				}
-				err = ioutil.WriteFile(filepath.Join(tmpParseDir, de.Name()), f1, 0644)
-				if err != nil {
-					panic(err)
-				}
-				return nil
-			},
-		)
-	} else {
-		panic("not dir")
-	}
+// 		if err != nil {
+// 			panic(err)
+// 		}
+// 		// filepath.WalkDir()
+// 		TraverseDirectorySpecificFileWithFunction(
+// 			projectAbsPath, "go",
+// 			func(s string, de fs.DirEntry) error {
+// 				fmt.Printf("s = %v\n", s)
+// 				fmt.Printf("de.Name = %v\n", de.Name())
+// 				f1, err := ioutil.ReadFile(s)
+// 				if err != nil {
+// 					panic(err)
+// 				}
+// 				err = ioutil.WriteFile(filepath.Join(tmpParseDir, de.Name()), f1, 0644)
+// 				if err != nil {
+// 					panic(err)
+// 				}
+// 				return nil
+// 			},
+// 		)
+// 	} else {
+// 		panic("not dir")
+// 	}
 
-	projectFileSet := token.NewFileSet()
-	pkgMap, err := parser.ParseDir(projectFileSet, tmpParseDir, nil, parser.ParseComments)
-	if err != nil {
-		return nil, err
-	}
+// 	projectFileSet := token.NewFileSet()
+// 	pkgMap, err := parser.ParseDir(projectFileSet, tmpParseDir, nil, parser.ParseComments)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-	for pkgPath := range pkgMap {
-		fmt.Printf("pkgPath %v\n", pkgPath)
-	}
+// 	for pkgPath := range pkgMap {
+// 		fmt.Printf("pkgPath %v\n", pkgPath)
+// 	}
 
-	err = os.RemoveAll(tmpParseDir)
-	if err != nil {
-		panic(err)
-	}
+// 	err = os.RemoveAll(tmpParseDir)
+// 	if err != nil {
+// 		panic(err)
+// 	}
 
-	return projectMeta, nil
-}
+// 	return projectMeta, nil
+// }
 
 // ExtractGoProjectMeta 通过指定目录提取项目 meta 数据
-// - 指定忽略路径
+// - 忽略项目路径下的相对路径
 // - 递归提取
 func ExtractGoProjectMeta(projectPath string, ignorePaths map[string]struct{}) (*GoProjectMeta, error) {
 	return extractGoProjectMeta(projectPath, ignorePaths, false)
 }
 
-// ExtractGoProjectMeta 通过指定目录提取项目 meta 数据
-// - 指定特定路径
-// - 递归提取
-func ExtractGoProjectMetaWithSpecPaths(projectPath string, specPaths map[string]struct{}) (*GoProjectMeta, error) {
-	return extractGoProjectMeta(projectPath, specPaths, true)
-}
+// // ExtractGoProjectMeta 通过指定目录提取项目 meta 数据
+// // - 限定项目路径下的相对路径
+// // - 递归提取
+// func ExtractGoProjectMetaWithSpecPaths(projectPath string, specPaths map[string]struct{}) (*GoProjectMeta, error) {
+// 	return extractGoProjectMeta(projectPath, specPaths, true)
+// }
 
 // extractGoProjectMeta 通过指定目录提取项目 meta 数据
 // - 递归提取
@@ -144,10 +141,7 @@ func extractGoProjectMeta(projectPath string, toHandlePaths map[string]struct{},
 
 	toHandleAbsPaths := make(map[string]struct{})
 	for toHandleRelPath := range toHandlePaths {
-		pathAbs, err := filepath.Abs(toHandleRelPath)
-		if err != nil {
-			return nil, err
-		}
+		pathAbs := filepath.Join(projectAbsPath, toHandleRelPath)
 		toHandleAbsPaths[pathAbs] = struct{}{}
 	}
 	if spec {

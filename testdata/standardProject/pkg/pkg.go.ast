@@ -738,12 +738,12 @@
    737  .  FileEnd: /Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject/pkg/pkg.go:36:3
    738  .  Scope: *ast.Scope {
    739  .  .  Objects: map[string]*ast.Object (len = 6) {
-   740  .  .  .  "ExampleFunc": *(obj @ 51)
-   741  .  .  .  "NoDocExampleFunc": *(obj @ 143)
-   742  .  .  .  "OneLineDocExampleFunc": *(obj @ 243)
-   743  .  .  .  "ImportSelectorFunc": *(obj @ 335)
-   744  .  .  .  "ExampleTemplateStructWithTemplateParent": *(obj @ 472)
-   745  .  .  .  "ExampleTemplateInterfaceWithTypeConstraints": *(obj @ 576)
+   740  .  .  .  "ImportSelectorFunc": *(obj @ 335)
+   741  .  .  .  "ExampleTemplateStructWithTemplateParent": *(obj @ 472)
+   742  .  .  .  "ExampleTemplateInterfaceWithTypeConstraints": *(obj @ 576)
+   743  .  .  .  "ExampleFunc": *(obj @ 51)
+   744  .  .  .  "NoDocExampleFunc": *(obj @ 143)
+   745  .  .  .  "OneLineDocExampleFunc": *(obj @ 243)
    746  .  .  }
    747  .  }
    748  .  Imports: []*ast.ImportSpec (len = 3) {

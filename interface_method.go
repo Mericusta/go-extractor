@@ -5,55 +5,52 @@ import (
 	"go/ast"
 )
 
-type GoInterfaceMethodMetaTypeConstraints interface {
-	*ast.Field
-
-	ast.Node
-}
-
 // GoInterfaceMethodMeta go interface 的 method 的 meta 数据
-type GoInterfaceMethodMeta[T GoInterfaceMethodMetaTypeConstraints, IT GoInterfaceMetaTypeConstraints] struct {
+type GoInterfaceMethodMeta struct {
 	// 组合基本 meta 数据
 	// ast 节点，要求为 满足 IsInterfaceMethodNode 的 *ast.Field
 	// 以 ast 节点 为单位执行 AST/PrintAST/Expression/Format
-	*meta[T]
+	*meta
 
 	// method 所属的 interface 的 meta 数据
-	interfaceMeta *GoInterfaceMeta[IT]
+	interfaceMeta *GoInterfaceMeta
 
 	// interface 的 method 的标识
 	ident string
 
 	// func 参数
-	params []*GoVarMeta[*ast.Field]
+	params []*GoVarMeta
 
 	// func 返回值
-	returns []*GoVarMeta[*ast.Field]
+	returns []*GoVarMeta
 
 	// func 模板参数
-	typeParams []*GoVarMeta[*ast.Field]
+	typeParams []*GoVarMeta
 }
 
 // newGoInterfaceMethodMeta 通过 ast 构造 interface 的 method 的 meta 数据
-func newGoInterfaceMethodMeta[T GoInterfaceMethodMetaTypeConstraints, IT GoInterfaceMetaTypeConstraints](m *meta[T], ident string, gim *GoInterfaceMeta[IT], stopExtract ...bool) *GoInterfaceMethodMeta[T, IT] {
-	gimm := &GoInterfaceMethodMeta[T, IT]{meta: m, ident: ident, interfaceMeta: gim}
+func newGoInterfaceMethodMeta(m *meta, ident string, gim *GoInterfaceMeta, stopExtract ...bool) *GoInterfaceMethodMeta {
+	gimm := &GoInterfaceMethodMeta{meta: m, ident: ident, interfaceMeta: gim}
 	if len(stopExtract) == 0 {
 		gimm.ExtractAll()
 	}
 	return gimm
 }
 
-func (gimm *GoInterfaceMethodMeta[T, IT]) funcType() *ast.FuncType {
-	var field *ast.Field = gimm.node
+func (gimm *GoInterfaceMethodMeta) funcType() *ast.FuncType {
+	var field *ast.Field = gimm.node.(*ast.Field)
+	if field.Type == nil {
+		return nil
+	}
 	return field.Type.(*ast.FuncType)
 }
 
 // -------------------------------- extractor --------------------------------
 
 // ExtractGoInterfaceMethodMeta 通过文件的绝对路径和 interface 以及 method 的 标识 提取文件中的 interface 的 method 的 meta 数据
-func ExtractGoInterfaceMethodMeta[T GoInterfaceMethodMetaTypeConstraints](extractFilepath, interfaceIdent, methodIdent string) (*GoInterfaceMethodMeta[*ast.Field, *ast.TypeSpec], error) {
+func ExtractGoInterfaceMethodMeta(extractFilepath, interfaceIdent, methodIdent string) (*GoInterfaceMethodMeta, error) {
 	// 提取 package
-	gpm, err := ExtractGoPackageMeta[T](extractFilepath, nil)
+	gpm, err := ExtractGoPackageMeta(extractFilepath, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +74,7 @@ func ExtractGoInterfaceMethodMeta[T GoInterfaceMethodMetaTypeConstraints](extrac
 }
 
 // ExtractAll 提取 func 内所有 params，returns，typeParams 的 meta 数据
-func (gimm *GoInterfaceMethodMeta[T, IT]) ExtractAll() {
+func (gimm *GoInterfaceMethodMeta) ExtractAll() {
 	// 提取 params
 	gimm.extractParams()
 
@@ -88,14 +85,14 @@ func (gimm *GoInterfaceMethodMeta[T, IT]) ExtractAll() {
 	gimm.extractTypeParams()
 }
 
-func (gimm *GoInterfaceMethodMeta[T, IT]) extractParams() {
+func (gimm *GoInterfaceMethodMeta) extractParams() {
 	funcType := gimm.funcType()
 	if funcType == nil || funcType.Params == nil || len(funcType.Params.List) == 0 {
 		return
 	}
 
 	pLen := len(funcType.Params.List)
-	gimm.params = make([]*GoVarMeta[*ast.Field], 0, pLen)
+	gimm.params = make([]*GoVarMeta, 0, pLen)
 	for _, field := range funcType.Params.List {
 		if len(field.Names) > 0 {
 			// 定义参数名称的方法
@@ -109,14 +106,14 @@ func (gimm *GoInterfaceMethodMeta[T, IT]) extractParams() {
 	}
 }
 
-func (gimm *GoInterfaceMethodMeta[T, IT]) extractReturns() {
+func (gimm *GoInterfaceMethodMeta) extractReturns() {
 	funcType := gimm.funcType()
 	if funcType == nil || funcType.Results == nil || len(funcType.Results.List) == 0 {
 		return
 	}
 
 	rLen := len(funcType.Results.List)
-	gimm.returns = make([]*GoVarMeta[*ast.Field], 0, rLen)
+	gimm.returns = make([]*GoVarMeta, 0, rLen)
 	for _, field := range funcType.Results.List {
 		if len(field.Names) > 0 {
 			// 定义返回值名称的方法
@@ -130,16 +127,16 @@ func (gimm *GoInterfaceMethodMeta[T, IT]) extractReturns() {
 	}
 }
 
-func (gimm *GoInterfaceMethodMeta[T, IT]) extractTypeParams() {
+func (gimm *GoInterfaceMethodMeta) extractTypeParams() {
 }
 
 // -------------------------------- extractor --------------------------------
 
 // -------------------------------- unit test --------------------------------
 
-func (gimm *GoInterfaceMethodMeta[T, IT]) Ident() string                     { return gimm.ident }
-func (gimm *GoInterfaceMethodMeta[T, IT]) Params() []*GoVarMeta[*ast.Field]  { return gimm.params }
-func (gimm *GoInterfaceMethodMeta[T, IT]) Returns() []*GoVarMeta[*ast.Field] { return gimm.returns }
+func (gimm *GoInterfaceMethodMeta) Ident() string         { return gimm.ident }
+func (gimm *GoInterfaceMethodMeta) Params() []*GoVarMeta  { return gimm.params }
+func (gimm *GoInterfaceMethodMeta) Returns() []*GoVarMeta { return gimm.returns }
 
 // -------------------------------- unit test --------------------------------
 

@@ -4,22 +4,16 @@ import (
 	"go/ast"
 )
 
-type GoMethodMetaTypeConstraints interface {
-	*ast.FuncDecl
-
-	ast.Node
-}
-
-type GoMethodMeta[T GoMethodMetaTypeConstraints] struct {
-	*GoFuncMeta[T]
+type GoMethodMeta struct {
+	*GoFuncMeta
 
 	// receiver 的 meta 数据
-	receiver *GoVarMeta[*ast.Field]
+	receiver *GoVarMeta
 }
 
 // newGoMethodMeta 通过 ast 构造 struct 的 method 的 meta 数据
-func newGoMethodMeta[T GoMethodMetaTypeConstraints](m *meta[T], ident string, stopExtract ...bool) *GoMethodMeta[T] {
-	gmm := &GoMethodMeta[T]{GoFuncMeta: newGoFuncMeta(m, ident)}
+func newGoMethodMeta(m *meta, ident string, stopExtract ...bool) *GoMethodMeta {
+	gmm := &GoMethodMeta{GoFuncMeta: newGoFuncMeta(m, ident)}
 	if len(stopExtract) == 0 {
 		gmm.ExtractAll()
 	}
@@ -28,7 +22,7 @@ func newGoMethodMeta[T GoMethodMetaTypeConstraints](m *meta[T], ident string, st
 
 // -------------------------------- extractor --------------------------------
 
-func (gmm *GoMethodMeta[T]) ExtractAll() {
+func (gmm *GoMethodMeta) ExtractAll() {
 	// 提取 func
 	gmm.GoFuncMeta.ExtractAll()
 
@@ -36,9 +30,9 @@ func (gmm *GoMethodMeta[T]) ExtractAll() {
 	gmm.extractReceiver()
 }
 
-func (gmm *GoMethodMeta[T]) extractReceiver() {
+func (gmm *GoMethodMeta) extractReceiver() {
 	var (
-		funcDecl     *ast.FuncDecl = gmm.node
+		funcDecl     *ast.FuncDecl = gmm.node.(*ast.FuncDecl)
 		receiverNode               = funcDecl.Recv.List[0]
 		receiverName string
 	)
@@ -83,11 +77,11 @@ func traitReceiverStruct(node ast.Node) (*ast.Ident, bool) {
 
 // -------------------------------- unit test --------------------------------
 
-func (gmm *GoMethodMeta[T]) Receiver() *GoVarMeta[*ast.Field] { return gmm.receiver }
+func (gmm *GoMethodMeta) Receiver() *GoVarMeta { return gmm.receiver }
 
 // -------------------------------- unit test --------------------------------
 
-// func ExtractGoMethodMeta[T GoMethodMetaTypeConstraints](extractFilepath, structName, methodName string) (*GoMethodMeta[T], error) {
+// func ExtractGoMethodMeta[T GoMethodMetaTypeConstraints](extractFilepath, structName, methodName string) (*GoMethodMeta, error) {
 // 	gfm, err := ExtractGoFileMeta(extractFilepath)
 // 	if err != nil {
 // 		return nil, err

@@ -44,11 +44,11 @@ type GoVarMetaTypeConstraints interface {
 }
 
 // GoVarMeta go var 的 meta 数据
-type GoVarMeta[T GoVarMetaTypeConstraints] struct {
+type GoVarMeta struct {
 	// 组合基本 meta 数据
 	// ast 节点，要求为 *ast.ValueSpec 或 *ast.Field 或 *ast.InterfaceType
 	// 以 ast 节点 为单位执行 AST/PrintAST/Expression/Format
-	*meta[T]
+	*meta
 
 	// var 标识
 	ident string
@@ -67,8 +67,8 @@ type GoVarMeta[T GoVarMetaTypeConstraints] struct {
 }
 
 // newGoVarMeta 通过 ast 构造 var 的 meta 数据
-func newGoVarMeta[T GoVarMetaTypeConstraints](m *meta[T], ident string, stopExtract ...bool) *GoVarMeta[T] {
-	gvm := &GoVarMeta[T]{meta: m, ident: ident}
+func newGoVarMeta(m *meta, ident string, stopExtract ...bool) *GoVarMeta {
+	gvm := &GoVarMeta{meta: m, ident: ident}
 	if len(stopExtract) == 0 {
 		gvm.ExtractAll()
 	}
@@ -77,18 +77,18 @@ func newGoVarMeta[T GoVarMetaTypeConstraints](m *meta[T], ident string, stopExtr
 
 // -------------------------------- unit test --------------------------------
 
-func (gvm *GoVarMeta[T]) Ident() string          { return gvm.ident }
-func (gvm *GoVarMeta[T]) TypeIdent() string      { return gvm.typeIdent }
-func (gvm *GoVarMeta[T]) TypeExpression() string { return gvm.typeExpression }
+func (gvm *GoVarMeta) Ident() string          { return gvm.ident }
+func (gvm *GoVarMeta) TypeIdent() string      { return gvm.typeIdent }
+func (gvm *GoVarMeta) TypeExpression() string { return gvm.typeExpression }
 
 // -------------------------------- unit test --------------------------------
 
 // -------------------------------- extractor --------------------------------
 
 // ExtractGoVarMeta 通过文件的绝对路径和 var 的 标识 提取文件中 var 的 meta 数据
-func ExtractGoVarMeta[T GoVarMetaTypeConstraints](extractFilepath, varIdent string) (*GoVarMeta[*ast.ValueSpec], error) {
+func ExtractGoVarMeta(extractFilepath, varIdent string) (*GoVarMeta, error) {
 	// 提取 package
-	gpm, err := ExtractGoPackageMeta[T](extractFilepath, nil)
+	gpm, err := ExtractGoPackageMeta(extractFilepath, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -105,12 +105,12 @@ func ExtractGoVarMeta[T GoVarMetaTypeConstraints](extractFilepath, varIdent stri
 	return gvm, nil
 }
 
-func (gvm *GoVarMeta[T]) ExtractAll() {
+func (gvm *GoVarMeta) ExtractAll() {
 	// 提取 类型
 	gvm.extractType()
 }
 
-func (gvm *GoVarMeta[T]) extractType() {
+func (gvm *GoVarMeta) extractType() {
 	var (
 		n        ast.Node = gvm.node
 		typeExpr ast.Expr
@@ -221,7 +221,7 @@ func (gvm *GoVarMeta[T]) extractType() {
 // -------------------------------- maker --------------------------------
 
 // MakeUpVarMeta 通过参数生成 var 的 meta 数据
-func MakeUpVarMeta(ident, typeExpression string) *GoVarMeta[*ast.Field] {
+func MakeUpVarMeta(ident, typeExpression string) *GoVarMeta {
 	typeExpr, err := parser.ParseExpr(typeExpression)
 	if typeExpr == nil || err != nil {
 		return nil
@@ -236,7 +236,7 @@ func MakeUpVarMeta(ident, typeExpression string) *GoVarMeta[*ast.Field] {
 	return gvm
 }
 
-func (gvm *GoVarMeta[T]) make() *ast.Field {
+func (gvm *GoVarMeta) make() *ast.Field {
 	var (
 		n        ast.Node = gvm.node
 		typeExpr ast.Expr

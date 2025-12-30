@@ -7,14 +7,10 @@ import (
 	"path/filepath"
 )
 
-type GoPackageMetaTypeConstraints interface {
-	ast.Node
-}
-
 // GoPackageMeta go package 的 meta 数据
 type GoPackageMeta struct {
 	// 空组合
-	*meta[ast.Node]
+	*meta
 
 	// package 标识
 	ident string
@@ -27,41 +23,41 @@ type GoPackageMeta struct {
 
 	// package 内所有文件的 meta 数据
 	// - key: 文件名称
-	fileMetaMap map[string]*GoFileMeta[*ast.File]
+	fileMetaMap map[string]*GoFileMeta
 
 	// package 内所有 var 的 meta 数据
 	// - key: var 标识
-	varMetaMap map[string]*GoVarMeta[*ast.ValueSpec]
+	varMetaMap map[string]*GoVarMeta
 
 	// package 内所有 func 的 meta 数据
 	// - key: func 标识
-	funcMetaMap map[string]*GoFuncMeta[*ast.FuncDecl]
+	funcMetaMap map[string]*GoFuncMeta
 
 	// package 内所有 struct 的 meta 数据
 	// - key: struct 标识
-	structMetaMap map[string]*GoStructMeta[*ast.TypeSpec]
+	structMetaMap map[string]*GoStructMeta
 
 	// package 内所有 interface 的 meta 数据
 	// - key: interface 标识
-	interfaceMetaMap map[string]*GoInterfaceMeta[*ast.TypeSpec]
+	interfaceMetaMap map[string]*GoInterfaceMeta
 
-	// package 内所有 类型约束 的 meta 数据
-	// - key: 类型约束 标识
-	typeConstraintsMetaMap map[string]*GoInterfaceMeta[*ast.TypeSpec]
+	// // package 内所有 类型约束 的 meta 数据
+	// // - key: 类型约束 标识
+	// typeConstraintsMetaMap map[string]*GoInterfaceMeta
 }
 
 // newGoPackageMeta 通过 ast 构造 package 的 meta
 func newGoPackageMeta(ident, absolutePath, importPath string) *GoPackageMeta {
 	return &GoPackageMeta{
-		ident:                  ident,
-		absolutePath:           absolutePath,
-		importPath:             importPath,
-		fileMetaMap:            make(map[string]*GoFileMeta[*ast.File]),
-		varMetaMap:             make(map[string]*GoVarMeta[*ast.ValueSpec]),
-		funcMetaMap:            make(map[string]*GoFuncMeta[*ast.FuncDecl]),
-		structMetaMap:          make(map[string]*GoStructMeta[*ast.TypeSpec]),
-		interfaceMetaMap:       make(map[string]*GoInterfaceMeta[*ast.TypeSpec]),
-		typeConstraintsMetaMap: make(map[string]*GoInterfaceMeta[*ast.TypeSpec]),
+		ident:            ident,
+		absolutePath:     absolutePath,
+		importPath:       importPath,
+		fileMetaMap:      make(map[string]*GoFileMeta),
+		varMetaMap:       make(map[string]*GoVarMeta),
+		funcMetaMap:      make(map[string]*GoFuncMeta),
+		structMetaMap:    make(map[string]*GoStructMeta),
+		interfaceMetaMap: make(map[string]*GoInterfaceMeta),
+		// typeConstraintsMetaMap: make(map[string]*GoInterfaceMeta),
 	}
 }
 
@@ -71,22 +67,22 @@ func newGoPackageMeta(ident, absolutePath, importPath string) *GoPackageMeta {
 // - 指定忽略文件
 // - 递归提取
 // - 无法获得 package 的导入路径
-func ExtractGoPackageMeta[T GoPackageMetaTypeConstraints](packageRelativePath string, ignoreFiles map[string]struct{}) (*GoPackageMeta, error) {
-	return extractGoPackageMeta[T](packageRelativePath, ignoreFiles, false)
+func ExtractGoPackageMeta(packageRelativePath string, ignoreFiles map[string]struct{}) (*GoPackageMeta, error) {
+	return extractGoPackageMeta(packageRelativePath, ignoreFiles, false)
 }
 
 // ExtractGoPackageMetaWithSpecPaths 通过 package 的绝对路径提取 package 的 meta 数据
 // - 指定特定文件
 // - 递归提取
 // - 无法获得 package 的导入路径
-func ExtractGoPackageMetaWithSpecPaths[T GoPackageMetaTypeConstraints](packageRelativePath string, specFiles map[string]struct{}) (*GoPackageMeta, error) {
-	return extractGoPackageMeta[T](packageRelativePath, specFiles, true)
+func ExtractGoPackageMetaWithSpecPaths(packageRelativePath string, specFiles map[string]struct{}) (*GoPackageMeta, error) {
+	return extractGoPackageMeta(packageRelativePath, specFiles, true)
 }
 
 // extractGoPackageMeta 通过 package 的结对路径提取 package 的 meta 数据
 // - 递归提取
 // - 无法获得 package 的导入路径
-func extractGoPackageMeta[T GoPackageMetaTypeConstraints](packageRelativePath string, files map[string]struct{}, spec bool) (*GoPackageMeta, error) {
+func extractGoPackageMeta(packageRelativePath string, files map[string]struct{}, spec bool) (*GoPackageMeta, error) {
 	// 查找绝对路径
 	packagePathAbs, err := filepath.Abs(packageRelativePath)
 	if err != nil {
@@ -111,11 +107,11 @@ func extractGoPackageMeta[T GoPackageMetaTypeConstraints](packageRelativePath st
 	// 构造 meta 数据
 	packageMeta := &GoPackageMeta{
 		absolutePath:     packagePathAbs,
-		fileMetaMap:      make(map[string]*GoFileMeta[*ast.File]),
-		varMetaMap:       make(map[string]*GoVarMeta[*ast.ValueSpec]),
-		structMetaMap:    make(map[string]*GoStructMeta[*ast.TypeSpec]),
-		interfaceMetaMap: make(map[string]*GoInterfaceMeta[*ast.TypeSpec]),
-		funcMetaMap:      make(map[string]*GoFuncMeta[*ast.FuncDecl]),
+		fileMetaMap:      make(map[string]*GoFileMeta),
+		varMetaMap:       make(map[string]*GoVarMeta),
+		structMetaMap:    make(map[string]*GoStructMeta),
+		interfaceMetaMap: make(map[string]*GoInterfaceMeta),
+		funcMetaMap:      make(map[string]*GoFuncMeta),
 	}
 
 	if packageDirStat.IsDir() {
@@ -289,24 +285,24 @@ func (gpm *GoPackageMeta) extractInterface() {
 // -------------------------------- extractor --------------------------------
 
 // SearchFileMeta 根据 文件名 搜索 文件 的 meta 数据
-func (gpm *GoPackageMeta) SearchFileMeta(fileName string) *GoFileMeta[*ast.File] {
+func (gpm *GoPackageMeta) SearchFileMeta(fileName string) *GoFileMeta {
 	return gpm.fileMetaMap[fileName]
 }
 
 // SearchVarMeta 根据 var 名称 搜索 var 的 meta 数据
-func (gpm *GoPackageMeta) SearchVarMeta(varIdent string) *GoVarMeta[*ast.ValueSpec] {
+func (gpm *GoPackageMeta) SearchVarMeta(varIdent string) *GoVarMeta {
 	return gpm.varMetaMap[varIdent]
 }
 
-func (gpm *GoPackageMeta) SearchFuncMeta(funcIdent string) *GoFuncMeta[*ast.FuncDecl] {
+func (gpm *GoPackageMeta) SearchFuncMeta(funcIdent string) *GoFuncMeta {
 	return gpm.funcMetaMap[funcIdent]
 }
 
-func (gpm *GoPackageMeta) SearchStructMeta(structName string) *GoStructMeta[*ast.TypeSpec] {
+func (gpm *GoPackageMeta) SearchStructMeta(structName string) *GoStructMeta {
 	return gpm.structMetaMap[structName]
 }
 
-func (gpm *GoPackageMeta) SearchInterfaceMeta(interfaceIdent string) *GoInterfaceMeta[*ast.TypeSpec] {
+func (gpm *GoPackageMeta) SearchInterfaceMeta(interfaceIdent string) *GoInterfaceMeta {
 	return gpm.interfaceMetaMap[interfaceIdent]
 }
 
@@ -410,24 +406,17 @@ func (gpm *GoPackageMeta) FunctionNames() []string {
 
 // -------------------------------- unit test --------------------------------
 
-func (gpm *GoPackageMeta) Ident() string                                  { return gpm.ident }
-func (gpm *GoPackageMeta) AbsolutePath() string                           { return gpm.absolutePath }
-func (gpm *GoPackageMeta) ImportPath() string                             { return gpm.importPath }
-func (gpm *GoPackageMeta) FileMetaMap() map[string]*GoFileMeta[*ast.File] { return gpm.fileMetaMap }
-func (gpm *GoPackageMeta) VariableMetaMap() map[string]*GoVarMeta[*ast.ValueSpec] {
-	return gpm.varMetaMap
-}
-func (gpm *GoPackageMeta) FuncMetaMap() map[string]*GoFuncMeta[*ast.FuncDecl] {
-	return gpm.funcMetaMap
-}
-func (gpm *GoPackageMeta) StructMetaMap() map[string]*GoStructMeta[*ast.TypeSpec] {
-	return gpm.structMetaMap
-}
-func (gpm *GoPackageMeta) InterfaceMetaMap() map[string]*GoInterfaceMeta[*ast.TypeSpec] {
-	return gpm.interfaceMetaMap
-}
-func (gpm *GoPackageMeta) TypeConstraintsMetaMap() map[string]*GoInterfaceMeta[*ast.TypeSpec] {
-	return gpm.typeConstraintsMetaMap
-}
+func (gpm *GoPackageMeta) Ident() string                                 { return gpm.ident }
+func (gpm *GoPackageMeta) AbsolutePath() string                          { return gpm.absolutePath }
+func (gpm *GoPackageMeta) ImportPath() string                            { return gpm.importPath }
+func (gpm *GoPackageMeta) FileMetaMap() map[string]*GoFileMeta           { return gpm.fileMetaMap }
+func (gpm *GoPackageMeta) VariableMetaMap() map[string]*GoVarMeta        { return gpm.varMetaMap }
+func (gpm *GoPackageMeta) FuncMetaMap() map[string]*GoFuncMeta           { return gpm.funcMetaMap }
+func (gpm *GoPackageMeta) StructMetaMap() map[string]*GoStructMeta       { return gpm.structMetaMap }
+func (gpm *GoPackageMeta) InterfaceMetaMap() map[string]*GoInterfaceMeta { return gpm.interfaceMetaMap }
+
+// func (gpm *GoPackageMeta) TypeConstraintsMetaMap() map[string]*GoInterfaceMeta {
+// 	return gpm.typeConstraintsMetaMap
+// }
 
 // -------------------------------- unit test --------------------------------

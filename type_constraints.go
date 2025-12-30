@@ -4,15 +4,9 @@ import (
 	"go/ast"
 )
 
-type GoTypeConstraintsMetaTypeConstraints interface {
-	*ast.TypeSpec
-
-	ast.Node
-}
-
-type GoTypeConstraintsMeta[T GoTypeConstraintsMetaTypeConstraints] struct {
+type GoTypeConstraintsMeta struct {
 	// typeSpec     *ast.TypeSpec
-	*meta[T]
+	*meta
 	commentGroup *ast.CommentGroup
 	// methodMeta   map[string]*GoTypeConstraintsMethodMeta
 }

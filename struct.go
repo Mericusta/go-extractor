@@ -5,40 +5,34 @@ import (
 	"go/ast"
 )
 
-type GoStructMetaTypeConstraints interface {
-	*ast.TypeSpec
-
-	ast.Node
-}
-
 // GoStructMeta go struct 的 meta 数据
-type GoStructMeta[T GoStructMetaTypeConstraints] struct {
+type GoStructMeta struct {
 	// 组合基本 meta 数据
 	// ast 节点，要求为 满足 IsStructNode 的 *ast.TypeSpec
 	// 以 ast 节点 为单位执行 AST/PrintAST/Expression/Format
-	*meta[T]
+	*meta
 
 	// struct 标识
 	ident string
 
 	// struct 内所有 member 的 meta 数据
 	// - key: member 标识
-	memberMetaMap map[string]*GoVarMeta[*ast.Field]
+	memberMetaMap map[string]*GoVarMeta
 
 	// struct 内所有 method 的 meta 数据
 	// - key: method 标识
-	methodMetaMap map[string]*GoMethodMeta[*ast.FuncDecl]
+	methodMetaMap map[string]*GoMethodMeta
 
 	commentGroup *ast.CommentGroup
 }
 
 // newGoStructMeta 通过 ast 构造 struct 的 meta 数据
-func newGoStructMeta[T GoStructMetaTypeConstraints](m *meta[T], ident string, stopExtract ...bool) *GoStructMeta[T] {
-	gsm := &GoStructMeta[T]{
+func newGoStructMeta(m *meta, ident string, stopExtract ...bool) *GoStructMeta {
+	gsm := &GoStructMeta{
 		meta:          m,
 		ident:         ident,
-		memberMetaMap: make(map[string]*GoVarMeta[*ast.Field]),
-		methodMetaMap: make(map[string]*GoMethodMeta[*ast.FuncDecl]),
+		memberMetaMap: make(map[string]*GoVarMeta),
+		methodMetaMap: make(map[string]*GoMethodMeta),
 	}
 	if len(stopExtract) == 0 {
 		gsm.ExtractAll()
@@ -49,9 +43,9 @@ func newGoStructMeta[T GoStructMetaTypeConstraints](m *meta[T], ident string, st
 // -------------------------------- extractor --------------------------------
 
 // ExtractGoStructMeta 通过文件的绝对路径和 struct 的 标识 提取文件中的 struct 的 meta 数据
-func ExtractGoStructMeta[T GoStructMetaTypeConstraints](extractFilepath, structIdent string) (*GoStructMeta[*ast.TypeSpec], error) {
+func ExtractGoStructMeta(extractFilepath, structIdent string) (*GoStructMeta, error) {
 	// 提取 package
-	gpm, err := ExtractGoPackageMeta[T](extractFilepath, nil)
+	gpm, err := ExtractGoPackageMeta(extractFilepath, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -69,8 +63,8 @@ func ExtractGoStructMeta[T GoStructMetaTypeConstraints](extractFilepath, structI
 }
 
 // ExtractAll 提取 struct 内所有 member，method 的 meta 数据
-func (gsm *GoStructMeta[T]) ExtractAll() {
-	var typeSpec *ast.TypeSpec = gsm.node
+func (gsm *GoStructMeta) ExtractAll() {
+	var typeSpec *ast.TypeSpec = gsm.node.(*ast.TypeSpec)
 	structType := typeSpec.Type.(*ast.StructType)
 	if structType == nil || structType.Fields == nil {
 		return
@@ -144,11 +138,11 @@ func (gsm *GoStructMeta[T]) ExtractAll() {
 
 // -------------------------------- extractor --------------------------------
 
-func (gsm *GoStructMeta[T]) SearchMemberMeta(member string) *GoVarMeta[*ast.Field] {
+func (gsm *GoStructMeta) SearchMemberMeta(member string) *GoVarMeta {
 	return gsm.memberMetaMap[member]
 }
 
-func (gsm *GoStructMeta[T]) SearchMethodMeta(method string) *GoMethodMeta[*ast.FuncDecl] {
+func (gsm *GoStructMeta) SearchMethodMeta(method string) *GoMethodMeta {
 	return gsm.methodMetaMap[method]
 }
 
@@ -185,17 +179,17 @@ func (gsm *GoStructMeta[T]) SearchMethodMeta(method string) *GoMethodMeta[*ast.F
 
 // -------------------------------- unit test --------------------------------
 
-func (gsm *GoStructMeta[T]) Ident() string { return gsm.ident }
-func (gsm *GoStructMeta[T]) MemberMetaMap() map[string]*GoVarMeta[*ast.Field] {
+func (gsm *GoStructMeta) Ident() string { return gsm.ident }
+func (gsm *GoStructMeta) MemberMetaMap() map[string]*GoVarMeta {
 	return gsm.memberMetaMap
 }
-func (gsm *GoStructMeta[T]) MethodMetaMap() map[string]*GoMethodMeta[*ast.FuncDecl] {
+func (gsm *GoStructMeta) MethodMetaMap() map[string]*GoMethodMeta {
 	return gsm.methodMetaMap
 }
 
 // -------------------------------- unit test --------------------------------
 
-func (gsm *GoStructMeta[T]) Doc() []string {
+func (gsm *GoStructMeta) Doc() []string {
 	if gsm.node == nil || gsm.commentGroup == nil || len(gsm.commentGroup.List) == 0 {
 		return nil
 	}
@@ -206,7 +200,7 @@ func (gsm *GoStructMeta[T]) Doc() []string {
 	return commentSlice
 }
 
-// func (gsm *GoStructMeta[T]) TypeParams() []*GoVarMeta {
+// func (gsm *GoStructMeta) TypeParams() []*GoVarMeta {
 // 	if gsm.node == nil || gsm.node.(*ast.TypeSpec).TypeParams == nil || len(gsm.node.(*ast.TypeSpec).TypeParams.List) == 0 {
 // 		return nil
 // 	}
@@ -225,7 +219,7 @@ func (gsm *GoStructMeta[T]) Doc() []string {
 // 	return tParams
 // }
 
-// func (gsm *GoStructMeta[T]) Members() []string {
+// func (gsm *GoStructMeta) Members() []string {
 // 	if gsm.node.(*ast.TypeSpec) == nil || gsm.node.(*ast.TypeSpec).Type == nil {
 // 		return nil
 // 	}

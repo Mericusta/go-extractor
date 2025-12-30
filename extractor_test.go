@@ -66,7 +66,7 @@ type compareGoPackageMeta struct {
 	absolutePath           string
 	importPath             string
 	fileMetaMap            map[string]*compareGoFileMeta
-	varMetaMap             map[string]*compareGoVarMeta[*ast.ValueSpec]
+	varMetaMap             map[string]*compareGoVarMeta
 	funcMetaMap            map[string]*compareGoFuncMeta
 	structMetaMap          map[string]*compareGoStructMeta
 	interfaceMetaMap       map[string]*compareGoInterfaceMeta
@@ -82,7 +82,7 @@ func (cgpm *compareGoPackageMeta) compare(gpm *GoPackageMeta) {
 	TMapKeyNotExistPanic(cgpm.funcMetaMap, gpm.FuncMetaMap())
 	TMapKeyNotExistPanic(cgpm.structMetaMap, gpm.StructMetaMap())
 	TMapKeyNotExistPanic(cgpm.interfaceMetaMap, gpm.InterfaceMetaMap())
-	TMapKeyNotExistPanic(cgpm.typeConstraintsMetaMap, gpm.TypeConstraintsMetaMap()) // TODO:
+	// TMapKeyNotExistPanic(cgpm.typeConstraintsMetaMap, gpm.TypeConstraintsMetaMap()) // TODO:
 }
 
 type compareGoFileMeta struct {
@@ -90,7 +90,7 @@ type compareGoFileMeta struct {
 	packageName string
 }
 
-func (cgfm *compareGoFileMeta) compare(gfm *GoFileMeta[*ast.File]) {
+func (cgfm *compareGoFileMeta) compare(gfm *GoFileMeta) {
 	TNotEqualPanic(cgfm.ident, gfm.Ident())
 	TNotEqualPanic(cgfm.packageName, gfm.PackageName())
 }
@@ -100,7 +100,7 @@ type compareGoVarMetaTypeConstraints interface {
 	ast.Node
 }
 
-type compareGoVarMeta[T compareGoVarMetaTypeConstraints] struct {
+type compareGoVarMeta struct {
 	expression     string
 	ident          string
 	typeIdent      string
@@ -113,7 +113,7 @@ type compareGoVarMeta[T compareGoVarMetaTypeConstraints] struct {
 	Doc                  []string
 }
 
-func (cgvm *compareGoVarMeta[T]) compare(gvm *GoVarMeta[T]) {
+func (cgvm *compareGoVarMeta) compare(gvm *GoVarMeta) {
 	TNotEqualPanic(cgvm.expression, gvm.Expression())
 	TNotEqualPanic(cgvm.ident, gvm.Ident())
 	TNotEqualPanic(cgvm.typeIdent, gvm.TypeIdent())
@@ -122,23 +122,23 @@ func (cgvm *compareGoVarMeta[T]) compare(gvm *GoVarMeta[T]) {
 
 type compareGoFuncDeclMeta struct {
 	ident   string
-	params  []*compareGoVarMeta[*ast.Field]
-	returns []*compareGoVarMeta[*ast.Field]
+	params  []*compareGoVarMeta
+	returns []*compareGoVarMeta
 	// TODO:
 	Doc        []string
-	TypeParams []*compareGoVarMeta[*ast.Field]
+	TypeParams []*compareGoVarMeta
 }
 
 type iGoFuncDeclMeta interface {
 	Ident() string
-	Params() []*GoVarMeta[*ast.Field]
-	Returns() []*GoVarMeta[*ast.Field]
+	Params() []*GoVarMeta
+	Returns() []*GoVarMeta
 }
 
 func (cgfdm *compareGoFuncDeclMeta) compare(igfdm iGoFuncDeclMeta) {
 	TNotEqualPanic(cgfdm.ident, igfdm.Ident())
-	TSliceNotEqualPanic(cgfdm.params, igfdm.Params(), func(c *compareGoVarMeta[*ast.Field], v *GoVarMeta[*ast.Field]) { c.compare(v) })
-	TSliceNotEqualPanic(cgfdm.returns, igfdm.Returns(), func(c *compareGoVarMeta[*ast.Field], v *GoVarMeta[*ast.Field]) { c.compare(v) })
+	TSliceNotEqualPanic(cgfdm.params, igfdm.Params(), func(c *compareGoVarMeta, v *GoVarMeta) { c.compare(v) })
+	TSliceNotEqualPanic(cgfdm.returns, igfdm.Returns(), func(c *compareGoVarMeta, v *GoVarMeta) { c.compare(v) })
 }
 
 type compareGoFuncMeta struct {
@@ -148,13 +148,13 @@ type compareGoFuncMeta struct {
 	// VarMeta map[string]
 }
 
-func (cgfm *compareGoFuncMeta) compare(gfm *GoFuncMeta[*ast.FuncDecl]) {
+func (cgfm *compareGoFuncMeta) compare(gfm *GoFuncMeta) {
 	cgfm.compareGoFuncDeclMeta.compare(gfm)
 }
 
 type compareGoStructMeta struct {
 	ident         string
-	memberMetaMap map[string]*compareGoVarMeta[*ast.Field]
+	memberMetaMap map[string]*compareGoVarMeta
 	methodMetaMap map[string]*compareGoMethodMeta
 	// TODO:
 	expression string
@@ -162,7 +162,7 @@ type compareGoStructMeta struct {
 	// typeParams       []*compareGoVarMeta
 }
 
-func (cgsm compareGoStructMeta) compare(gsm *GoStructMeta[*ast.TypeSpec]) {
+func (cgsm compareGoStructMeta) compare(gsm *GoStructMeta) {
 	TNotEqualPanic(cgsm.ident, gsm.Ident())
 	TMapKeyNotExistPanic(cgsm.memberMetaMap, gsm.MemberMetaMap())
 	TMapKeyNotExistPanic(cgsm.methodMetaMap, gsm.MethodMetaMap())
@@ -175,7 +175,7 @@ type compareGoMethodMeta struct {
 	PointerReceiver bool
 }
 
-func (cgmm *compareGoMethodMeta) compare(gmm *GoMethodMeta[*ast.FuncDecl]) {
+func (cgmm *compareGoMethodMeta) compare(gmm *GoMethodMeta) {
 	cgmm.compareGoFuncDeclMeta.compare(gmm)
 }
 
@@ -188,7 +188,7 @@ type compareGoInterfaceMeta struct {
 	// TypeParams []*compareGoVarMeta
 }
 
-func (cgim compareGoInterfaceMeta) compare(gim *GoInterfaceMeta[*ast.TypeSpec]) {
+func (cgim compareGoInterfaceMeta) compare(gim *GoInterfaceMeta) {
 	TNotEqualPanic(cgim.ident, gim.Ident())
 	TMapKeyNotExistPanic(cgim.methodMetaMap, gim.MethodMetaMap())
 }
@@ -197,7 +197,7 @@ type compareGoInterfaceMethodMeta struct {
 	compareGoFuncDeclMeta
 }
 
-func (cgimm *compareGoInterfaceMethodMeta) compare(gimm *GoInterfaceMethodMeta[*ast.Field, *ast.TypeSpec]) {
+func (cgimm *compareGoInterfaceMethodMeta) compare(gimm *GoInterfaceMethodMeta) {
 	cgimm.compareGoFuncDeclMeta.compare(gimm)
 }
 
@@ -233,12 +233,10 @@ type compareGoImportMeta struct {
 
 var (
 	standardProjectRelPath       = "./testdata/standardProject"
-	standardProjectIgnorePathMap = map[string]struct{}{
-		standardProjectRelPath + "/vendor": {},
-	}
-	standardProjectAbsPath    = "/Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject"
-	standardProjectModuleName = "standardProject"
-	standardProjectMeta       = &compareGoProjectMeta{
+	standardProjectIgnorePathMap = map[string]struct{}{"vendor": {}}
+	standardProjectAbsPath       = "/Users/dragonplus/Projects/github.com/Mericustar/go-extractor/testdata/standardProject"
+	standardProjectModuleName    = "standardProject"
+	standardProjectMeta          = &compareGoProjectMeta{
 		absolutePath: standardProjectAbsPath,
 		moduleName:   standardProjectModuleName,
 		packageMap: map[string]*compareGoPackageMeta{
@@ -255,7 +253,7 @@ var (
 						packageName: "main",
 					},
 				},
-				varMetaMap: map[string]*compareGoVarMeta[*ast.ValueSpec]{
+				varMetaMap: map[string]*compareGoVarMeta{
 					"globalVariableInt": {
 						expression:     `globalVariableInt        int    = 1`,
 						ident:          "globalVariableInt",
@@ -405,7 +403,7 @@ var (
 							Doc: []string{
 								"// ExampleFunc this is example function",
 							},
-							params: []*compareGoVarMeta[*ast.Field]{
+							params: []*compareGoVarMeta{
 								{
 									expression:     `s *module.ExampleStruct`,
 									ident:          "s",
@@ -450,7 +448,7 @@ var (
 					"NoDocExampleFunc": {
 						compareGoFuncDeclMeta: compareGoFuncDeclMeta{
 							ident: "NoDocExampleFunc",
-							params: []*compareGoVarMeta[*ast.Field]{
+							params: []*compareGoVarMeta{
 								{
 									expression:     `s *module.ExampleStruct`,
 									ident:          "s",
@@ -498,7 +496,7 @@ var (
 							Doc: []string{
 								"// OneLineDocExampleFunc this is one-line-doc example function",
 							},
-							params: []*compareGoVarMeta[*ast.Field]{
+							params: []*compareGoVarMeta{
 								{
 									expression:     `s *module.ExampleStruct`,
 									ident:          "s",
@@ -543,7 +541,7 @@ var (
 					"ImportSelectorFunc": {
 						compareGoFuncDeclMeta: compareGoFuncDeclMeta{
 							ident: "ImportSelectorFunc",
-							params: []*compareGoVarMeta[*ast.Field]{
+							params: []*compareGoVarMeta{
 								{
 									expression:     `s *module.ExampleStruct`,
 									ident:          "s",
@@ -615,14 +613,14 @@ var (
 				structMetaMap: map[string]*compareGoStructMeta{
 					"ExampleTemplateStructWithTemplateParent": {
 						ident: "ExampleTemplateStructWithTemplateParent",
-						// typeParams: []*compareGoVarMeta[*ast.Field]{
+						// typeParams: []*compareGoVarMeta{
 						// 	{
 						// 		expression:           `T any`,
 						// 		ident:                "T",
 						// 		TypeExpression:       "any",
 						// 	},
 						// },
-						memberMetaMap: map[string]*compareGoVarMeta[*ast.Field]{
+						memberMetaMap: map[string]*compareGoVarMeta{
 							"TemplateStruct": {
 								expression:     `*template.TemplateStruct[map[string]*template.TemplateStruct[*T]]`,
 								ident:          "TemplateStruct",
@@ -639,7 +637,7 @@ var (
 							"Parse": {
 								compareGoFuncDeclMeta{
 									ident: "Parse",
-									params: []*compareGoVarMeta[*ast.Field]{
+									params: []*compareGoVarMeta{
 										{
 											expression:     `T`,
 											ident:          "",
@@ -652,7 +650,7 @@ var (
 							"Format": &compareGoInterfaceMethodMeta{
 								compareGoFuncDeclMeta{
 									ident: "Format",
-									returns: []*compareGoVarMeta[*ast.Field]{
+									returns: []*compareGoVarMeta{
 										{
 											expression:     `T`,
 											ident:          "",
@@ -684,7 +682,7 @@ var (
 								compareGoFuncDeclMeta{
 									ident: "ExampleFunc",
 									Doc:   []string{"// This is ExampleFunc Doc"},
-									params: []*compareGoVarMeta[*ast.Field]{
+									params: []*compareGoVarMeta{
 										{
 											expression:     `int`,
 											ident:          "",
@@ -698,7 +696,7 @@ var (
 								compareGoFuncDeclMeta{
 									ident: "AnotherExampleFunc",
 									Doc:   []string{"// This is AnotherExampleFunc Doc"},
-									params: []*compareGoVarMeta[*ast.Field]{
+									params: []*compareGoVarMeta{
 										{
 											expression:     `int`,
 											ident:          "",
@@ -712,7 +710,7 @@ var (
 											typeExpression: `[]int`,
 										},
 									},
-									returns: []*compareGoVarMeta[*ast.Field]{
+									returns: []*compareGoVarMeta{
 										{
 											expression:     `int`,
 											ident:          "",
@@ -732,7 +730,7 @@ var (
 					},
 					"ExampleTemplateInterface": {
 						ident: "ExampleTemplateInterface",
-						// TypeParams: []*compareGoVarMeta[*ast.Field]{
+						// TypeParams: []*compareGoVarMeta{
 						// 	{
 						// 		expression:           `T any`,
 						// 		ident:                "T",
@@ -744,7 +742,7 @@ var (
 								compareGoFuncDeclMeta{
 									ident: "ExampleFunc",
 									Doc:   []string{"// This is ExampleFunc Doc"},
-									TypeParams: []*compareGoVarMeta[*ast.Field]{
+									TypeParams: []*compareGoVarMeta{
 										{
 											expression:     `T any`,
 											ident:          "T",
@@ -752,7 +750,7 @@ var (
 											typeExpression: `any`,
 										},
 									},
-									params: []*compareGoVarMeta[*ast.Field]{
+									params: []*compareGoVarMeta{
 										{
 											expression:     `T`,
 											ident:          "",
@@ -766,7 +764,7 @@ var (
 								compareGoFuncDeclMeta{
 									ident: "AnotherExampleFunc",
 									Doc:   []string{"// This is AnotherExampleFunc Doc"},
-									TypeParams: []*compareGoVarMeta[*ast.Field]{
+									TypeParams: []*compareGoVarMeta{
 										{
 											expression:     `T any`,
 											ident:          "T",
@@ -774,7 +772,7 @@ var (
 											typeExpression: `any`,
 										},
 									},
-									params: []*compareGoVarMeta[*ast.Field]{
+									params: []*compareGoVarMeta{
 										{
 											expression:     `T`,
 											ident:          "",
@@ -788,7 +786,7 @@ var (
 											typeExpression: `[]T`,
 										},
 									},
-									returns: []*compareGoVarMeta[*ast.Field]{
+									returns: []*compareGoVarMeta{
 										{
 											expression:     `T`,
 											ident:          "",
@@ -818,7 +816,7 @@ var (
 						packageName: "module",
 					},
 				},
-				varMetaMap: map[string]*compareGoVarMeta[*ast.ValueSpec]{
+				varMetaMap: map[string]*compareGoVarMeta{
 					"globalExampleStruct": {
 						expression:     `globalExampleStruct *ExampleStruct`,
 						ident:          "globalExampleStruct",
@@ -829,7 +827,7 @@ var (
 				structMetaMap: map[string]*compareGoStructMeta{
 					"ParentStruct": {
 						ident: "ParentStruct",
-						memberMetaMap: map[string]*compareGoVarMeta[*ast.Field]{
+						memberMetaMap: map[string]*compareGoVarMeta{
 							"p": {
 								expression:     `p int`,
 								ident:          "p",
@@ -843,8 +841,8 @@ var (
 								compareGoFuncMeta: &compareGoFuncMeta{
 									compareGoFuncDeclMeta: compareGoFuncDeclMeta{
 										ident: "P",
-										returns: []*compareGoVarMeta[*ast.Field]{
-											&compareGoVarMeta[*ast.Field]{
+										returns: []*compareGoVarMeta{
+											&compareGoVarMeta{
 												expression:     `int`,
 												ident:          "",
 												typeIdent:      "int",
@@ -865,7 +863,7 @@ var (
 							"// this is struct comment",
 							"// this is another struct comment",
 						},
-						memberMetaMap: map[string]*compareGoVarMeta[*ast.Field]{
+						memberMetaMap: map[string]*compareGoVarMeta{
 							"ParentStruct": {
 								expression:     `*ParentStruct`,
 								ident:          "ParentStruct",
@@ -897,7 +895,7 @@ var (
 								compareGoFuncMeta: &compareGoFuncMeta{
 									compareGoFuncDeclMeta: compareGoFuncDeclMeta{
 										ident: "ExampleFunc",
-										params: []*compareGoVarMeta[*ast.Field]{
+										params: []*compareGoVarMeta{
 											{
 												expression:     `v int`,
 												ident:          "v",
@@ -1092,7 +1090,7 @@ var (
 								compareGoFuncMeta: &compareGoFuncMeta{
 									compareGoFuncDeclMeta: compareGoFuncDeclMeta{
 										ident: "ExampleFuncWithPointerReceiver",
-										params: []*compareGoVarMeta[*ast.Field]{
+										params: []*compareGoVarMeta{
 											{
 												expression:     `v int`,
 												ident:          "v",
@@ -1127,7 +1125,7 @@ var (
 								compareGoFuncMeta: &compareGoFuncMeta{
 									compareGoFuncDeclMeta: compareGoFuncDeclMeta{
 										ident: "DoubleReturnFunc",
-										returns: []*compareGoVarMeta[*ast.Field]{
+										returns: []*compareGoVarMeta{
 											{
 												expression:     `int`,
 												ident:          "",
@@ -1164,7 +1162,7 @@ var (
 								compareGoFuncMeta: &compareGoFuncMeta{
 									compareGoFuncDeclMeta: compareGoFuncDeclMeta{
 										ident: "V",
-										returns: []*compareGoVarMeta[*ast.Field]{
+										returns: []*compareGoVarMeta{
 											{
 												expression:     `int`,
 												ident:          "",
@@ -1181,7 +1179,7 @@ var (
 								compareGoFuncMeta: &compareGoFuncMeta{
 									compareGoFuncDeclMeta: compareGoFuncDeclMeta{
 										ident: "Sub",
-										returns: []*compareGoVarMeta[*ast.Field]{
+										returns: []*compareGoVarMeta{
 											{
 												expression:     `*ExampleStruct`,
 												ident:          "",
@@ -1206,7 +1204,7 @@ var (
 								"// @param           value",
 								"// @return          pointer to ExampleStruct",
 							},
-							params: []*compareGoVarMeta[*ast.Field]{
+							params: []*compareGoVarMeta{
 								{
 									expression:     `v int`,
 									ident:          "v",
@@ -1214,7 +1212,7 @@ var (
 									typeExpression: `int`,
 								},
 							},
-							returns: []*compareGoVarMeta[*ast.Field]{
+							returns: []*compareGoVarMeta{
 								{
 									expression:     `*ExampleStruct`,
 									ident:          "",
@@ -1245,7 +1243,7 @@ var (
 					"ExampleFunc": {
 						compareGoFuncDeclMeta: compareGoFuncDeclMeta{
 							ident: "ExampleFunc",
-							params: []*compareGoVarMeta[*ast.Field]{
+							params: []*compareGoVarMeta{
 								{
 									expression:     `s *ExampleStruct`,
 									ident:          "s",
@@ -1289,7 +1287,7 @@ var (
 					"OneTemplateFunc": {
 						compareGoFuncDeclMeta: compareGoFuncDeclMeta{
 							ident: "OneTemplateFunc",
-							TypeParams: []*compareGoVarMeta[*ast.Field]{
+							TypeParams: []*compareGoVarMeta{
 								{
 									expression:     `T any`,
 									ident:          "T",
@@ -1297,7 +1295,7 @@ var (
 									typeExpression: "any",
 								},
 							},
-							params: []*compareGoVarMeta[*ast.Field]{
+							params: []*compareGoVarMeta{
 								{
 									expression:     `tv *T`,
 									ident:          "tv",
@@ -1305,7 +1303,7 @@ var (
 									typeExpression: "*T",
 								},
 							},
-							returns: []*compareGoVarMeta[*ast.Field]{
+							returns: []*compareGoVarMeta{
 								{
 									expression:     `*T`,
 									ident:          "",
@@ -1318,7 +1316,7 @@ var (
 					"DoubleSameTemplateFunc": {
 						compareGoFuncDeclMeta: compareGoFuncDeclMeta{
 							ident: "DoubleSameTemplateFunc",
-							TypeParams: []*compareGoVarMeta[*ast.Field]{
+							TypeParams: []*compareGoVarMeta{
 								{
 									expression:     `T1, T2 any`,
 									ident:          "T1",
@@ -1332,7 +1330,7 @@ var (
 									typeExpression: "any",
 								},
 							},
-							params: []*compareGoVarMeta[*ast.Field]{
+							params: []*compareGoVarMeta{
 								{
 									expression:     `tv1 T1`,
 									ident:          "tv1",
@@ -1346,7 +1344,7 @@ var (
 									typeExpression: "T2",
 								},
 							},
-							returns: []*compareGoVarMeta[*ast.Field]{
+							returns: []*compareGoVarMeta{
 								{
 									expression:     `*T1`,
 									ident:          "",
@@ -1365,7 +1363,7 @@ var (
 					"DoubleDifferenceTemplateFunc": {
 						compareGoFuncDeclMeta: compareGoFuncDeclMeta{
 							ident: "DoubleDifferenceTemplateFunc",
-							TypeParams: []*compareGoVarMeta[*ast.Field]{
+							TypeParams: []*compareGoVarMeta{
 								{
 									expression:     `T1 any`,
 									ident:          "T1",
@@ -1379,7 +1377,7 @@ var (
 									typeExpression: "comparable",
 								},
 							},
-							params: []*compareGoVarMeta[*ast.Field]{
+							params: []*compareGoVarMeta{
 								{
 									expression:     `tv1 T1`,
 									ident:          "tv1",
@@ -1393,7 +1391,7 @@ var (
 									typeExpression: "T2",
 								},
 							},
-							returns: []*compareGoVarMeta[*ast.Field]{
+							returns: []*compareGoVarMeta{
 								{
 									expression:     `*T1`,
 									ident:          "",
@@ -1412,7 +1410,7 @@ var (
 					"TypeConstraintsTemplateFunc": {
 						compareGoFuncDeclMeta: compareGoFuncDeclMeta{
 							ident: "TypeConstraintsTemplateFunc",
-							TypeParams: []*compareGoVarMeta[*ast.Field]{
+							TypeParams: []*compareGoVarMeta{
 								{
 									expression:     `T TypeConstraints`,
 									ident:          "T",
@@ -1420,7 +1418,7 @@ var (
 									typeExpression: `TypeConstraints`,
 								},
 							},
-							params: []*compareGoVarMeta[*ast.Field]{
+							params: []*compareGoVarMeta{
 								{
 									expression:     `tv T`,
 									ident:          "tv",
@@ -1428,7 +1426,7 @@ var (
 									typeExpression: "T",
 								},
 							},
-							returns: []*compareGoVarMeta[*ast.Field]{
+							returns: []*compareGoVarMeta{
 								{
 									expression:     `*T`,
 									ident:          "",
@@ -1441,7 +1439,7 @@ var (
 					"CannotInferTypeFunc1": {
 						compareGoFuncDeclMeta: compareGoFuncDeclMeta{
 							ident: "CannotInferTypeFunc1",
-							TypeParams: []*compareGoVarMeta[*ast.Field]{
+							TypeParams: []*compareGoVarMeta{
 								{
 									expression:     `T any`,
 									ident:          "T",
@@ -1454,7 +1452,7 @@ var (
 					"CannotInferTypeFunc2": {
 						compareGoFuncDeclMeta: compareGoFuncDeclMeta{
 							ident: "CannotInferTypeFunc2",
-							TypeParams: []*compareGoVarMeta[*ast.Field]{
+							TypeParams: []*compareGoVarMeta{
 								{
 									expression:     `K comparable`,
 									ident:          "K",
@@ -1468,7 +1466,7 @@ var (
 									typeExpression: "any",
 								},
 							},
-							returns: []*compareGoVarMeta[*ast.Field]{
+							returns: []*compareGoVarMeta{
 								{
 									expression:     `*K`,
 									ident:          "",
@@ -1488,14 +1486,14 @@ var (
 				structMetaMap: map[string]*compareGoStructMeta{
 					"TemplateStruct": {
 						ident: "TemplateStruct",
-						// typeParams: []*compareGoVarMeta[*ast.Field]{
+						// typeParams: []*compareGoVarMeta{
 						// 	{
 						// 		expression:           `T any`,
 						// 		ident:                "T",
 						// 		TypeExpression:       "any",
 						// 	},
 						// },
-						memberMetaMap: map[string]*compareGoVarMeta[*ast.Field]{
+						memberMetaMap: map[string]*compareGoVarMeta{
 							"v": {
 								expression:     `v T`,
 								ident:          "v",
@@ -1508,7 +1506,7 @@ var (
 								compareGoFuncMeta: &compareGoFuncMeta{
 									compareGoFuncDeclMeta: compareGoFuncDeclMeta{
 										ident: "V",
-										returns: []*compareGoVarMeta[*ast.Field]{
+										returns: []*compareGoVarMeta{
 											{
 												expression:     `T`,
 												ident:          "",
@@ -1525,7 +1523,7 @@ var (
 					},
 					"TwoTypeTemplateStruct": {
 						ident: "TwoTypeTemplateStruct",
-						// typeParams: []*compareGoVarMeta[*ast.Field]{
+						// typeParams: []*compareGoVarMeta{
 						// 	{
 						// 		expression:           `K TypeConstraints`,
 						// 		ident:                "K",
@@ -1537,7 +1535,7 @@ var (
 						// 		TypeExpression:       "any",
 						// 	},
 						// },
-						memberMetaMap: map[string]*compareGoVarMeta[*ast.Field]{
+						memberMetaMap: map[string]*compareGoVarMeta{
 							"v": {
 								expression:     `v map[K]V`,
 								ident:          "v",
@@ -1550,7 +1548,7 @@ var (
 								compareGoFuncMeta: &compareGoFuncMeta{
 									compareGoFuncDeclMeta: compareGoFuncDeclMeta{
 										ident: "KVSlice",
-										params: []*compareGoVarMeta[*ast.Field]{
+										params: []*compareGoVarMeta{
 											{
 												expression:     `k K`,
 												ident:          "k",
@@ -1564,7 +1562,7 @@ var (
 												typeExpression: `V`,
 											},
 										},
-										returns: []*compareGoVarMeta[*ast.Field]{
+										returns: []*compareGoVarMeta{
 											{
 												expression:     `[]K`,
 												ident:          "",
@@ -1587,14 +1585,14 @@ var (
 					},
 					"TemplateStructWithParent": {
 						ident: "TemplateStructWithParent",
-						// typeParams: []*compareGoVarMeta[*ast.Field]{
+						// typeParams: []*compareGoVarMeta{
 						// 	{
 						// 		expression:           `T any`,
 						// 		ident:                "T",
 						// 		TypeExpression:       "any",
 						// 	},
 						// },
-						memberMetaMap: map[string]*compareGoVarMeta[*ast.Field]{
+						memberMetaMap: map[string]*compareGoVarMeta{
 							"TemplateStruct": {
 								expression:     `*TemplateStruct[T]`,
 								ident:          "TemplateStruct",
@@ -1659,8 +1657,8 @@ func TestExtractGoProjectMeta(t *testing.T) {
 			cgfm.compare(gfm)
 
 			// make
-			params := make([]*GoVarMeta[*ast.Field], 0, 8)
-			returns := make([]*GoVarMeta[*ast.Field], 0, 8)
+			params := make([]*GoVarMeta, 0, 8)
+			returns := make([]*GoVarMeta, 0, 8)
 			for _, p := range gfm.Params() {
 				ngvm := MakeUpVarMeta(p.ident, p.TypeExpression())
 				if ngvm != nil {

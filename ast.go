@@ -31,12 +31,12 @@ import "go/ast"
 // 	}
 // }
 
-type fieldMaker[T GoVarMetaTypeConstraints] interface {
-	*field | *GoVarMeta[T]
+type fieldMaker interface {
+	*field | *GoVarMeta
 	make() *ast.Field
 }
 
-func makeFieldList[T fieldMaker[*ast.Field]](vs []T) *ast.FieldList {
+func makeFieldList[T fieldMaker](vs []T) *ast.FieldList {
 	l := len(vs)
 	if l == 0 {
 		return nil
