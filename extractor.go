@@ -71,3 +71,8 @@ func (m *meta) Format() string {
 	}
 	return buffer.String()
 }
+
+// 当前 meta 的 ast 节点所属的文件的绝对路径
+func (m *meta) AbsPath() string {
+	return m.path
+}

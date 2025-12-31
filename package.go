@@ -12,6 +12,9 @@ type GoPackageMeta struct {
 	// 空组合
 	*meta
 
+	// 是否已经执行过 ExtractAll 方法
+	extractedAll bool
+
 	// package 标识
 	ident string
 
@@ -155,6 +158,10 @@ func extractGoPackageMeta(packageRelativePath string, files map[string]struct{},
 
 // ExtractAll 提取 package 内所有 var，func，struct，interface 的 meta 数据
 func (gpm *GoPackageMeta) ExtractAll() {
+	if gpm.extractedAll {
+		return
+	}
+
 	// 提取 var
 	gpm.extractVar()
 
@@ -169,6 +176,8 @@ func (gpm *GoPackageMeta) ExtractAll() {
 
 	// 提取 interface
 	gpm.extractInterface()
+
+	gpm.extractedAll = true
 }
 
 // extractVar 提取 var 的 meta 数据
@@ -311,7 +320,16 @@ func (gpm *GoPackageMeta) StructNames() []string {
 	for _, gfm := range gpm.fileMetaMap {
 		ast.Inspect(gfm.node, func(n ast.Node) bool {
 			if IsTypeNode(n) {
-				structNames = append(structNames, n.(*ast.TypeSpec).Name.String())
+				switch _n := n.(type) {
+				case *ast.TypeSpec:
+					structNames = append(structNames, _n.Name.String())
+				case *ast.GenDecl:
+					// 处理文件中出现的如下情况：
+					// var MyInt int
+					for _, specNode := range _n.Specs {
+						structNames = append(structNames, specNode.(*ast.TypeSpec).Name.String())
+					}
+				}
 				return false
 			}
 			return true

@@ -24,7 +24,7 @@ func IsFuncNode(n ast.Node) bool {
 // IsTypeNode 判断 ast.Node 是否是 type 关键字定义域
 func IsTypeNode(n ast.Node) bool {
 	genDecl, ok := n.(*ast.GenDecl)
-	return genDecl != nil && ok
+	return genDecl != nil && ok && genDecl.Tok == token.TYPE
 }
 
 // IsStructNode 判断 ast.Spec 是否是 struct 节点

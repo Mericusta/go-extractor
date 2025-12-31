@@ -120,12 +120,12 @@ func ExtractGoProjectMeta(projectPath string, ignorePaths map[string]struct{}) (
 	return extractGoProjectMeta(projectPath, ignorePaths, false)
 }
 
-// // ExtractGoProjectMeta 通过指定目录提取项目 meta 数据
-// // - 限定项目路径下的相对路径
-// // - 递归提取
-// func ExtractGoProjectMetaWithSpecPaths(projectPath string, specPaths map[string]struct{}) (*GoProjectMeta, error) {
-// 	return extractGoProjectMeta(projectPath, specPaths, true)
-// }
+// ExtractGoProjectMeta 通过指定目录提取项目 meta 数据
+// - 限定项目路径下的相对路径
+// - 递归提取
+func ExtractGoProjectMetaWithSpecPaths(projectPath string, specPaths map[string]struct{}) (*GoProjectMeta, error) {
+	return extractGoProjectMeta(projectPath, specPaths, true)
+}
 
 // extractGoProjectMeta 通过指定目录提取项目 meta 数据
 // - 递归提取
