@@ -43,3 +43,8 @@
 - GoFuncMeta
   - struct
     - GoFuncMeta
+  - func
+    - Extract
+      - from package
+      - from file
+    - newGoFuncMeta
